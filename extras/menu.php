@@ -99,13 +99,14 @@ class walker_texas_ranger extends Walker_Nav_Menu {
         $link_class_string = implode("  ", array_filter($link_classes));
         $link_class_output = 'class="' . $link_class_string . '"';
         //var_dump($item);
-        if(! empty(get_field('state', $item->ID))) {
-            if(get_field('state', $item->ID) == 'popup') {
+        $state = get_field('state', $item->ID);
+        if(! empty($state)) {
+            if($state == 'popup') {
                 $hash = str_replace('#', '', esc_attr($item->url));
                 $sref = ' ng-click="$event.preventDefault();modal(\''.$hash.'\')"';
             } else {
                 $page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ).'\'' : '';
-                $sref =  ' ui-sref="app.'.get_field('state', $item->ID).'({lang : \''.get_field('lingua', $item->ID).'\''.$page.'})"';
+                $sref =  ' ui-sref="app.'.$state.'({lang : \''.get_field('lingua', $item->ID).'\''.$page.'})"';
             }
         } else {
             $sref =  '';
