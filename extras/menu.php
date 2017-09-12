@@ -97,6 +97,7 @@ class walker_texas_ranger extends Walker_Nav_Menu {
         );
 
         $link_class_string = implode("  ", array_filter($link_classes));
+        echo 'ciao';
         $link_class_output = 'class="' . $link_class_string . '"';
         //var_dump($item);
         $state = get_field('state', $item->ID);
