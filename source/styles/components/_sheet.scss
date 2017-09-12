@@ -1,0 +1,30 @@
+.sheet {
+	@include grow('lg');
+	&__container {
+		@include grow('lg');
+	}
+	&__title--small-lighter {
+		text-align: center;
+		padding-bottom: em($p*2, 30px);
+	}
+	&__item {
+		@include breakpoint($bp, false) {
+			text-align: center;
+		}
+		border-bottom: 1px solid $w;
+		@include grow('md');
+		@include grow('md', 'top');
+		&--last {
+			border-bottom: 0;
+		}
+	}
+	&__table {
+		td {
+			vertical-align: top;
+		}
+	}
+	&__td {
+		padding-right: em($p*2);
+		text-transform: uppercase;
+	}
+}

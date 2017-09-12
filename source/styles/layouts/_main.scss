@@ -1,0 +1,19 @@
+.main {
+	min-height: 100vh;
+	position: relative;
+	.admin-bar.logged-in & {
+		min-height: calc(100vh - 32px);
+	}
+	&:before {
+		@include full;
+		content: '';
+		background: linear-gradient(72deg, #07131d, $dark-color, #07131d);
+		visibility: hidden;
+		opacity: 0;
+		z-index: 0;
+	}
+	&__container {
+		position: relative;
+		z-index: 1;
+	}
+}

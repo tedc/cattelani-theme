@@ -1,0 +1,169 @@
+*, *:after, *:before {
+    box-sizing: border-box !important;
+}
+
+
+html {
+    color: transparent !important;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: scroll; 
+    > [class*="-s"] {
+        width: auto !important;
+    }
+}
+
+
+body {
+    font-size: $base_font_size - 2px;
+    color: $main-color;
+    letter-spacing: $spacing;
+    margin: 0;
+    padding: {
+        bottom: em(90px);
+    }
+    font-family: $main-font;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    .wf-active &, .wf-inactive & {
+        font-family: $main-font;
+    }
+    @include breakpoint(1024px) {
+        font-size: $base_font_size;
+    }
+    &.blog, &.category, &.single-post {
+        overflow: visible;
+    }
+    &.home, &.tax-collezioni {
+        padding-bottom: 0;
+    }
+}
+
+a {
+    text-decoration: none;
+    transition: color $speed;
+}
+
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1;
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+p {
+	line-height: percentage(27px/18px);
+}
+
+strong {
+	font-weight: bold;
+    color: $dark-color;
+}
+
+[class*="__title"] {
+	font-weight: normal;
+	line-height: percentage(130px/120px);
+    font-size: em(20px);
+    @include breakpoint($bp) {
+        font-size: em(22px);
+    }
+}
+[class*="-small"] {
+    font-size: em(26px);
+    @include breakpoint($bp) {
+        font-size: em(30px);
+    }
+}
+[class*="-medium"] {
+	font-size: em(28px);
+    @include breakpoint($bp) {
+        font-size: em(34px);
+    }
+}
+[class*="-big"] {
+    font-size: em(35px);
+    @include breakpoint($bp) {
+        font-size: em(50px);
+    }
+}
+[class*="-large"] {
+    font-size: em(40px);
+    @include breakpoint($bp) {
+        font-size: em(60px);
+    }
+}
+[class*="-huge"] {
+	font-size: em(50px);
+    font-weight: 200;
+    @include breakpoint($bp) {
+        font-size: em(70px);
+    }
+}
+[class*="-giant"] {
+    font-size: vmin(150px);
+    font-weight: 200;
+    @include breakpoint($bp) {
+        font-size: em(150px);
+    }
+}
+[class*="-light"] {
+    font-weight: 300;
+}
+[class*="-lighter"] {
+    font-weight: 200;
+}
+[class*="-ungrow"] {
+    padding: 0;
+}
+[class*="-upper"] {
+	text-transform: uppercase;
+}
+[class*="-emphasis"] {
+	color: $brand-main;
+    strong {
+        color: $brand-main;
+    }
+}
+[class*="-gray"] {
+    background-color: $lighter-color;
+    transition: background-color $speed;
+    .main--dark & {
+        background-color: transparent;
+    }
+}
+[class*="-mw"] {
+    max-width: 685px;
+    margin: {
+        left: auto;
+        right: auto;
+    }
+}
+[class*="-white"] {
+    background-color: $w;
+    transition: background-color $speed;
+    .main--dark & {
+        background-color: transparent;
+    }
+}
+[class*="-alternate"] {
+    font-family: $alternate-font;
+    p {
+        color: $dark-gray;
+    }
+}
+[class*="-aligncenter"] {
+    text-align: center;
+}
+[ng-click] {
+    cursor: pointer;
+}
+
+@include grid();
+@include flex-align();
+@include shrink();

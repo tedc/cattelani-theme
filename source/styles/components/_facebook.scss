@@ -1,0 +1,112 @@
+.facebook {
+	padding-top: percentage(336px/$max-width);
+	position: relative;
+	&__cover {
+		padding-bottom: em($p*5);
+		padding-top: percentage(336px/$max-width);
+		height: 0 !important;
+	}
+	&__header {
+		display: flex;
+		align-items: center;
+		> * {
+			flex: 0 0 auto;
+		}
+		img {
+			max-width: em(100px);
+			margin-right: em($p*2);
+		}
+		padding: 20px 10px 10px;
+		@include breakpoint(640px) {
+			padding: em($p*2) em($p) em($p);
+		}
+	}
+	&__cell {
+		@include grow('small');
+		&--stream {
+			position: relative;
+			border-radius: 6px;
+			background-color: $lighter-color;
+			overflow: hidden;
+			padding: {
+				left: 10px;
+				right: 10px;
+			}
+			@include breakpoint(640px) {
+				padding: {
+					left: em($p);
+					right: em($p);
+				}
+			}
+		}
+		scrollbar {
+			max-height: em(325px);
+			position: relative;
+			display: block;
+		}
+		.scroll-content{
+			padding: 10px;
+			@include breakpoint(640px) {
+				padding: em($p);
+			}
+		}
+	}
+	.cff {
+		&-wrapper {
+			font-weight: 200;
+			a {
+				color: $dark-color;
+				&:hover {
+					color: $dark-gray;
+				}
+			}
+		}
+		&-item {
+			display: flex;
+			flex-direction: column;
+			padding: {
+				top: 10px;
+				bottom: 10px;
+			}
+			@include breakpoint(640px) {
+				padding: {
+					top: em($p);
+					bottom: em($p);
+				}
+			}
+			> * {
+				order: 1;
+			}
+			> .cff-date {
+				order: 0
+			}
+			border-bottom: 1px solid white;
+		}
+		&-post-desc {
+			font-size: 1em !important;
+		}
+		&-shared-link, &-media-link {
+			padding: {
+				top: 20px;
+			}
+			@include breakpoint(640px) {
+				padding: {
+					top: em(30px);
+				}
+			}
+		}
+		&-post-links {
+			padding: {
+				top: 20px;
+			}
+			@include breakpoint(640px) {
+				padding: {
+					top: em(30px);
+				}
+			}
+		}
+		&-share-link, &-share-container{
+			display: none;
+		}
+	}
+}

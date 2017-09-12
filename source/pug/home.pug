@@ -1,0 +1,14 @@
+.collections
+	.collections__slider.swiper-container
+		.swiper-wrapper
+			.swiper-slide(ng-repeat="item in home.items" ng-style="{'background-image': 'url('+item.cover.url+')'}" on-finish-render="finishRepeat")
+				h2.slide__title(ng-bind-html="item.name")
+	.collections__nav.collections__nav--shrink.collections__nav--grow-md
+		.icon-arrow.swiper-prev
+		.swiper-container.swiper-container--shrink
+			.swiper-wrapper
+				.swiper-slide(ng-repeat="item in home.items" on-finish-render="navFinishRepeat")
+					span.swiper-slide__item
+						span.swiper-slide__name(ng-bind-html="item.name")
+					a.swiper-slide__link(ui-sref="app.collection({name : item.slug})")
+		.icon-arrow.swiper-next

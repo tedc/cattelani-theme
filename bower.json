@@ -1,0 +1,20 @@
+{
+  "name": "sage",
+  "homepage": "https://roots.io/sage/",
+  "authors": [
+    "Ben Word <ben@benword.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "gsap": "~1.19.1",
+    "scrollmagic": "~2.0.5",
+    "normalize-css": "normalize.css#~5.0.0",
+    "fastclick": "~1.0.6",
+    "slick-carousel": "~1.6.0",
+    "swiper": "^3.4.2",
+    "angular-bind-html-compile": "^1.4.1",
+    "smooth-scrollbar": "^7.3.1",
+    "hamsterjs": "^1.1.2"
+  }
+}

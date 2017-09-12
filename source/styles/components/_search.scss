@@ -1,0 +1,106 @@
+.search {
+	width: $f;
+	@include normalize_padding;
+	margin: 0 !important;
+	display: flex;
+	flex-direction: column;
+	&__header {
+		@include grow('md');
+		text-align: center;
+		flex: 0 0 auto;
+	}
+	&__filters {
+		justify-content: center;
+		flex: 0 0 auto;
+	}
+	&__select {
+		width: em(260px);
+		margin: 0 em($p);
+	}
+	&__cell {
+		@include grow('md');
+		position: relative;
+		display: block;
+		overflow: hidden;
+		@include breakpoint() {
+			width: $f/5;
+		}
+		img {
+			width: $f;
+		}
+	}
+	&__mask {
+		@include full;
+		background-color: $w;
+		transform-origin: center bottom;
+		transform: scaleY(0) translateZ(0);
+		content: '';
+		z-index: 3;
+	}
+	&__content {
+		display: block;
+		padding: {
+			left: em(15px);
+			right: em(15px);
+		}
+	}
+	&__figure {
+		position: relative;
+		display: block;
+		line-height: 0;
+		&:after {
+			content: '';
+			@include full;
+			background-color: transparentize($dark-color, .25);
+			transition: opacity $speed;
+			opacity: 0;
+		}
+		.search__cell:hover & {
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+	&__title {
+		&--name {
+			display: block;
+			font-size: em(18px);
+			font-family: $alternate-font;
+			font-weight: 400;
+			padding-top: em($p, 18px);
+			> span {
+				color: $main-color;
+				padding: 0 em($p, 18px);
+				position: relative;
+				display: inline-block;
+				&:after {
+					content: '';
+					height: 1px;
+					width: $f;
+					background-color: $main-color;
+					left: 0;
+					top: 50%;
+					transform: translate3d(0, -50%, 0) scaleX(0);
+					transition: transform $speed;
+					position: absolute;
+					transform-origin: right center;
+				}
+				.search__cell:hover & {
+					&:after {
+						transform: translate3d(0, -50%, 0) scaleX(1);
+						transform-origin: left center;
+					}
+				}
+			}
+		}
+	}
+	&__items {
+		flex: 10;
+		position: relative;
+		margin-top: em($p*2);
+		.scroll-content {
+			display: flex;
+			flex-wrap: wrap;
+		}
+	}
+}

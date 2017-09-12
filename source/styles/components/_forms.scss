@@ -1,0 +1,130 @@
+%inputs {
+	border: 0;
+	border-radius: 6px;
+	padding: 0 em($p, 18px);
+	outline: none;
+	font-size: 18px;
+	box-shadow: none;
+	color: $main-color;
+	margin: 0;
+	placeholder: {
+		font-size: 1em;
+		color: $light-color;
+	}
+	transition: $speed box-shadow, $speed background-color;
+	background-color: $lighter-color;
+	&:focus {
+		outline: none !important;
+	}
+	&:focus, &:hover {
+		box-shadow: 0 3px 12px transparentize(#939598, .8);
+	}
+	&.ng-invalid.ng-pristine.ng-touched {
+		background-color: #fde8e6;
+	}
+}
+%select {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: $lighter-color;
+	padding: 0 em($p);
+	border-radius: 6px;
+	height: em($p*2);
+	[class*="-gray"] & {
+		background-color: $w;
+	}
+	.icon-select {
+		font-size: 6px;
+	}
+	.icon-close {
+		position: absolute;
+		font-size: 6px;
+		border-radius: $f;
+		width: 14px;
+		height: 14px;
+		background-color: $main-color;
+		color: $lighter-color;
+		line-height: 14px;
+		text-align: center;
+		transform: translate3d(-50%, -50%, 0);
+		top: 50%;
+		left: 50%;
+		z-index: 900;
+		transition: visibility $speed, opacity $speed;
+		opacity: 0;
+		visibility: hidden;
+	}
+	[class*="__value"] {
+		font-size: em(18px);
+		color: $alternate-color;
+	}
+	[class*="__icons"] {
+		position: relative;
+	}
+	select {
+		display: none;
+	}
+}
+%options {
+	position: absolute;
+	border-radius: 6px;
+	padding: em($p/2) em($p);
+	width: $f;
+	top: 0;
+	left: 0;
+	z-index: 901;
+	transition: visibility $speed, opacity $speed;
+	visibility: hidden;
+	opacity: 0;
+	background-color: $lighter-color;
+	box-shadow: 0 3px 12px transparentize(#939598, .8);
+	color: $alternate-color;
+	font-weight: 300;
+	[class*="__option"] {
+		line-height: percentage(27px/18px);
+		font-size: em(18px);
+		transition: $speed color;
+		&:hover {
+			color: $main-color;
+		}
+	}
+	[class*="-gray"] & {
+		background-color: $w;
+	}
+	[class*="--selected"] {
+		color: $main-color;
+	}
+}
+[class*="__send"] {
+	@extend %button;
+}
+[class*="__textarea"] {
+	@extend %inputs;
+	height: em(150px, 18px);
+	padding-top: em($p/2, 18px);
+}
+[class*="__input"] {
+	@extend %inputs;
+	height: em($p*2, 18px);
+}
+[class*="__select"] {
+	@extend %select;
+}
+[class*="__select--filled"] {
+	[class*="__value"] {
+		color: $main-color;
+	}
+	.icon-close {
+		opacity: 1;
+		visibility: visible;
+	}
+} 
+[class*="__options"] {
+	@extend %options;
+}
+[class*="__options--visible"] {
+	visibility: visible;
+	opacity: 1;
+}

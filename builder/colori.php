@@ -1,0 +1,17 @@
+<?php
+	$colors = wp_get_post_terms( $post->ID, 'colori_materiali', array( 'ordeby'=>'name' ) );
+	if($colors) : ?>
+<section class="colors colors--shrink colors--grow-lg">
+	<header class="colors__header colors__header--mw colors__header--aligncenter colors__header--grow-lg-top colors__header--grow-md-bottom">
+		<h3 class="colors__title colors__title--small-lighter"><?php _e('Colori e materiali', 'catellani'); ?></h3>
+	</header>
+	<ul class="colors__list colors__list--mw colors__list--grid colors__list--grow-lg-bottom">
+		<?php foreach ($colors as $color) : ?>
+		<li class="colors__item colors__item--shrink">
+			<div class="colors__color" ng-style="{'background-color':'<?php the_field('colore', 'colori_materiali_'.$color->term_id); ?>'}"></div>
+			<span class="colors__name colors__name--light"><?php echo $color->name; ?></span>
+		</li>
+		<?php endforeach; ?>
+	</ul>
+</section>
+<?php endif; ?>

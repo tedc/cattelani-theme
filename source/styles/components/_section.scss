@@ -1,0 +1,51 @@
+.section {
+	&--end {
+		@include breakpoint() {
+			justify-content: flex-end;
+		}
+	}
+	&__cell {
+		position: relative;
+		&--text {
+			z-index: 2;
+		}
+	}
+	&__title {
+		&--giant {
+			color: $light-color;
+			@include breakpoint() {
+				width: 120%;
+				z-index: 20;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		}
+	}
+	&__content {
+		@include grow('lg');
+	}
+	&__text, &__link, &__sign {
+		@include grow('md', 'top');
+	}
+	&__text {
+		&--alternate {
+			p {
+				font-size: em(27px);
+			}
+		}
+	}
+	&__figure {
+		img {
+			width: $f !important;
+			height: auto !important;
+		}
+		&--move {
+			&-up {
+				@include breakpoint() {
+					margin-top: percentage(200px/550px)*-1;
+				}
+			}
+		}
+	}
+}

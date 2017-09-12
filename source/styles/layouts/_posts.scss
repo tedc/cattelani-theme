@@ -1,0 +1,154 @@
+.meta {
+	@include grow('small');
+	align-items: center;
+	text-align: center;
+	@include breakpoint() {
+		text-align: left;
+	}
+	&__cell {
+		@include grow('small');
+	}
+}
+
+.related {
+	@include grow('lg');
+	&__header {
+		@include grow('lg');
+	}
+	&__items {
+		@include grow('md', 'top');
+		position: relative;
+		@include grow('lg', 'bottom');
+	}
+	.swiper-container {
+		margin: {
+			left: em($p*2);
+			right: em($p*2);
+		}
+		@include breakpoint() {
+			margin: {
+				left: em($p*4);
+				right: em($p*4);
+			}
+		}
+		@include breakpoint($max-width) {
+			margin: {
+				left: em($p*3);
+				right: em($p*3);
+			}
+		}
+	}
+	.icon-arrow {
+		position: absolute;
+		top: 50%;
+		font-size: 8px;
+		margin-top: -4px;
+		&--prev {
+			left: 0;
+			transform: translateZ(0) scaleX(-1);
+		}
+		&--next {
+			right: 0;
+		}
+	}
+	.swiper-wrapper {
+		display: flex;
+	}
+	.swiper-slide {
+		flex: 0 0 auto;
+		padding: {
+			left: em($p);
+			right: em($p);
+		}
+		&__title {
+			font-size: em(18px);
+			padding-top: em($p, 18px);
+		}
+	}
+	img {
+		width: $f !important;
+		height: auto !important;
+	}
+	a {
+		color: $main-color;
+		&:hover {
+			color: $dark-color;
+		}
+	}
+}
+
+.posts {
+	overflow: hidden;
+	min-height: 20vh;
+	@include grow('lg');
+	&__cell {
+		@include grow('md');
+		&--even {
+			@include breakpoint() {
+				padding-left: em($p);
+			}
+		}
+		&--odd {
+			@include breakpoint() {
+				padding-right: em($p);
+			}
+		}
+		&--instagram {
+			position: relative;
+			&:before {
+				position: absolute;
+				top: 0;
+				height: $f;
+				width: 100vw;
+				background: linear-gradient(75deg, #07131d, $dark-color, #07131d);
+				left: -10px;
+				content: '';
+				@include breakpoint(640px) {
+					left: em($p*-1);
+				}
+				@include breakpoint() {
+					left: em($p*-2);
+				}
+				@include breakpoint($max-width) {
+				   	left: calc(((100vw - #{$max-width}) / 2) * -1);
+	            }
+			}
+		}
+	}
+}
+.type-post {
+	@include grow('md');
+	img {
+		width: $f !important;
+		height: auto !important;
+	}
+	&__title {
+		a {
+			.posts & {
+				color: $dark-gray;
+				&:hover {
+					color: $dark-color;
+				}
+			}
+		}
+	}
+	&__summary {
+		@include grow('md');
+	}
+	&__updated {
+		display: block;
+		@include grow('md');
+		.posts & {
+			span {
+				font-size: em(22px);
+				text-transform: capitalize;
+				font-weight: 200;
+			}
+		}
+	}
+	&__send {
+		.posts & {
+			font-size: em(18px);
+		}
+	}
+}

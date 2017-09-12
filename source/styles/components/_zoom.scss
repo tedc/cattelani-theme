@@ -1,0 +1,151 @@
+.zoom {
+	transition: $speed*2;
+	cursor: none !important;
+	&__container {
+		position: relative;
+		&:before {
+			display: block;
+			content: '';
+			padding-top: em(350px);
+			width: $f;
+		}
+		&:after {
+			content: '';
+			@include full;
+			z-index: 9999;
+			.zoom--active & {
+				display: none;
+			}
+		}
+	}
+	&--active{
+		.zoom__figure {
+			position: fixed;
+		}
+		.zoom__image {
+			visibility: visible;
+		}
+		.zoom__close {
+			display: block;
+		}
+		.zoom__open {
+			display: none;
+		}
+		&-add {
+			.zoom__figure, &.zoom--active.zoom--active-add .zoom__figure {
+				position: absolute;
+				transition: {
+					property: visibility, opacity;
+					duration: $speed;
+				}
+				visibility: hidden;
+				opacity: 0;
+			}
+			.zoom__image, &.zoom--active.zoom--active-add .zoom__image {
+				visibility: hidden;
+			}
+			&.zoom--active.zoom--active-add .zoom__close {
+				display: none;
+			}
+			&.zoom--active.zoom--active-add .zoom__open {
+				display: block;
+			}
+			&-active {
+				.zoom__figure {
+					visibility: visible;
+					opacity: 1;
+					transition: {
+						delay: $speed;
+					}
+				}
+			}
+		}
+		&-remove {
+			.zoom__figure {
+				position: fixed;
+				visibility: hidden;
+				opacity: 0;
+			}
+			.zoom__image {
+				visibility: visible;
+			}
+			.zoom__close {
+				display: block;
+			}
+			.zoom__icn {
+				transform: translateZ(0) rotate(45deg);
+			}
+			.zoom__open {
+				display: none;
+			}
+		}
+	}
+	&__move {
+		@include full;
+	}
+	&__figure {
+		@include full;
+		@include cover;
+		z-index: 9998;
+		cursor: none !important;
+		transition: {
+			property: visibility, opacity;
+			duration: $speed;
+		}
+	}
+	&__image {
+		visibility: hidden;
+	}
+	&__scroll {
+		@include full;
+	}
+	&__cursor {
+		position: absolute;
+		opacity: 0;
+		z-index: 9999;
+		transition: opacity $speed;
+		transform: translate3d(-50%, -50%, 0);
+		color: $w;
+		display: inline-flex;
+		align-items: center;
+		z-index: 20;
+		span {
+			font-size: 14px;
+		}
+		.zoom:hover & {
+			opacity: 1;
+		}
+	}
+	&__icn {
+		width: em(25px);
+		height: em(25px);
+		margin-right: em($p/2);
+		position: relative;
+		transition: transform $speed $speed;
+		&:before, &:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			content: '';
+			background: $w;
+			transform: translate3d(-50%, -50%, 0);
+		}
+		&:before {
+			width: 1px;
+			height: $f;
+		}
+		&:after {
+			width: $f;
+			height: 1px;
+		}
+		.zoom--active & {
+			transform: translateZ(0) rotate(45deg);
+		}
+	}
+	&__close {
+		display: none;
+	}
+	.scrollbar-track {
+		display: none !important;
+	}
+}

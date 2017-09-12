@@ -1,0 +1,136 @@
+.divider {
+	border: 0;
+	margin: 0;
+	height: em($p*4);
+	&--double {
+		height: em($p*8);
+	}
+}
+.container {
+	@include grow('lg');
+	@include grow('lg', 'bottom');
+	&__content {
+		@include grow('md', 'top');
+		position: relative;
+		> p {
+			font-size: em(18px);
+			padding-top: em($p*2, 18px);
+		}
+		&--alternate {
+			> p {
+				font-size: em(27px);
+				padding-top: 0;
+				.container--bg & {
+					color: $w;
+				}
+			}
+		}
+		.container--bg & {
+			&:before, &:after {
+				content: '';
+				width: em(220px);
+				display: block;
+				height: 7px;
+				margin: {
+					left: auto;
+					right: auto;
+				}
+				border: {
+					top: 1px solid $w;
+					bottom: 1px solid $w;
+				}
+			}
+			&:before {
+				margin-bottom: em($p*2);
+				transform: perspective(10px) rotateX(7deg);
+			}
+			&:after {
+				margin-top: em($p*2);
+				transform: perspective(10px) rotateX(-7deg);
+			}
+		}
+	}
+	&__title {
+		text-align: center;
+		position: relative;
+		color: $alternate-color;
+		.container--post & {
+			max-width: 685px;
+			margin: 0 auto;
+			text-align: left;
+		}
+	}
+	&__sign {
+		text-align: center;
+		font-size: em($p);
+		padding-top: 2em;
+		color: $alternate-color;
+		position: relative;
+	}
+	&--bg {
+		@include cover;
+		position: relative;
+		color: $w;
+		&:before {
+			content: '';
+			@include full;
+			background: linear-gradient(72deg, #07131d, $dark-color, #07131d);
+			opacity: .25;
+		}
+		@include breakpoint() {
+			padding-bottom: em($p*8);
+			padding-top: em($p*8);
+		}
+	}
+	&__gallery {
+		position: relative;
+		width: 100vw;
+		@include grow('md', 'bottom');
+		@include grow('lg', 'top');
+		@include breakpoint(685px) {
+			left: calc(((100vw - 100%) / 2)*-1)
+		}
+		.container--post & {
+			width: em(685px + 160px);
+			@include breakpoint(685px) {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+				left: em($p*-2);
+			}
+		}
+	}
+	&--post {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	&__updated {
+		top: 0;
+		position: sticky;
+		display: block;
+	}
+	&__share {
+		text-align: center;
+		position: sticky;
+		a {
+			color: $alternate-color;
+			margin-bottom: $p;
+			font-size: 24px;
+			&:hover {
+				color: $dark-color;
+			}
+			@include breakpoint() {
+				display: block;
+			}
+		}
+		@include breakpoint() {
+			left: auto !important;
+            right: em($p*2) !important;
+        }
+		@include breakpoint($max-width) {
+			left: auto !important;
+            right: calc((100vw - #{$max-width}) / 2) !important;
+        }
+	}
+}

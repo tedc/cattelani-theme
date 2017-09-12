@@ -1,0 +1,37 @@
+[class*="loader"] {
+	text-align: center;
+	width: $f;
+	flex: 0 0 auto;
+	align-self: flex-end;
+	max-height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	opacity: 0;
+}
+[class*="spinner"] {
+	width: em($p*2);
+	height: em($p*2);
+	position: relative;
+	margin: 0 auto;
+	&:before, &:after {
+		@include full;
+		opacity: .5;
+		display: block;
+		background-color: $dark-color;
+		border-radius: $f;
+		animation: pulse 2s infinite ease-in-out;
+		content: '';
+	}
+	&:before {
+		animation-delay: -1s;
+	}
+}
+
+@keyframes pulse {
+	0%, 100% {
+		transform: scale(0) translateZ(0);
+	}
+	50% {
+		transform: scale(1) translateZ(0);
+	}
+}

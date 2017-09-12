@@ -1,0 +1,64 @@
+.light {
+	position: relative;
+	&:after {
+		width: $f;
+		background-color: $lighter-color;
+		content: '';
+		height: em($p*8);
+		display: block;
+		z-index: 0;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		transition: background-color $speed;
+		.main--dark & {
+			background-color: transparent;
+		}
+	}
+	&__cell {
+		position: relative;
+		img {
+			display: block;
+			width: $f !important;
+			height: auto !important;
+			position: relative;
+			z-index: 1;
+		}
+		svg {
+			position: absolute;
+			z-index: 2;
+			right: 0;
+			top: 0;
+			height: $f;
+			left: 0;
+			width: $f;
+		}
+		overflow: hidden;
+		@include breakpoint() {	
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-end;
+			align-content: flex-end;
+			> * {
+				width: $f;
+				flex: 0 0 auto;
+			}
+			&--content {
+				padding-bottom: em($p*8);
+			}
+		}
+	}
+	&__text {
+		@include grow('md');
+	}
+	&__circle {
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility $speed/2, opacity $speed/2;
+		.light__cell:hover & {
+			visibility: visible;
+			opacity: 1;
+			transition-delay: $speed;
+		}
+	}
+}

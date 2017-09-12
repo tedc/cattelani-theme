@@ -1,0 +1,293 @@
+@mixin on-circle($item-count, $circle-size, $item-size) {
+	> * {
+		display: block;
+		position: absolute;
+		top:  50%; 
+		left: 50%;
+		border-radius: $item-size;
+		width:  ($item-size/1379px) * 100vw;
+		height: ($item-size/1379px) * 100vw;
+		margin: (($item-size / 2)/1379px) * -100vw;
+		$angle: (360 / $item-count);
+		$rot: 0;
+		$translate: percentage($circle-size / $item-size) / 2;
+		&:before {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			border-radius: 100%;
+			width:  $item-size;
+			height: $item-size;
+			margin: -($item-size / 2);
+			content: '';
+			background-color: $w;
+		}
+		@for $i from 1 through $item-count {
+			&:nth-child(#{$i}) {
+				transform: 
+				rotate($rot * 1deg) 
+				translate3d($translate*-1, 0, 0) 
+				rotate($rot * -1deg);
+			}
+
+			$rot: $rot + $angle;
+		}
+	}
+}
+.manifesto {
+	@include grow('lg', 'top');
+	position: relative;
+	@include breakpoint(1020px) {
+		@include cover(center bottom);
+		justify-content: center;
+		display: flex;
+		flex-wrap: wrap;
+		overflow: hidden;
+		padding-top: percentage(160px/1379px);
+	}
+	&__header {
+		position: relative;
+		margin-top: calc(50vw - #{em($p*2)});
+		@include breakpoint() {		
+			margin-top: calc(50vw - #{em($p*4)});
+		}
+		text-align: center;
+		@include grow('lg');
+		@include breakpoint(1020px) {
+			margin-top: 0;
+			color: $w;
+			&:after {
+				display: block;
+				content: '';
+				padding-top: percentage(365px/1379px)
+			}
+			width: $f;
+			padding: 0 !important;
+		}
+	}
+	&__cover {
+		@include breakpoint(1020px, false) {
+			height: 50vw;
+		}
+		@include breakpoint(1020px) {
+			&--light {
+				transition: {
+					property: visibility, opacity;
+					duration: $speed;
+				}
+				visibility: hidden;
+				opacity: 0;
+				.manifesto--active & {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+	}
+	&__title {
+		font-size: em(40px);
+		@include breakpoint(1020px) {
+			font-size: vw(50px) !important;
+		};
+	}
+	&__list {
+		position: relative;
+		@include breakpoint(1020px) {
+			margin-top: 0;
+			transform: translate3d(0, 10%, 0);
+			color: $w;
+			align-self: flex-end;
+			width: percentage(340px/1379px);
+			&:before {
+				display: block;
+				content: '';
+				padding-top: percentage(310px/350px);
+			}
+			@include on-circle(8, 340px, 12px);
+		}
+		.manifesto__item {
+			&:nth-last-child(1) {
+				.manifesto__content {
+					border-bottom: 0;
+				}
+			}
+		}
+	}
+	&__content {
+		border-bottom: 1px solid $light-color;
+		padding-bottom: em($p);
+		@include breakpoint(1020px) {
+			position: absolute;
+			width: (180/1379) * 100vw;
+			border-bottom: 1px solid $w;
+			padding-bottom: em($p/2);	
+			transition: margin-bottom $speed .125s;
+			.manifesto__item--active & {
+				transition: none;
+			}
+			[data-manifesto-item="1"] & {
+				right: (195/12) * 100%;
+				text-align: right;
+				&:before {
+					width: (175/1379) * 100vw;
+					height: (175/1379) * 100vw;
+				}
+			}
+			[data-manifesto-item="2"] & {
+				right: (143/12) * 100%;
+				text-align: right;
+				&:before {
+					width: (124/1379) * 100vw;
+					height: (200/1379) * 100vw;
+				}
+			}
+			[data-manifesto-item="3"] & {
+				left: 50%;
+				transform: translate3d(-53.5%, 0, 0);
+				border-bottom-color: transparent;
+				text-align: center;
+				bottom: (177/12) * 100%;
+				&:before {
+					width: 1px;
+					left: 50%;
+					height: (152/1379) * 100vw;
+					background: $w;
+				}
+			}
+			[data-manifesto-item="4"] & {
+				left: (143/12) * 100%;
+				&:before {
+					left: auto;
+					right: $f;
+					transform: scaleX(-1);
+					width: (134/1379) * 100vw;
+					height: (198/1379) * 100vw;
+				}
+			}
+			[data-manifesto-item="5"] & {
+				left: (195/12) * 100%;
+				&:before {
+					left: auto;
+					right: $f;
+					transform: scaleX(-1);
+					width: (185/1379) * 100vw;
+					height: (175/1379) * 100vw;
+				}
+			}
+			[data-manifesto-item="2"] &, [data-manifesto-item="4"] & {
+				bottom: (222/12) * 100%;
+			}
+			[data-manifesto-item="1"] &, [data-manifesto-item="5"] & {
+				bottom: (195/12) * 100%;
+			}
+		}
+	}
+	&__item {
+		padding: em($p) 10px 0;
+		@include breakpoint(640px) {
+			padding: {
+				left: em($p);
+				right: em($p);
+			}
+		}
+		@include breakpoint() {
+			padding: {
+				left: em($p*2);
+				right: em($p*2);
+			}
+		}
+		@include breakpoint(1020px) {
+			padding: 0;
+		}
+	}
+	&__line {
+		@include breakpoint(1020px) {
+			position: absolute;
+			top: $f;
+			left: $f;
+			background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><line x1='0' y1='0' x2='100%' y2='100%' stroke='#fff' stroke-width='1'/></svg>") no-repeat;
+			transition: height $speed .125s;
+			.manifesto__item--active & {
+				transition: none;
+			}
+			[data-manifesto-item="1"] & {
+				width: (175/1379) * 100vw;
+				height: (175/1379) * 100vw;
+			}
+			[data-manifesto-item="2"] & {
+				width: (124/1379) * 100vw;
+				height: (200/1379) * 100vw;
+			}
+			[data-manifesto-item="3"] & {
+				width: 1px;
+				left: 50%;
+				height: (152/1379) * 100vw;
+				background: $w;
+			}
+			[data-manifesto-item="4"] & {
+				left: auto;
+				right: $f;
+				transform: scaleX(-1);
+				width: (134/1379) * 100vw;
+				height: (198/1379) * 100vw;
+			}
+			[data-manifesto-item="5"] & {
+				left: auto;
+				right: $f;
+				transform: scaleX(-1);
+				width: (185/1379) * 100vw;
+				height: (175/1379) * 100vw;
+			}
+		}
+		
+	}
+	&__desc {
+		font-weight: 300;
+		font-size: 14px;
+		padding-top: em($p, 14px);
+		@include breakpoint(1020px) {
+			padding-top: 0;
+			visibility: hidden;
+			opacity: 0;
+			font-size: vw(14px);
+			position: absolute;
+			top: $f;
+			margin-top: em($p, 14px);
+			padding-bottom: em($p, 14px);
+			left: 0;
+			width: (295/1379) * 100vw;
+			transition: {
+				property: visibility, opacity;
+				duration: .25s;
+			}
+			.manifesto__item--active & {
+				transition: none;
+			}
+			[data-manifesto-item="1"] &, [data-manifesto-item="2"] & {
+				left: auto;
+				right: 0;
+			}
+			[data-manifesto-item="3"] & {
+				left: 50%;
+				transform: translate3d(-50%, 0, 0);
+			}
+		}
+	}
+	&__name {
+		font-weight: 300;
+		color: $dark-color;
+		font-size: em(24px);
+		@include breakpoint(1020px) {
+			font-weight: 200;
+			color: $w;
+			transition: margin-bottom $speed;
+			.manifesto__item--active & {
+				transition: none;
+			}
+			font-size: vw(24px);
+			display: inline-block;
+			position: relative;
+		}
+	}
+}

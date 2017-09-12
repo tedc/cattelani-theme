@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "main.js": {
+      "files": [
+         "scripts/main.js"
+      ]
+    },
+    "lib.js": {
+      "files": [
+        "../bower_components/gsap/src/uncompressed/TweenMax.js",
+        "../bower_components/gsap/src/uncompressed/plugins/CSSRulePlugin.js",
+        "../bower_components/gsap/src/uncompressed/plugins/ScrollToPlugin.js",
+        "../bower_components/scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js"
+      ],
+      "bower" : ["fastclick", "scrollmagic", "swiper", "hamsterjs"]
+    },
+    "main.css": {
+      "files": [
+        "styles/main.scss"
+      ],
+      "bower" : ["normalize-css"]
+    }
+  },
+  "config": {
+    "devUrl": "http://catellani.dnative.com"
+  },
+  "paths": {
+    "dist": "assets/",
+    "source": "source/"
+  }
+}

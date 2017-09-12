@@ -1,0 +1,92 @@
+.view {
+	&.ng-animate {
+		width: $f;
+		position: absolute;
+		height: 100vh;
+		overflow: hidden !important;
+		.logged-in.admin-bar & {
+			height: calc(100vh - 32px);
+		}
+	}
+}
+
+.transitioner {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+	z-index: 9993;
+	display: none;
+	.logged-in.admin-bar & {
+		margin-top: 32px;
+		height: calc(100vh - 32px);
+	}
+	&--flex {
+		display: flex;
+		justify-content: center;
+		&-start {
+			justify-content: flex-start;
+		}
+		&-end {
+			justify-content: flex-end;
+		}
+	}
+	&__wrapper {
+		overflow: hidden;
+		position: relative;
+		transition: $speed width, $speed height;
+	}
+	&__cover {
+		left: 50%;
+		top: 50%;
+		transform: translate3d(-50%, -50%, 0);
+		.transitioner--flex-start & {
+			left: 0;
+			transform: translate3d(0%, -50%, 0);
+		}
+		.transitioner--flex-end & {
+			left: auto;
+			right: 0;
+			transform: translate3d(0%, -50%, 0);
+		}
+	}
+}
+
+.fixed-element {
+	position: fixed;
+	overflow: hidden;
+	transition: $speed;
+	top: 0;
+	left: 0;
+	width: $f;
+	height: $f;
+	[class*="_cover"], [class*="-cover"] {
+		width: 100vw;
+		height: 100vh;
+		top: 50%;
+		left: 50%;
+		transform: translate3d(-50%, -50%, 0);
+		transition: width $speed, height $speed;
+	}
+	&--left {
+		[class*="_cover"], [class*="-cover"] {
+			left: 0;
+			transform: translate3d(0, -50%, 0);
+		}
+	}
+	&--right {
+		[class*="_cover"], [class*="-cover"] {
+			right: 0;
+			transform: translate3d(0, -50%, 0);
+		}
+	}
+	[class*="__title"] {
+		transform: translate3d(0, 100%, 0);
+		opacity: 0;
+		transition: {
+			property: opacity, transform;
+			duration: $speed;
+		}
+	}
+}

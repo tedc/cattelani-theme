@@ -1,0 +1,1 @@
+<hr class="divider<?php echo (get_sub_field('background')) ? ' divider--'.get_sub_field('background') : ''; echo (get_sub_field('double')) ? ' divider--double' : ''; ?>" />

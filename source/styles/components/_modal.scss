@@ -1,0 +1,99 @@
+.modal {
+	@include full($pos: fixed);
+	z-index: 9994;
+	background-color: $w;
+	visibility: hidden;
+	opacity: 0;
+	.logged-in.admin-bar & {
+		top: 32px;
+	}
+	&__container {
+		@include full;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		visibility: hidden;
+		opacity: 0;
+		z-index: 1;
+		&--search {
+			align-items: stretch;
+		}
+		> * {
+			opacity: 0;
+			transform: translate3d(0, $p*2, 0);
+			margin: {
+				top: auto;
+				bottom: auto;
+			}
+			padding: {
+				top: em(90px);
+			}
+		}
+	}
+	&__nav {
+		display: flex;
+		align-items: center;
+		align-content: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding: {
+			bottom: em(90px);
+		}
+		.modal__header {
+			text-align: center;
+			@include grow('md', 'bottom');
+		}
+		.modal__button {
+			margin: em($p/2);
+		}
+	}
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 2;
+		@include grow('md', 'top');
+		@extend %icon_btn;
+	}
+	&__close-sign {
+		@extend %burger;
+	}
+	&__label {
+		padding-right: em($p);
+	}
+	&__line {
+		@extend %open_close;
+		@extend %open_close_center;
+		&:before, &:after {
+			background-color: $main-color;
+		}
+		&:before {
+			transform: rotate(45deg) translateZ(0);
+		}
+		&:after {
+			transform: rotate(-45deg) translateZ(0);
+		}
+		.modal__close:hover & {
+			&:after {
+				transform: rotate(45deg) translateZ(0);
+			}
+			&:before {
+				transform: rotate(-45deg) translateZ(0);
+			}
+		}
+	}
+	&__header {
+		@include grow('md', 'bottom');
+		width: $f;
+		text-align: center;
+	}
+	&__button {
+		margin: 0 em($p/2);
+		&--lang {
+			background-color: $w;
+			&-active {
+				background-color: $lighter-color;
+			}
+		}
+	}
+}

@@ -1,0 +1,125 @@
+.contact {
+	justify-content: center;
+	@include grow('md', 'bottom');
+	&__cell {
+		@include breakpoint() {
+			width: auto !important;
+		}
+		&--content {
+			transform: translate3d($p*-2, 0, 0);
+			p {
+				font-size: em(18px);
+				padding-top: em($p*2);
+			}
+			svg {
+				width: em(168px);
+				height: em(72px);
+			}
+			path {
+				fill: $main-color !important;
+			}
+			.social {
+				line-height: 1;
+				a {
+					color: $main-color;
+					font-size: $p;
+					&:hover {
+						color: $dark-color;
+					}
+				}
+			}
+			@include breakpoint() {
+				.contact__header {
+					visibility: hidden;
+				}
+			}
+		}
+		&--form {
+			transform: translate3d($p*2, 0, 0);
+			.contact__header {
+				display: none;
+			}
+			@include breakpoint() {
+				.contact__header {
+					position: relative;
+					display: block;
+					&:before {
+						display: block;
+						content: attr(data-title);
+						font-size: em(30px);
+						font-weight: 200;
+					}
+					&:after {
+						position: absolute;
+						width: 1px;
+						margin-left: -1px;
+						height: $f;
+						left: em($p*-4);
+						top: 0;
+						content: '';
+						background-color: $w;
+					}
+				}
+				border-left: 1px solid $lighter-color;
+			}
+		}
+	}
+	&__header {
+		@include grow('md', 'bottom');
+	}
+	&__title {
+		font-weight: 200;
+	}
+}
+
+.form {
+	position: relative;
+	@include breakpoint() {
+		width: em(470px);
+	}
+	p {
+		padding-bottom: em($p);
+	}
+	&__footer {
+		padding-bottom: 0;
+		padding-top: em($p*2);
+		@include breakpoint() {
+			text-align: right;
+		};
+	}
+	&__send {
+		margin-right: em(30px*-1);
+	}
+	&__input, &__textarea {
+		width: $f;
+	}
+	&__alert {
+		@include full;
+		background-color: $w;
+		display: flex;
+		align-items: center;
+		visibility: hidden;
+		opacity: 0;
+		transition: $speed visibility, $speed opacity;
+		&--visible {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	&__message {
+		width: $f;
+		@include normalize_padding;
+		opacity: 0;
+		transition: $speed visibility, $speed opacity;
+		&--visible {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
+	&__privacy {
+		line-height: 1;
+		font-size: em(14px);
+		font-style: normal;
+		color: $alternate-color;
+	}
+}

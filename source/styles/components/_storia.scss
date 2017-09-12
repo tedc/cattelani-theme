@@ -1,0 +1,262 @@
+.storia {
+	@include grow('lg');
+	.swiper-container {
+		margin: 0 auto;
+	}
+	.swiper-wrapper {
+		display: flex;
+		align-items: flex-start;
+	}
+	.swiper-slide {
+		flex: 0 0 auto;
+		@include grow('md');
+		&__figure {
+			margin: 0 auto;
+			text-align: center;
+			top: 0;
+			left: 0;
+			width: $f;
+			transition: {
+				property: visibility, opacity;
+				duration: $speed;
+			}
+		}
+		&__alt {
+			font-size: em(14px);
+			font-weight: 300;
+			padding-top: em($p, 14px);
+		}
+	}
+	&__header {
+		@include grow('lg');
+	}
+	&__items {
+		justify-content: center;
+		padding: em($p*2) 0;
+	}
+	&__cell {
+		position: relative;
+		height: $p;
+		display: flex;
+		align-items: center;
+		padding: {
+			left: em($p);
+			right: em($p);
+		}
+		&:before {
+			width: $f;
+			content: '';
+			height: 1px;
+			background-color: $light-color;
+		}
+		&--active {
+			z-index: 2;
+		}
+	}
+	&__year {
+		position: absolute;
+		top: 0;
+		width: $p;
+		height: $p;
+		&:before {
+			@include full;
+			content: '';
+			border-radius: $p;
+			border: 1px solid $main-color;
+			transform: scale(0);
+			transition: transform $speed;
+			.storia__cell--active & {
+				transform: scale(1);
+			}
+		}
+		&:after {
+			position: absolute;
+			content: '';
+			width: 5px;
+			height: 5px;
+			left: 50%;
+			top: 50%;
+			border-radius: $p;
+			background-color: $main-color;
+			transition: background-color $speed;
+			transform: translate3d(-50%, -50%, 0);
+			.storia__cell--active & {
+				background-color: $dark-color;
+			}
+		}
+		&--first {
+			left: 0;
+			transform: translate3d(-50%, 0, 0);
+		}
+		&--last {
+			right: 0;
+			transform: translate3d(50%, 0, 0);
+		}
+	}
+	&__label {
+		position: absolute;
+		left: 50%;
+		top: $f;
+		transform: translate3d(-50%, $p, 0);
+		font-size: em(14px);
+		opacity: 0;
+		visibility: hidden;
+		transition: {
+			property: visibility, opacity, transform;
+			duration: $speed;
+		}
+		.storia__cell--active & {
+			opacity: 1;
+			visibility: visible;
+			transform: translate3d(-50%, 0, 0);
+		}
+	}
+	&__date {
+		font-family: $alternate-font;
+		position: absolute;
+		left: 50%;
+		bottom: 120%;
+		transform: translate3d(-50%, 0, 0);
+		transition: color $speed;
+		.storia__cell--active & {
+			color: $dark-color;
+		}
+	}
+}
+.storia__slider--years-visible {
+	.type-anni {
+		position: relative;
+		visibility: visible;
+		opacity: 1;
+	}
+	.swiper-slide {
+		&__figure {
+			position: absolute;
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
+}
+.type-anni {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: $f;
+	visibility: hidden;
+	opacity: 0;
+	transition: {
+		property: visibility, opacity;
+		duration: $speed;
+	}
+	&__title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-size: vw(150px);
+		font-weight: 200;
+		color: $alternate-color;
+		z-index: 20;
+	}
+	&__footer {
+		@include grow('md', 'top');
+		position: relative;
+		justify-content: space-between;
+		align-items: center;
+		&:before {
+			content: '';
+			display: block;
+			width: $f;
+			flex: 0 0 auto;
+			height: 1px;
+			background-color: $light-color;
+			position: absolute;
+			top: 0;
+			@include normalize_sides;
+		}
+	}
+	&__next {
+		margin-right: em(30px*-1);
+	}
+}
+
+
+.anni {
+	@include grow('lg');
+	&__text, &__dida {
+		@include grow('md', 'top');
+	}
+	&__content {
+		@include grow('small');
+		width: $f;
+		flex: 0 0 auto;
+		p {
+			font-size: em(18px);
+		}
+	}
+	&__dida {
+		font-size: em(14px);
+	}
+	&__title {
+		font-size: em(30px);
+		font-weight: 200;
+		.anni__wrapper--full & {
+			font-size: em(45px);
+			font-weight: 300;
+			@include breakpoint() {
+				padding-right: em($p*2, 45px);
+			}
+		}
+	}
+	&__wrapper {
+		@include grow('md');
+	}
+	&__cell {
+		&--content {
+			display: flex;
+			align-items: center;
+			align-content: center;
+			flex-wrap: wrap;
+		}
+		@include breakpoint() {
+			&--figure {
+				.anni__wrapper--odd &, .anni__wrapper--full & {
+					order: 1 !important;
+				}
+				.anni__wrapper--even & {
+					order: 0;
+				}
+				img {
+					display: block;
+					width: $f;
+					height: auto !important;
+				}
+			}
+			&--content {
+				.anni__wrapper--even & {
+					order: 1;
+				}
+				.anni__wrapper--odd &, .anni__wrapper--full & {
+					order: 0;
+				}
+				.anni__wrapper--full & {
+					.anni__content {
+						display: flex;
+						flex-wrap: wrap;
+					}
+					.anni__title, .anni__text {
+						width: $f/2;
+						flex: 0 0 auto;
+					}
+					.anni__title {
+						text-align: right;
+					}
+					.anni__text {
+						padding-left: em($p*2);
+						padding-top: 0;
+						padding-bottom: em($p*2);
+					}
+				}
+			}
+		}
+	}
+}

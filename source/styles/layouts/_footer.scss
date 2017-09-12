@@ -1,0 +1,102 @@
+.footer {
+	text-align: center;
+	background: linear-gradient(to bottom, lighten($b, 15%), lighten($b, 8%));
+	color: $alternate-color;
+	&__brand {
+		display: block;
+		margin:  em($p*2) auto;
+		position: relative;
+		width: em(113px);
+		height: em(48px);		
+		svg {
+			@include full;
+			path {
+				fill: $alternate-color !important;
+				transition: fill $speed;
+			}
+		}
+		&:hover {
+			svg {
+				path {
+					fill: $w !important;
+				}
+			}
+		}
+	}
+	a {
+		color: $alternate-color;
+		&:hover {
+			color: $w;
+		}
+	}
+	@include grow('lg');
+	&__container {
+		align-items: center;
+		@include grow('md', 'bottom');
+		.footer__cell {
+			p {
+				font-size: 11px;
+				line-height: normal;
+			}
+			@include breakpoint() {
+				&:nth-child(1) {
+					text-align: left;
+				}
+				&:nth-child(3) {
+					text-align: right;
+				}
+			}
+		}
+	}
+	.home &, .tax-collezioni & {
+		display: none;
+	}
+}
+
+.cat {
+	position: fixed;
+	width: $f;
+	bottom: 0;
+	background-color: $dark-color;
+	color: $w;
+	z-index: 9993;
+	padding: {
+		top: em($p);
+		bottom: em($p);
+	}
+	transition: $speed transform;
+	transform: translate3d(0, $f, 0);
+	@include normalize_padding;
+	&--active {
+		transform: translate3d(0,0,0);
+	}
+	&__title {
+		font-size: em(24px);
+		margin: 0 em($p/2, 24px);
+		@include breakpoint(640px, false) {
+			display: none;
+		};
+	}
+	&__button {
+		margin: 0 em($p/2);
+	}
+	.home &, .tax-collezioni & {
+		display: none;
+	}
+	&__container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		&--store {
+			body.single-progetti &, body.single-lampade &, body.single-installazioni &, , body.contact-bar &{
+				display: none;
+			}
+		}
+		&--contact {
+			display: none;
+			body.single-progetti &, body.single-lampade &, body.single-installazioni &, , body.contact-bar & {
+				display: flex;
+			}
+		}
+	}
+}

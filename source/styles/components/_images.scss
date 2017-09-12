@@ -1,0 +1,8 @@
+figure {
+	margin: 0;
+}
+[class*="__cover"], [class*="-cover"] {
+	@include cover;
+	@include full;
+	z-index: 0;
+}

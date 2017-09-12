@@ -1,0 +1,25 @@
+.next {
+	@include grow('lg');
+	display: block;
+	color: $w;
+	text-align: center;
+	position: relative;
+	&__link {
+		@include full;
+	}
+	&--lampade {
+		text-align: left;
+	}
+	&__container {
+		@include grow('md');
+		position: relative;
+		@include breakpoint() {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			.next--post &, .next--lampade & {
+				display: block;
+			}
+		}
+	}
+}

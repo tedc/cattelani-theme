@@ -1,0 +1,94 @@
+.projects {
+	@include grow('lg');
+	&__filters {
+		justify-content: center;
+		@include grow('md');
+	}
+	&__select {
+		width: em(260px);
+		margin: 0 em($p);
+	}
+	&__cell {
+		display: flex;
+		&:before {
+			display: block;
+			content: '';
+			padding-top: percentage(410px/620px);
+		}
+	}
+	&__title {
+		line-height: percentage(27px/24px);
+		position: relative;
+		display: block;
+		opacity: 0;
+		transform: translate3d($p*-1, 0, 0);
+		transition: {
+			property: opacity, transform;
+			duration: $speed;
+		};
+	}
+	&__location {
+		display: block;
+		position: relative;
+		transform: translate3d($p*-1, 0, 0);
+		transition: {
+			property: opacity, transform;
+			duration: $speed;
+		}
+		opacity: 0;
+	}	
+	&__content {
+		display: flex;
+		align-items: center;
+		align-content: center;
+		flex-wrap: wrap;
+		width: $f;
+		color: $w;
+		position: relative;
+		@include cover;
+		padding: em($p*2);
+		&:before {
+			@include full;
+			content: '';
+			background-color: $b;
+			opacity: 0;
+			transition: opacity $speed;
+		}
+		> * {
+			width: $f;
+			flex: 0 0 auto;
+		}
+		img {
+			position: absolute;
+			visibility: hidden;
+			top: 0;
+			left: 0;
+		}
+		&:hover {
+			&:before {
+				opacity: .8;
+			}
+			.projects__title {
+				opacity: 1;
+				transform: translate3d(0, 0, 0);
+			}
+			.projects__location {
+				opacity: 1;
+				transform: translate3d(0, 0, 0);
+			}
+		}
+	}
+	&__items {
+		@include grow('lg');
+		.projects__cell {
+			@include breakpoint() {
+				&:nth-child(odd) {
+					padding-right: em($p);
+				}
+				&:nth-child(even) {
+					padding-left: em($p);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,114 @@
+%button {
+	display: inline-block;
+	color: $main-color;
+	background-color: transparent;
+	appearance: none;
+	border: 0;
+	font-weight: 200;
+	position: relative;
+	align-content: center;
+	padding: 0 em(30px);
+	cursor: pointer;
+	outline: none !important;
+	span {
+		font-size: em(18px);
+	}
+	&:before, &:after {
+		content: '';
+		height: 1px;
+		position: absolute;
+		top: $f/2;
+		background-color: $main-color;
+		transform: translate3d(0, ($f/2)*-1, 0) scaleX(1);
+		backface-visibility: hidden;
+	}
+	&:after {
+		right: 0;
+		left: $f;
+		transition: $speed left;
+	}
+	&:before {
+		right: calc(100% - #{em($p)});
+		left: 0;
+		transition: {
+			property: transform;
+			duration: $speed;
+			delay: $speed;
+		}
+		transform-origin: left center;
+	}
+	&:hover {
+		&:after {
+			left: 0;
+			right: 0;
+			transition: {
+				property: left;
+				duration: 0s;
+				delay: $speed;
+			}
+		}
+		&:before {
+			right: 0;
+			transform: translate3d(0, ($f/2)*-1, 0) scaleX(0);
+			transition: right $speed, transform 0s $speed;
+		}
+	}
+}
+
+%btn {
+	border-radius: em(30px);
+	font-weight: 300;
+	color: $alternate-color;
+	display: inline-flex;
+	cursor: pointer;
+	padding: 1em em(30px);
+	background-color: $lighter-color;
+	align-items: center;
+	transition: box-shadow $speed, background-color $speed;
+	> * {
+		flex: 0 0 auto;
+	}
+	span {
+		transition: transform $speed, color $speed;
+		display: inline-block;
+		&.download {
+			transform: translate3d($p/2, 0, 0);
+		}
+	}
+	.icon-arrow {
+		margin-left: $p;
+		font-size: 6px;
+		transition: transform $speed;
+	}
+	.icon-arrow-download {
+		transform: translate3d(0, ($p/2)*-1, 0);
+		transition: transform $speed, opacity $speed;
+		opacity: 0;
+		margin-left: $p;
+	}
+	&:hover {
+		box-shadow: 0 3px 12px transparentize($main-color, .8);
+		background-color: $lighter-color;
+		span {
+			transform: translate3d(($p/5)*-1, 0, 0);
+			color: $dark-color;
+			&.download {
+				transform: translate3d(($p/5)*-1, 0, 0);
+			}
+			&.lang {
+				transform: none;
+			}
+		}
+		.icon-arrow {
+			transform: translate3d($p/5, 0, 0);
+		}
+		.icon-arrow-download {
+			transform: translate3d(0, 0, 0);
+			opacity: 1;
+		}
+	}
+}
+
+[class*="__button"] {
+	@extend %btn;
+}

@@ -1,0 +1,20 @@
+.colors {
+	@include grow('lg');
+	&__header {
+		@include grow('md', 'bottom');
+		@include grow('lg', 'top');
+	}
+	&__list {
+		justify-content: center;
+		@include grow('lg', 'bottom');
+	}
+	&__color {
+		width: $p*2;
+		height: $p*2;
+		margin: 0 auto $p;
+		border-radius: $p*2;
+	}
+	&__name {
+		font-size: 14px;
+	}
+}

@@ -1,0 +1,14 @@
+.scrollbar {
+	&-track {
+		position: absolute;
+		&-y {
+			right: 4px;
+			top: 0;
+			width: 4px;
+		}
+	}
+	&-thumb {		
+		background: $alternate-color;
+		border-radius: 2px;
+	}
+}

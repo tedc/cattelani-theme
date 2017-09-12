@@ -1,0 +1,71 @@
+.successes {
+	&__title {
+		color: $alternate-color;
+		text-align: center;
+	}
+	&__content {
+		position: relative;
+		@include grow('lg');
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			width: 100vw;
+			right: 0;
+			height: $f;
+			background-color: $lighter-color;
+			[class*="-inverted"] & {
+				left: 0;
+				right: auto;
+			}
+		}
+		> * {
+			position: relative;
+		}
+		h2, h3, h4, h5 {
+			font: {
+				weight: 200;
+				size: em(30px);
+			}
+			content: $alternate-color;
+			padding-bottom: em($p*2, 30px);
+			letter-spacing: $spacing;
+		}
+		@include breakpoint(1286px) {
+			width: $max-width / 2;
+			&:before {
+				right: calc(((100vw - 1286px) / 2 )* -1)
+			}
+		}
+	}
+	&__cell {
+		@include grow('lg');
+		&--image {
+			position: relative;
+			min-height: 75vw;
+			z-index: 2;
+			@include cover(left bottom, contain);
+			img {
+				display: none;
+			}
+			@include breakpoint() {
+				min-height: 0;
+			}
+			[class*="-inverted"] & {
+				order: 1;
+				background-position: right bottom;
+			}
+		}
+		&--content {
+			[class*="-inverted"] & {
+				order: 0;
+			}
+		}
+	}
+	&__sign {
+		@include grow('lg', 'top');
+		span {
+			font-size: em(14px);
+		}
+	}
+}

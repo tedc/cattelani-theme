@@ -1,0 +1,109 @@
+%accordion {
+	overflow: hidden;
+}
+%accordion_content {
+	display: none;
+	p {
+		font-size: em(18px);
+	}
+}
+.faq, .glossary {
+	&__item {
+		@extend %accordion;
+	}
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		@include grow('md');
+		.icon-close {
+			transform: translateZ(0) rotate(45deg);
+			transition: transform $speed, opacity $speed;
+			.accordion--active & {
+				transform: translateZ(0) rotate(0deg);
+				opacity: 1;
+			}
+		}
+	}
+	&__content {
+		@extend %accordion_content;
+	}
+	&__text {
+		@include grow('md');
+	}
+}
+.faq {
+	&__header {		
+		border-bottom: 1px solid $lighter-color;
+	}
+}
+
+.glossary {
+	@include grow('lg');
+	@include grow('lg', 'top');
+	&__header {		
+		.icon-close {
+			opacity: 0;
+		}
+	}
+	&__term {
+		&s {
+			@include grow('lg');
+		}
+		line-height: percentage(40px/22px);
+		@include grow('small');
+		> a, > span {
+			display: block;
+			font-size: em(22px);
+			color: $dark-color;
+			&:hover {
+				color: $dark-gray;
+			}
+		}
+	}
+	&-search {
+		@include grow('md');
+		&__box {
+			position: relative;
+			background-color: $w;
+			border-radius: 6px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			input {
+				flex: 3;
+			}
+			i {
+				flex: 0 0 auto;
+				padding-right: em($p);
+			}
+		}
+		&__input {
+			background-color: transparent !important;
+			box-shadow: none !important;
+		}
+		&__results {
+			position: absolute;
+			top: $f;
+			width: $f;
+			border-radius: 6px;
+			visibility: hidden;
+			opacity: 0;
+			box-shadow: 0 3px 12px transparentize(#939598, .8);
+			left: 0;
+			background-color: $w;
+			transition: {
+				property: visibility, opacit;
+				duration: $speed/2;
+			}
+			&--visible {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+		&__item {
+			font-size: em(18px);
+			padding: em($p/2, 18px) em($p, 18px);
+		}
+	}
+}
