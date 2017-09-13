@@ -4,6 +4,7 @@
 		array(
 			'post_type' => 'lampade',
 			'posts_per_page' => -1,
+			'orderby' => 'title',
 			'tax_query' => array(
 				array(
 					'taxonomy' => $obj->taxonomy,

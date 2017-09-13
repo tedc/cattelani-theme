@@ -5,10 +5,21 @@
 	$kind = get_field('header_kind');
 	$cover = get_field('featured_image', $the_id) ? get_the_post_thumbnail_url($post->ID, 'full') : get_field('cover_image', $the_id)['url'];
 	$className  = $kind == 0 ? 'header--bg header--bg-'. get_post_type() : 'header--white';
-	$lampade = get_posts(array('post_type'=>'lampade','posts_per_page'=>-1));
+	$lampade = get_posts(array('post_type'=>'lampade','posts_per_page'=>-1, 'orderby'=>'title'));
     $class_lampada = count($lampade) >= 3 ? 3 : count($lampade);
     $class_lampada = 12 / $class_lampada;
-	$data = (get_post_type() == 'lampade') ? ' data-cover="'.$cover.'" data-size="'.$class_lampada.'"' : '';
+    $index = 0;
+    if(get_post_type() == 'lampade') {
+    	$i = 0;
+    	foreach ($lampade as $lampada) {
+    		if($lampada->ID == $post->ID){
+    		    $index = $i;
+    		    break;
+    		}
+    		$i++;
+    	}
+    }
+	$data = (get_post_type() == 'lampade') ? ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'"' : '';
 ?>
 <header class="header header--shrink <?php echo $className; ?> <?php echo ($kind == 0) ? 'header--grow-md-bottom' : 'header--grow-lg-bottom'; ?>"<?php echo $data; ?>>
 	<?php if( $kind == 0 ): ?>

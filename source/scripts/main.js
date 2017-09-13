@@ -64680,7 +64680,78 @@ module.exports = function($rootScope, $timeout) {
 
 },{}],160:[function(require,module,exports){
 module.exports = function($rootScope, $timeout, $state) {
-  var views;
+  var transitioner, views;
+  transitioner = function(element, cond) {
+    var animationCover, animationDiv, animationInner, cover, coverAnim, item, rect, size, total;
+    cover = element.getAttribute('data-item-background');
+    item = element.getAttribute('data-carousel-item');
+    total = element.getAttribute('data-item-total');
+    size = element.getAttribute('data-item-size');
+    animationDiv = angular.element(document.querySelector('.transitioner'));
+    animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
+    animationCover = angular.element(document.querySelector('.transitioner__cover'));
+    animationDiv.addClass('transitioner--flex');
+    if (parseInt(item === 0)) {
+      animationDiv.addClass('transitioner--flex-start');
+    } else if (parseInt(item === parseInt(total))) {
+      animationDiv.addClass('transitioner--flex-end');
+    }
+    rect = animationDiv.getBoundingClientRect();
+    if (cond) {
+      animationInner.addClass("transitioner__wrapper--s" + size);
+    } else {
+      animationInner.addClass("transitioner__wrapper--s12");
+    }
+    TweenMax.set(animationCover, {
+      backgroundImage: "url(" + cover + ")"
+    });
+    if (cond) {
+      coverAnim = {
+        from: {
+          width: "100%",
+          height: "100%"
+        },
+        to: {
+          width: rect.width,
+          height: rect.height,
+          onUpdate: function() {
+            if (this.time > .35) {
+              animationInner.removeClass("transitioner__wrapper--s" + size);
+              animationInner.addClass("transitioner__wrapper--s12");
+            }
+          },
+          onComplete: function() {
+            $timeout(function() {
+              animationDiv.removeClass('transitioner--flex');
+            }, 150);
+          }
+        }
+      };
+    } else {
+      coverAnim = {
+        from: {
+          width: rect.width,
+          height: rect.height
+        },
+        to: {
+          width: "100%",
+          height: "100%",
+          delay: .35,
+          onComplete: function() {
+            animationDiv.removeClass('transitioner--flex');
+            TweenMax.set(animationCover, {
+              clearProps: 'all'
+            });
+          }
+        }
+      };
+    }
+    TweenMax.fromTo(animationCover, .5, coverAnim.from, coverAnim.to);
+    if (!cond) {
+      animationInner.removeClass("transitioner__wrapper--s12");
+      animationInner.addClass("transitioner__wrapper--s" + size);
+    }
+  };
   return views = {
     enter: function(element, done) {
       var current, fromY, prev, toY;
@@ -64708,10 +64779,17 @@ module.exports = function($rootScope, $timeout, $state) {
       });
     },
     leave: function(element, done) {
-      var current, fromY, header, prev, toY;
+      var collection, current, fromY, header, prev, toY;
       header = element[0].querySelector('.header');
+      collection = element[0].querySelector('.collections__slider--archive');
       prev = $rootScope.PreviousState;
       current = $state.current.name;
+      if ((header != null) && typeof header !== 'undefined' && current === 'app.collection') {
+        transitioner(header, false);
+      }
+      if ((collection != null) && typeof collection !== 'undefined' && current === 'app.page') {
+        transitioner($rootScope.element, false);
+      }
       fromY = $state.current.name !== 'app.root' ? 0 : -100;
       toY = $state.current.name !== 'app.root' ? -100 : 0;
       element.addClass('view-leave');
