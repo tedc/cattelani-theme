@@ -1,5 +1,5 @@
 <div class="collections" ng-swiper>
-	<ks-swiper-container class="collections__slider" swiper="main" override-parameters="{'effect':'fade', 'fade' : {'crossFade':true}}" on-ready="sliderReady(main)">
+	<ks-swiper-container class="collections__slider" swiper="main" loop="true" override-parameters="{'effect':'fade', 'fade' : {'crossFade':true}}" on-ready="sliderReady(main)">
 	<?php 
 		$terms = get_terms(
 			array(
