@@ -7,5 +7,5 @@ module.exports = ($rootScope, $scope, data)->
 	$rootScope.body_class = $scope.post.body_class + vars.main.logged_classes
 	$rootScope.isMenu = off if $rootScope.isMenu
 	$rootScope.breadcrumbs = $scope.post.breadcrumbs
-	console.log $scope.post.breadcrumbs
+	$rootScope.fromElement = off if $scope.post.type isnt 'lampade'
 	return

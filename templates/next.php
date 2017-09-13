@@ -16,6 +16,6 @@
 	<?php echo (is_singular('progetti') || is_singular('installazioni')) ? '<br/><span class="next__city">'.get_field('city', $next->ID).'</span>' : '' ; ?>
 	</h3>
 	</div>
-	<a class="next__link" href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})"></a>
+	<a class="next__link" href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})" next-element></a>
 </div>
 <?php endif; ?>

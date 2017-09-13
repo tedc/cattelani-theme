@@ -64681,8 +64681,10 @@ module.exports = function($rootScope, $timeout) {
 },{}],160:[function(require,module,exports){
 module.exports = function($rootScope, $timeout, $state) {
   var transitioner, views;
-  transitioner = function(element, cond) {
+  $rootScope.isTransitionerActive = false;
+  transitioner = function(element, cond, done) {
     var animationCover, animationDiv, animationInner, cover, coverAnim, item, rect, size, total;
+    $rootScope.isTransitionerActive = true;
     cover = element.getAttribute('data-item-background');
     item = element.getAttribute('data-carousel-item');
     total = element.getAttribute('data-item-total');
@@ -64690,14 +64692,7 @@ module.exports = function($rootScope, $timeout, $state) {
     animationDiv = angular.element(document.querySelector('.transitioner'));
     animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
     animationCover = angular.element(document.querySelector('.transitioner__cover'));
-    animationDiv.addClass('transitioner--flex');
-    if (parseInt(item === 0)) {
-      animationDiv.addClass('transitioner--flex-start');
-    } else if (parseInt(item === parseInt(total))) {
-      animationDiv.addClass('transitioner--flex-end');
-    }
-    rect = animationDiv.getBoundingClientRect();
-    if (cond) {
+    if (!cond) {
       animationInner.addClass("transitioner__wrapper--s" + size);
     } else {
       animationInner.addClass("transitioner__wrapper--s12");
@@ -64705,108 +64700,168 @@ module.exports = function($rootScope, $timeout, $state) {
     TweenMax.set(animationCover, {
       backgroundImage: "url(" + cover + ")"
     });
+    animationDiv.addClass('transitioner--flex');
+    if (item === "0") {
+      animationDiv.addClass('transitioner--flex-start');
+    }
+    if (item === total) {
+      animationDiv.addClass('transitioner--flex-end');
+    }
     if (cond) {
+      animationDiv.addClass('transitioner--flex-dark');
+    }
+    rect = animationDiv[0].getBoundingClientRect();
+    if (!cond) {
       coverAnim = {
-        from: {
-          width: "100%",
-          height: "100%"
-        },
         to: {
           width: rect.width,
-          height: rect.height,
-          onUpdate: function() {
-            if (this.time > .35) {
-              animationInner.removeClass("transitioner__wrapper--s" + size);
-              animationInner.addClass("transitioner__wrapper--s12");
-            }
-          },
           onComplete: function() {
+            animationInner.removeClass("transitioner__wrapper--s" + size);
+            animationInner.addClass("transitioner__wrapper--s12");
             $timeout(function() {
+              $rootScope.isTransitionerActive = false;
+              TweenMax.set(animationCover, {
+                clearProps: 'width'
+              });
+              $rootScope.$broadcast('is_finish');
+              done();
               animationDiv.removeClass('transitioner--flex');
-            }, 150);
+              animationDiv.removeClass('transitioner--flex-start');
+              animationDiv.removeClass('transitioner--flex-end');
+              animationInner.removeClass("transitioner__wrapper--s12");
+            }, 500);
           }
         }
       };
     } else {
       coverAnim = {
         from: {
-          width: rect.width,
-          height: rect.height
+          width: rect.width
         },
         to: {
           width: "100%",
           height: "100%",
-          delay: .35,
+          delay: .5,
           onComplete: function() {
-            animationDiv.removeClass('transitioner--flex');
-            TweenMax.set(animationCover, {
-              clearProps: 'all'
+            $rootScope.$broadcast('collection_change', {
+              index: parseInt(item)
             });
+            $rootScope.$broadcast('is_finish');
+            done();
+            animationDiv.removeClass('transitioner--flex-dark');
+            $rootScope.isTransitionerActive = false;
+            TweenMax.set(animationCover, {
+              clearProps: 'width'
+            });
+            $timeout(function() {
+              animationDiv.removeClass('transitioner--flex');
+              animationDiv.removeClass('transitioner--flex-start');
+              animationDiv.removeClass('transitioner--flex-end');
+              return animationInner.removeClass("transitioner__wrapper--s" + size);
+            }, 500);
           }
         }
       };
     }
-    TweenMax.fromTo(animationCover, .5, coverAnim.from, coverAnim.to);
     if (!cond) {
+      TweenMax.to(animationCover, .5, coverAnim.to);
+    } else {
+      TweenMax.fromTo(animationCover, .5, coverAnim.from, coverAnim.to);
       animationInner.removeClass("transitioner__wrapper--s12");
       animationInner.addClass("transitioner__wrapper--s" + size);
     }
   };
   return views = {
     enter: function(element, done) {
-      var current, fromY, prev, toY;
-      prev = $rootScope.PreviousState;
-      current = $state.current.name;
-      fromY = $state.current.name !== 'app.root' ? 0 : -100;
-      toY = $state.current.name !== 'app.root' ? -100 : 0;
-      element.addClass('view-enter');
-      if ($state.current.name === 'app.root') {
-        element.addClass('view-enter-home');
-      }
-      TweenMax.fromTo(element, .5, {
-        yPercent: fromY
-      }, {
-        yPercent: toY,
-        onComplete: function() {
-          $timeout(function() {
-            element.removeClass('view-enter');
-            TweenMax.set(element, {
-              clearProps: 'all'
-            });
-            done();
-          });
+      var collection, current, fromY, header, prev, toY;
+      prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
+      current = $state.current.name.replace('app.', '');
+      if (current === 'root') {
+        fromY = -100;
+        toY = 0;
+      } else if (current === 'collection') {
+        if (prev === 'root') {
+          fromY = 100;
+          toY = 0;
+        } else {
+          fromY = -100;
+          toY = 0;
         }
-      });
+      } else {
+        fromY = 100;
+        toY = 0;
+      }
+      header = element[0].querySelector('.header--lampade');
+      collection = element[0].querySelector('.collections__slider--archive');
+      $timeout(function() {
+        if (!$rootScope.isTransitionerActive) {
+          element.addClass('view-enter');
+          TweenMax.fromTo(element, .49, {
+            yPercent: fromY
+          }, {
+            yPercent: toY,
+            onComplete: function() {
+              $timeout(function() {
+                done();
+                element.removeClass('view-enter');
+                TweenMax.set(element, {
+                  clearProps: 'all'
+                });
+              });
+            }
+          });
+        } else {
+          $rootScope.$on('is_finish', done);
+        }
+      }, 10);
     },
     leave: function(element, done) {
-      var collection, current, fromY, header, prev, toY;
-      header = element[0].querySelector('.header');
+      var collection, collectionCondition, current, fromY, header, lightCondition, prev, toY;
+      header = element[0].querySelector('.header--lampade');
       collection = element[0].querySelector('.collections__slider--archive');
-      prev = $rootScope.PreviousState;
-      current = $state.current.name;
-      if ((header != null) && typeof header !== 'undefined' && current === 'app.collection') {
-        transitioner(header, false);
+      prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
+      current = $state.current.name.replace('app.', '');
+      collectionCondition = (collection != null) && typeof collection !== 'undefined' && current === 'page' && $rootScope.fromElement;
+      lightCondition = (header != null) && typeof header !== 'undefined' && current === 'collection';
+      if (lightCondition) {
+        transitioner(header, true, done);
       }
-      if ((collection != null) && typeof collection !== 'undefined' && current === 'app.page') {
-        transitioner($rootScope.element, false);
+      if (collectionCondition) {
+        transitioner($rootScope.fromElement[0], false, done);
       }
-      fromY = $state.current.name !== 'app.root' ? 0 : -100;
-      toY = $state.current.name !== 'app.root' ? -100 : 0;
-      element.addClass('view-leave');
-      TweenMax.fromTo(element, .5, {
-        yPercent: fromY
-      }, {
-        yPercent: toY,
-        onComplete: function() {
-          $timeout(function() {
-            element.removeClass('view-leave');
-            TweenMax.set(element, {
-              clearProps: 'all'
-            });
-            done();
-          });
+      fromY = $state.current.name !== 'app.root' ? 100 : -100;
+      toY = $state.current.name !== 'app.root' ? 0 : 0;
+      if (current === 'root') {
+        fromY = 0;
+        toY = 100;
+      } else if (current === 'collection') {
+        if (prev === 'root') {
+          fromY = 0;
+          toY = -100;
+        } else {
+          fromY = 0;
+          toY = 100;
         }
-      });
+      } else {
+        fromY = 0;
+        toY = -100;
+      }
+      if (!$rootScope.isTransitionerActive) {
+        TweenMax.fromTo(element, .5, {
+          yPercent: fromY
+        }, {
+          yPercent: toY,
+          onComplete: function() {
+            $timeout(function() {
+              done();
+              element.removeClass('view-leave');
+              TweenMax.set(element, {
+                clearProps: 'all'
+              });
+            });
+          }
+        });
+      }
     }
   };
 };
@@ -65083,7 +65138,7 @@ var catellani;
 catellani = angular.module('catellani');
 
 catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)]).directive('collectionSearch', [require(172)]).directive('postTypeArchive', [require(163)]).directive('ngSm', ["$rootScope", "$timeout", require(173)]).directive('ngSwiper', ["$timeout", "$rootScope", require(175)]).directive('ngInstagram', [require(168)]).directive('ngVideo', ["$rootScope", require(176)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(171)]).directive('ngMagazine', [require(170)]).directive('ngLoader', ['$timeout', require(169)]).directive('ngFooter', ["$window", require(164)]).directive('glossaryAutocomplete', [require(166)]).directive('ngScrollCarousel', [
-  'ScrollbarService', "$window", "$timeout", function(ScrollbarService, $window, $timeout) {
+  'ScrollbarService', "$window", "$timeout", "$state", "$rootScope", function(ScrollbarService, $window, $timeout, $state, $rootScope) {
     return {
       link: function(scope, element, attrs) {
         var carousel, w;
@@ -65094,7 +65149,8 @@ catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)
         w = angular.element($window);
         carousel.then(function(scrollbar) {
           var items;
-          $timeout(function() {
+          scope.isState = false;
+          scope.currentState = $timeout(function() {
             scope.isVisible = true;
             scope.isPrev = scrollbar.offset.x > 0 ? true : false;
             scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
@@ -65123,6 +65179,25 @@ catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)
             }
             scrollbar.scrollIntoView(items[item]);
           };
+          scope.goto = function(index, params) {
+            var left;
+            scrollbar.removeListener();
+            if (scrollbar.isVisible(items[index])) {
+              $state.go('app.page', params);
+            } else {
+              left = items[index].offsetLeft;
+              scrollbar.scrollTo(left, 0, 0, function() {
+                scope.isState = true;
+                scope.currentState = params.slug;
+                $timeout(function() {
+                  $state.go('app.page', params);
+                }, 450);
+              });
+            }
+          };
+          scope.$on('collection_change', function(evt, data) {
+            scrollbar.scrollIntoView(items[data.index]);
+          });
           w.on('resize', function() {
             $timeout(function() {
               scope.isPrev = scrollbar.offset.x > 0 ? true : false;
@@ -66091,109 +66166,28 @@ require(156);
 
 require(162);
 
-require(182);
+require(183);
 
 
-},{"1":1,"102":102,"156":156,"162":162,"167":167,"178":178,"182":182,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],178:[function(require,module,exports){
+},{"1":1,"102":102,"156":156,"162":162,"167":167,"178":178,"183":183,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],178:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.config(["$stateProvider", "$locationProvider", require(180)]).run([
+catellani.config(["$stateProvider", "$locationProvider", require(181)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", function($transitions, $state, $location, $rootScope, $timeout) {
-    var animationCover, animationDiv, animationInner, cleanTransition, complete, fromElementAnim, oldUrl;
+    var oldUrl;
     $rootScope.isFinish = true;
-    animationDiv = document.createElement('div');
-    document.body.appendChild(animationDiv);
-    animationDiv = angular.element(animationDiv);
-    animationDiv.addClass('transitioner');
-    animationInner = document.createElement('div');
-    animationInner = angular.element(animationInner);
-    animationInner.addClass('transitioner__wrapper');
-    animationDiv.append(animationInner);
-    animationCover = document.createElement('div');
-    animationCover = angular.element(animationCover);
-    animationCover.addClass('transitioner__cover');
-    animationInner.append(animationCover);
-    complete = function() {
-      $timeout(function() {
-        $rootScope.isFinish = true;
-        $rootScope.$broadcast('is_finish');
-      });
-    };
-    fromElementAnim = function(element) {
-      var classAdd, coords;
-      if ($rootScope.isNew !== element) {
-        $rootScope.isNew = element;
-        $rootScope.el = {
-          element: element,
-          cover: element.attr('data-item-background'),
-          total: element.attr('data-item-total'),
-          size: element.attr('data-item-size'),
-          carousel: element.attr('data-carousel-item')
-        };
-      } else {
-        $rootScope.isNew = false;
-      }
-      TweenMax.set(animationCover, {
-        backgroundImage: "url(" + $rootScope.el.cover + ")"
-      });
-      animationInner.addClass("transitioner__wrapper--s" + $rootScope.el.size);
-      if ($rootScope.el.carousel) {
-        classAdd = '';
-        if (parseInt($rootScope.el.carousel) === 0) {
-          classAdd = 'transitioner--flex-start';
-        }
-        if (parseInt($rootScope.el.carousel) === parseInt($rootScope.el.total)) {
-          classAdd = 'transitioner--flex-end';
-        }
-        animationDiv.addClass(classAdd);
-      }
-      animationDiv.addClass('transitioner--flex');
-      coords = animationDiv[0].getBoundingClientRect();
-      if ($rootScope.isNew === element) {
-        TweenMax.to(animationCover, .5, {
-          width: coords.width,
-          onUpdate: function() {
-            if (this.time() > 0.35) {
-              if (animationInner.hasClass("transitioner__wrapper--s" + $rootScope.el.size)) {
-                animationInner.removeClass("transitioner__wrapper--s" + $rootScope.el.size);
-              }
-              if (!animationInner.hasClass('transitioner__wrapper--s12')) {
-                animationInner.addClass('transitioner__wrapper--s12');
-              }
-            }
-          },
-          onComplete: complete
-        });
-      } else {
-        if (animationInner.hasClass('transitioner__wrapper--s12')) {
-          animationInner.removeClass('transitioner__wrapper--s12');
-        }
-        if (!animationInner.hasClass("transitioner__wrapper--s" + $rootScope.el.size)) {
-          animationInner.addClass("transitioner__wrapper--s" + $rootScope.el.size);
-        }
-        TweenMax.fromTo(animationCover, .5, {
-          width: coords.width
-        }, {
-          width: "100%",
-          delay: .35,
-          onComplete: complete
-        });
-      }
-    };
-    cleanTransition = function() {
-      animationDiv.removeClass('transitioner--flex');
-    };
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     return $transitions.onStart({}, function(trans) {
       var from, newUrl, to;
+      $rootScope.scrollFrom = document.body.scrollTop;
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
         absolute: true
       });
-      $rootScope.from = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : false;
+      $rootScope.fromState = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : $rootScope.fromState;
       if (newUrl === oldUrl) {
         return false;
       }
@@ -66209,7 +66203,30 @@ catellani.config(["$stateProvider", "$locationProvider", require(180)]).run([
 ]);
 
 
-},{"180":180}],179:[function(require,module,exports){
+},{"181":181}],179:[function(require,module,exports){
+module.exports = function($q, $timeout, $rootScope) {
+  var deferred;
+  deferred = $q.defer();
+  if ($rootScope.scrollFrom > 0) {
+    TweenMax.to(window, .3, {
+      scrollTo: {
+        y: 0
+      },
+      onComplete: function() {
+        $timeout(function() {
+          window.scrollTo(0, 0);
+          deferred.resolve(true);
+        });
+      }
+    });
+  } else {
+    deferred.resolve(true);
+  }
+  return deferred.promise;
+};
+
+
+},{}],180:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
   $scope.type = $scope.post.type;
@@ -66221,11 +66238,13 @@ module.exports = function($rootScope, $scope, data) {
     $rootScope.isMenu = false;
   }
   $rootScope.breadcrumbs = $scope.post.breadcrumbs;
-  console.log($scope.post.breadcrumbs);
+  if ($scope.post.type !== 'lampade') {
+    $rootScope.fromElement = false;
+  }
 };
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 module.exports = function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
@@ -66244,7 +66263,7 @@ module.exports = function($stateProvider, $locationProvider) {
         dynamic: true
       }
     },
-    template: '<ui-view class="view"/>',
+    template: '<ui-view class="view" />',
     controller: [
       "$rootScope", "$stateParams", function($rootScope, $stateParams) {
         if ($stateParams.search) {
@@ -66277,9 +66296,10 @@ module.exports = function($stateProvider, $locationProvider) {
             URL: $state.href($state.current.name, $state.params)
           };
         }
-      ]
+      ],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
     },
-    controller: ["$rootScope", "$scope", "data", require(179)]
+    controller: ["$rootScope", "$scope", "data", require(180)]
   }).state('app.page', {
     url: '/:slug',
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
@@ -66306,9 +66326,10 @@ module.exports = function($stateProvider, $locationProvider) {
             URL: $state.href($state.current.name, $state.params)
           };
         }
-      ]
+      ],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
     },
-    controller: ["$rootScope", "$scope", "data", require(179)]
+    controller: ["$rootScope", "$scope", "data", require(180)]
   }).state('app.collection', {
     url: '/{collection:(?:collection|collezioni)}/:name',
     params: {
@@ -66340,9 +66361,10 @@ module.exports = function($stateProvider, $locationProvider) {
             URL: $state.href($state.current.name, $state.params)
           };
         }
-      ]
+      ],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
     },
-    controller: ["$rootScope", "data", "$scope", require(181)]
+    controller: ["$rootScope", "data", "$scope", require(182)]
   }).state('app.glossary', {
     url: "/" + vars.main.glossary + "/:name",
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
@@ -66369,25 +66391,25 @@ module.exports = function($stateProvider, $locationProvider) {
             URL: $state.href($state.current.name, $state.params)
           };
         }
-      ]
+      ],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
     },
-    controller: ["$rootScope", "data", "$scope", require(181)]
+    controller: ["$rootScope", "data", "$scope", require(182)]
   });
 };
 
 
-},{"179":179,"181":181}],181:[function(require,module,exports){
+},{"179":179,"180":180,"182":182}],182:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
   $scope.content = data.content;
   $rootScope.title = data.yoats_title;
   $rootScope.lang_menu = data.wpml_menu[0];
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;
-  console.log(data.breadcrumbs);
 };
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 var WPAPI, catellani, wp;
 
 WPAPI = require(153);

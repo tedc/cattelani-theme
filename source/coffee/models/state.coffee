@@ -14,7 +14,7 @@ module.exports = ($stateProvider, $locationProvider)->
 					value: 'it'
 				search :
 					dynamic : true
-			template: '<ui-view class="view"/>'
+			template: '<ui-view class="view" />'
 			controller: ["$rootScope", "$stateParams", ($rootScope, $stateParams)->
 				$rootScope.$broadcast 'collection_changed', {id : $stateParams.search } if  $stateParams.search
 				return
@@ -42,6 +42,7 @@ module.exports = ($stateProvider, $locationProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
+				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.page',
 			url: '/:slug'
@@ -67,7 +68,8 @@ module.exports = ($stateProvider, $locationProvider)->
 						Params: $state.params,
 						URL: $state.href $state.current.name, $state.params
 					return
-				]
+				]		
+				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/{collection:(?:collection|collezioni)}/:name'
@@ -97,6 +99,7 @@ module.exports = ($stateProvider, $locationProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
+				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
 			url : "/#{vars.main.glossary}/:name"
@@ -123,5 +126,6 @@ module.exports = ($stateProvider, $locationProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
+				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 	return

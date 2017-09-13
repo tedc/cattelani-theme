@@ -1,11 +1,27 @@
+%pos_Abs {
+	width: $f;
+	z-index: 1;
+	position: absolute;
+	height: 100vh;
+	overflow: hidden !important;
+	.logged-in.admin-bar & {
+		height: calc(100vh - 32px);
+	}
+}
 .view {
 	&.ng-animate {
-		width: $f;
-		position: absolute;
-		height: 100vh;
-		overflow: hidden !important;
-		.logged-in.admin-bar & {
-			height: calc(100vh - 32px);
+		@extend %pos_Abs !optional;
+	}
+	&.view-enter {
+		z-index: 1;
+	}
+	&.view-leave {
+		z-index: 3;
+		&-scroll {
+			height: auto;
+			.logged-in.admin-bar & {
+				margin-top: -32px;
+			}
 		}
 	}
 }
@@ -17,14 +33,28 @@
 	height: 100vh;
 	width: 100%;
 	z-index: 9993;
-	display: none;
+	display: flex;
+	visibility: hidden;
+	justify-content: center;
+	&:before {
+		@include full;
+		background-color: $dark-color;
+		content: '';
+		transition: $speed opacity;
+		opacity: 0;
+	}
 	.logged-in.admin-bar & {
 		margin-top: 32px;
 		height: calc(100vh - 32px);
 	}
 	&--flex {
-		display: flex;
-		justify-content: center;
+		visibility: visible;
+		&-dark {
+			&:before {
+				transition: none;
+				opacity: 1;
+			}
+		}
 		&-start {
 			justify-content: flex-start;
 		}
@@ -36,6 +66,7 @@
 		overflow: hidden;
 		position: relative;
 		transition: $speed width, $speed height;
+		z-index: 1;
 	}
 	&__cover {
 		left: 50%;

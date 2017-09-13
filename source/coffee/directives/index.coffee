@@ -13,7 +13,7 @@ catellani
 	.directive 'ngLoader', [ '$timeout', require './loader.coffee'] 
 	.directive 'ngFooter', ["$window", require './footer.coffee']
 	.directive 'glossaryAutocomplete', [ require './glossary.coffee']
-	.directive 'ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", (ScrollbarService, $window, $timeout)->
+	.directive 'ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", (ScrollbarService, $window, $timeout, $state, $rootScope)->
 		link : (scope, element, attrs)->
 			carousel = ScrollbarService.getInstance 'carousel'
 			scope.isVisible = off
@@ -22,6 +22,8 @@ catellani
 			w = angular.element $window
 			carousel
 				.then (scrollbar)->
+					scope.isState = off
+					scope.currentState = 
 					$timeout ->
 						scope.isVisible = on
 						scope.isPrev = if scrollbar.offset.x > 0 then on else off
@@ -47,6 +49,26 @@ catellani
 							item = if cond then 1 else 0
 						scrollbar.scrollIntoView(items[item])
 						return
+					scope.goto = (index, params)->
+						scrollbar.removeListener()
+						if scrollbar.isVisible items[index]
+							$state.go 'app.page', params
+						else
+							left = items[index].offsetLeft
+							scrollbar.scrollTo left, 0, 0, ->
+								scope.isState = on
+								scope.currentState = params.slug
+								$timeout ->
+									$state.go 'app.page', params
+									return
+								, 450
+								return
+						return
+					scope.$on 'collection_change', (evt, data)->
+						scrollbar.scrollIntoView(items[data.index])
+						return
+					
+
 					w.on 'resize', ->
 						$timeout ->
 							#scrollbar.update()

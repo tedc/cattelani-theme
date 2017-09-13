@@ -22,10 +22,11 @@ body {
     padding: {
         bottom: em(90px);
     }
+    background-color: $dark-color;
     font-family: $main-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    //overflow-x: hidden;
     .wf-active &, .wf-inactive & {
         font-family: $main-font;
     }

@@ -25,11 +25,20 @@
 
 	add_shortcode( 'breadcrumb', 'breadcrumb_shortcode');
 
+	//add_filter( 'acf/load_field/name=magazine_template', 'hide_field' );
+	//add_filter( 'acf/load_field/name=is_front_page', 'hide_field' );
+
+	function hide_field( $field ) {
+		$field['conditional_logic'] = 1;
+
+		return $field;
+	}
+
 	// ADD BUILDER TO CONTENT
 	function builder_shortcode($attr) {
 		ob_start();
-		if(!is_front_page()){get_template_part('templates/page', 'header');}
-		if(is_page_template('template-magazine.php')) :
+		if(!get_field('is_front_page')){get_template_part('templates/page', 'header');}
+		if(get_field('magazine_template')) :
 			get_template_part('index');
 		else :
 			get_template_part('builder/init');
@@ -43,6 +52,7 @@
 		$array = array(
 			'post_type' => 'lampade',
 			'posts_per_page' => -1,
+			'orderby' => 'title',
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'collezioni',

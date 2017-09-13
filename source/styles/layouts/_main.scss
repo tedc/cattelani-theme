@@ -1,6 +1,7 @@
 .main {
 	min-height: 100vh;
 	position: relative;
+	background-color: $w;
 	.admin-bar.logged-in & {
 		min-height: calc(100vh - 32px);
 	}

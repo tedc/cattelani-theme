@@ -54,6 +54,19 @@
 		overflow: hidden;
 		justify-content: center;
 		@include grow('md');
+
+	}
+	&__mask {
+		@include full;
+		background-color: $dark-color;
+		transition: transform $speed;
+		z-index: 5;
+		transform: scaleX(0) translateZ(0) {
+			origin: right center;
+		}
+		.collections__cell--masking & {
+			transform: scaleX(1) translateZ(0);
+		}
 	}
 	&--slider {
 		&-h {
@@ -111,12 +124,18 @@
 		.collections__cell:hover & {
 			transform: translate3d(0, 0%, 0);			
 		}
+		.collections__cell--current &, .collections__cell--current:hover & {
+			transform: translate3d(0, $f, 0);			
+		}
 		span {
 			display: inline-block;
 			transform: translate3d(0, $f*-1, 0);
 			transition: transform $speed;
 			.collections__cell:hover & {
 				transform: translate3d(0, 0%, 0);			
+			}
+			.collections__cell--current &, .collections__cell--current:hover & {
+				transform: translate3d(0, $f*-1, 0);			
 			}
 		}
 
