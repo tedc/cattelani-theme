@@ -4,15 +4,36 @@
 	color: $w;
 	text-align: center;
 	position: relative;
+	&--fixed {
+		top: 0;
+		left: 0;
+		.logged-in.admin-bar & {
+			top: 32px;
+		}
+		width: $f;
+		position: fixed;
+		z-index: 5;
+	}
 	&__link {
 		@include full;
 	}
 	&--lampade {
 		text-align: left;
 	}
+	&__label, &__title {
+		display: block;
+		transition: opacity $speed, transform $speed;
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+		.next--active & {
+			transform: translate3d($p*-1, 0, 0);
+			opacity: 0;
+		}
+	}
 	&__container {
 		@include grow('md');
 		position: relative;
+		display: block;
 		@include breakpoint() {
 			align-items: center;
 			display: flex;

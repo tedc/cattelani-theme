@@ -13,10 +13,12 @@
 		@extend %pos_Abs !optional;
 	}
 	&.view-enter {
-		z-index: 1;
+		z-index: 3;
 	}
 	&.view-leave {
-		z-index: 3;
+		&-prev {
+			z-index: 5;
+		}
 		&-scroll {
 			height: auto;
 			.logged-in.admin-bar & {
@@ -35,6 +37,11 @@
 	z-index: 9993;
 	display: flex;
 	visibility: hidden;
+	opacity: 0;
+	transition: {
+		property : opacity, visibility;
+		duration : 0;
+	}
 	justify-content: center;
 	&:before {
 		@include full;
@@ -49,6 +56,8 @@
 	}
 	&--flex {
 		visibility: visible;
+		opacity: 1;
+		transition-duration: $speed/2;
 		&-dark {
 			&:before {
 				transition: none;

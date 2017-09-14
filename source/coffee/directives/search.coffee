@@ -47,7 +47,7 @@ module.exports = ->
 					return
 			$scope.image = (item)->
 				img = item._embedded['wp:featuredmedia'][0]
-				url = if img.media_details.sizes.large then img.media_details.sizes.large.source_url else img.media_details.sizes.full.source_url
+				url = if img.media_details.sizes['vertical-thumb'] then img.media_details.sizes['vertical-thumb'].source_url else img.media_details.sizes.full.source_url
 				alt = img.alt_text
 				array =
 					url : url

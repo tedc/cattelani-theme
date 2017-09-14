@@ -1,27 +1,32 @@
 module.exports = ($rootScope, $timeout)->
-	parseDuration = (options, element)->
-		if typeof options.duration is 'string' and options.duration.match(/^(\.|\d)*\d+vh$/)
-			duration = options.duration.replace 'vh', '%'
+	parseDuration = (duration, element)->
+		if typeof duration is 'string' and duration.match(/^(\.|\d)*\d+vh$/)
+			duration = duration.replace 'vh', '%'
 		else
-			if typeof options.duration is 'string' and options.duration.match(/^(\.|\d)*\d+%$/)
-				value = parseFloat( options.duration ) / 100
+			if typeof duration is 'string' and duration.match(/^(\.|\d)*\d+%$/)
+				value = parseFloat( duration ) / 100
 				element = if typeof element is 'string' then document.querySelector element else element
 				duration = element.offsetHeight * value
 			else
-				duration = parseFloat options.duration
+				duration = parseFloat duration
 		return duration
 	createScene = (element, config)->
 		triggerElement = config.triggerElement or element[0]
 		if typeof config.duration isnt 'undefined'
 			durationElement = if typeof config.durationElement isnt 'undefined' then config.durationElement else triggerElement
-			config.duration = parseDuration config, durationElement
+			config.duration = parseDuration config.duration, durationElement
 		else
 			config.duration = 0
+		if typeof config.offset isnt 'undefined'
+			offsetElement = if typeof config.durationElement isnt 'undefined' then config.durationElement else triggerElement
+			config.offset = parseDuration config.offset, offsetElement
+		else
+			config.offset = 0
 		options = 
 			triggerElement : config.triggerElement or element[0]
 			triggerHook : config.triggerHook or 0.5
 			duration : config.duration
-			offset : config.offset or 0
+			offset : config.offset
 		$rootScope.$on 'sceneDestroy', ->
 			scene.destroy() if scene and not config.fixed
 			return

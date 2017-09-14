@@ -8,6 +8,7 @@
 	function theme_setup() {
 		add_theme_support( 'custom-logo' );
 		add_image_size('magazine', 1246, 700, true);
+		add_image_size('vertical-thumb', 440, 560, true);
 	}
 	
 	add_action('after_setup_theme', 'theme_setup');

@@ -5,7 +5,7 @@
 	//$store_obj = get_post($store->ID);
     acf_unset_language_to_default(); 
 ?>
-<aside class="cat"<?php scrollmagic('"class":"cat--active", "triggerElement": "body", "triggerHook" : "onLeave", "offset" : 100, "fixed" : true'); ?>>
+<aside class="cat"<?php scrollmagic('"class":"cat--active", "triggerElement": "body", "triggerHook" : "onLeave", "offset" : "50%", "fixed" : true'); ?>>
 	<div class="cat__container cat__container--store">
 	<h4 class="cat__title cat__title--light"><?php _e('Trova il rivenditore più vicino', 'catellani'); ?></h4>
 	<a class="cat__button" href="<?php echo get_permalink($store_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">

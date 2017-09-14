@@ -21,6 +21,7 @@
 	&--active{
 		.zoom__figure {
 			position: fixed;
+			z-index: 9999;
 		}
 		.zoom__image {
 			visibility: visible;
@@ -35,7 +36,7 @@
 			.zoom__figure, &.zoom--active.zoom--active-add .zoom__figure {
 				position: absolute;
 				transition: {
-					property: visibility, opacity;
+					property: visibility, opacity, z-index;
 					duration: $speed;
 				}
 				visibility: hidden;
@@ -86,8 +87,8 @@
 	&__figure {
 		@include full;
 		@include cover;
-		z-index: 9998;
 		cursor: none !important;
+		z-index: 2;
 		transition: {
 			property: visibility, opacity;
 			duration: $speed;

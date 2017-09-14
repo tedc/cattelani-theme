@@ -20,9 +20,10 @@
 							$tr = trim($tr);
 							$tr = preg_split('/\s+/', $tr, -1);
 							$new_tr = array();
-							for ($i = 1; $i < count($tr) - 1; $i++) {
+							for ($i = 1; $i < count($tr); $i++) {
 								array_push($new_tr, $tr[$i]);
 							}
+							
 							$right = join(' ', $new_tr);
 							echo '<tr><td class="sheet__td">'.$tr[0].'</td><td>'.$right.'</td></tr>';
 						}

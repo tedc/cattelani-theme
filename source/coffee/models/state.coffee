@@ -48,6 +48,7 @@ module.exports = ($stateProvider, $locationProvider)->
 			url: '/:slug'
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
+				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
 				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
 					wp = WPAPI
 					wp.multiple = wp.registerRoute 'wp/v2', 'multiple-post-type/',
@@ -62,14 +63,16 @@ module.exports = ($stateProvider, $locationProvider)->
 							return
 					deferred.promise
 				]	
-				PreviousState: ["$state", "$rootScope", ($state, $rootScope)->
+				PreviousState: ["$state", "$rootScope", "$stateParams", ($state, $rootScope, $stateParams)->
 					$rootScope.PreviousState =
 						Name: $state.current.name,
 						Params: $state.params,
 						URL: $state.href $state.current.name, $state.params
+						Slug: $stateParams.slug
 					return
-				]		
+				]
 				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require('./blocks.coffee').single]
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/{collection:(?:collection|collezioni)}/:name'
@@ -100,6 +103,7 @@ module.exports = ($stateProvider, $locationProvider)->
 					return
 				]
 				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require('./blocks.coffee').collection]		
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
 			url : "/#{vars.main.glossary}/:name"

@@ -64680,100 +64680,10 @@ module.exports = function($rootScope, $timeout) {
 
 },{}],160:[function(require,module,exports){
 module.exports = function($rootScope, $timeout, $state) {
-  var transitioner, views;
-  $rootScope.isTransitionerActive = false;
-  transitioner = function(element, cond, done) {
-    var animationCover, animationDiv, animationInner, cover, coverAnim, item, rect, size, total;
-    $rootScope.isTransitionerActive = true;
-    cover = element.getAttribute('data-item-background');
-    item = element.getAttribute('data-carousel-item');
-    total = element.getAttribute('data-item-total');
-    size = element.getAttribute('data-item-size');
-    animationDiv = angular.element(document.querySelector('.transitioner'));
-    animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
-    animationCover = angular.element(document.querySelector('.transitioner__cover'));
-    if (!cond) {
-      animationInner.addClass("transitioner__wrapper--s" + size);
-    } else {
-      animationInner.addClass("transitioner__wrapper--s12");
-    }
-    TweenMax.set(animationCover, {
-      backgroundImage: "url(" + cover + ")"
-    });
-    animationDiv.addClass('transitioner--flex');
-    if (item === "0") {
-      animationDiv.addClass('transitioner--flex-start');
-    }
-    if (item === total) {
-      animationDiv.addClass('transitioner--flex-end');
-    }
-    if (cond) {
-      animationDiv.addClass('transitioner--flex-dark');
-    }
-    rect = animationDiv[0].getBoundingClientRect();
-    if (!cond) {
-      coverAnim = {
-        to: {
-          width: rect.width,
-          onComplete: function() {
-            animationInner.removeClass("transitioner__wrapper--s" + size);
-            animationInner.addClass("transitioner__wrapper--s12");
-            $timeout(function() {
-              $rootScope.isTransitionerActive = false;
-              TweenMax.set(animationCover, {
-                clearProps: 'width'
-              });
-              $rootScope.$broadcast('is_finish');
-              done();
-              animationDiv.removeClass('transitioner--flex');
-              animationDiv.removeClass('transitioner--flex-start');
-              animationDiv.removeClass('transitioner--flex-end');
-              animationInner.removeClass("transitioner__wrapper--s12");
-            }, 500);
-          }
-        }
-      };
-    } else {
-      coverAnim = {
-        from: {
-          width: rect.width
-        },
-        to: {
-          width: "100%",
-          height: "100%",
-          delay: .5,
-          onComplete: function() {
-            $rootScope.$broadcast('collection_change', {
-              index: parseInt(item)
-            });
-            $rootScope.$broadcast('is_finish');
-            done();
-            animationDiv.removeClass('transitioner--flex-dark');
-            $rootScope.isTransitionerActive = false;
-            TweenMax.set(animationCover, {
-              clearProps: 'width'
-            });
-            $timeout(function() {
-              animationDiv.removeClass('transitioner--flex');
-              animationDiv.removeClass('transitioner--flex-start');
-              animationDiv.removeClass('transitioner--flex-end');
-              return animationInner.removeClass("transitioner__wrapper--s" + size);
-            }, 500);
-          }
-        }
-      };
-    }
-    if (!cond) {
-      TweenMax.to(animationCover, .5, coverAnim.to);
-    } else {
-      TweenMax.fromTo(animationCover, .5, coverAnim.from, coverAnim.to);
-      animationInner.removeClass("transitioner__wrapper--s12");
-      animationInner.addClass("transitioner__wrapper--s" + size);
-    }
-  };
+  var views;
   return views = {
     enter: function(element, done) {
-      var collection, current, fromY, header, prev, toY;
+      var current, fromY, prev, toY;
       prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
       current = $state.current.name.replace('app.', '');
       if (current === 'root') {
@@ -64791,11 +64701,9 @@ module.exports = function($rootScope, $timeout, $state) {
         fromY = 100;
         toY = 0;
       }
-      header = element[0].querySelector('.header--lampade');
-      collection = element[0].querySelector('.collections__slider--archive');
-      $timeout(function() {
-        if (!$rootScope.isTransitionerActive) {
-          element.addClass('view-enter');
+      element.addClass('view-enter');
+      if (!$rootScope.isTransitionerActive) {
+        if (!$rootScope.prevElement) {
           TweenMax.fromTo(element, .49, {
             yPercent: fromY
           }, {
@@ -64807,28 +64715,39 @@ module.exports = function($rootScope, $timeout, $state) {
                 TweenMax.set(element, {
                   clearProps: 'all'
                 });
+                $rootScope.isAnim = false;
               });
             }
           });
-        } else {
-          $rootScope.$on('is_finish', done);
         }
-      }, 10);
+      } else {
+        $rootScope.$broadcast('collection_change', {
+          index: $rootScope.carouselIndex
+        });
+        TweenMax.to({
+          number: 0
+        }, .1, {
+          number: 1,
+          onCompleteParams: ['{self}'],
+          onComplete: function() {
+            $timeout(function() {
+              done();
+              $rootScope.isTransitionerActive = false;
+              element.addClass('view-enter');
+            });
+          }
+        });
+      }
+      if ($rootScope.prevElement) {
+        element.removeClass('view-enter');
+        done();
+        $rootScope.isAnim = false;
+      }
     },
     leave: function(element, done) {
-      var collection, collectionCondition, current, fromY, header, lightCondition, prev, toY;
-      header = element[0].querySelector('.header--lampade');
-      collection = element[0].querySelector('.collections__slider--archive');
+      var current, fromY, prev, toY;
       prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
       current = $state.current.name.replace('app.', '');
-      collectionCondition = (collection != null) && typeof collection !== 'undefined' && current === 'page' && $rootScope.fromElement;
-      lightCondition = (header != null) && typeof header !== 'undefined' && current === 'collection';
-      if (lightCondition) {
-        transitioner(header, true, done);
-      }
-      if (collectionCondition) {
-        transitioner($rootScope.fromElement[0], false, done);
-      }
       fromY = $state.current.name !== 'app.root' ? 100 : -100;
       toY = $state.current.name !== 'app.root' ? 0 : 0;
       if (current === 'root') {
@@ -64846,18 +64765,41 @@ module.exports = function($rootScope, $timeout, $state) {
         fromY = 0;
         toY = -100;
       }
+      element.addClass('view-leave');
       if (!$rootScope.isTransitionerActive) {
-        TweenMax.fromTo(element, .5, {
-          yPercent: fromY
-        }, {
-          yPercent: toY,
+        if (!$rootScope.prevElement) {
+          TweenMax.fromTo(element, .5, {
+            yPercent: fromY
+          }, {
+            yPercent: toY,
+            onComplete: function() {
+              $timeout(function() {
+                done();
+                element.removeClass('view-leave');
+                TweenMax.set(element, {
+                  clearProps: 'all'
+                });
+              });
+            }
+          });
+        }
+      } else {
+        done();
+        element.removeClass('view-leave');
+      }
+      if ($rootScope.prevElement) {
+        element.addClass('view-leave-prev');
+        element.removeClass('view-leave');
+        TweenMax.to({
+          num: 0
+        }, .15, {
+          num: 1,
+          onCompleteParams: ['{self}'],
           onComplete: function() {
             $timeout(function() {
+              element.removeClass('view-leave-prev');
               done();
-              element.removeClass('view-leave');
-              TweenMax.set(element, {
-                clearProps: 'all'
-              });
+              $rootScope.prevElement = false;
             });
           }
         });
@@ -65180,23 +65122,41 @@ catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)
             scrollbar.scrollIntoView(items[item]);
           };
           scope.goto = function(index, params) {
-            var left;
+            var left, width;
             scrollbar.removeListener();
             if (scrollbar.isVisible(items[index])) {
-              $state.go('app.page', params);
+              if (index !== 0) {
+                left = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+                scrollbar.scrollTo(left, 0, 0, function() {
+                  scope.isState = true;
+                  scope.currentState = params.slug;
+                  $timeout(function() {
+                    $state.go('app.page', params);
+                  }, 400);
+                });
+              } else {
+                $timeout(function() {
+                  $state.go('app.page', params);
+                }, 400);
+              }
             } else {
-              left = items[index].offsetLeft;
+              width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+              left = index === 0 ? items[index].offsetLeft : width;
               scrollbar.scrollTo(left, 0, 0, function() {
                 scope.isState = true;
                 scope.currentState = params.slug;
                 $timeout(function() {
                   $state.go('app.page', params);
-                }, 450);
+                }, 400);
               });
             }
           };
           scope.$on('collection_change', function(evt, data) {
-            scrollbar.scrollIntoView(items[data.index]);
+            var index, left, width;
+            index = data.index;
+            width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+            left = index === 0 ? items[index].offsetLeft : width;
+            scrollbar.setPosition(left, 0);
           });
           w.on('resize', function() {
             $timeout(function() {
@@ -65216,6 +65176,19 @@ catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)
       link: function(scope, element, attr) {
         element.on('click', function() {
           $rootScope.fromElement = element;
+        });
+      }
+    };
+  }
+]).directive('nextElement', [
+  '$rootScope', function($rootScope) {
+    var clicked;
+    return clicked = {
+      restrict: 'A',
+      link: function(scope, element, attr) {
+        element.on('click', function() {
+          element.addClass('next--active');
+          $rootScope.prevElement = element;
         });
       }
     };
@@ -65609,7 +65582,7 @@ module.exports = function() {
         $scope.image = function(item) {
           var alt, array, img, url;
           img = item._embedded['wp:featuredmedia'][0];
-          url = img.media_details.sizes.large ? img.media_details.sizes.large.source_url : img.media_details.sizes.full.source_url;
+          url = img.media_details.sizes['vertical-thumb'] ? img.media_details.sizes['vertical-thumb'].source_url : img.media_details.sizes.full.source_url;
           alt = img.alt_text;
           return array = {
             url: url,
@@ -65666,35 +65639,41 @@ module.exports = function() {
 },{}],173:[function(require,module,exports){
 module.exports = function($rootScope, $timeout) {
   var createScene, parseDuration, scrollmagic;
-  parseDuration = function(options, element) {
-    var duration, value;
-    if (typeof options.duration === 'string' && options.duration.match(/^(\.|\d)*\d+vh$/)) {
-      duration = options.duration.replace('vh', '%');
+  parseDuration = function(duration, element) {
+    var value;
+    if (typeof duration === 'string' && duration.match(/^(\.|\d)*\d+vh$/)) {
+      duration = duration.replace('vh', '%');
     } else {
-      if (typeof options.duration === 'string' && options.duration.match(/^(\.|\d)*\d+%$/)) {
-        value = parseFloat(options.duration) / 100;
+      if (typeof duration === 'string' && duration.match(/^(\.|\d)*\d+%$/)) {
+        value = parseFloat(duration) / 100;
         element = typeof element === 'string' ? document.querySelector(element) : element;
         duration = element.offsetHeight * value;
       } else {
-        duration = parseFloat(options.duration);
+        duration = parseFloat(duration);
       }
     }
     return duration;
   };
   createScene = function(element, config) {
-    var classEl, durationElement, options, pinEl, pseudoRegex, scene, speed, triggerElement, tween, tweenEl;
+    var classEl, durationElement, offsetElement, options, pinEl, pseudoRegex, scene, speed, triggerElement, tween, tweenEl;
     triggerElement = config.triggerElement || element[0];
     if (typeof config.duration !== 'undefined') {
       durationElement = typeof config.durationElement !== 'undefined' ? config.durationElement : triggerElement;
-      config.duration = parseDuration(config, durationElement);
+      config.duration = parseDuration(config.duration, durationElement);
     } else {
       config.duration = 0;
+    }
+    if (typeof config.offset !== 'undefined') {
+      offsetElement = typeof config.durationElement !== 'undefined' ? config.durationElement : triggerElement;
+      config.offset = parseDuration(config.offset, offsetElement);
+    } else {
+      config.offset = 0;
     }
     options = {
       triggerElement: config.triggerElement || element[0],
       triggerHook: config.triggerHook || 0.5,
       duration: config.duration,
-      offset: config.offset || 0
+      offset: config.offset
     };
     $rootScope.$on('sceneDestroy', function() {
       if (scene && !config.fixed) {
@@ -66158,7 +66137,7 @@ window.controller = new ScrollMagic.Controller();
 
 catellani = angular.module('catellani', ['ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']);
 
-require(178);
+require(179);
 
 require(167);
 
@@ -66166,18 +66145,208 @@ require(156);
 
 require(162);
 
-require(183);
+require(184);
 
 
-},{"1":1,"102":102,"156":156,"162":162,"167":167,"178":178,"183":183,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],178:[function(require,module,exports){
+},{"1":1,"102":102,"156":156,"162":162,"167":167,"179":179,"184":184,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],178:[function(require,module,exports){
+var animationCover, animationDiv, animationInner, closeBlocks;
+
+animationDiv = angular.element(document.querySelector('.transitioner'));
+
+animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
+
+animationCover = angular.element(document.querySelector('.transitioner__cover'));
+
+closeBlocks = function(size) {
+  animationDiv.removeClass('transitioner--flex');
+  animationDiv.removeClass('transitioner--flex-start');
+  animationDiv.removeClass('transitioner--flex-end');
+  animationInner.removeClass("transitioner__wrapper--s12");
+  TweenMax.set(animationCover, {
+    clearProps: 'width'
+  });
+};
+
+exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState) {
+  var cover, coverAnim, deferred, element, item, prev, rect, size, tl, total;
+  deferred = $q.defer();
+  prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
+  if ($rootScope.PreviousState.Name !== 'collection' && (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null)) {
+    deferred.resolve(true);
+    return deferred.promise;
+  }
+  $timeout(function() {
+    $rootScope.isTransitionerActive = true;
+  });
+  element = angular.element(document.querySelector("[data-item-slug='" + $stateParams.slug + "']"));
+  cover = element.attr('data-item-background');
+  item = element.attr('data-carousel-item');
+  total = element.attr('data-item-total');
+  size = element.attr('data-item-size');
+  animationInner.addClass("transitioner__wrapper--s" + size);
+  TweenMax.set(animationCover, {
+    backgroundImage: "url(" + cover + ")"
+  });
+  animationDiv.addClass('transitioner--flex');
+  if (item === "0") {
+    animationDiv.addClass('transitioner--flex-start');
+  }
+  if (item === total) {
+    animationDiv.addClass('transitioner--flex-end');
+  }
+  rect = animationDiv[0].getBoundingClientRect();
+  $rootScope.transitionerSize = 12;
+  $rootScope.carouselIndex = item;
+  tl = new TimelineMax();
+  coverAnim = {
+    to: {
+      width: rect.width,
+      onComplete: function() {
+        $timeout(function() {
+          deferred.resolve(true);
+        }, 0);
+        $timeout(function() {
+          animationDiv.removeClass('transitioner--flex');
+          animationDiv.removeClass('transitioner--flex-start');
+          animationDiv.removeClass('transitioner--flex-end');
+          animationInner.removeClass("transitioner__wrapper--s12");
+          TweenMax.set(animationCover, {
+            clearProps: 'width'
+          });
+        }, 550);
+        animationInner.removeClass("transitioner__wrapper--s" + size);
+        animationInner.addClass("transitioner__wrapper--s12");
+      }
+    }
+  };
+  tl.to(animationCover, .5, coverAnim.to).to({
+    val: 0
+  }, .5, {
+    val: 1,
+    onCompleteParams: ['{self}'],
+    delay: .05,
+    onComplete: function() {
+      closeBlocks($rootScope.transitionerSize);
+      $timeout(function() {
+        $rootScope.isAnim = false;
+      });
+    }
+  });
+  TweenMax.to(animationCover, .5, coverAnim.to);
+  return deferred.promise;
+};
+
+exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState) {
+  var cover, coverAnim, deferred, element, item, perc, prev, ratio, rect, size, tl, total;
+  deferred = $q.defer();
+  prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
+  if ($rootScope.PreviousState.Name !== 'page' && (document.querySelector(".header--lampade") == null)) {
+    deferred.resolve(true);
+    return deferred.promise;
+  }
+  $timeout(function() {
+    $rootScope.isTransitionerActive = true;
+  });
+  element = angular.element(document.querySelector(".header--lampade"));
+  cover = element.attr('data-item-background');
+  item = element.attr('data-carousel-item');
+  total = element.attr('data-item-total');
+  size = element.attr('data-item-size');
+  animationInner.addClass("transitioner__wrapper--s12");
+  TweenMax.set(animationCover, {
+    backgroundImage: "url(" + cover + ")"
+  });
+  animationDiv.addClass('transitioner--flex');
+  if (item === "0") {
+    animationDiv.addClass('transitioner--flex-start');
+  }
+  if (item === total) {
+    animationDiv.addClass('transitioner--flex-end');
+  }
+  animationDiv.addClass('transitioner--flex-dark');
+  ratio = 12 / size;
+  perc = 100 * ratio;
+  rect = animationDiv[0].getBoundingClientRect();
+  $rootScope.transitionerSize = size;
+  $rootScope.carouselIndex = item;
+  TweenMax.set(animationCover, {
+    width: rect.width
+  });
+  tl = new TimelineMax();
+  coverAnim = {
+    to: {
+      width: "100%",
+      delay: .5,
+      onStart: function() {
+        return $timeout(function() {
+          deferred.resolve(true);
+        }, 0);
+      },
+      onComplete: function() {
+        animationDiv.removeClass('transitioner--flex-dark');
+      }
+    }
+  };
+  tl.to(animationCover, .5, coverAnim.to).to({
+    val: 0
+  }, .5, {
+    val: 1,
+    onCompleteParams: ['{self}'],
+    delay: .05,
+    onComplete: function() {
+      closeBlocks($rootScope.transitionerSize);
+      $timeout(function() {
+        $rootScope.isAnim = false;
+      });
+    }
+  });
+  animationInner.removeClass("transitioner__wrapper--s12");
+  animationInner.addClass("transitioner__wrapper--s" + size);
+  return deferred.promise;
+};
+
+exports.prev = function($rootScope, $timeout, $q) {
+  var body, deferred, height, tl;
+  body = angular.element(document.body);
+  deferred = $q.defer();
+  if (!$rootScope.prevElement) {
+    deferred.resolve(true);
+    return deferred.promise;
+  }
+  tl = new TimelineMax();
+  height = body.hasClass('admin-bar') ? 'calc(100vh - 32px)' : '100vh';
+  controller.scrollTo(function(newPos) {
+    tl.to(window, .5, {
+      scrollTo: {
+        y: newPos
+      }
+    });
+  });
+  controller.scrollTo($rootScope.prevElement[0]);
+  tl.to($rootScope.prevElement, .5, {
+    height: height,
+    onComplete: function() {
+      $rootScope.prevElement.addClass('next--fixed');
+      return $timeout(function() {
+        window.scrollTo(0, 0);
+        deferred.resolve(true);
+      }, 0);
+    }
+  });
+  return deferred.promise;
+};
+
+
+},{}],179:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.config(["$stateProvider", "$locationProvider", require(181)]).run([
+catellani.config(["$stateProvider", "$locationProvider", require(182)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", function($transitions, $state, $location, $rootScope, $timeout) {
     var oldUrl;
     $rootScope.isFinish = true;
+    $rootScope.isAnim = 'is-anim';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
@@ -66189,8 +66358,12 @@ catellani.config(["$stateProvider", "$locationProvider", require(181)]).run([
       });
       $rootScope.fromState = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : $rootScope.fromState;
       if (newUrl === oldUrl) {
+        $rootScope.isAnim = false;
+      }
+      if (newUrl === oldUrl) {
         return false;
       }
+      $rootScope.isAnim = 'is-anim';
       from = $rootScope.from ? $rootScope.from : trans.$from().name.replace('app.', '');
       to = trans.$to().name.replace('app.', '');
       $rootScope.isFinish = false;
@@ -66203,9 +66376,12 @@ catellani.config(["$stateProvider", "$locationProvider", require(181)]).run([
 ]);
 
 
-},{"181":181}],179:[function(require,module,exports){
+},{"182":182}],180:[function(require,module,exports){
 module.exports = function($q, $timeout, $rootScope) {
   var deferred;
+  if ($rootScope.prevElement) {
+    return;
+  }
   deferred = $q.defer();
   if ($rootScope.scrollFrom > 0) {
     TweenMax.to(window, .3, {
@@ -66226,7 +66402,7 @@ module.exports = function($q, $timeout, $rootScope) {
 };
 
 
-},{}],180:[function(require,module,exports){
+},{}],181:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
   $scope.type = $scope.post.type;
@@ -66237,6 +66413,9 @@ module.exports = function($rootScope, $scope, data) {
   if ($rootScope.isMenu) {
     $rootScope.isMenu = false;
   }
+  if ($rootScope.isPopup) {
+    $rootScope.isPopup = false;
+  }
   $rootScope.breadcrumbs = $scope.post.breadcrumbs;
   if ($scope.post.type !== 'lampade') {
     $rootScope.fromElement = false;
@@ -66244,7 +66423,7 @@ module.exports = function($rootScope, $scope, data) {
 };
 
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 module.exports = function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
@@ -66297,13 +66476,14 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)]
     },
-    controller: ["$rootScope", "$scope", "data", require(180)]
+    controller: ["$rootScope", "$scope", "data", require(181)]
   }).state('app.page', {
     url: '/:slug',
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
+      PrevBefore: ["$rootScope", "$timeout", "$q", require(178).prev],
       data: [
         "$stateParams", "$q", "WPAPI", function($stateParams, $q, WPAPI) {
           var deferred, wp;
@@ -66319,17 +66499,19 @@ module.exports = function($stateProvider, $locationProvider) {
         }
       ],
       PreviousState: [
-        "$state", "$rootScope", function($state, $rootScope) {
+        "$state", "$rootScope", "$stateParams", function($state, $rootScope, $stateParams) {
           $rootScope.PreviousState = {
             Name: $state.current.name,
             Params: $state.params,
-            URL: $state.href($state.current.name, $state.params)
+            URL: $state.href($state.current.name, $state.params),
+            Slug: $stateParams.slug
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(178).single]
     },
-    controller: ["$rootScope", "$scope", "data", require(180)]
+    controller: ["$rootScope", "$scope", "data", require(181)]
   }).state('app.collection', {
     url: '/{collection:(?:collection|collezioni)}/:name',
     params: {
@@ -66362,9 +66544,10 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(178).collection]
     },
-    controller: ["$rootScope", "data", "$scope", require(182)]
+    controller: ["$rootScope", "data", "$scope", require(183)]
   }).state('app.glossary', {
     url: "/" + vars.main.glossary + "/:name",
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
@@ -66392,14 +66575,14 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(179)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)]
     },
-    controller: ["$rootScope", "data", "$scope", require(182)]
+    controller: ["$rootScope", "data", "$scope", require(183)]
   });
 };
 
 
-},{"179":179,"180":180,"182":182}],182:[function(require,module,exports){
+},{"178":178,"180":180,"181":181,"183":183}],183:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
   $scope.content = data.content;
   $rootScope.title = data.yoats_title;
@@ -66409,7 +66592,7 @@ module.exports = function($rootScope, data, $scope) {
 };
 
 
-},{}],183:[function(require,module,exports){
+},{}],184:[function(require,module,exports){
 var WPAPI, catellani, wp;
 
 WPAPI = require(153);

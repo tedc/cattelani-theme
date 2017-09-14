@@ -19,8 +19,8 @@
 		    break;
 		}
 		$i++;
-	}
-	$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'"';
+	} 
+	$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($post->ID)).'"';
 	endif;
 ?>
 <header class="header header--shrink header--<?php echo get_post_type(); ?> <?php echo $className; ?> <?php echo ($kind == 0) ? 'header--grow-md-bottom' : 'header--grow-lg-bottom'; ?>"<?php echo $data; ?>>

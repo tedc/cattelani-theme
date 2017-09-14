@@ -52,20 +52,38 @@ catellani
 					scope.goto = (index, params)->
 						scrollbar.removeListener()
 						if scrollbar.isVisible items[index]
-							$state.go 'app.page', params
+							if index isnt 0
+								left = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
+								scrollbar.scrollTo left, 0, 0, ->
+									scope.isState = on
+									scope.currentState = params.slug
+									$timeout ->
+										$state.go 'app.page', params
+										return
+									, 400
+									return
+							else
+								$timeout ->
+									$state.go 'app.page', params
+									return
+								, 400
 						else
-							left = items[index].offsetLeft
+							width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
+							left = if index is 0 then items[index].offsetLeft else width
 							scrollbar.scrollTo left, 0, 0, ->
 								scope.isState = on
 								scope.currentState = params.slug
 								$timeout ->
 									$state.go 'app.page', params
 									return
-								, 450
+								, 400
 								return
 						return
 					scope.$on 'collection_change', (evt, data)->
-						scrollbar.scrollIntoView(items[data.index])
+						index = data.index
+						width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
+						left = if index is 0 then items[index].offsetLeft else width
+						scrollbar.setPosition left, 0
 						return
 					
 
@@ -87,6 +105,16 @@ catellani
 			link : (scope, element, attr)->
 				element.on 'click', ->
 					$rootScope.fromElement = element
+					return
+				return
+	]
+	.directive 'nextElement', ['$rootScope', ($rootScope)->
+		clicked =
+			restrict : 'A'
+			link : (scope, element, attr)->
+				element.on 'click', ->
+					element.addClass 'next--active'
+					$rootScope.prevElement = element
 					return
 				return
 	]

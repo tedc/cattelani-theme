@@ -324,6 +324,12 @@
 	transform: translate3d(-50%, 0%, 0);
 	line-height: 1;
 	z-index: 9995;
+	opacity: 1;
+	transition: transform $speed, opacity $speed;
+	.is-anim & {
+		transform: translate3d(-50%, $p*-2, 0);
+		opacity: 0;
+	}
 	@extend .banner__tools--grow-md-top;
 	.admin-bar.logged-in & {
 		top: 32px;
@@ -382,6 +388,13 @@
 					content: '';
 					animation: scroll $speed*3 $speed infinite;
 				}
+			}
+			transition: $speed transform, $speed opacity;
+			transform: translate3d(0, 0, 0);
+			opacity: 1;
+			.is-anim & {
+				transform: translate3d(0, $p*2, 0);
+				opacity: 0;
 			}
 		}
 	}

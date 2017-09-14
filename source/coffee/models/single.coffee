@@ -6,6 +6,7 @@ module.exports = ($rootScope, $scope, data)->
 	$rootScope.lang_menu = $scope.post.wpml_menu
 	$rootScope.body_class = $scope.post.body_class + vars.main.logged_classes
 	$rootScope.isMenu = off if $rootScope.isMenu
+	$rootScope.isPopup = off if $rootScope.isPopup
 	$rootScope.breadcrumbs = $scope.post.breadcrumbs
 	$rootScope.fromElement = off if $scope.post.type isnt 'lampade'
 	return

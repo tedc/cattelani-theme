@@ -1,4 +1,5 @@
 module.exports = ($q, $timeout, $rootScope)->
+	return if $rootScope.prevElement
 	deferred = $q.defer()
 	if $rootScope.scrollFrom > 0
 		TweenMax.to window, .3,

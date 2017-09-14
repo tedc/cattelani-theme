@@ -26,5 +26,12 @@
 	&__td {
 		padding-right: em($p*2);
 		text-transform: uppercase;
+		&:before {
+			display: inline-block;
+			padding-top: em($p);
+			width: 0;
+			content: '';
+			vertical-align: top;
+		}
 	}
 }
