@@ -64428,55 +64428,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.animation('.search__cell', function() {
-  var search;
-  return search = {
-    leave: function(element, done) {
-      var content, mask, tl, w;
-      tl = new TimelineMax();
-      w = element[0].offsetWidth;
-      content = element[0].querySelector('.search__content');
-      mask = element[0].querySelector('.search__mask');
-      tl.set(content, {
-        width: w
-      }).to(mask, .5, {
-        scaleY: 1
-      }).to(element, .5, {
-        width: 0,
-        onComplete: function() {
-          TweenMax.set([mask, element], {
-            clearProps: 'all'
-          });
-          done();
-        }
-      });
-    },
-    enter: function(element, done) {
-      var content, mask, tl, w;
-      tl = new TimelineMax();
-      w = element[0].offsetWidth;
-      content = element[0].querySelector('.search__content');
-      mask = element[0].querySelector('.search__mask');
-      tl.set(content, {
-        width: w
-      }).set(mask, {
-        scaleY: 1
-      }).fromTo(element, .5, {
-        width: 0
-      }, {
-        width: w
-      }).to(mask, .5, {
-        scaleY: 0,
-        onComplete: function() {
-          TweenMax.set([mask, element, content], {
-            clearProps: 'all'
-          });
-          done();
-        }
-      });
-    }
-  };
-}).animation('.banner', ["$timeout", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia__slider', [
+catellani.animation('.banner', ["$timeout", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia__slider', [
   "$rootScope", "$timeout", function($rootScope) {
     var storia;
     return storia = {
@@ -64717,7 +64669,7 @@ module.exports = function($rootScope, $timeout, $state) {
       element.addClass('view-enter');
       if (!$rootScope.isTransitionerActive) {
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .49, {
+          TweenMax.fromTo(element, .75, {
             yPercent: fromY
           }, {
             yPercent: toY,
@@ -64802,7 +64754,7 @@ module.exports = function($rootScope, $timeout, $state) {
       if (!$rootScope.isTransitionerActive) {
         element.addClass('view-leave');
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .5, {
+          TweenMax.fromTo(element, .75, {
             yPercent: fromY
           }, {
             yPercent: toY,
@@ -64917,13 +64869,7 @@ module.exports = function() {
         $scope.select = {
           periodi: false
         };
-        $scope.collection = function(id) {
-          if (id !== false) {
-            $rootScope.$broadcast('collection_changed', {
-              id: id
-            });
-          }
-        };
+        $scope.page = 1;
         $scope.change = function(s, i) {
           $scope.projects[s] = i.id;
           $scope.select[s] = i.name;
@@ -64953,14 +64899,19 @@ module.exports = function() {
           collectionValue = $scope.projects.collezioni ? $scope.projects.collezioni : 0;
           collectionPar = collectionValue === 0 ? 'collezioni_exclude' : 'collezioni';
           kindPar = kindValue === 0 ? 'tipologie_exclude' : 'tipologie';
-          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after);
+          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
         };
         query().then(function(results) {
           $timeout(function() {
             $scope.items = results;
+            $scope.page += 1;
+            if ($scope.page > parseInt(res._paging.totalPages)) {
+              $scope.isNotLoading = true;
+            }
           }, 0);
         });
         $scope.$on('projects_changed', function() {
+          $scope.page = 1;
           query().then(function(results) {
             if (angular.equals(results, $scope.items)) {
               return;
@@ -64971,6 +64922,17 @@ module.exports = function() {
           });
           return;
         });
+        $scope.$on('loadPojects', function() {
+          query().then(function(results) {
+            if (angular.equals(results, $scope.items)) {
+              return;
+            }
+            return $timeout(function() {
+              $scope.items = results;
+            }, 0);
+          });
+        });
+        $scope.$broadcast('loadPojects');
         $scope.image = function(item) {
           var alt, array, img, url;
           img = item._embedded['wp:featuredmedia'][0];
@@ -65570,8 +65532,8 @@ module.exports = function() {
   return search = {
     scope: true,
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI) {
-        var getAll, lang, per_page, wp;
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate) {
+        var close, getAll, lang, per_page, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('wp/v2', 'lampade/', {
           params: ['collezioni', 'posizioni', 'fonti']
@@ -65598,11 +65560,17 @@ module.exports = function() {
             });
           }
         };
+        $scope.isLoading = false;
         $scope.change = function(s, i) {
+          $scope.isLoading = true;
           $scope.search[s] = i.id;
           $scope.select[s] = i.name;
           $scope.isSelect[s] = false;
           $rootScope.$broadcast('scrollBarUpdate');
+        };
+        $scope.clear = function(s) {
+          $scope.isLoading = true;
+          $scope.search[s] = '';
         };
         wp.collections().lang(lang).then(function(res) {
           $scope.collections = res;
@@ -65644,13 +65612,14 @@ module.exports = function() {
             return;
           }
           $rootScope.isSearch = true;
+          $scope.isLoading = true;
           if (per_page > 100) {
-            getAll(wp.products().perPage(per_page)).then(function(results) {
+            getAll(wp.products().perPage(per_page)).embed().order('asc').orderby('title').then(function(results) {
               $scope.items = results;
               $rootScope.$broadcast('scrollBarUpdate');
             });
           } else {
-            wp.products().embed().perPage(per_page).then(function(results) {
+            wp.products().embed().order('asc').orderby('title').perPage(per_page).then(function(results) {
               $timeout(function() {
                 $scope.items = results;
                 $rootScope.$broadcast('scrollBarUpdate');
@@ -65658,6 +65627,23 @@ module.exports = function() {
             });
           }
         };
+        wrapper = angular.element(document.querySelector('.search__items'));
+        close = function(element, phase) {
+          var searchTimeout;
+          if (phase === 'close') {
+            searchTimeout = $timeout(function() {
+              $timeout.cancel(searchTimeout);
+              $scope.isLoading = false;
+            }, 250);
+          }
+        };
+        $animate.on('leave', wrapper, close);
+        $animate.on('enter', wrapper, close);
+        $scope.$on('search_ended', function() {
+          $timeout(function() {
+            $scope.isLoading = false;
+          }, 250);
+        });
         $rootScope.modal = function(id) {
           $rootScope.oldMenu = $rootScope.isMenu;
           $rootScope.isMenu = false;
@@ -66337,6 +66323,7 @@ exports.prev = function($rootScope, $timeout, $q) {
       $rootScope.prevElement.addClass('next--fixed');
       return $timeout(function() {
         window.scrollTo(0, 0);
+        deferred.resolve(true);
       }, 0);
     }
   });
@@ -66350,7 +66337,7 @@ var catellani;
 catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", require(182)]).run([
-  "$transitions", "$state", "$location", "$rootScope", "$timeout", function($transitions, $state, $location, $rootScope, $timeout) {
+  "$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", function($transitions, $state, $location, $rootScope, $timeout, angularLoad) {
     var oldUrl;
     $rootScope.isFinish = true;
     $rootScope.isAnim = 'is-anim';

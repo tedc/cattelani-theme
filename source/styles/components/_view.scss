@@ -44,7 +44,7 @@
 	opacity: 0;
 	transition: {
 		property : opacity, visibility;
-		duration : 0;
+		duration : $speed/2;
 	}
 	justify-content: center;
 	&:before {

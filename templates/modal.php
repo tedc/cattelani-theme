@@ -8,4 +8,3 @@
 	<?php get_template_part('templates/modal', 'downloads'); ?>
 	<?php get_template_part('templates/modal', 'languages'); ?>
 </div>
-<?php get_template_part('templates/modal', 'video'); ?>

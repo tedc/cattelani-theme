@@ -1,7 +1,7 @@
 module.exports = ->
 	search =
 		scope : true
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate)->
 			wp = WPAPI
 			wp.products = wp.registerRoute 'wp/v2', 'lampade/', params : ['collezioni', 'posizioni', 'fonti']
 			wp.collections = wp.registerRoute 'wp/v2', 'collezioni/', params : ['lang']
@@ -17,14 +17,19 @@ module.exports = ->
 				$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
 				return
 
+			$scope.isLoading = off
 			$scope.change = (s, i)->
 				#e.stopPropagation();
+				$scope.isLoading = on
 				$scope.search[s] = i.id
 				$scope.select[s] = i.name
 				$scope.isSelect[s] = false
 				$rootScope.$broadcast 'scrollBarUpdate'
 				return
-			
+			$scope.clear = (s)->
+				$scope.isLoading = on
+				$scope.search[s] = ''
+				return
 			wp
 				.collections()
 				.lang lang
@@ -65,8 +70,12 @@ module.exports = ->
 			$rootScope.startSearch = ->
 				return if $rootScope.isSearch
 				$rootScope.isSearch = on
+				$scope.isLoading = on
 				if per_page > 100
 					getAll wp.products().perPage per_page 
+						.embed()
+						.order 'asc'
+						.orderby 'title'
 						.then (results)->
 							$scope.items = results
 							$rootScope.$broadcast 'scrollBarUpdate'
@@ -75,6 +84,8 @@ module.exports = ->
 					wp
 						.products()
 						.embed()
+						.order 'asc'
+						.orderby 'title'
 						.perPage per_page
 						.then (results)->
 							$timeout ->
@@ -83,6 +94,23 @@ module.exports = ->
 								return
 							, 0
 							return
+				return
+			wrapper = angular.element document.querySelector '.search__items'
+			close =  (element, phase)->
+				if phase is 'close'
+					searchTimeout = $timeout ->
+						$timeout.cancel searchTimeout
+						$scope.isLoading = off
+						return
+					, 250
+				return
+			$animate.on 'leave', wrapper, close
+			$animate.on 'enter', wrapper, close
+			$scope.$on 'search_ended', ->
+				$timeout ->
+					$scope.isLoading = off
+					return
+				, 250
 				return
 			## MODAL
 			$rootScope.modal = (id)->

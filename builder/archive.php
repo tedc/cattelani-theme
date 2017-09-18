@@ -51,4 +51,5 @@
 			</span>
 		</a>
 	</div>
+	<?php loader('projects', 'loadProjects'); ?>
 </div>

@@ -444,6 +444,10 @@
 		transition: background-color $speed, visibility $speed, opacity $speed;
 		visibility: hidden;
 		opacity: 0;
+		&:before {
+			display: inline-block;
+			transform: translate3d(10%, 0, 0);
+		}
 		&:hover {
 			background-color: transparentize($w, .4);
 		}

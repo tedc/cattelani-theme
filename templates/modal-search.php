@@ -8,7 +8,7 @@
 				<span class="search__value" ng-bind-html="(search.collezioni ? select['collezioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();search.collezioni = '';"></i>
+					<i class="icon-close" ng-click="$event.stopPropagation();clear('collezioni')"></i>
 				</span>
 				<select ng-model="search.collezioni" ng-options="opt.id as opt.name for opt in collections">			
 					<option value=""></option>
@@ -23,7 +23,7 @@
 				<span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();search.posizioni = '';"></i>
+					<i class="icon-close" ng-click="$event.stopPropagation();clear('posizioni')"></i>
 				</span>
 				<select ng-model="search.posizioni" ng-options="opt.id as opt.name for opt in positions">			
 					<option value=""></option>
@@ -38,7 +38,7 @@
 				<span class="search__value" ng-bind-html="(search.fonti ? select['sources'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();search.fonti = '';"></i>
+					<i class="icon-close" ng-click="$event.stopPropagation();clear('fonti')"></i>
 				</span>
 				<select ng-model="search.fonti" ng-options="opt.id as opt.name for opt in sources">			
 					<option value=""></option>
@@ -49,8 +49,11 @@
 				</ul>
 			</div>
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar>
-			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})">
+		<div class="search__items search__items--shrink-fw" scrollbar ng-class="{'search__items--loading':isLoading}">
+			<div class="search__loader">
+				<div class="search__spinner"></div>
+			</div>
+			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
 					<span class="search__figure" ng-if="item.featured_media > 0">
 						<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />

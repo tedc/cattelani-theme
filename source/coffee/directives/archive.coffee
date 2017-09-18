@@ -21,9 +21,7 @@ module.exports = ->
 			$scope.select = {
 				periodi : false
 			}
-			$scope.collection = (id)->
-				$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
-				return
+			$scope.page = 1
 
 			$scope.change = (s, i)->
 				#e.stopPropagation();
@@ -67,14 +65,18 @@ module.exports = ->
 					.param(kindPar, kindValue)
 					.before(before)
 					.after(after)
+					.page $scope.page
 			query()
 				.then (results)->
 					$timeout ->
 						$scope.items = results
+						$scope.page += 1
+						$scope.isNotLoading = on if $scope.page > parseInt res._paging.totalPages
 						return
 					, 0
 					return
 			$scope.$on 'projects_changed', ->
+				$scope.page = 1
 				query()
 					.then (results)->
 						return if angular.equals results, $scope.items
@@ -84,6 +86,16 @@ module.exports = ->
 						, 0
 					return
 				return
+			$scope.$on 'loadPojects', ->
+				query()
+					.then (results)->
+						return if angular.equals results, $scope.items
+						$timeout ->
+							$scope.items = results
+							return
+						, 0
+					return
+			$scope.$broadcast 'loadPojects'
 			$scope.image = (item)->
 				img = item._embedded['wp:featuredmedia'][0]
 				url = if img.media_details.sizes.large then img.media_details.sizes.large.source_url else img.media_details.sizes.full.source_url

@@ -1,12 +1,13 @@
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
-	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", ($transitions, $state, $location, $rootScope, $timeout)->
+	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", ($transitions, $state, $location, $rootScope, $timeout, angularLoad)->
 		$rootScope.isFinish = on
 		$rootScope.isAnim = 'is-anim'
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
+		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onStart {}, (trans)->
 			$rootScope.scrollFrom = document.body.scrollTop
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})

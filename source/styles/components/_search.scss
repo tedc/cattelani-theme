@@ -20,6 +20,10 @@
 	&__cell {
 		@include grow('md');
 		position: relative;
+		transition: {
+			property: transform, visibility, opacity;
+			duration: $speed*1.5;
+		}
 		display: block;
 		overflow: hidden;
 		@include breakpoint() {
@@ -100,7 +104,42 @@
 		margin-top: em($p*2);
 		.scroll-content {
 			display: flex;
+			position: relative;
 			flex-wrap: wrap;
+		}
+		@for $n from 1 through 60 {
+			&:nth-child(#{$n}) {
+				$late: ($n - 1) * 0.015s;
+				transition-delay: $late;
+			}
+		}
+		&--loading {
+			.search__cell {
+				opacity: 0;
+				visibility: hidden;
+				transform: translate3d(0, $p, 0);
+				@for $n from 1 through 60 {
+					&:nth-child(#{$n}) {
+						$late: (60 - ($n - 1)) * 0.015s;
+						transition-delay: $late;
+					}
+				}
+			}
+		}
+	}
+	&__loader {
+		position: absolute;
+		left: 50%;
+		transform: translate3d(-50%, 0, 0);
+		max-height: none;
+		top: 0;
+		transition: {
+			property: visibility, opacity;
+			duration: $speed;
+		}
+		.search__items--loading & {
+			visibility: visible;
+			opacity: 1;
 		}
 	}
 }

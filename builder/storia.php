@@ -55,7 +55,7 @@
 			</h2>
 			<?php include(locate_template( 'templates/content-single-'.$s->post_type .'.php', false, true)); ?>
 			<footer class="type-anni__footer anni__footer--shrink type-anni__footer--grid type-anni__footer--grow-md-top">
-				<span class="type-anni__send"><?php _e('Torna alla storia', 'catellani'); ?></span>
+				<span class="type-anni__send" ng-click="isYearsActive = !isYearsActive"><?php _e('Torna alla storia', 'catellani'); ?></span>
 				<?php 
 					$oldPost = $post;
 					$post = $s;
