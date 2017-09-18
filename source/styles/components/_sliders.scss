@@ -129,6 +129,11 @@
 		.is-anim & {
 			visibility: visible;
 			opacity: 1;
+		}	
+		.is-anim .ng-enter & {
+			&:before {
+				display: none;
+			}
 		}
 	}
 	&__spinner {
@@ -383,7 +388,12 @@
 				.is-anim & {
 					&:before {
 						transition: none !important;
-						animation: loading $speed*4 infinite;
+						animation: loading $speed*2 infinite;
+					}
+				}
+				.is-anim .ng-enter & {
+					&:before {
+						display: none;
 					}
 				}
 			}
