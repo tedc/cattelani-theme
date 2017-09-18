@@ -66,5 +66,8 @@
 		.section__cell--text & {
 			transform-delay: $speed;
 		}
+		.section--active & {
+			transform: scaleX(1) translateZ(0);
+		}
 	}
 }
