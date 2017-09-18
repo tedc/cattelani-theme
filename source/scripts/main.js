@@ -64681,7 +64681,6 @@ module.exports = function($rootScope, $timeout, $state) {
                 TweenMax.set(element, {
                   clearProps: 'all'
                 });
-                $rootScope.isAnim = false;
               });
             }
           });
@@ -64727,7 +64726,6 @@ module.exports = function($rootScope, $timeout, $state) {
       if ($rootScope.prevElement) {
         element.removeClass('view-enter');
         done();
-        $rootScope.isAnim = false;
       }
     },
     leave: function(element, done) {
@@ -66414,6 +66412,7 @@ module.exports = function($rootScope, $scope, data) {
   if ($scope.post.type !== 'lampade') {
     $rootScope.fromElement = false;
   }
+  $rootScope.isAnim = false;
 };
 
 
@@ -66583,6 +66582,7 @@ module.exports = function($rootScope, data, $scope) {
   $rootScope.lang_menu = data.wpml_menu[0];
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;
+  $rootScope.isAnim = false;
 };
 
 

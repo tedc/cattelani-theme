@@ -44,7 +44,6 @@ module.exports = ($rootScope, $timeout, $state)->
 									element.removeClass 'view-enter'
 									TweenMax.set element,
 										clearProps : 'all'
-									$rootScope.isAnim = off
 									return
 								return
 						}
@@ -81,7 +80,6 @@ module.exports = ($rootScope, $timeout, $state)->
 			if $rootScope.prevElement
 				element.removeClass 'view-enter'
 				done()
-				$rootScope.isAnim = off
 			return
 		leave : (element, done)->
 			prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
