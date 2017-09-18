@@ -611,12 +611,20 @@
 }
 
 @keyframes loading {
-	0%, 100%  {
+	0%  {
+		transform-origin: left center;
+		transform: scaleX(0) translateZ(0);
+	}
+	49% {
+		transform-origin: left center;
+		transform: scaleX(1) translateZ(0);
+	}
+	51%  {
 		transform-origin: right center;
 		transform: scaleX(0) translateZ(0);
 	}
-	50% {
-		transform-origin: left center;
-		transform: scaleX(1) translateZ(0);
+	100%  {
+		transform-origin: right center;
+		transform: scaleX(0) translateZ(0);
 	}
 }
