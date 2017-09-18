@@ -9,5 +9,4 @@ module.exports = ($rootScope, $scope, data)->
 	$rootScope.isPopup = off if $rootScope.isPopup
 	$rootScope.breadcrumbs = $scope.post.breadcrumbs
 	$rootScope.fromElement = off if $scope.post.type isnt 'lampade'
-	$rootScope.isAnim = off
 	return

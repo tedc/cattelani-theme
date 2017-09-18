@@ -15,6 +15,17 @@ module.exports = ($rootScope, $timeout, $state)->
 		enter : (element, done)->
 			prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 			current = $state.current.name.replace 'app.', ''
+			endGlobalTransition = ->
+				TweenMax.to {load:0}, .25,
+					load : 1
+					onCompleteParams: ['{self}']
+					onComplete : ->
+						$timeout ->
+							$rootScope.isAnim = off
+							return
+						, 0
+						return
+				return
 			if current is 'root' 
 				fromY = -100
 				toY = 0
@@ -44,6 +55,7 @@ module.exports = ($rootScope, $timeout, $state)->
 									element.removeClass 'view-enter'
 									TweenMax.set element,
 										clearProps : 'all'
+									endGlobalTransition()
 									return
 								return
 						}
@@ -59,19 +71,18 @@ module.exports = ($rootScope, $timeout, $state)->
 							done()
 							element.removeClass 'view-enter'
 							$rootScope.isTransitionerActive = off
+							endGlobalTransition()
 							return
 				else
 					closeBlocks $rootScope.transitionerSize
 					$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 					done()
-				# $rootScope.isTransitionerActive = off
-				# element.removeClass 'view-enter'
 					TweenMax.to {number : 0}, .1,
 						number : 1
 						onCompleteParams : ['{self}']
 						onComplete : ->
 							$timeout ->
-								#done()
+								endGlobalTransition()
 								element.removeClass 'view-enter'
 								$rootScope.isTransitionerActive = off
 								#element.removeClass 'view-enter'
@@ -80,6 +91,7 @@ module.exports = ($rootScope, $timeout, $state)->
 			if $rootScope.prevElement
 				element.removeClass 'view-enter'
 				done()
+				endGlobalTransition()
 			return
 		leave : (element, done)->
 			prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
