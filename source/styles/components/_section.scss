@@ -12,12 +12,26 @@
 }
 %scale {	
 	transition: transform $speed*1.25;
-	transform: scaleX(0) translateZ(0);
 	overflow: hidden;
-	@extend %scaled;
+	.section__cell--even & {
+		transform: translate3d($f*-1, 0, 0);
+	}	
+	.section__cell--odd & {
+		transform: translate3d($f*1, 0, 0);
+	}
+	.section--active & {
+		transform: translate3d(0, 0, 0);
+	}
 	> * {
-		transform: scaleX(2) translateZ(0);
-		@extend %scaled;
+		.section__cell--even & {
+			transform: translate3d($f*1, 0, 0);
+		}	
+		.section__cell--odd & {
+			transform: translate3d($f*-1, 0, 0);
+		}
+		.section--active & {
+			transform: translate3d(0, 0, 0);
+		}
 	}
 }
 .section {
