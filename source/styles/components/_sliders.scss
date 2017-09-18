@@ -382,7 +382,7 @@
 				}
 				.is-anim & {
 					&:before {
-						animation: loading $speed*2 infinite;
+						animation: loading $speed*4 infinite;
 					}
 				}
 			}
@@ -623,8 +623,12 @@
 		transform-origin: right center;
 		transform: scaleX(0) translateZ(0);
 	}
-	100%  {
+	99%  {
 		transform-origin: right center;
+		transform: scaleX(0) translateZ(0);
+	}
+	100%  {
+		transform-origin: left center;
 		transform: scaleX(0) translateZ(0);
 	}
 }
