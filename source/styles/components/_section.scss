@@ -1,21 +1,23 @@
+
+%scaled {
+	.section__cell--even & {
+		transform-origin: left center;
+	}	
+	.section__cell--odd & {
+		transform-origin: right center;
+	}
+	.section--active & {
+		transform: scaleX(1) translateZ(0)
+	}
+}
 %scale {	
 	transition: transform $speed*1.25;
 	transform: scaleX(0) translateZ(0);
 	overflow: hidden;
-	.section--active & {
-		transform: scaleX(1) translateZ(0)
-	}
+	@extend %scaled;
 	> * {
 		transform: scaleX(2) translateZ(0);
-		.section__cell--even & {
-			transform-origin: left center;
-		}	
-		.section__cell--odd & {
-			transform-origin: right center;
-		}
-		.section--active & {
-			transform: scaleX(1) translateZ(0)
-		}
+		@extend %scaled;
 	}
 }
 .section {
