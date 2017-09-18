@@ -56,8 +56,8 @@
 		@include full;
 		z-index: 20;
 		background-color: $w;
-		transition: transform $speed*1.5;
-		transform: scaleX(0) translateZ(0);
+		transition: transform $speed;
+		transform: scaleX(1) translateZ(0);
 		[class*="gray"] & {
 			background-color: $lighter-color;
 		}
@@ -68,10 +68,10 @@
 			transform-origin: right center;
 		}
 		.section__cell--text & {
-			transition-delay: $speed;
+			transition-delay: $speed*0.75;
 		}
 		.section--active & {
-			transform: scaleX(1) translateZ(0);
+			transform: scaleX(0) translateZ(0);
 		}
 	}
 }
