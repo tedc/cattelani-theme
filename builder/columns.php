@@ -1,4 +1,4 @@
-<div class="section section--shrink-fw section--grid section--grow-lg<?php echo (get_sub_field('column_right')) ? ' section--end' : ''; ?><?php echo (get_sub_field('background')) ? ' section--'.get_sub_field('background') : ''; ?><?php scrollmagic('"triggerHook":0.45,"class":"section--active","reverse":false'); ?>>
+<div class="section section--shrink-fw section--grid section--grow-lg<?php echo (get_sub_field('column_right')) ? ' section--end' : ''; ?><?php echo (get_sub_field('background')) ? ' section--'.get_sub_field('background') : ''; ?>"<?php scrollmagic('"triggerHook":0.45,"class":"section--active","reverse":false'); ?>>
 <?php 
 $col = 0;
 while(have_rows('column')) : the_row('column'); 
