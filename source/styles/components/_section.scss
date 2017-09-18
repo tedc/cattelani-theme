@@ -23,6 +23,7 @@
 		transform: translate3d(0, 0, 0);
 	}
 	> * {
+		transition: transform $speed*1.25;
 		.section__cell--even & {
 			transform: translate3d($f*1, 0, 0);
 		}	
