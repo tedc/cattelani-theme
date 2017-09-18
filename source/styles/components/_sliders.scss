@@ -121,29 +121,37 @@
 		position: relative;
 		color: $w;
 		padding: 0 em($p, 34px);
-		overflow: hidden;
-		transform: translate3d(0, $f, 0);
-		transition: transform $speed;
-		.collections--slider-h & {
-			padding-bottom: em(30px, 34px);
-		}
-		// @extend %line_before;
+		// overflow: hidden;
+		// transform: translate3d(0, $f, 0);
+		// transition: transform $speed;
+		// .collections--slider-h & {
+		// 	padding-bottom: em(30px, 34px);
+		// }
+		// // @extend %line_before;
+		// .collections__cell:hover & {
+		// 	transform: translate3d(0, 0%, 0);			
+		// }
+		// .collections__cell--current &, .collections__cell--current:hover & {
+		// 	transform: translate3d(0, $f, 0);			
+		// }
+		@extend %line_before;
 		.collections__cell:hover & {
-			transform: translate3d(0, 0%, 0);			
-		}
-		.collections__cell--current &, .collections__cell--current:hover & {
-			transform: translate3d(0, $f, 0);			
+			&:before {
+				transform-origin: left center;
+				transform: scaleX(1) translateZ(0);
+			}
 		}
 		span {
-			display: inline-block;
-			transform: translate3d(0, $f*-1, 0);
-			transition: transform $speed;
-			.collections__cell:hover & {
-				transform: translate3d(0, 0%, 0);			
-			}
-			.collections__cell--current &, .collections__cell--current:hover & {
-				transform: translate3d(0, $f*-1, 0);			
-			}
+			position: relative;
+			// display: inline-block;
+			// transform: translate3d(0, $f*-1, 0);
+			// transition: transform $speed;
+			// .collections__cell:hover & {
+			// 	transform: translate3d(0, 0%, 0);			
+			// }
+			// .collections__cell--current &, .collections__cell--current:hover & {
+			// 	transform: translate3d(0, $f*-1, 0);			
+			// }
 		}
 
 	}
