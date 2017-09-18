@@ -382,6 +382,7 @@
 				}
 				.is-anim & {
 					&:before {
+						transition: none !important;
 						animation: loading $speed*4 infinite;
 					}
 				}
@@ -621,7 +622,7 @@
 	}
 	51%  {
 		transform-origin: right center;
-		transform: scaleX(0) translateZ(0);
+		transform: scaleX(1) translateZ(0);
 	}
 	99%  {
 		transform-origin: right center;
