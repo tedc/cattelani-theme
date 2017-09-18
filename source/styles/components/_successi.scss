@@ -5,7 +5,19 @@
 	}
 	&__content {
 		position: relative;
-		@include grow('lg');
+		@include grow('lg');	
+		> * {
+			position: relative;
+			transition: opacity $speed $speed/2, transform $speed $speed/2;
+			.desktop & {
+				opacity: 0;
+				transform: translate3d(0, $p, 0);
+			}
+			.desktop .successes__items--active & {
+				opacity: 1;
+				transform: translate3d(0, 0, 0);
+			}
+		}
 		&:before {
 			content: '';
 			position: absolute;
@@ -14,13 +26,19 @@
 			right: 0;
 			height: $f;
 			background-color: $lighter-color;
+			transition: transform $speed !important;
 			[class*="-inverted"] & {
 				left: 0;
 				right: auto;
 			}
-		}
-		> * {
-			position: relative;
+			.desktop & {
+				opacity: 1 !important;
+				transform: scaleX(0) translateZ(0) !important;
+				transform-origin: right center;
+			}
+			.desktop .successes__items--active & {
+				transform: scaleX(1) translateZ(0) !important;
+			}
 		}
 		h2, h3, h4, h5 {
 			font: {
@@ -41,6 +59,7 @@
 	&__cell {
 		@include grow('lg');
 		&--image {
+			transition: opacity $speed;
 			position: relative;
 			min-height: 75vw;
 			z-index: 2;
@@ -55,6 +74,15 @@
 				order: 1;
 				background-position: right bottom;
 			}
+			transition: opacity $speed $speed, transform $speed $speed;
+			.desktop & {
+				opacity: 0;
+				transform: translate3d(0, $p, 0);
+			}
+			.desktop .successes__items--active & {
+				opacity: 1;
+				transform: translate3d(0, 0, 0);
+			}
 		}
 		&--content {
 			[class*="-inverted"] & {
@@ -66,6 +94,15 @@
 		@include grow('lg', 'top');
 		span {
 			font-size: em(14px);
+		}	
+		transition: opacity $speed $speed/2, transform $speed $speed/2;
+		.desktop & {
+			opacity: 0;
+			transform: translate3d(0, $p, 0);
+		}
+		.desktop .successes__items--active & {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
 		}
 	}
 }

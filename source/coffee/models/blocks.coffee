@@ -41,19 +41,6 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Previous
 		to :
 			width : rect.width
 			onComplete : ->
-				$timeout ->
-					deferred.resolve on
-					return
-				, 0
-				$timeout ->
-					animationDiv.removeClass 'transitioner--flex'
-					animationDiv.removeClass 'transitioner--flex-start'
-					animationDiv.removeClass 'transitioner--flex-end'
-					animationInner.removeClass "transitioner__wrapper--s12"
-					TweenMax.set animationCover,
-						clearProps : 'width'
-					return
-				, 550
 				animationInner.removeClass "transitioner__wrapper--s#{size}"
 				animationInner.addClass "transitioner__wrapper--s12"
 				return
@@ -64,8 +51,9 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Previous
 			onCompleteParams : ['{self}']
 			delay : .05
 			onComplete : ->
-				closeBlocks $rootScope.transitionerSize
+				#closeBlocks $rootScope.transitionerSize
 				$timeout ->
+					deferred.resolve on
 					$rootScope.isAnim = off
 					return
 				return
@@ -106,26 +94,31 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		to :
 			width : "100%"
 			delay : .5
-			onStart : ->
+			# onStart : ->
+			# 	$timeout ->
+			# 		deferred.resolve on
+			# 		return
+			# 	, 0
+			onComplete : ->
 				$timeout ->
 					deferred.resolve on
 					return
 				, 0
-			onComplete : ->
-				animationDiv.removeClass 'transitioner--flex-dark'
+				#animationDiv.removeClass 'transitioner--flex-dark'
 				return
 	tl
 		.to animationCover, .5, coverAnim.to
-		.to {val : 0}, .5,
-			val : 1
-			onCompleteParams : ['{self}']
-			delay : .05
-			onComplete : ->
-				closeBlocks $rootScope.transitionerSize
-				$timeout ->
-					$rootScope.isAnim = off
-					return
-				return
+		# .to {val : 0}, .5,
+		# 	val : 1
+		# 	onCompleteParams : ['{self}']
+		# 	delay : .05
+		# 	onComplete : ->
+		# 		closeBlocks $rootScope.transitionerSize
+		# 		$timeout ->
+		# 			deferred.resolve on
+		# 			$rootScope.isAnim = off
+		# 			return
+		# 		return
 	animationInner.removeClass "transitioner__wrapper--s12"
 	animationInner.addClass "transitioner__wrapper--s#{size}"
 	return deferred.promise

@@ -64556,15 +64556,15 @@ module.exports = function($timeout) {
       clearProps: 'all'
     });
   };
-  LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .3, {
+  LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .5, {
     y: 0,
     opacity: 1
   }, .05);
-  RightStagger = TweenMax.staggerTo('.menu__item', .3, {
+  RightStagger = TweenMax.staggerTo('.menu__item', .5, {
     y: 0,
     opacity: 1
   }, .05);
-  TL.to('.main', .3, {
+  TL.to('.main', .5, {
     opacity: 0.8,
     onReverseComplete: endStagger
   }).to(['.banner__aside', '.banner__menu'], .5, {
@@ -64680,7 +64680,20 @@ module.exports = function($rootScope, $timeout) {
 
 },{}],160:[function(require,module,exports){
 module.exports = function($rootScope, $timeout, $state) {
-  var views;
+  var animationCover, animationDiv, animationInner, closeBlocks, views;
+  animationDiv = angular.element(document.querySelector('.transitioner'));
+  animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
+  animationCover = angular.element(document.querySelector('.transitioner__cover'));
+  closeBlocks = function(size) {
+    animationDiv.removeClass('transitioner--flex');
+    animationDiv.removeClass('transitioner--flex-start');
+    animationDiv.removeClass('transitioner--flex-end');
+    animationInner.removeClass("transitioner__wrapper--s12");
+    animationInner.removeClass("transitioner__wrapper--s" + size);
+    TweenMax.set(animationCover, {
+      clearProps: 'width'
+    });
+  };
   return views = {
     enter: function(element, done) {
       var current, fromY, prev, toY;
@@ -64708,6 +64721,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
+            ease: Power3.easeOut,
             onComplete: function() {
               $timeout(function() {
                 done();
@@ -64721,22 +64735,42 @@ module.exports = function($rootScope, $timeout, $state) {
           });
         }
       } else {
-        $rootScope.$broadcast('collection_change', {
-          index: $rootScope.carouselIndex
-        });
-        TweenMax.to({
-          number: 0
-        }, .1, {
-          number: 1,
-          onCompleteParams: ['{self}'],
-          onComplete: function() {
-            $timeout(function() {
+        if (animationDiv.hasClass('transitioner--flex-dark')) {
+          animationDiv.removeClass('transitioner--flex-dark');
+          TweenMax.to({
+            number: 0
+          }, .5, {
+            number: 1,
+            onCompleteParams: ['{self}'],
+            onComplete: function() {
+              closeBlocks($rootScope.transitionerSize);
+              $rootScope.$broadcast('collection_change', {
+                index: $rootScope.carouselIndex
+              });
               done();
+              element.removeClass('view-enter');
               $rootScope.isTransitionerActive = false;
-              element.addClass('view-enter');
-            });
-          }
-        });
+            }
+          });
+        } else {
+          closeBlocks($rootScope.transitionerSize);
+          $rootScope.$broadcast('collection_change', {
+            index: $rootScope.carouselIndex
+          });
+          done();
+          TweenMax.to({
+            number: 0
+          }, .1, {
+            number: 1,
+            onCompleteParams: ['{self}'],
+            onComplete: function() {
+              $timeout(function() {
+                element.removeClass('view-enter');
+                $rootScope.isTransitionerActive = false;
+              });
+            }
+          });
+        }
       }
       if ($rootScope.prevElement) {
         element.removeClass('view-enter');
@@ -64765,8 +64799,8 @@ module.exports = function($rootScope, $timeout, $state) {
         fromY = 0;
         toY = -100;
       }
-      element.addClass('view-leave');
       if (!$rootScope.isTransitionerActive) {
+        element.addClass('view-leave');
         if (!$rootScope.prevElement) {
           TweenMax.fromTo(element, .5, {
             yPercent: fromY
@@ -64785,9 +64819,9 @@ module.exports = function($rootScope, $timeout, $state) {
         }
       } else {
         done();
-        element.removeClass('view-leave');
       }
       if ($rootScope.prevElement) {
+        element.addClass('view-leave');
         element.addClass('view-leave-prev');
         element.removeClass('view-leave');
         TweenMax.to({
@@ -65673,7 +65707,8 @@ module.exports = function($rootScope, $timeout) {
       triggerElement: config.triggerElement || element[0],
       triggerHook: config.triggerHook || 0.5,
       duration: config.duration,
-      offset: config.offset
+      offset: config.offset,
+      reverse: config.reverse || true
     };
     $rootScope.$on('sceneDestroy', function() {
       if (scene && !config.fixed) {
@@ -66202,18 +66237,6 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, 
     to: {
       width: rect.width,
       onComplete: function() {
-        $timeout(function() {
-          deferred.resolve(true);
-        }, 0);
-        $timeout(function() {
-          animationDiv.removeClass('transitioner--flex');
-          animationDiv.removeClass('transitioner--flex-start');
-          animationDiv.removeClass('transitioner--flex-end');
-          animationInner.removeClass("transitioner__wrapper--s12");
-          TweenMax.set(animationCover, {
-            clearProps: 'width'
-          });
-        }, 550);
         animationInner.removeClass("transitioner__wrapper--s" + size);
         animationInner.addClass("transitioner__wrapper--s12");
       }
@@ -66226,8 +66249,8 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, 
     onCompleteParams: ['{self}'],
     delay: .05,
     onComplete: function() {
-      closeBlocks($rootScope.transitionerSize);
       $timeout(function() {
+        deferred.resolve(true);
         $rootScope.isAnim = false;
       });
     }
@@ -66277,29 +66300,14 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
     to: {
       width: "100%",
       delay: .5,
-      onStart: function() {
-        return $timeout(function() {
+      onComplete: function() {
+        $timeout(function() {
           deferred.resolve(true);
         }, 0);
-      },
-      onComplete: function() {
-        animationDiv.removeClass('transitioner--flex-dark');
       }
     }
   };
-  tl.to(animationCover, .5, coverAnim.to).to({
-    val: 0
-  }, .5, {
-    val: 1,
-    onCompleteParams: ['{self}'],
-    delay: .05,
-    onComplete: function() {
-      closeBlocks($rootScope.transitionerSize);
-      $timeout(function() {
-        $rootScope.isAnim = false;
-      });
-    }
-  });
+  tl.to(animationCover, .5, coverAnim.to);
   animationInner.removeClass("transitioner__wrapper--s12");
   animationInner.addClass("transitioner__wrapper--s" + size);
   return deferred.promise;
@@ -66329,7 +66337,6 @@ exports.prev = function($rootScope, $timeout, $q) {
       $rootScope.prevElement.addClass('next--fixed');
       return $timeout(function() {
         window.scrollTo(0, 0);
-        deferred.resolve(true);
       }, 0);
     }
   });

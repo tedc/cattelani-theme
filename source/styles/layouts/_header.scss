@@ -100,6 +100,7 @@
 		z-index: 9999;
 		top: em($p);
 		@include normalize_padding;
+		transition: $speed opacity;
 		svg {
 			height: em($p*2);
 			width: em(93px);
@@ -112,6 +113,9 @@
 		}
 		.logged-in.admin-bar & {
 			top: calc(#{em($p)} + 32px);
+		}
+		&:hover {
+			opacity: .5;
 		}
 	}
 	&__tools {
@@ -128,6 +132,17 @@
 		color: $light-color;
 		margin-left: em($p);
 		position: relative;
+		&--search {
+			i {
+				transition: transform $speed;
+				transform: scale(1) translateZ(0);
+			}
+			&:hover {
+				i {
+					transform: scale(0.9) translateZ(0);
+				}
+			}
+		}
 		&--toggle {
 			&:before {
 				content: attr(data-label);
@@ -139,12 +154,12 @@
 		&--active {	
 			&:hover {
 				.banner__line--center {
-					&:after {
-						transform: rotate(45deg) translateZ(0);
+					&:after, &:before {
+						transform: rotate(0deg) translateZ(0) scaleX(0.75);
 					}
-					&:before {
-						transform: rotate(-45deg) translateZ(0);
-					}
+					// &:before {
+					// 	transform: rotate(45deg) translateZ(0) scaleX(0.75);
+					// }
 				}
 			}
 		}
@@ -152,13 +167,18 @@
 	&__line {
 		@extend %open_close;
 		&--top {
-			.menu-opened &
-			 {
+			.banner__btn:hover & {
+				transform: scaleX(0.75) translateZ(0);
+			}
+			.menu-opened & {
 				opacity: 0;
 				transform: traslate3d(0, $f*-1, 0);
 			}
 		}
 		&--bottom {
+			.banner__btn:hover & {
+				transform: scaleX(0.75) translateZ(0);
+			}
 			.menu-opened & {
 				opacity: 0;
 				transform: traslate3d(0, $f, 0);
@@ -184,6 +204,7 @@
 	&__label {
 		display: inline-block;
 		padding-right: em($p);
+		transition: opacity $speed;
 		.banner__btn--toggle & {
 			position: absolute;
 			padding-right: 0;
@@ -192,7 +213,10 @@
 			transform: translate3d(0, -50%, 0);	
 			transition: $speed visibility, opacity $speed;
 		}
-		.banner__btn--active & {
+		.banner__btn:hover & {
+			opacity: .5;
+		}
+		.banner__btn--active &, .banner__btn--active:hover & {
 			visibility: hidden;
 			opacity: 0;
 		}
@@ -202,6 +226,10 @@
 			.banner__btn--active & {
 				visibility: visible;
 				opacity: 1;
+			}
+			.banner__btn--active:hover & {
+				visibility: visible;
+				opacity: .5;
 			}
 		}
 	}

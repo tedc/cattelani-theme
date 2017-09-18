@@ -12,6 +12,7 @@
 		$rot: 0;
 		$translate: percentage($circle-size / $item-size) / 2;
 		&:before {
+			transition: box-shadow $speed;
 			position: absolute;
 			top: 50%;
 			left: 50%;
@@ -78,7 +79,7 @@
 				}
 				visibility: hidden;
 				opacity: 0;
-				.manifesto--active & {
+				&-active {
 					visibility: visible;
 					opacity: 1;
 				}
@@ -112,6 +113,11 @@
 					border-bottom: 0;
 				}
 			}
+			&:hover, &--active {
+				&:before {
+					box-shadow: 0 0 $p transparentize(#fbcf00, .2);
+				}
+			}
 		}
 	}
 	&__content {
@@ -120,7 +126,7 @@
 		@include breakpoint(1020px) {
 			position: absolute;
 			width: (180/1379) * 100vw;
-			border-bottom: 1px solid $w;
+			border-bottom: 0;
 			padding-bottom: em($p/2);	
 			transition: margin-bottom $speed .125s;
 			.manifesto__item--active & {
@@ -204,10 +210,14 @@
 	&__line {
 		@include breakpoint(1020px) {
 			position: absolute;
+			opacity: .35;
 			top: $f;
 			left: $f;
 			background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><line x1='0' y1='0' x2='100%' y2='100%' stroke='#fff' stroke-width='1'/></svg>") no-repeat;
-			transition: height $speed .125s;
+			transition: height $speed .125s, opacity $speed;
+			.manifesto__item:hover & {
+				opacity: 1;
+			}
 			.manifesto__item--active & {
 				transition: none;
 			}
@@ -272,6 +282,12 @@
 				left: 50%;
 				transform: translate3d(-50%, 0, 0);
 			}
+			[data-manifesto-item="4"] &, [data-manifesto-item="5"] & {
+				padding-left: em($p/2, 14px);
+			}
+			[data-manifesto-item="1"] &, [data-manifesto-item="2"] & {
+				padding-right: em($p/2, 14px);
+			}
 		}
 	}
 	&__name {
@@ -281,13 +297,22 @@
 		@include breakpoint(1020px) {
 			font-weight: 200;
 			color: $w;
-			transition: margin-bottom $speed;
+			transition: margin-bottom $speed, transform $speed;
+			.manifesto__item:hover & {
+				transform: translate3d(0, ($p/2)*-1, 0)
+			}
 			.manifesto__item--active & {
-				transition: none;
+				transition: transform $speed;
 			}
 			font-size: vw(24px);
 			display: inline-block;
 			position: relative;
+			[data-manifesto-item="4"] &, [data-manifesto-item="5"] & {
+				padding-left: em($p/2, 24px);
+			}
+			[data-manifesto-item="1"] &, [data-manifesto-item="2"] & {
+				padding-right: em($p/2, 24px);
+			}
 		}
 	}
 }

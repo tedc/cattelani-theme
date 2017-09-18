@@ -29,7 +29,7 @@
 			color: $w;
 		}
 	}
-	@include grow('lg');
+	@include grow();
 	&__container {
 		align-items: center;
 		@include grow('md', 'bottom');

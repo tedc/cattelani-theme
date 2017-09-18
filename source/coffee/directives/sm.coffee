@@ -27,6 +27,7 @@ module.exports = ($rootScope, $timeout)->
 			triggerHook : config.triggerHook or 0.5
 			duration : config.duration
 			offset : config.offset
+			reverse : config.reverse or on
 		$rootScope.$on 'sceneDestroy', ->
 			scene.destroy() if scene and not config.fixed
 			return

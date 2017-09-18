@@ -22,14 +22,21 @@
 
 %arrows {
 	@extend [class^="icon"];
+	transition: visibility $speed, opacity $speed;
 	cursor: pointer;
 	&:before {
 		@extend .icon-arrow:before;
 		font-size: 8px;
-		transition: color $speed;
+		transition: color $speed, transform $speed;
+		display: inline-block;
+		transform: translate3d(0,0,0);
 		&:hover {
 			color: $alternate-color;
 		}
+	}
+	&.swiper-button-disabled {
+		visibility: hidden;
+		opacity: 0;
 	}
 }
 
@@ -147,6 +154,11 @@
 	&__slider {
 		@include full;
 		overflow: hidden;
+		&--home {
+			.swiper-wrapper {
+				transition-timing-function: ceaser($easeOutQuad);
+			}
+		}
 		&--archive {
 			height: 100vh;
 			.logged-in.admin-bar & {
@@ -177,10 +189,7 @@
 			.swiper-slide {
 				position: relative;
 				flex: 0 0 auto;
-				background-color: $main-color;
-				&:nth-child(even) {
-					background-color: $alternate-color;
-				}
+				@include cover;
 			}
 		}
 		&--slides {
@@ -223,6 +232,9 @@
 					font-size: $p/2;
 					color: $light-color;
 				}
+				&:hover:before {
+					transform: translate3d($p/2, 0, 0);
+				}
 				margin-bottom: em($p/2);
 				position: absolute;
 				bottom: 0;
@@ -238,6 +250,9 @@
 				}
 				@include breakpoint() {
 					left: em($p);
+				}
+				&:hover:before {
+					transform: translate3d($p/2, 0, 0);
 				}
 			}
 			.swiper-button-next {
@@ -302,48 +317,6 @@
 			&:after {
 				right: 0;
 			}
-			&__item {
-				position: absolute;
-				width: $p;
-				height: $p;
-				transform: translate3d(-50%, -50%, 0);
-				top: 50%;
-				left: 50%;
-				cursor: pointer;
-				transition: {
-					property: visbility, opacity, margin-bottom;
-					duration: $speed;
-				}
-				&:before {
-					@include full;
-					content: '';
-					border-radius: $p;
-					border: 1px solid $light-color;
-					transform: translateZ(0) scale(0);
-					transition: transform $speed;
-				}
-				&:after {
-					position: absolute;
-					content: '';
-					width: 5px;
-					height: 5px;
-					left: 50%;
-					top: 50%;
-					transform: translate3d(-50%, -50%, 0);
-					border-radius: $p;
-					background-color: transparentize($light-color, .5);
-				}
-				&:hover {
-					.swiper-slide__name {
-						opacity: 1;
-						visibility: visible;
-						margin-bottom: $p/2;
-					}
-					&:before {
-						transform: translateZ(0) scale(1);
-					}
-				}
-			}
 			&__link {
 				visibility: hidden;
 				opacity: 0;
@@ -376,13 +349,55 @@
 				visibility: hidden;
 				transition: {
 					property: visbility, opacity, margin-bottom;
-					duration: $speed;
+					duration: $speed*1.5;
 				}
 				font-size: em(18px);
 				font-family: $alternate-font;
 				color: $light-color;
 				transform: translate3d(-50%, 0, 0);
 				left: $f/2;
+			}
+			&__item {
+				position: absolute;
+				width: $p;
+				height: $p;
+				transform: translate3d(-50%, -50%, 0);
+				top: 50%;
+				left: 50%;
+				cursor: pointer;
+				transition: {
+					property: visbility, opacity, margin-bottom;
+					duration: $speed*1.5;
+				}
+				&:before {
+					@include full;
+					content: '';
+					border-radius: $p;
+					border: 1px solid $light-color;
+					transform: translateZ(0) scale(0);
+					transition: transform $speed*1.5;
+				}
+				&:after {
+					position: absolute;
+					content: '';
+					width: 5px;
+					height: 5px;
+					left: 50%;
+					top: 50%;
+					transform: translate3d(-50%, -50%, 0);
+					border-radius: $p;
+					background-color: transparentize($light-color, .5);
+				}
+				&:hover {
+					.swiper-slide__name {
+						opacity: 1;
+						visibility: visible;
+						margin-bottom: $p/2;
+					}
+					&:before {
+						transform: translateZ(0) scale(1);
+					}
+				}
 			}
 			&-active {
 				&:before, &:after, .swiper-slide__item {
@@ -400,8 +415,27 @@
 			color: $light-color;
 			font-size: $p/2;
 			cursor: pointer;
+			transition: {
+				property: visibility, opacity;
+				duration: $speed;
+			}				
+			&.swiper-button-disabled {
+				visibility: hidden;
+				opacity: 0;
+			}
+			&:before {
+				display: inline-block;
+				transition: transform $speed;
+				transform: translate3d(0,0,0);
+			}
+			&:hover:before {
+				transform: translate3d($p/2, 0, 0);
+			}
 			&-prev {
 				transform: scaleX(-1) translate3d(0, 0, 0);
+				&:hover:before {
+					transform: translate3d($p/2, 0, 0);
+				}
 			}
 		}
 	}
@@ -442,10 +476,13 @@
 		}
 	}
 	.swiper-button-prev, .swiper-button-next {
-		@extend %arrows;	
+		@extend %arrows;
 	}
 	.swiper-button-prev {
 		order: 0;
+		&:hover:before {
+			transform: translate3d($p/2, 0, 0);
+		}
 	}
 	.swiper-pagination {
 		order: 1;

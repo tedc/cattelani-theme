@@ -4,6 +4,7 @@
 	position: absolute;
 	height: 100vh;
 	overflow: hidden !important;
+	display: none;
 	.logged-in.admin-bar & {
 		height: calc(100vh - 32px);
 	}
@@ -14,10 +15,13 @@
 	}
 	&.view-enter {
 		z-index: 3;
+		display: block;
 	}
 	&.view-leave {
+		display: block;
 		&-prev {
 			z-index: 5;
+			display: block;
 		}
 		&-scroll {
 			height: auto;

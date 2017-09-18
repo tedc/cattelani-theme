@@ -4,6 +4,19 @@
 	color: $w;
 	text-align: center;
 	position: relative;
+	transition: padding $speed*1.5;
+	&--grow-double {
+		padding: {
+			top: em($p*4);
+			bottom: em($p*4);
+		}
+		@include breakpoint() {
+			padding: {
+				top: em($p*8);
+				bottom: em($p*8);
+			}
+		}
+	}
 	&--fixed {
 		top: 0;
 		left: 0;

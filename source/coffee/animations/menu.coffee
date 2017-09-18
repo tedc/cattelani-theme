@@ -6,10 +6,10 @@ module.exports = ($timeout)->
 		#console.log TL.reversed()
 		TweenMax.to ['.banner__nav', '.main'], .5, { clearProps : 'all' } 
 		return
-	LeftStagger = TweenMax.staggerTo ['.banner__footer', '.banner__quote'], .3, { y : 0, opacity : 1}, .05
-	RightStagger = TweenMax.staggerTo '.menu__item', .3, { y : 0, opacity : 1}, .05
+	LeftStagger = TweenMax.staggerTo ['.banner__footer', '.banner__quote'], .5, { y : 0, opacity : 1}, .05
+	RightStagger = TweenMax.staggerTo '.menu__item', .5, { y : 0, opacity : 1}, .05
 	TL
-		.to '.main', .3,
+		.to '.main', .5,
 			opacity : 0.8
 			onReverseComplete : endStagger	
 		.to ['.banner__aside', '.banner__menu'], .5,
