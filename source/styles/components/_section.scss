@@ -1,3 +1,23 @@
+%scale {	
+	transition: transform $speed*1.25;
+	transform: scaleX(0) translateZ(0);
+	overflow: hidden;
+	.section--active & {
+		transform: scaleX(1) translateZ(0)
+	}
+	> * {
+		transform: scaleX(2) translateZ(0);
+		.section__cell--even & {
+			transform-origin: left center;
+		}	
+		.section__cell--odd & {
+			transform-origin: right center;
+		}
+		.section--active & {
+			transform: scaleX(1) translateZ(0)
+		}
+	}
+}
 .section {
 	&--end {
 		@include breakpoint() {
@@ -25,6 +45,7 @@
 	&__content {
 		@include grow('lg');
 		position: relative;
+		@extend %scale;
 	}
 	&__text, &__link, &__sign {
 		@include grow('md', 'top');
@@ -50,28 +71,29 @@
 		}
 		&-container {
 			position: relative;
+			@extend %scale;
 		}
 	}
-	&__mask {
-		@include full;
-		z-index: 20;
-		background-color: $w;
-		transition: transform $speed;
-		transform: scaleX(1) translateZ(0);
-		[class*="gray"] & {
-			background-color: $lighter-color;
-		}
-		.section__cell--even & {
-			transform-origin: left center;
-		}
-		.section__cell--odd & {
-			transform-origin: right center;
-		}
-		.section__cell--text & {
-			transition-delay: $speed*0.75;
-		}
-		.section--active & {
-			transform: scaleX(0) translateZ(0);
-		}
-	}
+	// &__mask {
+	// 	@include full;
+	// 	z-index: 20;
+	// 	background-color: $w;
+	// 	transition: transform $speed*1.25;
+	// 	transform: scaleX(1) translateZ(0);
+	// 	[class*="gray"] & {
+	// 		background-color: $lighter-color;
+	// 	}
+	// 	.section__cell--even & {
+	// 		transform-origin: left center;
+	// 	}
+	// 	.section__cell--odd & {
+	// 		transform-origin: right center;
+	// 	}
+	// 	.section__cell--text & {
+	// 		transition-delay: $speed/2;
+	// 	}
+	// 	.section--active & {
+	// 		transform: scaleX(0) translateZ(0);
+	// 	}
+	// }
 }
