@@ -17,5 +17,5 @@
 	<?php endif; if(get_sub_field('col_sign')) : ?>
 		<p class="section__sign section__sign--grow-md-top section__sign--lighter"><?php the_sub_field('col_sign'); ?></p>
 	<?php endif; endif; ?>
-</div>
 <div class="section__mask"></div>
+</div>

@@ -24,6 +24,7 @@
 	}
 	&__content {
 		@include grow('lg');
+		position: relative;
 	}
 	&__text, &__link, &__sign {
 		@include grow('md', 'top');
@@ -47,6 +48,9 @@
 				}
 			}
 		}
+		&-container {
+			position: relative;
+		}
 	}
 	&__mask {
 		@include full;
@@ -57,10 +61,10 @@
 		[class*="gray"] & {
 			background-color: $lighter-color;
 		}
-		.section__cell--odd & {
+		.section__cell--even & {
 			transform-origin: left center;
 		}
-		.section__cell--even & {
+		.section__cell--odd & {
 			transform-origin: right center;
 		}
 		.section__cell--text & {
