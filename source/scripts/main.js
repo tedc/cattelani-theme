@@ -66235,7 +66235,6 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, 
     onComplete: function() {
       $timeout(function() {
         deferred.resolve(true);
-        $rootScope.isAnim = false;
       });
     }
   });

@@ -54,7 +54,6 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Previous
 				#closeBlocks $rootScope.transitionerSize
 				$timeout ->
 					deferred.resolve on
-					$rootScope.isAnim = off
 					return
 				return
 	TweenMax.to animationCover, .5, coverAnim.to
