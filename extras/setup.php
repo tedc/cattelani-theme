@@ -77,7 +77,7 @@
 			$html .= $item;
 			$c++;
 		}
-		$html .= '</div><i class="icon-arrow icon-arrow-prev" ng-click="move(false)" ng-class="{hide : !isVisible, inactive : !isPrev}"></i><i class="icon-arrow icon-arrow-next" ng-click="move(true)" ng-class="{hide : !isVisible, inactive : !isNext}"></i></div>';
+		$html .= '</div><div class="collections__loader"><div class="collections__spinner"></div></div><i class="icon-arrow icon-arrow-prev" ng-click="move(false)" ng-class="{hide : !isVisible, inactive : !isPrev}"></i><i class="icon-arrow icon-arrow-next" ng-click="move(true)" ng-class="{hide : !isVisible, inactive : !isNext}"></i></div>';
 		return $html;
 	}
 	add_shortcode( 'collezioni', 'collezioni_shortcode' );

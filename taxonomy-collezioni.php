@@ -27,6 +27,7 @@
 		wp_reset_postdata();
 		?>
 	</div>
+	<div class="collections__loader"><div class="collections__spinner"></div></div>
 	<i class="icon-arrow icon-arrow-prev" ng-click="move(false)" ng-class="{hide : !isVisible, inactive : !isPrev}"></i>
 	<i class="icon-arrow icon-arrow-next" ng-click="move(true)" ng-class="{hide : !isVisible, inactive : !isNext}"></i>
 </div>
