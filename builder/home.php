@@ -25,8 +25,7 @@
 			<span class="swiper-slide__item">
 				<span class="swiper-slide__name"><?php echo $term->name; ?></span>
 			</span>
-			<a ui-sref="app.collection({name : '<?php echo $term->slug; ?>'})" class="swiper-slide__link"><span><?php echo $term->name; ?></span><span class="collections__loader"><span class="collections__spinner"></span></span>
-			</a>
+			<a ui-sref="app.collection({name : '<?php echo $term->slug; ?>'})" class="swiper-slide__link"><span><?php echo $term->name; ?></span></a>
 		</ks-swiper-slide>
 		<?php $index++; endforeach; ?>
 	</ks-swiper-container>
