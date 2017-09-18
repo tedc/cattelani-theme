@@ -66243,7 +66243,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, 
       }
     }
   };
-  tl.to(animationCover, .5, coverAnim.to).to({
+  tl.to(animationCover, .75, coverAnim.to).to({
     val: 0
   }, .5, {
     val: 1,

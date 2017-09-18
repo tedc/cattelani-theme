@@ -48,4 +48,23 @@
 			}
 		}
 	}
+	&__mask {
+		@include full;
+		z-index: 20;
+		background-color: $w;
+		transition: transform $speed*1.5;
+		transform: scaleX(0) translateZ(0);
+		[class*="gray"] & {
+			background-color: $lighter-color;
+		}
+		.section__cell--odd & {
+			transform-origin: left center;
+		}
+		.section__cell--even & {
+			transform-origin: right center;
+		}
+		.section__cell--text & {
+			transform-delay: $speed;
+		}
+	}
 }

@@ -45,7 +45,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Previous
 				animationInner.addClass "transitioner__wrapper--s12"
 				return
 	tl
-		.to animationCover, .5, coverAnim.to
+		.to animationCover, .75, coverAnim.to
 		.to {val : 0}, .5,
 			val : 1
 			onCompleteParams : ['{self}']
