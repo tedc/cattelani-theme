@@ -13,6 +13,7 @@ catellani
 			$rootScope.scrollFrom = document.body.scrollTop
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
 			$rootScope.fromState = if newUrl is oldUrl then trans.$to().name.replace('app.', '') else $rootScope.fromState
+			$rootScope.isLeaving = off if newUrl is oldUrl
 			$rootScope.isAnim = off if newUrl is oldUrl
 			#$rootScope.fromParams = trans.params()
 			return false if newUrl is oldUrl

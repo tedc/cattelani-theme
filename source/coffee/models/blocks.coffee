@@ -11,7 +11,7 @@ closeBlocks = (size)->
 		clearProps : 'width'
 	return
 	
-exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState)->
+exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState)->
 	deferred = $q.defer()
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 	if $rootScope.PreviousState.Name isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
@@ -45,7 +45,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Previous
 				animationInner.addClass "transitioner__wrapper--s12"
 				return
 	tl
-		.to animationCover, .75, coverAnim.to
+		.to animationCover, 1, coverAnim.to
 		.to {val : 0}, .5,
 			val : 1
 			onCompleteParams : ['{self}']
@@ -106,7 +106,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 				#animationDiv.removeClass 'transitioner--flex-dark'
 				return
 	tl
-		.to animationCover, .5, coverAnim.to
+		.to animationCover, 1, coverAnim.to
 		# .to {val : 0}, .5,
 		# 	val : 1
 		# 	onCompleteParams : ['{self}']

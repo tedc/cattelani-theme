@@ -149,7 +149,7 @@
 		.logged-in.admin-bar & {
 			top: 32px;
 		}
-		transition: opacity $speed $speed, visibility $speed $speed; 
+		transition: opacity $speed/2 $speed, visibility $speed/2 $speed; 
 		.menu-opened &, .opened & {
 			visibility: hidden;
 			opacity: 0;

@@ -20,6 +20,11 @@
 				property: visibility, opacity;
 				duration: $speed;
 			}
+			img {
+				display: block;
+				width: $f !important;
+				height: auto !important;
+			}
 		}
 		&__alt {
 			font-size: em(14px);
@@ -27,11 +32,6 @@
 			padding-top: em($p, 14px);
 		}
 
-		img {
-			display: block;
-			width: $f !important;
-			height: auto !important;
-		}
 	}
 	&__header {
 		@include grow('lg');
@@ -271,12 +271,19 @@
 	&__wrapper {
 		@include grow('md');
 	}
-	&__item {
+	&__cell {
 		&--content {
 			display: flex;
 			align-items: center;
 			align-content: center;
 			flex-wrap: wrap;
+		}
+		&--figure {
+			img {
+				display: block;
+				width: $f !important;
+				height: auto !important;
+			}
 		}
 		@include breakpoint() {
 			&--figure {
@@ -286,11 +293,7 @@
 				.anni__wrapper--even & {
 					order: 0;
 				}
-				img {
-					display: block;
-					width: $f !important;
-					height: auto !important;
-				}
+				
 			}
 			&--content {
 				.anni__wrapper--even & {

@@ -2,7 +2,6 @@ module.exports = ($timeout, $rootScope)->
 	ngSwiper =
 		scope : on
 		link : (scope, element, attr)->
-			$rootScope.isYearsActive = off
 			scope.main = {}
 			scope.nav = {}
 			scope.current = 0
@@ -38,6 +37,10 @@ module.exports = ($timeout, $rootScope)->
 							return
 					return
 			
+				return
+			$rootScope.isYearsActive = off
+			scope.expandStory = (cond)->
+				$rootScope.isYearsActive = !$rootScope.isYearsActive
 				return
 			$rootScope.$on 'swiperChaged', ->
 				scope.main.update()

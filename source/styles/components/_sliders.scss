@@ -35,8 +35,7 @@
 		}
 	}
 	&.swiper-button-disabled {
-		visibility: hidden;
-		opacity: 0;
+		opacity: .25;
 	}
 }
 
@@ -108,9 +107,21 @@
 						right: em($p*2, $p/2);
 					}
 				}
-				&.hide, &.inactive {
+				&.hide {
 					opacity: 0;
 					visibility: hidden;
+				}
+				&.inactive {
+					opacity: 0.25;
+					cursor: auto;
+				}
+				&:before {
+					display: inline-block;
+					transform: translate3d(0, 0, 0);
+					transition: $speed transform;
+				}
+				&:not(.inactive):hover:before {
+					transform: translate3d($p/2, 0, 0);
 				}
 			}
 		}
@@ -477,15 +488,14 @@
 				duration: $speed;
 			}				
 			&.swiper-button-disabled {
-				visibility: hidden;
-				opacity: 0;
+				opacity: .25;
 			}
 			&:before {
 				display: inline-block;
 				transition: transform $speed;
 				transform: translate3d(0,0,0);
 			}
-			&:hover:before {
+			&:not(.swiper-button-disabled):hover:before {
 				transform: translate3d($p/2, 0, 0);
 			}
 			&-prev {

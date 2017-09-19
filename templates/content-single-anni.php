@@ -2,7 +2,7 @@
 	<div class="anni anni--grow-lg">
 	<?php $a = 0; foreach(get_field('storia_items', $s->ID) as $item) : ?>
 	<div class="anni__wrapper anni__wrapper--grow-md anni__wrapper--<?php echo ($a%2==0) ? 'even' : 'odd'; ?> anni__wrapper--grid<?php echo ($item['in_evidenza']) ? ' anni__wrapper--full': ''; ?>">
-		<div class="anni__cell anni__cell--shrink anni__cell--figure anni__cell--s<?php echo (get_sub_field('in_evidenza')) ? 12 : 5; ?>"">
+		<div class="anni__cell anni__cell--shrink anni__cell--figure anni__cell--s<?php echo ($item['in_evidenza']) ? 12 : 5; ?>"">
 			<figure class="anni__figure">
 				<?php echo wp_get_attachment_image( $item['immagine_anno']['ID'], 'large', false, '' ); ?>
 			</figure>

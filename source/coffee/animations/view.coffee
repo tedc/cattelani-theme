@@ -48,7 +48,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						}
 						{
 							yPercent : toY
-							ease: Power3.easeInOut
+							ease: Circ.easeIn
 							onComplete : ->
 								$timeout ->
 									done()
@@ -119,7 +119,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						}
 						{
 							yPercent : toY
-							ease: Power3.easeInOut
+							ease: Circ.easeIn
 							onComplete : ->
 								$timeout ->
 									$rootScope.isLeaving = off

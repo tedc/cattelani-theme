@@ -64567,10 +64567,7 @@ module.exports = function($rootScope, $timeout) {
   start = TweenMax.to('.modal', .5, {
     autoAlpha: true
   });
-  mTL.addLabel('start').add(start, 'start').to('.banner__tools', .5, {
-    visibility: 'hidden',
-    opacity: 0
-  }, 'start+=.25').addLabel('elements').addLabel('contacts');
+  mTL.addLabel('start').add(start, 'start').addLabel('elements').addLabel('contacts');
   return modal = {
     addClass: function(element, className, done) {
       var contact, elements, first, id;
@@ -64684,7 +64681,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Power3.easeInOut,
+            ease: Circ.easeIn,
             onComplete: function() {
               $timeout(function() {
                 done();
@@ -64768,7 +64765,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Power3.easeInOut,
+            ease: Circ.easeIn,
             onComplete: function() {
               $timeout(function() {
                 $rootScope.isLeaving = false;
@@ -65003,6 +65000,15 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
         });
         scope.move = function(cond) {
           var item;
+          if (cond) {
+            if (!scope.isNext) {
+              return;
+            }
+          } else {
+            if (!scope.isPrev) {
+              return;
+            }
+          }
           if (scope.inView) {
             item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
           } else {
@@ -65015,19 +65021,15 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           var left, width;
           scrollbar.removeListener();
           if (scrollbar.isVisible(items[index])) {
-            if (index !== 0) {
+            if (index !== 0 && index !== 1 && index !== parseInt(items[item].getAttribute('data-item-total'))) {
               left = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
               scrollbar.scrollTo(left, 0, 750, function() {
                 scope.isState = true;
                 scope.currentState = params.slug;
-                $timeout(function() {
-                  $state.go('app.page', params);
-                }, 400);
+                $state.go('app.page', params);
               });
             } else {
-              $timeout(function() {
-                $state.go('app.page', params);
-              }, 400);
+              $state.go('app.page', params);
             }
           } else {
             width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
@@ -65035,9 +65037,7 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
             scrollbar.scrollTo(left, 0, 750, function() {
               scope.isState = true;
               scope.currentState = params.slug;
-              $timeout(function() {
-                $state.go('app.page', params);
-              }, 400);
+              $state.go('app.page', params);
             });
           }
         };
@@ -66099,7 +66099,6 @@ module.exports = function($timeout, $rootScope) {
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
-      $rootScope.isYearsActive = false;
       scope.main = {};
       scope.nav = {};
       scope.current = 0;
@@ -66141,6 +66140,10 @@ module.exports = function($timeout, $rootScope) {
           }
         });
       });
+      $rootScope.isYearsActive = false;
+      scope.expandStory = function(cond) {
+        $rootScope.isYearsActive = !$rootScope.isYearsActive;
+      };
       $rootScope.$on('swiperChaged', function() {
         scope.main.update();
       });
@@ -66237,7 +66240,7 @@ closeBlocks = function(size) {
   });
 };
 
-exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState) {
+exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState) {
   var cover, coverAnim, deferred, element, item, prev, rect, size, tl, total;
   deferred = $q.defer();
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
@@ -66277,7 +66280,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, 
       }
     }
   };
-  tl.to(animationCover, .75, coverAnim.to).to({
+  tl.to(animationCover, 1, coverAnim.to).to({
     val: 0
   }, .5, {
     val: 1,
@@ -66341,7 +66344,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
       }
     }
   };
-  tl.to(animationCover, .5, coverAnim.to);
+  tl.to(animationCover, 1, coverAnim.to);
   animationInner.removeClass("transitioner__wrapper--s12");
   animationInner.addClass("transitioner__wrapper--s" + size);
   return deferred.promise;
@@ -66403,6 +66406,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(183)]).run([
         absolute: true
       });
       $rootScope.fromState = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : $rootScope.fromState;
+      if (newUrl === oldUrl) {
+        $rootScope.isLeaving = false;
+      }
       if (newUrl === oldUrl) {
         $rootScope.isAnim = false;
       }
@@ -66555,7 +66561,7 @@ module.exports = function($stateProvider, $locationProvider) {
         }
       ],
       ScrollBefore: ["$q", "$timeout", "$rootScope", require(181)],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(179).single]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", require(179).single]
     },
     controller: ["$rootScope", "$scope", "data", require(182)]
   }).state('app.collection', {

@@ -79,20 +79,26 @@
 		overflow: hidden;
 		position: relative;
 		transition: $speed width, $speed height;
+		backface-visibility: hidden;
+		perspective: 1000px;
+		transform-style: preserve-3d;
 		z-index: 1;
 	}
 	&__cover {
 		left: 50%;
-		top: 50%;
-		transform: translate3d(-50%, -50%, 0);
+		top: 0;
+		transform: translate3d(-50%, 0, 0);
+		backface-visibility: hidden;
+		perspective: 1000px;
+		transform-style: preserve-3d;
 		.transitioner--flex-start & {
 			left: 0;
-			transform: translate3d(0%, -50%, 0);
+			transform: translate3d(0%, 0, 0);
 		}
 		.transitioner--flex-end & {
 			left: auto;
 			right: 0;
-			transform: translate3d(0%, -50%, 0);
+			transform: translate3d(0%, 0, 0);
 		}
 	}
 }

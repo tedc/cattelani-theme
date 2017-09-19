@@ -9,10 +9,6 @@ module.exports = ($rootScope, $timeout)->
 	mTL
 		.addLabel 'start'
 		.add start, 'start' 
-		.to '.banner__tools', .5,
-			visibility : 'hidden',
-			opacity : 0
-		, 'start+=.25'
 		.addLabel 'elements'
 		.addLabel 'contacts'
 	modal =

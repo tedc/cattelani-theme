@@ -32,6 +32,10 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 					, 0
 					return
 				scope.move = (cond)->
+					if cond
+						return if not scope.isNext
+					else
+						return if not scope.isPrev
 					if scope.inView
 						item = if cond then scope.inView[0] + 1 else scope.inView[0] - 1
 					else
@@ -42,31 +46,22 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 				scope.goto = (index, params)->
 					scrollbar.removeListener()
 					if scrollbar.isVisible items[index]
-						if index isnt 0
+						if index isnt 0 and index isnt 1 and index isnt parseInt items[item].getAttribute 'data-item-total'
 							left = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 							scrollbar.scrollTo left, 0, 750, ->
 								scope.isState = on
 								scope.currentState = params.slug
-								$timeout ->
-									$state.go 'app.page', params
-									return
-								, 400
-								return
-						else
-							$timeout ->
 								$state.go 'app.page', params
 								return
-							, 400
+						else
+							$state.go 'app.page', params
 					else
 						width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 						left = if index is 0 then items[index].offsetLeft else width
 						scrollbar.scrollTo left, 0, 750, ->
 							scope.isState = on
 							scope.currentState = params.slug
-							$timeout ->
-								$state.go 'app.page', params
-								return
-							, 400
+							$state.go 'app.page', params
 							return
 					return
 				scope.$on 'collection_change', (evt, data)->
