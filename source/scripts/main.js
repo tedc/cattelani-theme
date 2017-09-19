@@ -65051,7 +65051,7 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
         };
         scope.$on('collection_change', function(evt, data) {
           var index, left, width;
-          index = data.index;
+          index = parseInt(data.index);
           console.log(index);
           width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
           left = index === 0 ? items[index].offsetLeft : width;

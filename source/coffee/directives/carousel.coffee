@@ -65,7 +65,7 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 							return
 					return
 				scope.$on 'collection_change', (evt, data)->
-					index = data.index
+					index = parseInt data.index
 					console.log index
 					width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 					left = if index is 0 then items[index].offsetLeft else width
