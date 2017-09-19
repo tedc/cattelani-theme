@@ -65014,7 +65014,7 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           var item;
           if (scope.inView) {
             item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
-            console.log(item);
+            console.log(scope.inView);
           } else {
             item = cond ? 1 : 0;
             console.log(item);
@@ -65056,7 +65056,7 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           index = parseInt(data.index);
           width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
           left = index === 0 ? items[index].offsetLeft : width;
-          console.log(left, scrollbar);
+          left = left > scrollbar.limit.x ? scrollbar.limit.x : left;
           scrollbar.scrollTo(left, 0, 0);
         });
         w.on('resize', function() {
