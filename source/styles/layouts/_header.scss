@@ -67,7 +67,7 @@
 		right: 0;
 		z-index: 9993;
 		background-color: $w;
-		content: '';
+		//content: '';
 		position: fixed;
 		opacity: 0;
 		visibility: hidden;
@@ -304,10 +304,16 @@
 		bottom: 0;
 		right: 0;
 		opacity: 0;
-		transition: opacity $speed;
+		transition: opacity $speed, ;
 		@include grow('md');
 		.menu-opened & {
 			opacity: 1;
+			&:hover {
+				opacity: .5;
+			}
+		}
+		&:hover {
+			opacity: .5;
 		}
 	}
 	&__menu {		
@@ -367,7 +373,8 @@
 }
 
 .breadcrumbs {
-	position: fixed;
+	//position: fixed;
+	position: absolute;
 	font-weight: 200;
 	top: 0;
 	left: 50%;

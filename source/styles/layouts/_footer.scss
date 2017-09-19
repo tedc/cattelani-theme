@@ -58,6 +58,7 @@
 	width: $f;
 	bottom: 0;
 	background-color: $dark-color;
+	background-color: transparent;
 	color: $w;
 	z-index: 9993;
 	padding: {
@@ -67,13 +68,13 @@
 	transition: $speed transform;
 	transform: translate3d(0, $f, 0);
 	@include normalize_padding;
-	display: none;
 	&--active {
 		transform: translate3d(0,0,0);
 	}
 	&__title {
 		font-size: em(24px);
 		margin: 0 em($p/2, 24px);
+		display: none;
 		@include breakpoint(640px, false) {
 			display: none;
 		};
