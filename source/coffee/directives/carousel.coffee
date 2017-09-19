@@ -69,7 +69,7 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 					width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 					left = if index is 0 then items[index].offsetLeft else width
 					console.log left
-					scrollbar.setPosition left, 0
+					scrollbar.scrollTo left, 0, 0
 					return
 				
 

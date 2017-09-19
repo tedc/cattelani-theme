@@ -65055,7 +65055,7 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
           left = index === 0 ? items[index].offsetLeft : width;
           console.log(left);
-          scrollbar.setPosition(left, 0);
+          scrollbar.scrollTo(left, 0, 0);
         });
         w.on('resize', function() {
           $timeout(function() {
