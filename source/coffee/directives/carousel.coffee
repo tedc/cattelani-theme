@@ -30,8 +30,10 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 				scope.move = (cond)->
 					if scope.inView
 						item = if cond then scope.inView[0] + 1 else scope.inView[0] - 1
+						console.log item
 					else
 						item = if cond then 1 else 0
+						console.log item
 					scrollbar.scrollIntoView(items[item])
 					return
 				scope.goto = (index, params)->
@@ -68,7 +70,7 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 					index = parseInt data.index
 					width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 					left = if index is 0 then items[index].offsetLeft else width
-					console.log left
+					console.log left, scrollbar
 					scrollbar.scrollTo left, 0, 0
 					return
 				
