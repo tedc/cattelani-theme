@@ -33,6 +33,7 @@
 	&__nav {
 		position: sticky;
 		z-index: 25;
+		top: em($p*4);
 	}
 	&__items {
 		justify-content: center;
