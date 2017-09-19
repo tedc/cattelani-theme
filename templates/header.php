@@ -52,4 +52,3 @@
     </nav>
 </header>
 <?php get_template_part('templates/modal'); ?>
-<div<?php scrollmagic('"triggerHook":"onLeave","class":{"element":"body","classes":"white"}'); ?>></div>

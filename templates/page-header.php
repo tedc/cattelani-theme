@@ -45,5 +45,5 @@
 		<i class="icon-play" ng-class="{ready : isReady == 'video_<?php echo get_the_ID(); ?>'}" ng-click="open('video_<?php echo get_the_ID(); ?>')"></i>
 	<?php endif; ?>
 </header>
-
+<div<?php scrollmagic('"triggerHook":"onLeave","class":{"element":"body","classes":"white"}'); ?>></div>
 <?php get_template_part('templates/modal', 'video'); ?>
