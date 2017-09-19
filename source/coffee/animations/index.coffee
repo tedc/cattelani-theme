@@ -45,7 +45,7 @@ catellani
 	# 						done()
 	# 						return
 	# 			return
-	.animation '.banner', ["$timeout", require './menu.coffee']
+	.animation '.banner', ["$timeout", "$rootScope", require './menu.coffee']
 	.animation '.modal', ["$rootScope", "$timeout",  require './modal.coffee']
 	.animation '.manifesto__item', ["$rootScope", "$timeout", require './manifesto.coffee']
 	.animation '.storia__slider', ["$rootScope", "$timeout", ($rootScope)->

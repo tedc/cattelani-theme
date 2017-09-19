@@ -1,19 +1,17 @@
-module.exports = ($timeout)->
+module.exports = ($timeout, $rootScope)->
+	$rootScope.isRunning = off
 	TL = new TimelineMax
 			paused : on
 			ease: Linear.easeNone
 	endStagger = ->
 		#console.log TL.reversed()
 		TweenMax.to ['.banner__nav', '.main'], .5, { clearProps : 'all' }
-		isRunning = off
+		$rootScope.isRunning = off
 		return
 	LeftStagger = TweenMax.staggerTo ['.banner__footer', '.banner__quote'], .5, { y : 0, opacity : 1}, .05
 	RightStagger = TweenMax.staggerTo '.menu__item', .5, 
 		y : 0
 		opacity : 1
-		onComplete : ->
-			isRunning = off
-			return
 	, .05
 	TL
 		.to '.main', .5,
@@ -26,11 +24,11 @@ module.exports = ($timeout)->
 			autoAlpha : off
 		, "-=.5"
 		.add [LeftStagger, RightStagger], "+=.5"
-	isRunning = off
+	$rootScope.isRunning = off
 	menu =
 		addClass : (element, className, done)->
-			return if isRunning
-			isRunning = on
+			return if $rootScope.isRunning
+			$rootScope.isRunning = on
 			return if className isnt 'menu-opened'
 			TweenMax.set '.banner__nav',
 				visibility : 'visible'
@@ -40,13 +38,14 @@ module.exports = ($timeout)->
 			TL.
 				eventCallback 'onComplete', ->
 					$timeout ->
+						$rootScope.isRunning = off
 						done()
 						return
 					return
 			return
 		removeClass : (element, className, done)->
-			return if isRunning
-			isRunning = on
+			return if $rootScope.isRunning
+			$rootScope.isRunning = on
 			return if className isnt 'menu-opened'
 			TL
 				.timeScale 1.8
@@ -55,6 +54,7 @@ module.exports = ($timeout)->
 			TL.
 				eventCallback 'onReverseComplete',  ->
 					$timeout ->
+						$rootScope.isRunning = off
 						done()
 						return
 					return

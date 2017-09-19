@@ -64428,7 +64428,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.animation('.banner', ["$timeout", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia__slider', [
+catellani.animation('.banner', ["$timeout", "$rootScope", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia__slider', [
   "$rootScope", "$timeout", function($rootScope) {
     var storia;
     return storia = {
@@ -64497,18 +64497,18 @@ module.exports = function() {
 
 
 },{}],158:[function(require,module,exports){
-module.exports = function($timeout) {
-  var LeftStagger, RightStagger, TL, endStagger, isRunning, menu;
+module.exports = function($timeout, $rootScope) {
+  var LeftStagger, RightStagger, TL, endStagger, menu;
+  $rootScope.isRunning = false;
   TL = new TimelineMax({
     paused: true,
     ease: Linear.easeNone
   });
   endStagger = function() {
-    var isRunning;
     TweenMax.to(['.banner__nav', '.main'], .5, {
       clearProps: 'all'
     });
-    isRunning = false;
+    $rootScope.isRunning = false;
   };
   LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .5, {
     y: 0,
@@ -64516,11 +64516,7 @@ module.exports = function($timeout) {
   }, .05);
   RightStagger = TweenMax.staggerTo('.menu__item', .5, {
     y: 0,
-    opacity: 1,
-    onComplete: function() {
-      var isRunning;
-      isRunning = false;
-    }
+    opacity: 1
   }, .05);
   TL.to('.main', .5, {
     opacity: 0.8,
@@ -64530,13 +64526,13 @@ module.exports = function($timeout) {
   }, "-=.15").to('.banner__btn--search', .5, {
     autoAlpha: false
   }, "-=.5").add([LeftStagger, RightStagger], "+=.5");
-  isRunning = false;
+  $rootScope.isRunning = false;
   return menu = {
     addClass: function(element, className, done) {
-      if (isRunning) {
+      if ($rootScope.isRunning) {
         return;
       }
-      isRunning = true;
+      $rootScope.isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
@@ -64546,21 +64542,23 @@ module.exports = function($timeout) {
       TL.timeScale(1).play();
       TL.eventCallback('onComplete', function() {
         $timeout(function() {
+          $rootScope.isRunning = false;
           done();
         });
       });
     },
     removeClass: function(element, className, done) {
-      if (isRunning) {
+      if ($rootScope.isRunning) {
         return;
       }
-      isRunning = true;
+      $rootScope.isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
       TL.timeScale(1.8).pause(true).reverse();
       TL.eventCallback('onReverseComplete', function() {
         $timeout(function() {
+          $rootScope.isRunning = false;
           done();
         });
       });
