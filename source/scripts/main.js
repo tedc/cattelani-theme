@@ -64498,15 +64498,17 @@ module.exports = function() {
 
 },{}],158:[function(require,module,exports){
 module.exports = function($timeout) {
-  var LeftStagger, RightStagger, TL, endStagger, menu;
+  var LeftStagger, RightStagger, TL, endStagger, isRunning, menu;
   TL = new TimelineMax({
     paused: true,
     ease: Linear.easeNone
   });
   endStagger = function() {
+    var isRunning;
     TweenMax.to(['.banner__nav', '.main'], .5, {
       clearProps: 'all'
     });
+    isRunning = false;
   };
   LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .5, {
     y: 0,
@@ -64514,7 +64516,11 @@ module.exports = function($timeout) {
   }, .05);
   RightStagger = TweenMax.staggerTo('.menu__item', .5, {
     y: 0,
-    opacity: 1
+    opacity: 1,
+    onComplete: function() {
+      var isRunning;
+      isRunning = false;
+    }
   }, .05);
   TL.to('.main', .5, {
     opacity: 0.8,
@@ -64524,8 +64530,13 @@ module.exports = function($timeout) {
   }, "-=.15").to('.banner__btn--search', .5, {
     autoAlpha: false
   }, "-=.5").add([LeftStagger, RightStagger], "+=.5");
+  isRunning = false;
   return menu = {
     addClass: function(element, className, done) {
+      if (isRunning) {
+        return;
+      }
+      isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
@@ -64540,6 +64551,10 @@ module.exports = function($timeout) {
       });
     },
     removeClass: function(element, className, done) {
+      if (isRunning) {
+        return;
+      }
+      isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
