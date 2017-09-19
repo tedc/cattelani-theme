@@ -21,7 +21,7 @@
 	<a class="cat__button" href="#contact" ng-click="$event.preventDefault(); modal('contact');">
 		<span>
 		<?php
-		_e('Conattti'); ?>
+		_e('Contattaci', 'catellani' ); ?>
 		</span>
 		<i class="icon-arrow"></i>
 	</a>

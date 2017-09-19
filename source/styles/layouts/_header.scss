@@ -154,6 +154,7 @@
 		color: $light-color;
 		margin-left: em($p);
 		position: relative;
+		@include grow('md', 'top');
 		&--search {
 			i {
 				transition: transform $speed;
@@ -173,7 +174,7 @@
 				visibility: hidden;
 			}
 		}
-		&--active {	
+		&--close {	
 			&:hover {
 				.banner__line--center {
 					&:after, &:before {
@@ -209,16 +210,16 @@
 		&--center {
 			@extend %open_close_center;
 			&:before {
-				.menu-opened & {
+				.banner__btn--close & {
 					transform: rotate(45deg) translateZ(0);
 				}
 			}
 			&:after {
-				.menu-opened & {
+				.banner__btn--close & {
 					transform: rotate(-45deg) translateZ(0);
 				}
 			}
-	}
+		}
 	}
 	&__burger {
 		@extend %burger;
@@ -226,34 +227,6 @@
 	&__label {
 		display: inline-block;
 		padding-right: em($p);
-		transition: opacity $speed;
-		.banner__btn--toggle & {
-			position: absolute;
-			padding-right: 0;
-			top: 50%;
-			left: 0;
-			transform: translate3d(0, -50%, 0);	
-			transition: $speed visibility, opacity $speed;
-		}
-		.banner__btn:hover & {
-			opacity: .5;
-		}
-		.banner__btn--active &, .banner__btn--active:hover & {
-			visibility: hidden;
-			opacity: 0;
-		}
-		&--close {
-			visibility: hidden;
-			opacity: 0;
-			.banner__btn--active & {
-				visibility: visible;
-				opacity: 1;
-			}
-			.banner__btn--active:hover & {
-				visibility: visible;
-				opacity: .5;
-			}
-		}
 	}
 	&__quote {
 		flex: 20;
@@ -297,6 +270,14 @@
 		z-index: 9995;
 		.logged-in.admin-bar & {
 			top: 32px;
+		}
+		.banner__btn--close {
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 1;
+			visibility: hidden;
+			opacity: 0;
 		}
 	}
 	&__lang {

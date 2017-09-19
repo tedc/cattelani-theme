@@ -21,7 +21,11 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 						scope.inView = []
 						for i in items
 							if scrollbar.isVisible i
-								scope.inView.push parseInt i.getAttribute 'data-carousel-item'	
+								scope.inView.push parseInt i.getAttribute 'data-carousel-item'
+							else
+								idx = parseInt i.getAttribute 'data-carousel-item'
+								idx = scope.inView.indexOf idx
+								scope.inView.splice idx, 1 if idx > -1 
 						scope.isPrev = if status.offset.x > 0 then on else off
 						scope.isNext = if status.offset.x < scrollbar.limit.x then on else off
 						return
@@ -30,10 +34,9 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 				scope.move = (cond)->
 					if scope.inView
 						item = if cond then scope.inView[0] + 1 else scope.inView[0] - 1
-						console.log scope.inView
 					else
 						item = if cond then 1 else 0
-						console.log item
+					item = if item < 0 then 0 else item
 					scrollbar.scrollIntoView(items[item])
 					return
 				scope.goto = (index, params)->
@@ -67,11 +70,13 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 							return
 					return
 				scope.$on 'collection_change', (evt, data)->
-					index = parseInt data.index
-					width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
-					left = if index is 0 then items[index].offsetLeft else width
-					left = if left > scrollbar.limit.x then scrollbar.limit.x else left
-					scrollbar.scrollTo left, 0, 0
+					$timeout ->
+						index = parseInt data.index
+						width = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
+						left = if index is 0 then items[index].offsetLeft else width
+						left = if left > scrollbar.limit.x then scrollbar.limit.x else left
+						scrollbar.scrollTo left, 0, 0
+						return
 					return
 				
 

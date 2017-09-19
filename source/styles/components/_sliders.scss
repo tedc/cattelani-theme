@@ -126,11 +126,11 @@
 			top: 50%;
 			transform: translate3d(-50%, 0, 0);
 		}
-		.is-anim & {
+		.is-leaving & {
 			visibility: visible;
 			opacity: 1;
 		}	
-		.is-anim .ng-enter & {
+		.is-leaving .ng-enter & {
 			&:before {
 				display: none;
 			}
@@ -374,7 +374,7 @@
 					position: relative;
 					transition: opacity $speed;
 					display: inline-block;
-					.is-anim & {
+					.is-leaving & {
 						opacity: 0;
 					}
 				}
@@ -385,13 +385,13 @@
 						transform: scaleX(1) translateZ(0);
 					}
 				}
-				.is-anim & {
+				.is-leaving & {
 					&:before {
 						transition: none !important;
-						animation: loading $speed*2 infinite;
+						animation: loading $speed*4 infinite;
 					}
 				}
-				.is-anim .ng-enter & {
+				.is-leaving .ng-enter & {
 					&:before {
 						display: none;
 					}

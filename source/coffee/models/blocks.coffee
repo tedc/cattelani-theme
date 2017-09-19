@@ -141,6 +141,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 			onComplete : ->
 				$rootScope.prevElement.addClass 'next--fixed'
 				$timeout ->
+					$rootScope.isLeaving = off
 					window.scrollTo 0, 0
 					deferred.resolve on
 					return

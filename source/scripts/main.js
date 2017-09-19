@@ -64498,18 +64498,21 @@ module.exports = function() {
 
 },{}],158:[function(require,module,exports){
 module.exports = function($timeout, $rootScope) {
-  var LeftStagger, RightStagger, TL, endStagger, menu;
-  $rootScope.isRunning = false;
+  var Close, LeftStagger, RightStagger, TL, endStagger, menu;
   TL = new TimelineMax({
     paused: true,
     ease: Linear.easeNone
   });
   endStagger = function() {
+    console.log(true);
     TweenMax.to(['.banner__nav', '.main'], .5, {
       clearProps: 'all'
     });
-    $rootScope.isRunning = false;
   };
+  Close = TweenMax.to('.banner__btn--close', .5, {
+    visibility: 'visible',
+    opacity: 1
+  });
   LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .5, {
     y: 0,
     opacity: 1
@@ -64523,16 +64526,13 @@ module.exports = function($timeout, $rootScope) {
     onReverseComplete: endStagger
   }).to(['.banner__aside', '.banner__menu'], .5, {
     x: '0%'
-  }, "-=.15").to('.banner__btn--search', .5, {
-    autoAlpha: false
-  }, "-=.5").add([LeftStagger, RightStagger], "+=.5");
+  }, "-=.15").to('.banner__tools', .5, {
+    visibility: 'hidden',
+    opacity: 0
+  }, "-=.5").add([LeftStagger, RightStagger, Close], "+=.5");
   $rootScope.isRunning = false;
   return menu = {
     addClass: function(element, className, done) {
-      if ($rootScope.isRunning) {
-        return;
-      }
-      $rootScope.isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
@@ -64548,17 +64548,12 @@ module.exports = function($timeout, $rootScope) {
       });
     },
     removeClass: function(element, className, done) {
-      if ($rootScope.isRunning) {
-        return;
-      }
-      $rootScope.isRunning = true;
       if (className !== 'menu-opened') {
         return;
       }
-      TL.timeScale(1.8).pause(true).reverse();
+      TL.timeScale(1.25).pause(true).reverse();
       TL.eventCallback('onReverseComplete', function() {
         $timeout(function() {
-          $rootScope.isRunning = false;
           done();
         });
       });
@@ -64699,7 +64694,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Power3.easeOut,
+            ease: Power3.easeInOut,
             onComplete: function() {
               $timeout(function() {
                 done();
@@ -64713,10 +64708,10 @@ module.exports = function($rootScope, $timeout, $state) {
           });
         }
       } else {
+        $rootScope.$broadcast('collection_change', {
+          index: $rootScope.carouselIndex
+        });
         if (animationDiv.hasClass('transitioner--flex-dark')) {
-          $rootScope.$broadcast('collection_change', {
-            index: $rootScope.carouselIndex
-          });
           animationDiv.removeClass('transitioner--flex-dark');
           TweenMax.to({
             number: 0
@@ -64733,9 +64728,6 @@ module.exports = function($rootScope, $timeout, $state) {
           });
         } else {
           closeBlocks($rootScope.transitionerSize);
-          $rootScope.$broadcast('collection_change', {
-            index: $rootScope.carouselIndex
-          });
           done();
           TweenMax.to({
             number: 0
@@ -64786,8 +64778,10 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
+            ease: Power3.easeInOut,
             onComplete: function() {
               $timeout(function() {
+                $rootScope.isLeaving = false;
                 done();
                 element.removeClass('view-leave');
                 TweenMax.set(element, {
@@ -64798,6 +64792,7 @@ module.exports = function($rootScope, $timeout, $state) {
           });
         }
       } else {
+        $rootScope.isLeaving = false;
         done();
       }
       if ($rootScope.prevElement) {
@@ -64998,12 +64993,18 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
         items = scrollbar.targets.content.querySelectorAll('[data-carousel-item]');
         scrollbar.addListener(function(status) {
           $timeout(function() {
-            var i, j, len;
+            var i, idx, j, len;
             scope.inView = [];
             for (j = 0, len = items.length; j < len; j++) {
               i = items[j];
               if (scrollbar.isVisible(i)) {
                 scope.inView.push(parseInt(i.getAttribute('data-carousel-item')));
+              } else {
+                idx = parseInt(i.getAttribute('data-carousel-item'));
+                idx = scope.inView.indexOf(idx);
+                if (idx > -1) {
+                  scope.inView.splice(idx, 1);
+                }
               }
             }
             scope.isPrev = status.offset.x > 0 ? true : false;
@@ -65014,11 +65015,10 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           var item;
           if (scope.inView) {
             item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
-            console.log(scope.inView);
           } else {
             item = cond ? 1 : 0;
-            console.log(item);
           }
+          item = item < 0 ? 0 : item;
           scrollbar.scrollIntoView(items[item]);
         };
         scope.goto = function(index, params) {
@@ -65052,12 +65052,14 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           }
         };
         scope.$on('collection_change', function(evt, data) {
-          var index, left, width;
-          index = parseInt(data.index);
-          width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
-          left = index === 0 ? items[index].offsetLeft : width;
-          left = left > scrollbar.limit.x ? scrollbar.limit.x : left;
-          scrollbar.scrollTo(left, 0, 0);
+          $timeout(function() {
+            var index, left, width;
+            index = parseInt(data.index);
+            width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+            left = index === 0 ? items[index].offsetLeft : width;
+            left = left > scrollbar.limit.x ? scrollbar.limit.x : left;
+            scrollbar.scrollTo(left, 0, 0);
+          });
         });
         w.on('resize', function() {
           $timeout(function() {
@@ -66356,6 +66358,7 @@ exports.prev = function($rootScope, $timeout, $q) {
     onComplete: function() {
       $rootScope.prevElement.addClass('next--fixed');
       return $timeout(function() {
+        $rootScope.isLeaving = false;
         window.scrollTo(0, 0);
         deferred.resolve(true);
       }, 0);
@@ -66375,6 +66378,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(183)]).run([
     var oldUrl;
     $rootScope.isFinish = true;
     $rootScope.isAnim = 'is-anim';
+    $rootScope.isLeaving = 'is-leaving';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;

@@ -1,3 +1,4 @@
+<?php if(get_sub_field('immagine_accesa') && get_sub_field('immagine_spenta')) : ?>
 <div class="light light--shrink-fw light--grid">
 	<figure class="light__cell light__cell--figure light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 5 : 8; ?>" ng-light-mask ng-mousemove="moveMask($event, '#circle_<?php echo $row; ?>')">
 		<?php echo wp_get_attachment_image( get_sub_field('immagine_spenta')['ID'], 'full' ); ?>
@@ -18,3 +19,4 @@
 		<div class="light__text light__text--grow-md"><?php _e('Muovi il mouse sopra l’immagine per creare la luce.') ?></div>
 	</div>
 </div>
+<?php endif; ?>

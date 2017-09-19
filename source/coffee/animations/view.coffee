@@ -48,7 +48,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						}
 						{
 							yPercent : toY
-							ease: Power3.easeOut
+							ease: Power3.easeInOut
 							onComplete : ->
 								$timeout ->
 									done()
@@ -60,8 +60,8 @@ module.exports = ($rootScope, $timeout, $state)->
 								return
 						}
 			else
+				$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 				if animationDiv.hasClass 'transitioner--flex-dark'
-					$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 					animationDiv.removeClass 'transitioner--flex-dark'
 					TweenMax.to {number : 0}, .5,
 						number : 1
@@ -75,7 +75,6 @@ module.exports = ($rootScope, $timeout, $state)->
 							return
 				else
 					closeBlocks $rootScope.transitionerSize
-					$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 					done()
 					TweenMax.to {number : 0}, .1,
 						number : 1
@@ -120,8 +119,10 @@ module.exports = ($rootScope, $timeout, $state)->
 						}
 						{
 							yPercent : toY
+							ease: Power3.easeInOut
 							onComplete : ->
 								$timeout ->
+									$rootScope.isLeaving = off
 									done()
 									element.removeClass 'view-leave'
 									TweenMax.set element,
@@ -130,6 +131,7 @@ module.exports = ($rootScope, $timeout, $state)->
 								return
 						}
 			else
+				$rootScope.isLeaving = off
 				done()
 				#element.removeClass 'view-leave'
 			if $rootScope.prevElement

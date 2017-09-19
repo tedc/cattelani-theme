@@ -4,6 +4,7 @@ catellani
 	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", ($transitions, $state, $location, $rootScope, $timeout, angularLoad)->
 		$rootScope.isFinish = on
 		$rootScope.isAnim = 'is-anim'
+		$rootScope.isLeaving = 'is-leaving'
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
