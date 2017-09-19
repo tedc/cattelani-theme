@@ -64978,6 +64978,98 @@ module.exports = function() {
 
 
 },{"153":153}],164:[function(require,module,exports){
+module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScope) {
+  return {
+    link: function(scope, element, attrs) {
+      var carousel, w;
+      carousel = ScrollbarService.getInstance('carousel');
+      scope.isVisible = false;
+      scope.isPrev = false;
+      scope.isNext = false;
+      w = angular.element($window);
+      carousel.then(function(scrollbar) {
+        var items;
+        scope.isState = false;
+        scope.currentState = $timeout(function() {
+          scope.isVisible = true;
+          scope.isPrev = scrollbar.offset.x > 0 ? true : false;
+          scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
+        }, 0);
+        items = scrollbar.targets.content.querySelectorAll('[data-carousel-item]');
+        scrollbar.addListener(function(status) {
+          $timeout(function() {
+            var i, j, len;
+            scope.inView = [];
+            for (j = 0, len = items.length; j < len; j++) {
+              i = items[j];
+              if (scrollbar.isVisible(i)) {
+                scope.inView.push(parseInt(i.getAttribute('data-carousel-item')));
+              }
+            }
+            scope.isPrev = status.offset.x > 0 ? true : false;
+            scope.isNext = status.offset.x < scrollbar.limit.x ? true : false;
+          }, 0);
+        });
+        scope.move = function(cond) {
+          var item;
+          if (scope.inView) {
+            item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
+          } else {
+            item = cond ? 1 : 0;
+          }
+          scrollbar.scrollIntoView(items[item]);
+        };
+        scope.goto = function(index, params) {
+          var left, width;
+          scrollbar.removeListener();
+          if (scrollbar.isVisible(items[index])) {
+            if (index !== 0) {
+              left = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+              scrollbar.scrollTo(left, 0, 750, function() {
+                scope.isState = true;
+                scope.currentState = params.slug;
+                $timeout(function() {
+                  $state.go('app.page', params);
+                }, 400);
+              });
+            } else {
+              $timeout(function() {
+                $state.go('app.page', params);
+              }, 400);
+            }
+          } else {
+            width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+            left = index === 0 ? items[index].offsetLeft : width;
+            scrollbar.scrollTo(left, 0, 750, function() {
+              scope.isState = true;
+              scope.currentState = params.slug;
+              $timeout(function() {
+                $state.go('app.page', params);
+              }, 400);
+            });
+          }
+        };
+        scope.$on('collection_change', function(evt, data) {
+          var index, left, width;
+          index = data.index;
+          console.log(index);
+          width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
+          left = index === 0 ? items[index].offsetLeft : width;
+          scrollbar.setPosition(left, 0);
+        });
+        w.on('resize', function() {
+          $timeout(function() {
+            scope.isPrev = scrollbar.offset.x > 0 ? true : false;
+            scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
+          }, 0);
+        });
+      });
+    }
+  };
+};
+
+
+},{}],165:[function(require,module,exports){
 module.exports = function($window) {
   var footer;
   return footer = {
@@ -65001,7 +65093,7 @@ module.exports = function($window) {
 };
 
 
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 module.exports = function() {
   var form;
   return form = {
@@ -65052,7 +65144,7 @@ module.exports = function() {
 };
 
 
-},{}],166:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 module.exports = function($rootScope) {
   return {
     controller: [
@@ -65098,101 +65190,12 @@ module.exports = function($rootScope) {
 };
 
 
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)]).directive('collectionSearch', [require(172)]).directive('postTypeArchive', [require(163)]).directive('ngSm', ["$rootScope", "$timeout", require(173)]).directive('ngSwiper', ["$timeout", "$rootScope", require(175)]).directive('ngInstagram', [require(168)]).directive('ngVideo', ["$rootScope", require(176)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(171)]).directive('ngMagazine', [require(170)]).directive('ngLoader', ['$timeout', require(169)]).directive('ngFooter', ["$window", require(164)]).directive('glossaryAutocomplete', [require(166)]).directive('ngScrollCarousel', [
-  'ScrollbarService', "$window", "$timeout", "$state", "$rootScope", function(ScrollbarService, $window, $timeout, $state, $rootScope) {
-    return {
-      link: function(scope, element, attrs) {
-        var carousel, w;
-        carousel = ScrollbarService.getInstance('carousel');
-        scope.isVisible = false;
-        scope.isPrev = false;
-        scope.isNext = false;
-        w = angular.element($window);
-        carousel.then(function(scrollbar) {
-          var items;
-          scope.isState = false;
-          scope.currentState = $timeout(function() {
-            scope.isVisible = true;
-            scope.isPrev = scrollbar.offset.x > 0 ? true : false;
-            scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
-          }, 0);
-          items = scrollbar.targets.content.querySelectorAll('[data-carousel-item]');
-          scrollbar.addListener(function(status) {
-            $timeout(function() {
-              var i, j, len;
-              scope.inView = [];
-              for (j = 0, len = items.length; j < len; j++) {
-                i = items[j];
-                if (scrollbar.isVisible(i)) {
-                  scope.inView.push(parseInt(i.getAttribute('data-carousel-item')));
-                }
-              }
-              scope.isPrev = status.offset.x > 0 ? true : false;
-              scope.isNext = status.offset.x < scrollbar.limit.x ? true : false;
-            }, 0);
-          });
-          scope.move = function(cond) {
-            var item;
-            if (scope.inView) {
-              item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
-            } else {
-              item = cond ? 1 : 0;
-            }
-            scrollbar.scrollIntoView(items[item]);
-          };
-          scope.goto = function(index, params) {
-            var left, width;
-            scrollbar.removeListener();
-            if (scrollbar.isVisible(items[index])) {
-              if (index !== 0) {
-                left = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
-                scrollbar.scrollTo(left, 0, 0, function() {
-                  scope.isState = true;
-                  scope.currentState = params.slug;
-                  $timeout(function() {
-                    $state.go('app.page', params);
-                  }, 400);
-                });
-              } else {
-                $timeout(function() {
-                  $state.go('app.page', params);
-                }, 400);
-              }
-            } else {
-              width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
-              left = index === 0 ? items[index].offsetLeft : width;
-              scrollbar.scrollTo(left, 0, 0, function() {
-                scope.isState = true;
-                scope.currentState = params.slug;
-                $timeout(function() {
-                  $state.go('app.page', params);
-                }, 400);
-              });
-            }
-          };
-          scope.$on('collection_change', function(evt, data) {
-            var index, left, width;
-            index = data.index;
-            width = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
-            left = index === 0 ? items[index].offsetLeft : width;
-            scrollbar.setPosition(left, 0);
-          });
-          w.on('resize', function() {
-            $timeout(function() {
-              scope.isPrev = scrollbar.offset.x > 0 ? true : false;
-              scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
-            }, 0);
-          });
-        });
-      }
-    };
-  }
-]).directive('clickedElement', [
+catellani.directive('ngStore', [require(175)]).directive('ngForm', [require(166)]).directive('collectionSearch', [require(173)]).directive('postTypeArchive', [require(163)]).directive('ngSm', ["$rootScope", "$timeout", require(174)]).directive('ngSwiper', ["$timeout", "$rootScope", require(176)]).directive('ngInstagram', [require(169)]).directive('ngVideo', ["$rootScope", require(177)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(172)]).directive('ngMagazine', [require(171)]).directive('ngLoader', ['$timeout', require(170)]).directive('ngFooter', ["$window", require(165)]).directive('glossaryAutocomplete', [require(167)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(164)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -65307,7 +65310,7 @@ catellani.directive('ngStore', [require(174)]).directive('ngForm', [require(165)
 ]);
 
 
-},{"163":163,"164":164,"165":165,"166":166,"168":168,"169":169,"170":170,"171":171,"172":172,"173":173,"174":174,"175":175,"176":176}],168:[function(require,module,exports){
+},{"163":163,"164":164,"165":165,"166":166,"167":167,"169":169,"170":170,"171":171,"172":172,"173":173,"174":174,"175":175,"176":176,"177":177}],169:[function(require,module,exports){
 var WPAPI, wp;
 
 WPAPI = require(153);
@@ -65341,7 +65344,7 @@ module.exports = function() {
 };
 
 
-},{"153":153}],169:[function(require,module,exports){
+},{"153":153}],170:[function(require,module,exports){
 module.exports = function($timeout) {
   var loader;
   return loader = {
@@ -65371,7 +65374,7 @@ module.exports = function($timeout) {
 };
 
 
-},{}],170:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 module.exports = function() {
   return {
     controller: [
@@ -65420,7 +65423,7 @@ module.exports = function() {
 };
 
 
-},{}],171:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 var launchIntoFullscreen;
 
 launchIntoFullscreen = function(element) {
@@ -65554,7 +65557,7 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
 };
 
 
-},{}],172:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 module.exports = function() {
   var search;
   return search = {
@@ -65684,7 +65687,7 @@ module.exports = function() {
 };
 
 
-},{}],173:[function(require,module,exports){
+},{}],174:[function(require,module,exports){
 module.exports = function($rootScope, $timeout) {
   var createScene, parseDuration, scrollmagic;
   parseDuration = function(duration, element) {
@@ -65780,7 +65783,7 @@ module.exports = function($rootScope, $timeout) {
 };
 
 
-},{}],174:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 var WPAPI, wp;
 
 WPAPI = require(153);
@@ -66074,7 +66077,7 @@ module.exports = function() {
 };
 
 
-},{"153":153}],175:[function(require,module,exports){
+},{"153":153}],176:[function(require,module,exports){
 module.exports = function($timeout, $rootScope) {
   var ngSwiper;
   return ngSwiper = {
@@ -66130,7 +66133,7 @@ module.exports = function($timeout, $rootScope) {
 };
 
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 module.exports = function($rootScope) {
   var video;
   return video = {
@@ -66161,7 +66164,7 @@ module.exports = function($rootScope) {
 };
 
 
-},{}],177:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 var angular, catellani;
 
 angular = require(97);
@@ -66188,18 +66191,18 @@ window.controller = new ScrollMagic.Controller();
 
 catellani = angular.module('catellani', ['ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']);
 
-require(179);
+require(180);
 
-require(167);
+require(168);
 
 require(156);
 
 require(162);
 
-require(184);
+require(185);
 
 
-},{"1":1,"102":102,"156":156,"162":162,"167":167,"179":179,"184":184,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],178:[function(require,module,exports){
+},{"1":1,"102":102,"156":156,"162":162,"168":168,"180":180,"185":185,"2":2,"76":76,"77":77,"79":79,"80":80,"81":81,"85":85,"97":97}],179:[function(require,module,exports){
 var animationCover, animationDiv, animationInner, closeBlocks;
 
 animationDiv = angular.element(document.querySelector('.transitioner'));
@@ -66360,12 +66363,12 @@ exports.prev = function($rootScope, $timeout, $q) {
 };
 
 
-},{}],179:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.config(["$stateProvider", "$locationProvider", require(182)]).run([
+catellani.config(["$stateProvider", "$locationProvider", require(183)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", function($transitions, $state, $location, $rootScope, $timeout, angularLoad) {
     var oldUrl;
     $rootScope.isFinish = true;
@@ -66399,7 +66402,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(182)]).run([
 ]);
 
 
-},{"182":182}],180:[function(require,module,exports){
+},{"183":183}],181:[function(require,module,exports){
 module.exports = function($q, $timeout, $rootScope) {
   var deferred;
   if ($rootScope.prevElement) {
@@ -66425,7 +66428,7 @@ module.exports = function($q, $timeout, $rootScope) {
 };
 
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
   $scope.type = $scope.post.type;
@@ -66446,7 +66449,7 @@ module.exports = function($rootScope, $scope, data) {
 };
 
 
-},{}],182:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 module.exports = function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
@@ -66499,14 +66502,14 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(181)]
     },
-    controller: ["$rootScope", "$scope", "data", require(181)]
+    controller: ["$rootScope", "$scope", "data", require(182)]
   }).state('app.page', {
     url: '/:slug',
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
-      PrevBefore: ["$rootScope", "$timeout", "$q", require(178).prev],
+      PrevBefore: ["$rootScope", "$timeout", "$q", require(179).prev],
       data: [
         "$stateParams", "$q", "WPAPI", function($stateParams, $q, WPAPI) {
           var deferred, wp;
@@ -66531,10 +66534,10 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(178).single]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(181)],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(179).single]
     },
-    controller: ["$rootScope", "$scope", "data", require(181)]
+    controller: ["$rootScope", "$scope", "data", require(182)]
   }).state('app.collection', {
     url: '/{collection:(?:collection|collezioni)}/:name',
     params: {
@@ -66567,10 +66570,10 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(178).collection]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(181)],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require(179).collection]
     },
-    controller: ["$rootScope", "data", "$scope", require(183)]
+    controller: ["$rootScope", "data", "$scope", require(184)]
   }).state('app.glossary', {
     url: "/" + vars.main.glossary + "/:name",
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
@@ -66598,14 +66601,14 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(180)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", require(181)]
     },
-    controller: ["$rootScope", "data", "$scope", require(183)]
+    controller: ["$rootScope", "data", "$scope", require(184)]
   });
 };
 
 
-},{"178":178,"180":180,"181":181,"183":183}],183:[function(require,module,exports){
+},{"179":179,"181":181,"182":182,"184":184}],184:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
   $scope.content = data.content;
   $rootScope.title = data.yoats_title;
@@ -66615,7 +66618,7 @@ module.exports = function($rootScope, data, $scope) {
 };
 
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var WPAPI, catellani, wp;
 
 WPAPI = require(153);
@@ -66700,4 +66703,4 @@ catellani.factory('WPAPI', function() {
 ]);
 
 
-},{"153":153,"97":97}]},{},[177]);
+},{"153":153,"97":97}]},{},[178]);
