@@ -48,7 +48,7 @@ catellani
 	.animation '.banner', ["$timeout", "$rootScope", require './menu.coffee']
 	.animation '.modal', ["$rootScope", "$timeout",  require './modal.coffee']
 	.animation '.manifesto__item', ["$rootScope", "$timeout", require './manifesto.coffee']
-	.animation '.storia__slider', ["$rootScope", "$timeout", ($rootScope)->
+	.animation '.storia', ["$rootScope", "$timeout", ($rootScope)->
 		storia =
 			addClass : (element, className, done)->
 				return if className isnt 'storia__slider--years-visible'

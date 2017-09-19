@@ -22,13 +22,13 @@ module.exports = ($rootScope, $timeout)->
 			config.offset = parseDuration config.offset, offsetElement
 		else
 			config.offset = 0
-		console.log config.reverse
+		reverse = if typeof config.reverse isnt 'undefined' then config.reverse else on
 		options = 
 			triggerElement : config.triggerElement or element[0]
 			triggerHook : config.triggerHook or 0.5
 			duration : config.duration
 			offset : config.offset
-			reverse : config.reverse or on
+			reverse : reverse
 		$rootScope.$on 'sceneDestroy', ->
 			scene.destroy() if scene and not config.fixed
 			return

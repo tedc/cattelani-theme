@@ -243,6 +243,8 @@
 					position: relative;
 					color: $w;
 					padding: 0 em($p, 34px);
+					backface-visibility: hidden;
+					display: block;
 					@extend %line_before;
 				}
 				&__link {

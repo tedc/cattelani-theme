@@ -23,7 +23,7 @@
             $mapped = array_map('strlen', $strings);
             $attr = $strings[array_search(max($mapped), $mapped)];
         ?>
-        <span class="banner__btn banner__btn--toggle" ng-click="isMenu=true">
+        <span class="banner__btn banner__btn--toggle" menu="true">
             <span class="banner__label banner__label--menu">
                 <?php _e('Menu', 'catellani'); ?>
             </span>
@@ -35,7 +35,7 @@
         </span>
     </nav>
     <nav class="banner__nav banner__nav--grid">
-         <span class="banner__btn banner__btn--shrink banner__btn--grow-md-top banner__btn--close" ng-click="isMenu=false" >
+         <span class="banner__btn banner__btn--shrink banner__btn--grow-md-top banner__btn--close" menu="false">
             <span class="banner__label banner__label--close">
                 <?php _e('Chiudi', 'catellani'); ?>
             </span>

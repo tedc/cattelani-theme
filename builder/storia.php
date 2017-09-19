@@ -10,26 +10,29 @@
 	);
 	if($storia) :
 ?>
-<div class="storia storia--grow-lg" ng-swiper>
+<div class="storia storia--grow-lg" ng-swiper  ng-class="{'storia--visible':isYearsActive}">
 <header class="storia__header storia__header--grow-lg storia__header--shrink-fw">
 	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php _e('La Storia', 'catellani'); ?></h3>
 </header>
 <nav class="storia__nav storia__nav--shrink storia__nav--grow-md">
-	<ul class="storia__items storia__items--grid-nowrap storia__items--shrink">
+	<div class="storia__items storia__items--shrink" scrollbar continuous-scrolling="true">
 		<?php $i = 0; foreach($storia as $s): ?>
-		<li class="storia__cell storia__cell--s2 storia__cell"<?php if($i==0) : ?> ng-init="isYears = <?php echo $s->ID; ?>"<?php endif; ?> ng-class="{'storia__cell--active' : isYears == <?php echo $s->ID; ?>}" ng-click="slideTo(<?php echo $i; ?>); isYears = <?php echo $s->ID;; ?>">
+		<div class="storia__item storia__item--s2 storia__item"<?php if($i==0) : ?> ng-init="isYears = <?php echo $s->ID; ?>"<?php endif; ?> ng-class="{'storia__item--active' : isYears == <?php echo $s->ID; ?>}" ng-click="slideTo(<?php echo $i; ?>); isYears = <?php echo $s->ID;; ?>">
 			<?php 
 				$split_title = get_the_title($s->ID);  
 				$split_title = explode('/', $split_title);
 			?>
 			<span class="storia__year storia__year--first"><span class="storia__date"><?php echo trim($split_title[0]); ?></span></span>
 			<span class="storia__year storia__year--last"><span class="storia__date"><?php echo trim($split_title[1]); ?></span></span>
-			<span class="storia__label" ng-click="isYearsActive = !isYearsActive"><?php _e('Esplora', 'catellani'); ?></span>
-		</li>
+			<span class="storia__label" ng-click="isYearsActive = !isYearsActive">
+				<span><?php _e('Esplora', 'catellani'); ?></span>
+				<span><?php _e('Chiudi', 'catellani'); ?></span>
+			</span>
+		</div>
 		<?php $i++; endforeach; wp_reset_postdata();?>
-	</ul>
+	</div>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="main" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true}" ng-class="{'storia__slider--years-visible':isYearsActive}">
+<ks-swiper-container class="storia__slider" swiper="main" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true}">
 	<?php foreach($storia as $s): ?>
 	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" history="storia_<?php echo $s->ID; ?>">
 		<figure class="swiper-slide__figure">
@@ -55,7 +58,7 @@
 			</h2>
 			<?php include(locate_template( 'templates/content-single-'.$s->post_type .'.php', false, true)); ?>
 			<footer class="type-anni__footer anni__footer--shrink type-anni__footer--grid type-anni__footer--grow-md-top">
-				<span class="type-anni__send" ng-click="isYearsActive = !isYearsActive"><?php _e('Torna alla storia', 'catellani'); ?></span>
+				<span class="type-anni__send" ng-click="isYearsActive = false"><?php _e('Torna alla storia', 'catellani'); ?></span>
 				<?php 
 					$oldPost = $post;
 					$post = $s;

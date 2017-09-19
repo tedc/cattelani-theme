@@ -64428,7 +64428,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.animation('.banner', ["$timeout", "$rootScope", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia__slider', [
+catellani.animation('.banner', ["$timeout", "$rootScope", require(158)]).animation('.modal', ["$rootScope", "$timeout", require(159)]).animation('.manifesto__item', ["$rootScope", "$timeout", require(157)]).animation('.storia', [
   "$rootScope", "$timeout", function($rootScope) {
     var storia;
     return storia = {
@@ -64498,19 +64498,12 @@ module.exports = function() {
 
 },{}],158:[function(require,module,exports){
 module.exports = function($timeout, $rootScope) {
-  var Close, LeftStagger, RightStagger, TL, endStagger, menu;
+  var Close, LeftStagger, RightStagger, TL, menu;
   TL = new TimelineMax({
     paused: true,
     ease: Linear.easeNone
   });
-  endStagger = function() {
-    console.log(true);
-    TweenMax.to(['.banner__nav', '.main'], .5, {
-      clearProps: 'all'
-    });
-  };
   Close = TweenMax.to('.banner__btn--close', .5, {
-    visibility: 'visible',
     opacity: 1
   });
   LeftStagger = TweenMax.staggerTo(['.banner__footer', '.banner__quote'], .5, {
@@ -64521,29 +64514,25 @@ module.exports = function($timeout, $rootScope) {
     y: 0,
     opacity: 1
   }, .05);
-  TL.to('.main', .5, {
-    opacity: 0.8,
-    onReverseComplete: endStagger
+  TL.set(['.main', '.banner__nav'], {
+    clearProps: 'all'
+  }).set('.banner__nav', {
+    visibility: 'visible'
+  }).to('.main', .5, {
+    opacity: 0.8
   }).to(['.banner__aside', '.banner__menu'], .5, {
     x: '0%'
-  }, "-=.15").to('.banner__tools', .5, {
-    visibility: 'hidden',
-    opacity: 0
-  }, "-=.5").add([LeftStagger, RightStagger, Close], "+=.5");
-  $rootScope.isRunning = false;
+  }, "-=.15").add([LeftStagger, RightStagger, Close], "+=.5");
   return menu = {
     addClass: function(element, className, done) {
       if (className !== 'menu-opened') {
         return;
       }
-      TweenMax.set('.banner__nav', {
-        visibility: 'visible'
-      });
       TL.timeScale(1).play();
       TL.eventCallback('onComplete', function() {
         $timeout(function() {
-          $rootScope.isRunning = false;
           done();
+          $rootScope.isRunning = false;
         });
       });
     },
@@ -64551,10 +64540,11 @@ module.exports = function($timeout, $rootScope) {
       if (className !== 'menu-opened') {
         return;
       }
-      TL.timeScale(1.25).pause(true).reverse();
+      TL.timeScale(1.25).reverse();
       TL.eventCallback('onReverseComplete', function() {
         $timeout(function() {
           done();
+          $rootScope.isRunning = false;
         });
       });
     }
@@ -65224,6 +65214,25 @@ catellani.directive('ngStore', [require(175)]).directive('ngForm', [require(166)
       }
     };
   }
+]).directive('menu', [
+  '$rootScope', function($rootScope) {
+    return {
+      restrict: 'A',
+      scope: {
+        cond: '=menu'
+      },
+      link: function(scope, element) {
+        $rootScope.isRunning = false;
+        element.on('click', function() {
+          if ($rootScope.isRunning) {
+            return;
+          }
+          $rootScope.isRunning = true;
+          $rootScope.isMenu = scope.cond;
+        });
+      }
+    };
+  }
 ]).directive('onFinishRender', [
   '$timeout', function($timeout) {
     var onFinish;
@@ -65680,6 +65689,9 @@ module.exports = function() {
           }, 250);
         });
         $rootScope.modal = function(id) {
+          if ($rootScope.isRunning) {
+            return;
+          }
           $rootScope.oldMenu = $rootScope.isMenu;
           $rootScope.isMenu = false;
           $rootScope.isPopup = !$rootScope.isPopup;
@@ -65710,7 +65722,7 @@ module.exports = function($rootScope, $timeout) {
     return duration;
   };
   createScene = function(element, config) {
-    var classEl, durationElement, offsetElement, options, pinEl, pseudoRegex, scene, speed, triggerElement, tween, tweenEl;
+    var classEl, durationElement, offsetElement, options, pinEl, pseudoRegex, reverse, scene, speed, triggerElement, tween, tweenEl;
     triggerElement = config.triggerElement || element[0];
     if (typeof config.duration !== 'undefined') {
       durationElement = typeof config.durationElement !== 'undefined' ? config.durationElement : triggerElement;
@@ -65724,13 +65736,13 @@ module.exports = function($rootScope, $timeout) {
     } else {
       config.offset = 0;
     }
-    console.log(config.reverse);
+    reverse = typeof config.reverse !== 'undefined' ? config.reverse : true;
     options = {
       triggerElement: config.triggerElement || element[0],
       triggerHook: config.triggerHook || 0.5,
       duration: config.duration,
       offset: config.offset,
-      reverse: config.reverse || true
+      reverse: reverse
     };
     $rootScope.$on('sceneDestroy', function() {
       if (scene && !config.fixed) {
@@ -66346,7 +66358,9 @@ exports.prev = function($rootScope, $timeout, $q) {
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 'calc(100vh - 32px)' : '100vh';
   controller.scrollTo(function(newPos) {
-    tl.to(window, .5, {
+    tl.set('body', {
+      className: '-=white'
+    }).to(window, .5, {
       scrollTo: {
         y: newPos
       }

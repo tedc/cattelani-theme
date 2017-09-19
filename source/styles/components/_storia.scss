@@ -26,20 +26,33 @@
 			font-weight: 300;
 			padding-top: em($p, 14px);
 		}
+
+		img {
+			display: block;
+			width: $f !important;
+			height: auto !important;
+		}
 	}
 	&__header {
 		@include grow('lg');
 	}
-	&__nav {
-		position: sticky;
-		z-index: 25;
-		top: em($p*4);
-	}
 	&__items {
-		justify-content: center;
-		padding: em($p*2) 0;
+		margin: 0 auto;
+		.scroll-content {
+			display: flex;
+			padding: em($p*2) 0;
+			@include normalize_padding;
+			&:before, &:after {
+				display: block;
+				content: '';
+				margin: 0 auto;
+			}
+			@include breakpoint() {
+				justify-content: center;
+			};
+		}
 	}
-	&__cell {
+	&__item {
 		position: relative;
 		height: $p;
 		display: flex;
@@ -47,6 +60,20 @@
 		padding: {
 			left: em($p);
 			right: em($p);
+		}
+		flex: 0 0 auto;
+		width: $f/2;
+		@include breakpoint(480px) {
+			width: $f/3;
+		}
+		@include breakpoint(640px) {
+			width: $f/4;
+		}
+		@include breakpoint(768px) {
+			width: $f/5;
+		}
+		@include breakpoint() {		
+			width: $f/6;
 		}
 		&:before {
 			width: $f;
@@ -70,7 +97,7 @@
 			border: 1px solid $main-color;
 			transform: scale(0);
 			transition: transform $speed;
-			.storia__cell--active & {
+			.storia__item--active & {
 				transform: scale(1);
 			}
 		}
@@ -85,7 +112,7 @@
 			background-color: $main-color;
 			transition: background-color $speed;
 			transform: translate3d(-50%, -50%, 0);
-			.storia__cell--active & {
+			.storia__item--active & {
 				background-color: $dark-color;
 			}
 		}
@@ -110,10 +137,34 @@
 			property: visibility, opacity, transform;
 			duration: $speed;
 		}
-		.storia__cell--active & {
+		span {
+			display: inline-block;
+			transition: opacity $speed;
+		}
+		span {
+			&:nth-child(2) {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate3d(-50%, -50%, 0);
+				opacity: 0;
+			}
+		}
+		.storia__item--active & {
 			opacity: 1;
 			visibility: visible;
 			transform: translate3d(-50%, 0, 0);
+			
+		}
+		.storia--visible & {
+			span {
+				&:nth-child(1) {
+					opacity: 0;
+				}
+				&:nth-child(2) {
+					opacity: 1;
+				}
+			}
 		}
 	}
 	&__date {
@@ -123,12 +174,12 @@
 		bottom: 120%;
 		transform: translate3d(-50%, 0, 0);
 		transition: color $speed;
-		.storia__cell--active & {
+		.storia__item--active & {
 			color: $dark-color;
 		}
 	}
 }
-.storia__slider--years-visible {
+.storia--visible {
 	.type-anni {
 		position: relative;
 		visibility: visible;
@@ -140,6 +191,11 @@
 			visibility: hidden;
 			opacity: 0;
 		}
+	}
+	.storia__nav {
+		position: sticky;
+		z-index: 25;
+		top: em($p*4);
 	}
 }
 .type-anni {
@@ -215,7 +271,7 @@
 	&__wrapper {
 		@include grow('md');
 	}
-	&__cell {
+	&__item {
 		&--content {
 			display: flex;
 			align-items: center;
@@ -232,7 +288,7 @@
 				}
 				img {
 					display: block;
-					width: $f;
+					width: $f !important;
 					height: auto !important;
 				}
 			}

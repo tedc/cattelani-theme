@@ -81,6 +81,7 @@
 	}
 	&__button {
 		margin: 0 em($p/2);
+		box-shadow: 0 3px 6px transparentize($main-color, .9);
 	}
 	.home &, .tax-collezioni & {
 		display: none;

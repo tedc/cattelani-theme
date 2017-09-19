@@ -114,6 +114,7 @@ module.exports = ->
 				return
 			## MODAL
 			$rootScope.modal = (id)->
+				return if $rootScope.isRunning
 				$rootScope.oldMenu = $rootScope.isMenu
 				$rootScope.isMenu = off
 				$rootScope.isPopup = !$rootScope.isPopup

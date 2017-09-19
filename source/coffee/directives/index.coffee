@@ -33,6 +33,19 @@ catellani
 					return
 				return
 	]
+	.directive 'menu', ['$rootScope', ($rootScope)->
+		restrict : 'A'
+		scope : 
+			cond : '=menu'
+		link : (scope, element)->
+			$rootScope.isRunning = off
+			element.on 'click', ->
+				return if $rootScope.isRunning
+				$rootScope.isRunning = on
+				$rootScope.isMenu = scope.cond
+				return
+			return
+	]
 	.directive 'onFinishRender', ['$timeout',($timeout)->
 		onFinish =
 			restrict : 'A'

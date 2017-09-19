@@ -5,10 +5,10 @@
 	&--dark {
 		color: $w;
 		background-color: $dark-color;
-		transition: background-color $speed;
-		.main--dark & {
-			background-color: transparent;
-		}
+		// transition: background-color $speed;
+		// .main--dark & {
+		// 	background-color: transparent;
+		// }
 	}
 	&__header {
 		top: $p;
@@ -18,10 +18,19 @@
 	&__container {
 		position: relative;
 		z-index: 1;
+		height: calc(100vh - #{em($p*2)});
+		overflow: hidden;
+		.admin-bar.logged-in & {
+			height: calc(100vh - 32px - #{em($p*2)});
+		}
 	}
 	&__item {
-		width: $f;
-		height: auto;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-height: 100%;
+		min-width: 100%;
+		transform: translate3d(-50%, -50%, 0);
 	}
 	&__footer {
 		text-align: right;
