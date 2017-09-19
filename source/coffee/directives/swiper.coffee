@@ -2,6 +2,8 @@ module.exports = ($timeout, $rootScope)->
 	ngSwiper =
 		scope : on
 		link : (scope, element, attr)->
+			scope.isYears = off
+			scope.isYearsActive = off
 			scope.main = {}
 			scope.nav = {}
 			scope.current = 0

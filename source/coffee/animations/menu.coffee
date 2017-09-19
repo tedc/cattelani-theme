@@ -25,6 +25,8 @@ module.exports = ($timeout)->
 			TweenMax.set '.banner__nav',
 				visibility : 'visible'
 			TL
+				.timeScale 1
+				.pause on
 				.play()
 			TL.
 				eventCallback 'onComplete', ->
@@ -37,6 +39,7 @@ module.exports = ($timeout)->
 			return if className isnt 'menu-opened'
 			TL
 				.timeScale 1.8
+				.pause on
 				.reverse()
 			TL.
 				eventCallback 'onReverseComplete',  ->

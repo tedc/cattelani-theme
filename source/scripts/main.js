@@ -64532,7 +64532,7 @@ module.exports = function($timeout) {
       TweenMax.set('.banner__nav', {
         visibility: 'visible'
       });
-      TL.play();
+      TL.timeScale(1).pause(true).play();
       TL.eventCallback('onComplete', function() {
         $timeout(function() {
           done();
@@ -64543,7 +64543,7 @@ module.exports = function($timeout) {
       if (className !== 'menu-opened') {
         return;
       }
-      TL.timeScale(1.8).reverse();
+      TL.timeScale(1.8).pause(true).reverse();
       TL.eventCallback('onReverseComplete', function() {
         $timeout(function() {
           done();
@@ -66066,6 +66066,8 @@ module.exports = function($timeout, $rootScope) {
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
+      scope.isYears = false;
+      scope.isYearsActive = false;
       scope.main = {};
       scope.nav = {};
       scope.current = 0;

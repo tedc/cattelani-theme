@@ -29,9 +29,9 @@
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</ul>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="main" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true}}" ng-class="{'storia__slider--years-visible':isYearsActive}">
+<ks-swiper-container class="storia__slider" swiper="main" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true}" ng-class="{'storia__slider--years-visible':isYearsActive}">
 	<?php foreach($storia as $s): ?>
-	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw">
+	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" history="storia_<?php echo $s->ID; ?>">
 		<figure class="swiper-slide__figure">
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
