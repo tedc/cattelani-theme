@@ -74,7 +74,7 @@
 		&:before {
 			content: '';
 			@include full;
-			background: linear-gradient(72deg, #07131d, $dark-color, #07131d);
+			background: $dark-color;
 			opacity: .25;
 		}
 		@include breakpoint() {

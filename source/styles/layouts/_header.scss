@@ -302,6 +302,28 @@
 			margin: auto;
 		}
 	}
+	&:before {
+		width: $f;
+		top: 0;
+		right: 0;
+		z-index: 9993;
+		background-color: $w;
+		content: '';
+		position: fixed;
+		opacity: 0;
+		visibility: hidden;
+		height: em(90px);
+		transition: {
+			property: opacity, visibility;
+			duration: $speed;
+		}
+	}
+	.white & {
+		&:before {
+			opacity: 1;
+			visibility: visible
+		}
+	}
 }
 
 .menu {

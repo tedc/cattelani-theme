@@ -67,6 +67,7 @@
 	transition: $speed transform;
 	transform: translate3d(0, $f, 0);
 	@include normalize_padding;
+	display: none;
 	&--active {
 		transform: translate3d(0,0,0);
 	}
