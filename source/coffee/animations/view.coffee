@@ -61,13 +61,13 @@ module.exports = ($rootScope, $timeout, $state)->
 						}
 			else
 				if animationDiv.hasClass 'transitioner--flex-dark'
+					$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 					animationDiv.removeClass 'transitioner--flex-dark'
 					TweenMax.to {number : 0}, .5,
 						number : 1
 						onCompleteParams : ['{self}']
 						onComplete : ->
 							closeBlocks $rootScope.transitionerSize
-							$rootScope.$broadcast 'collection_change', index : $rootScope.carouselIndex
 							done()
 							element.removeClass 'view-enter'
 							$rootScope.isTransitionerActive = off

@@ -64714,6 +64714,9 @@ module.exports = function($rootScope, $timeout, $state) {
         }
       } else {
         if (animationDiv.hasClass('transitioner--flex-dark')) {
+          $rootScope.$broadcast('collection_change', {
+            index: $rootScope.carouselIndex
+          });
           animationDiv.removeClass('transitioner--flex-dark');
           TweenMax.to({
             number: 0
@@ -64722,9 +64725,6 @@ module.exports = function($rootScope, $timeout, $state) {
             onCompleteParams: ['{self}'],
             onComplete: function() {
               closeBlocks($rootScope.transitionerSize);
-              $rootScope.$broadcast('collection_change', {
-                index: $rootScope.carouselIndex
-              });
               done();
               element.removeClass('view-enter');
               $rootScope.isTransitionerActive = false;
