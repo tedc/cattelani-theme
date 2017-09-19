@@ -22,6 +22,7 @@ module.exports = ($rootScope, $timeout)->
 			config.offset = parseDuration config.offset, offsetElement
 		else
 			config.offset = 0
+		console.log config.reverse
 		options = 
 			triggerElement : config.triggerElement or element[0]
 			triggerHook : config.triggerHook or 0.5

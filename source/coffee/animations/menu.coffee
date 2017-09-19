@@ -26,7 +26,6 @@ module.exports = ($timeout)->
 				visibility : 'visible'
 			TL
 				.timeScale 1
-				.pause on
 				.play()
 			TL.
 				eventCallback 'onComplete', ->

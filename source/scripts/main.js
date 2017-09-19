@@ -64532,7 +64532,7 @@ module.exports = function($timeout) {
       TweenMax.set('.banner__nav', {
         visibility: 'visible'
       });
-      TL.timeScale(1).pause(true).play();
+      TL.timeScale(1).play();
       TL.eventCallback('onComplete', function() {
         $timeout(function() {
           done();
@@ -65704,6 +65704,7 @@ module.exports = function($rootScope, $timeout) {
     } else {
       config.offset = 0;
     }
+    console.log(config.reverse);
     options = {
       triggerElement: config.triggerElement || element[0],
       triggerHook: config.triggerHook || 0.5,
@@ -66066,8 +66067,7 @@ module.exports = function($timeout, $rootScope) {
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
-      scope.isYears = false;
-      scope.isYearsActive = false;
+      $rootScope.isYearsActive = false;
       scope.main = {};
       scope.nav = {};
       scope.current = 0;
