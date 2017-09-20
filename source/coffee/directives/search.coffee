@@ -74,7 +74,6 @@ module.exports = ->
 					.embed()
 					.order 'asc'
 					.orderby 'title'
-					.perPage 20
 					.then (results)->
 						$timeout ->
 							$scope.isLoading = off

@@ -65653,7 +65653,7 @@ module.exports = function() {
         };
         $scope.page = 1;
         getAllLoop = function() {
-          wp.products().embed().order('asc').orderby('title').perPage(20).then(function(results) {
+          wp.products().embed().order('asc').orderby('title').then(function(results) {
             $timeout(function() {
               $scope.isLoading = false;
               $scope.items = $scope.items.concat(results);
