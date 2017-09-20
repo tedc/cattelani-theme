@@ -9,7 +9,7 @@
 					<stop offset="100%" stop-color="white" stop-opacity="0" />
 				</radialGradient>
 				<mask id="mask_<?php echo $row; ?>">
-					<circle r="<?php echo get_sub_field('radius') ? get_sub_field('radius') : 150; ?>" cy="0" cx="0" class="light__circle" fill="url(#gradient_<?php echo $row; ?>)" id="circle_<?php echo $row; ?>" />
+					<circle r="<?php echo get_sub_field('radius') ? get_sub_field('radius') : 250; ?>" cy="0" cx="0" class="light__circle" fill="url(#gradient_<?php echo $row; ?>)" id="circle_<?php echo $row; ?>" />
 				</mask>
 			</defs>
 			<image xlink:href="" x="0" y="0" width="<?php echo get_sub_field('immagine_accesa')['width']; ?>" height="<?php echo get_sub_field('immagine_accesa')['height']; ?>" ng-attr-xlink:href="<?php echo wp_get_attachment_image_src( get_sub_field('immagine_accesa')['ID'], 'full')[0]; ?>" mask="url(#mask_<?php echo $row; ?>)" />
