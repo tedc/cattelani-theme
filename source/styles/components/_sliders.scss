@@ -157,25 +157,16 @@
 		text-align: center;
 		position: relative;
 		color: $w;
-		padding: 0 em($p, 34px);
+		padding: 0 em($p*2, 34px);
 		transition: transform $speed, opacity $speed;
+		opacity: 0;
+		.collections__cell:hover {
+			opacity: 1;
+		}
 		.is-anim & {
 			opacity: 0;
 			transform: translate3d(0, $p*2, 0);
 		}
-		// overflow: hidden;
-		// transform: translate3d(0, $f, 0);
-		// transition: transform $speed;
-		// .collections--slider-h & {
-		// 	padding-bottom: em(30px, 34px);
-		// }
-		// // @extend %line_before;
-		// .collections__cell:hover & {
-		// 	transform: translate3d(0, 0%, 0);			
-		// }
-		// .collections__cell--current &, .collections__cell--current:hover & {
-		// 	transform: translate3d(0, $f, 0);			
-		// }
 		@extend %line_before;
 		.collections__cell:hover & {
 			&:before {
@@ -228,8 +219,7 @@
 				.collections__cell:hover .collections__cover {
 					opacity: 1;
 				}
-			}
-			
+			}		
 		}
 		.swiper-container {
 			@include full;
