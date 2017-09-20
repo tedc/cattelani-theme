@@ -122,7 +122,7 @@
 			 *
 			 * @param string $excluded_terms Array of excluded term IDs.
 			 */
-			$excluded_terms = add_filter( "get_next_post_excluded_terms", function($excluded_terms){ return $excluded_terms;} );
+			//$excluded_terms = add_filter( "get_next_post_excluded_terms", function($excluded_terms){ return $excluded_terms;} );
 
 			if ( ! empty( $excluded_terms ) ) {
 				$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
