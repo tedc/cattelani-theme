@@ -157,14 +157,14 @@
 		text-align: center;
 		position: relative;
 		color: $w;
-		padding: 0 em($p*2, 34px);
+		padding: 0 em($p, 34px) em($p/2, 34px);
 		transition: transform $speed, opacity $speed;
 		opacity: 0;
 		&:after {
 			width: 1px;
 			background-color: $lighter-color;
-			height: em($p*2.1 - 5px, 34px);
-			bottom: 0;
+			height: em($p*3.1 - 5px, 34px);
+			top: $f;
 			left: 50%;
 			content: '';
 			position: absolute;
