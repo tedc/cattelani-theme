@@ -575,7 +575,7 @@ add_filter( 'rest_prepare_wpsl_stores', 'reigel_rest_prepare_post', 10, 3 );
 function my_rest_prepare_post( $data, $post, $request ) {
   $_data = $data->data;
   $params = $request->get_params();
-  if ( ! isset( $params['id'] ) ) {
+  if ( !isset($_GET['slug'])  ) {
     unset( $_data['content'] );
     unset($_data['yoats_title']);
     unset($_data['breadcrumbs']);
@@ -586,6 +586,9 @@ function my_rest_prepare_post( $data, $post, $request ) {
   return $data;
 }
 add_filter( 'rest_prepare_lampade', 'my_rest_prepare_post', 10, 3 );
+add_filter( 'rest_prepare_post', 'my_rest_prepare_post', 10, 3 );
+add_filter( 'rest_prepare_progetti', 'my_rest_prepare_post', 10, 3 );
+add_filter( 'rest_prepare_installazioni', 'my_rest_prepare_post', 10, 3 );
 
 function search_by_title_only( $search, &$wp_query )
 {
