@@ -65647,7 +65647,7 @@ module.exports = function() {
               $scope.page += 1;
               $rootScope.$broadcast('scrollBarUpdate');
               $scope.isSearching = false;
-              if ($scope.page > parseInt(res._paging.totalPages)) {
+              if ($scope.page > parseInt(results._paging.totalPages)) {
                 $scope.isSearchEnded = true;
               }
             });
@@ -65690,7 +65690,7 @@ module.exports = function() {
         $scope.$on('loadMoreSearch', searchBar = ScrollbarService.getInstance('search'));
         searchBar.then(function(scrollbar) {
           scrollbar.addListener(function(s) {
-            if (s.offeset.y >= s.limit.y) {
+            if (s.offset.y >= s.limit.y) {
               if (!$scope.isSearchEnded) {
                 scope.$emit('loadMoreSearch');
               }

@@ -87,7 +87,7 @@ module.exports = ->
 							$scope.page += 1
 							$rootScope.$broadcast 'scrollBarUpdate'
 							$scope.isSearching = off
-							$scope.isSearchEnded = on if $scope.page > parseInt res._paging.totalPages
+							$scope.isSearchEnded = on if $scope.page > parseInt results._paging.totalPages
 							return
 						return
 				return
@@ -153,7 +153,7 @@ module.exports = ->
 			searchBar
 				.then (scrollbar)->
 					scrollbar.addListener (s)->
-						if s.offeset.y >= s.limit.y
+						if s.offset.y >= s.limit.y
 							scope.$emit 'loadMoreSearch' if not $scope.isSearchEnded
 						return
 					return
