@@ -571,6 +571,18 @@ function reigel_rest_prepare_post( $response, $post, $request ) {
 }
 add_filter( 'rest_prepare_post', 'reigel_rest_prepare_post', 10, 3 );
 
+
+function my_rest_prepare_post( $data, $post, $request ) {
+  $_data = $data->data;
+  $params = $request->get_params();
+  if ( ! isset( $params['id'] ) ) {
+    unset( $_data['content'] );
+  }
+  $data->data = $_data;
+  return $data;
+}
+add_filter( 'rest_prepare_post', 'my_rest_prepare_post', 10, 3 );
+
 function search_by_title_only( $search, &$wp_query )
 {
     global $wpdb;
