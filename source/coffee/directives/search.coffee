@@ -147,14 +147,14 @@ module.exports = ->
 				$rootScope.isPopup = !$rootScope.isPopup
 				$rootScope.modalId = id
 				return
-			$scope.$on 'loadMoreSearch', 
+			$scope.$on 'loadMoreSearch', getSearch
 			## INFINITI SCROLL
 			searchBar = ScrollbarService.getInstance 'search'
 			searchBar
 				.then (scrollbar)->
 					scrollbar.addListener (s)->
 						if s.offset.y >= s.limit.y
-							scope.$emit 'loadMoreSearch' if not $scope.isSearchEnded
+							$scope.$emit 'loadMoreSearch' if not $scope.isSearchEnded
 						return
 					return
 			return

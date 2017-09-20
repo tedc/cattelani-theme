@@ -65687,12 +65687,13 @@ module.exports = function() {
           $rootScope.isPopup = !$rootScope.isPopup;
           $rootScope.modalId = id;
         };
-        $scope.$on('loadMoreSearch', searchBar = ScrollbarService.getInstance('search'));
+        $scope.$on('loadMoreSearch', getSearch);
+        searchBar = ScrollbarService.getInstance('search');
         searchBar.then(function(scrollbar) {
           scrollbar.addListener(function(s) {
             if (s.offset.y >= s.limit.y) {
               if (!$scope.isSearchEnded) {
-                scope.$emit('loadMoreSearch');
+                $scope.$emit('loadMoreSearch');
               }
             }
           });
