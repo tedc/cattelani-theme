@@ -3,7 +3,7 @@
 			array(
 				'taxonomy' => 'collezioni',
 				'hide_empty' => true,
-				'orderyb' => 'name'
+				'orderby' => 'term_order'
 			)
 		);
 		$loopedSlides = count($terms) * 2;
