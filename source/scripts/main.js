@@ -65576,7 +65576,7 @@ module.exports = function() {
   return search = {
     scope: true,
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate) {
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService) {
         var close, getSearch, lang, per_page, searchBar, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('wp/v2', 'lampade/', {
@@ -65659,9 +65659,8 @@ module.exports = function() {
             return;
           }
           $rootScope.isSearch = true;
-          $scope.isLoading = true;
-          getSearch();
         };
+        getSearch();
         wrapper = angular.element(document.querySelector('.search__items'));
         close = function(element, phase) {
           var searchTimeout;
