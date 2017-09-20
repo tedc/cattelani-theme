@@ -131,18 +131,9 @@
 		}
 	}
 	&__loader {
-		position: absolute;
-		left: 50%;
-		transform: translate3d(-50%, 0, 0);
-		max-height: none;
-		top: 0;
-		transition: {
-			property: visibility, opacity;
-			duration: $speed;
-		}
-		.search__items--loading & {
-			visibility: visible;
-			opacity: 1;
+		transition: max-height $speed;
+		&.loading {
+			max-height: em($p*2);
 		}
 	}
 }

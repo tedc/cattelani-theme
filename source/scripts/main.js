@@ -65577,7 +65577,7 @@ module.exports = function() {
     scope: true,
     controller: [
       "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate) {
-        var close, getAll, getAllLoop, lang, per_page, wp, wrapper;
+        var close, getSearch, lang, per_page, searchBar, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('wp/v2', 'lampade/', {
           params: ['collezioni', 'posizioni', 'fonti']
@@ -65606,6 +65606,7 @@ module.exports = function() {
           }
         };
         $scope.isLoading = false;
+        $scope.isSearchEnded = false;
         $scope.change = function(s, i) {
           $scope.isLoading = true;
           $scope.search[s] = i.id;
@@ -65617,13 +65618,13 @@ module.exports = function() {
           $scope.isLoading = true;
           $scope.search[s] = '';
         };
-        wp.collections().lang(lang).then(function(res) {
+        wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
           $scope.collections = res;
         });
-        wp.positions().lang(lang).then(function(res) {
+        wp.positions().perPage("" + vars.api.count_positions).lang(lang).then(function(res) {
           $scope.positions = res;
         });
-        wp.sources().lang(lang).then(function(res) {
+        wp.sources().perPage("" + vars.api.count_sources).lang(lang).then(function(res) {
           $scope.sources = res;
         });
         $scope.image = function(item) {
@@ -65636,30 +65637,18 @@ module.exports = function() {
             alt: alt
           };
         };
-        getAll = function(request) {
-          return request.then(function(response) {
-            var array;
-            if (!response._paging || !response._paging.next) {
-              return response;
-            }
-            array = [response, getAll(response._paging.next)];
-            return $q.all(array).then(function(responses) {
-              var flattened;
-              return flattened = responses.reduce(function(a, b) {
-                return b.concat(a);
-              });
-            });
-          });
-        };
         $scope.page = 1;
-        getAllLoop = function() {
-          wp.products().embed().order('asc').orderby('title').then(function(results) {
+        getSearch = function() {
+          $scope.isSearching = true;
+          wp.products().embed().order('asc').orderby('title').page($scope.page).then(function(results) {
             $timeout(function() {
               $scope.isLoading = false;
               $scope.items = $scope.items.concat(results);
               $scope.page += 1;
-              if ($scope.page < parseInt(results._paging.totalPages)) {
-                getAllLoop();
+              $rootScope.$broadcast('scrollBarUpdate');
+              $scope.isSearching = false;
+              if ($scope.page > parseInt(res._paging.totalPages)) {
+                $scope.isSearchEnded = true;
               }
             });
           });
@@ -65671,7 +65660,7 @@ module.exports = function() {
           }
           $rootScope.isSearch = true;
           $scope.isLoading = true;
-          getAllLoop();
+          getSearch();
         };
         wrapper = angular.element(document.querySelector('.search__items'));
         close = function(element, phase) {
@@ -65699,6 +65688,16 @@ module.exports = function() {
           $rootScope.isPopup = !$rootScope.isPopup;
           $rootScope.modalId = id;
         };
+        $scope.$on('loadMoreSearch', searchBar = ScrollbarService.getInstance('search'));
+        searchBar.then(function(scrollbar) {
+          scrollbar.addListener(function(s) {
+            if (s.offeset.y >= s.limit.y) {
+              if (!$scope.isSearchEnded) {
+                scope.$emit('loadMoreSearch');
+              }
+            }
+          });
+        });
       }
     ]
   };

@@ -19,6 +19,7 @@ module.exports = ->
 				return
 
 			$scope.isLoading = off
+			$scope.isSearchEnded = off
 			$scope.change = (s, i)->
 				#e.stopPropagation();
 				$scope.isLoading = on
@@ -33,6 +34,7 @@ module.exports = ->
 				return
 			wp
 				.collections()
+				.perPage "#{vars.api.count_collections}"
 				.lang lang
 				.then (res)->
 					$scope.collections = res
@@ -40,6 +42,7 @@ module.exports = ->
 
 			wp
 				.positions()
+				.perPage "#{vars.api.count_positions}"
 				.lang lang
 				.then (res)->
 					$scope.positions = res
@@ -47,6 +50,7 @@ module.exports = ->
 					
 			wp
 				.sources()
+				.perPage "#{vars.api.count_sources}"
 				.lang lang
 				.then (res)->
 					$scope.sources = res
@@ -58,28 +62,32 @@ module.exports = ->
 				array =
 					url : url
 					alt : alt
-			getAll = (request)->
-				request.then (response)->
-					if not response._paging or not response._paging.next
-						return response
-					array = [response, getAll response._paging.next ]
-					$q.all array
-						.then (responses)->
-							flattened = responses.reduce (a, b)->
-								b.concat a
+			# getAll = (request)->
+			# 	request.then (response)->
+			# 		if not response._paging or not response._paging.next
+			# 			return response
+			# 		array = [response, getAll response._paging.next ]
+			# 		$q.all array
+			# 			.then (responses)->
+			# 				flattened = responses.reduce (a, b)->
+			# 					b.concat a
 			$scope.page = 1
-			getAllLoop = ->
+			getSearch = ->
+				$scope.isSearching = on
 				wp
 					.products()
 					.embed()
 					.order 'asc'
 					.orderby 'title'
+					.page $scope.page
 					.then (results)->
 						$timeout ->
 							$scope.isLoading = off
 							$scope.items = $scope.items.concat results
 							$scope.page += 1
-							getAllLoop() if $scope.page < parseInt results._paging.totalPages
+							$rootScope.$broadcast 'scrollBarUpdate'
+							$scope.isSearching = off
+							$scope.isSearchEnded = on if $scope.page > parseInt res._paging.totalPages
 							return
 						return
 				return
@@ -88,7 +96,7 @@ module.exports = ->
 				return if $rootScope.isSearch
 				$rootScope.isSearch = on
 				$scope.isLoading = on
-				getAllLoop()
+				getSearch()
 				# if per_page > 100
 				# 	getAll wp.products().perPage per_page 
 				# 		.embed()
@@ -138,5 +146,15 @@ module.exports = ->
 				$rootScope.isPopup = !$rootScope.isPopup
 				$rootScope.modalId = id
 				return
+			$scope.$on 'loadMoreSearch', 
+			## INFINITI SCROLL
+			searchBar = ScrollbarService.getInstance 'search'
+			searchBar
+				.then (scrollbar)->
+					scrollbar.addListener (s)->
+						if s.offeset.y >= s.limit.y
+							scope.$emit 'loadMoreSearch' if not $scope.isSearchEnded
+						return
+					return
 			return
 		]

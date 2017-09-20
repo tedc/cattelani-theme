@@ -37,7 +37,10 @@
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
 				'start_latlng' => get_option('wpsl_settings')['start_latlng'],
-				'count_posts' => $posts
+				'count_posts' => $posts,
+				'count_collections' => count(get_terms(array('taxonomy' => 'collezioni'))),
+				'count_positions' => count(get_terms(array('taxonomy' => 'posizioni'))),
+				'count_sources' => count(get_terms(array('taxonomy' => 'fonti')))
 			),
 			"strings" => array(
 				'btn_stores' => __('Cerca rivenditori', 'catellani'),

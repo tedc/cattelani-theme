@@ -49,10 +49,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar ng-class="{'search__items--loading':isLoading}">
-			<div class="search__loader">
-				<div class="search__spinner"></div>
-			</div>
+		<div class="search__items search__items--shrink-fw" scrollbar="search" ng-class="{'search__items--loading':isLoading}">
 			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
 					<span class="search__figure" ng-if="item.featured_media > 0">
@@ -64,6 +61,9 @@
 				</span>
 				<span class="search__mask"></span>
 			</a>
+			<div class="search__loader" ng-hide="isSearchEnded" ng-class="{loading : isSearching}">
+				<div class="search__spinner"></div>
+			</div>
 		</div>
 	</div>
 </div>
