@@ -4,11 +4,9 @@
 	if(get_post_type() != 'lampade') :
 		$next = (is_singular('post')) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
 	else :
-		add_filter('get_previous_post_sort', 'catellani_previous_post_orderby_name', 100, 1);
-		add_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 100, 1);
+		add_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 10, 1);
 		$next = get_next_post( true, null, 'collezioni');
-		remove_filter('get_previous_post_sort', 'catellani_previous_post_orderby_name', 100);
-		remove_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 100);
+		remove_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 10);
 	endif;
 	if($next) :
 ?>

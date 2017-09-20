@@ -65,7 +65,7 @@
 	}
 
 	function catellani_previous_post_orderby_name($orderby){
-		return "ORDER BY p.post_title DESC LIMIT 1";
+		return "ORDER BY p.post_title ASC LIMIT 1";
 	}
 	function catellani_previous_post_where_name(){
 		global $post, $wpdb;
