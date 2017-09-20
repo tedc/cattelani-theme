@@ -65616,7 +65616,7 @@ module.exports = function() {
         };
         $scope.clear = function(s) {
           $scope.isLoading = true;
-          $scope.search[s] = '';
+          $scope.search[s] = false;
         };
         wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
           $scope.collections = res;
