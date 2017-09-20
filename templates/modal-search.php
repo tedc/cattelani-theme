@@ -1,6 +1,6 @@
 <div class="modal__container modal__container--search" collection-search lang="<?php echo ICL_LANGUAGE_CODE; ?>" id="modal-search">
 	<div class="search">
-		<header class="search__header search__header--grow-md">
+		<header class="search__header search__header--grow-md-top search__header--grow-bottom">
 			<h3 class="search__title search__title--lighter"><?php _e('Trova la tua lampada', 'catellani'); ?></h3>
 		</header>
 		<div class="search__filters search__filters--grid"> 
