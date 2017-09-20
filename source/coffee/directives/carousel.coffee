@@ -46,7 +46,7 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 				scope.goto = (index, params)->
 					scrollbar.removeListener()
 					if scrollbar.isVisible items[index]
-						if index isnt 0 and index isnt 1 and index isnt parseInt items[item].getAttribute 'data-item-total'
+						if index isnt 0 and index isnt 1 and index isnt parseInt items[index].getAttribute 'data-item-total'
 							left = if items[index].offsetWidth isnt scrollbar.getSize().container.width then items[index].offsetLeft - items[index].offsetWidth else items[index].offsetLeft
 							scrollbar.scrollTo left, 0, 750, ->
 								scope.isState = on
