@@ -65577,7 +65577,7 @@ module.exports = function() {
     scope: true,
     controller: [
       "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate) {
-        var close, getAll, lang, per_page, wp, wrapper;
+        var close, getAll, getAllLoop, lang, per_page, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('wp/v2', 'lampade/', {
           params: ['collezioni', 'posizioni', 'fonti']
@@ -65597,6 +65597,7 @@ module.exports = function() {
         $scope.isSelect = {};
         $scope.search = {};
         $scope.select = {};
+        $scope.items = [];
         $scope.collection = function(id) {
           if (id !== false) {
             $rootScope.$broadcast('collection_changed', {
@@ -65628,7 +65629,7 @@ module.exports = function() {
         $scope.image = function(item) {
           var alt, array, img, url;
           img = item._embedded['wp:featuredmedia'][0];
-          url = img.media_details.sizes['vertical-thumb'] ? img.media_details.sizes['vertical-thumb'].source_url : img.media_details.sizes.full.source_url;
+          url = typeof img.media_details.sizes['vertical-thumb'] !== 'undefined' ? img.media_details.sizes['vertical-thumb'].source_url : img.media_details.sizes.full.source_url;
           alt = img.alt_text;
           return array = {
             url: url,
@@ -65650,6 +65651,19 @@ module.exports = function() {
             });
           });
         };
+        $scope.page = 1;
+        getAllLoop = function() {
+          wp.products().embed().order('asc').orderby('title').perPage(20).then(function(results) {
+            $timeout(function() {
+              $scope.isLoading = false;
+              $scope.items = $scope.items.concat(results);
+              $scope.page += 1;
+              if ($scope.page < parseInt(results._paging.totalPages)) {
+                getAllLoop();
+              }
+            });
+          });
+        };
         $rootScope.isSearch = false;
         $rootScope.startSearch = function() {
           if ($rootScope.isSearch) {
@@ -65657,19 +65671,7 @@ module.exports = function() {
           }
           $rootScope.isSearch = true;
           $scope.isLoading = true;
-          if (per_page > 100) {
-            getAll(wp.products().perPage(per_page)).embed().order('asc').orderby('title').then(function(results) {
-              $scope.items = results;
-              $rootScope.$broadcast('scrollBarUpdate');
-            });
-          } else {
-            wp.products().embed().order('asc').orderby('title').perPage(per_page).then(function(results) {
-              $timeout(function() {
-                $scope.items = results;
-                $rootScope.$broadcast('scrollBarUpdate');
-              }, 0);
-            });
-          }
+          getAllLoop();
         };
         wrapper = angular.element(document.querySelector('.search__items'));
         close = function(element, phase) {

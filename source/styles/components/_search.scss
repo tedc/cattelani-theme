@@ -65,6 +65,9 @@
 			}
 		}
 	}
+	[class*=__options] [class*=__option], [class*=__select] [class*=__value] {
+		font-size: 14px;
+	}
 	&__title {
 		&--name {
 			display: block;

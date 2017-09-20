@@ -13,6 +13,7 @@ module.exports = ->
 			$scope.isSelect = {}
 			$scope.search = {}
 			$scope.select = {}
+			$scope.items = []
 			$scope.collection = (id)->
 				$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
 				return
@@ -52,7 +53,7 @@ module.exports = ->
 					return
 			$scope.image = (item)->
 				img = item._embedded['wp:featuredmedia'][0]
-				url = if img.media_details.sizes['vertical-thumb'] then img.media_details.sizes['vertical-thumb'].source_url else img.media_details.sizes.full.source_url
+				url = if typeof img.media_details.sizes['vertical-thumb'] isnt 'undefined' then img.media_details.sizes['vertical-thumb'].source_url else img.media_details.sizes.full.source_url
 				alt = img.alt_text
 				array =
 					url : url
@@ -66,34 +67,52 @@ module.exports = ->
 						.then (responses)->
 							flattened = responses.reduce (a, b)->
 								b.concat a
+			$scope.page = 1
+			getAllLoop = ->
+				wp
+					.products()
+					.embed()
+					.order 'asc'
+					.orderby 'title'
+					.perPage 20
+					.then (results)->
+						$timeout ->
+							$scope.isLoading = off
+							$scope.items = $scope.items.concat results
+							$scope.page += 1
+							getAllLoop() if $scope.page < parseInt results._paging.totalPages
+							return
+						return
+				return
 			$rootScope.isSearch = off
 			$rootScope.startSearch = ->
 				return if $rootScope.isSearch
 				$rootScope.isSearch = on
 				$scope.isLoading = on
-				if per_page > 100
-					getAll wp.products().perPage per_page 
-						.embed()
-						.order 'asc'
-						.orderby 'title'
-						.then (results)->
-							$scope.items = results
-							$rootScope.$broadcast 'scrollBarUpdate'
-							return
-				else
-					wp
-						.products()
-						.embed()
-						.order 'asc'
-						.orderby 'title'
-						.perPage per_page
-						.then (results)->
-							$timeout ->
-								$scope.items = results
-								$rootScope.$broadcast 'scrollBarUpdate'
-								return
-							, 0
-							return
+				getAllLoop()
+				# if per_page > 100
+				# 	getAll wp.products().perPage per_page 
+				# 		.embed()
+				# 		.order 'asc'
+				# 		.orderby 'title'
+				# 		.then (results)->
+				# 			$scope.items = results
+				# 			$rootScope.$broadcast 'scrollBarUpdate'
+				# 			return
+				# else
+				# 	wp
+				# 		.products()
+				# 		.embed()
+				# 		.order 'asc'
+				# 		.orderby 'title'
+				# 		.perPage per_page
+				# 		.then (results)->
+				# 			$timeout ->
+				# 				$scope.items = results
+				# 				$rootScope.$broadcast 'scrollBarUpdate'
+				# 				return
+				# 			, 0
+				# 			return
 				return
 			wrapper = angular.element document.querySelector '.search__items'
 			close =  (element, phase)->

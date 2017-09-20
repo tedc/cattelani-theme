@@ -5,7 +5,7 @@
 		</header>
 		<div class="search__filters search__filters--grid"> 
 			<div class="search__select" click-outside="isSelect['collezioni']=false" ng-class="{'search__select--filled' : search.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">
-				<span class="search__value" ng-bind-html="(search.collezioni ? select['collezioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
+				<span class="search__value" ng-bind-html="(search.collezioni ? select['collezioni'] : '<?php _e('Collezione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 					<i class="icon-close" ng-click="$event.stopPropagation();clear('collezioni')"></i>
@@ -20,7 +20,7 @@
 			</div>
 
 			<div class="search__select" click-outside="isSelect['posizioni']=false" ng-class="{'search__select--filled' : search.posizioni}" ng-click="isSelect['posizioni']=!isSelect['posizioni']">
-				<span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
+				<span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Posizione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 					<i class="icon-close" ng-click="$event.stopPropagation();clear('posizioni')"></i>
@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="search__select" click-outside="isSelect['sources']=false" ng-class="{'search__select--filled' : search.fonti}" ng-click="isSelect['sources']=!isSelect['sources']">
-				<span class="search__value" ng-bind-html="(search.fonti ? select['sources'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
+				<span class="search__value" ng-bind-html="(search.fonti ? select['sources'] : '<?php _e('Fonte luminosa', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 					<i class="icon-close" ng-click="$event.stopPropagation();clear('fonti')"></i>
