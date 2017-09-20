@@ -215,6 +215,7 @@
 				height: calc(100vh - 32px);
 			}
 			.scroll-content {
+				background-color: $dark-color;
 				display: flex;
 				height: 100vh;
 				.logged-in.admin-bar & {
