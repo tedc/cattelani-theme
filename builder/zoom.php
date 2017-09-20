@@ -6,7 +6,7 @@
 			</div>
 			<figcaption class="zoom__cursor">
 				<i class="zoom__icn"></i>
-				<span class="zoom__open"><?php _e('Esplora', 'catellani'); ?></span>
+				<span class="zoom__open"><?php _e('Clicca ed esplora', 'catellani'); ?></span>
 				<span class="zoom__close"><?php _e('Chiudi', 'catellani'); ?></span>
 			</figcaption>	
 		</figure>
