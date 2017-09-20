@@ -1,7 +1,7 @@
 module.exports = ->
 	search =
 		scope : true
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService)->
 			wp = WPAPI
 			wp.products = wp.registerRoute 'wp/v2', 'lampade/', params : ['collezioni', 'posizioni', 'fonti']
 			wp.collections = wp.registerRoute 'wp/v2', 'collezioni/', params : ['lang']
@@ -95,8 +95,8 @@ module.exports = ->
 			$rootScope.startSearch = ->
 				return if $rootScope.isSearch
 				$rootScope.isSearch = on
-				$scope.isLoading = on
-				getSearch()
+				#$scope.isLoading = on
+				#getSearch()
 				# if per_page > 100
 				# 	getAll wp.products().perPage per_page 
 				# 		.embed()
@@ -121,6 +121,7 @@ module.exports = ->
 				# 			, 0
 				# 			return
 				return
+			getSearch()
 			wrapper = angular.element document.querySelector '.search__items'
 			close =  (element, phase)->
 				if phase is 'close'
