@@ -132,9 +132,10 @@
 		}
 	}
 	&__loader {
-		transition: max-height $speed;
-		&.loading {
+		transition: max-height $speed, opacity $speed;
+		&--loading {
 			max-height: em($p*2);
+			opacity: 1;
 		}
 	}
 }
