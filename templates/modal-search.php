@@ -61,7 +61,7 @@
 				</span>
 				<span class="search__mask"></span>
 			</a>
-			<div class="search__loader" ng-hide="isSearchEnded" ng-class="{loading : isSearching}">
+			<div class="search__loader" ng-hide="isSearchEnded" ng-class="{'search__loader--loading' : isSearching}">
 				<div class="search__spinner"></div>
 			</div>
 		</div>
