@@ -163,8 +163,8 @@
 		&:after {
 			width: 1px;
 			background-color: $lighter-color;
-			height: em($p*2, 34px);
-			top: auto;
+			height: em($p*2.1 - 5px, 34px);
+			bottom: 0;
 			left: 50%;
 			content: '';
 			position: absolute;
