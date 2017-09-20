@@ -32,6 +32,10 @@ module.exports = ($timeout, $rootScope)->
 						scope.main.params.control = scope.nav 
 						scope.nav.update()
 						scope.main.update()
+						scope.nav.on 'slideChangeEnd', (swiper)->
+							swiper.update()
+							console.log swiper
+							return
 						$timeout ->
 							scope.navInit = on
 							return
