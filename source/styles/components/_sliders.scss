@@ -160,7 +160,7 @@
 		padding: 0 em($p*2, 34px);
 		transition: transform $speed, opacity $speed;
 		opacity: 0;
-		.collections__cell:hover {
+		.collections__cell:hover & {
 			opacity: 1;
 		}
 		.is-anim & {
