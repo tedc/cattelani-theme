@@ -109,6 +109,7 @@
 			display: flex;
 			position: relative;
 			flex-wrap: wrap;
+			padding-bottom: em($p*2);
 		}
 		@for $n from 1 through 60 {
 			&:nth-child(#{$n}) {
