@@ -10,7 +10,7 @@
         $pTo = get_field('email_address', 'options');
         acf_unset_language_to_default(); 
         $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
-        $rSubject = __('Risposta automatica da') . ' '.get_bloginfo('name');
+        $rSubject = __('Risposta automatica da') . ' '.html_entity_decode(get_bloginfo('name'));
         $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
         $errorMessage = __('Verifica di aver compilato bene i campi o scrivi a','catellani');
         $sent = __('Messaggio inviato correttamente','catellani');
@@ -20,7 +20,7 @@
     $name_row = (!empty($_POST['sender'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Da','catellani').'</em><br />'.$sender.'</td></tr>' : "";
     $email_row = (!empty($_POST['email'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#a7a9ac;font-style:italic">Email</em><br /><a href="mailto:'.$email.'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$email.'</a></td></tr>' : "";
     $tel_row = (!empty($_POST['tel'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Telefono','catellani').'</em><br />'.$tel.'</td></tr>' : "";
-    $message_row = (!empty($_POST['message'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Messaggio','catellani').'</em><br />'.$message.'</td></tr>' : "";
+    $message_row = (!empty($_POST['message'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Messaggio','catellani').'</em><br />'.html_entity_decode($message).'</td></tr>' : "";
     $body = $name_row.$email_row.$tel_row.$message_row;
     $resp = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;"><p style="line-height:1.35">'.$tnx.'</p></td></tr>';
     function template($body) {
