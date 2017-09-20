@@ -206,18 +206,10 @@
 				height: calc(100vh - 32px);
 			}
 			.scroll-content {
-				background-color: $dark-color;
 				display: flex;
 				height: 100vh;
 				.logged-in.admin-bar & {
 					height: calc(100vh - 32px);
-				}
-				.collections__cover {
-					transition: opacity $speed;
-					opacity: .5;
-				}	
-				.collections__cell:hover .collections__cover {
-					opacity: 1;
 				}
 			}		
 		}
