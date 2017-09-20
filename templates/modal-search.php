@@ -34,8 +34,8 @@
 				</ul>
 			</div>
 
-			<div class="search__select" click-outside="isSelect['sources']=false" ng-class="{'search__select--filled' : search.fonti}" ng-click="isSelect['sources']=!isSelect['sources']">
-				<span class="search__value" ng-bind-html="(search.fonti ? select['sources'] : '<?php _e('Fonte luminosa', 'catellani'); ?>')"></span>
+			<div class="search__select" click-outside="isSelect['fonti']=false" ng-class="{'search__select--filled' : search.fonti}" ng-click="isSelect['fonti']=!isSelect['fonti']">
+				<span class="search__value" ng-bind-html="(search.fonti ? select['fonti'] : '<?php _e('Fonte luminosa', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 					<i class="icon-close" ng-click="$event.stopPropagation();clear('fonti')"></i>
@@ -43,9 +43,9 @@
 				<select ng-model="search.fonti" ng-options="opt.id as opt.name for opt in sources">			
 					<option value=""></option>
 				</select>
-				<ul class="search__options" ng-class="{'store__options--visible':isSelect['sources']}">
+				<ul class="search__options" ng-class="{'store__options--visible':isSelect['fonti']}">
 					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="change('sources', source)" ng-class="{'search__option--selected':search.fonti==source.id}"></li>
+					<li class="store__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
 				</ul>
 			</div>
 		</div>
