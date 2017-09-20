@@ -18,10 +18,10 @@
 	&__container {
 		position: relative;
 		z-index: 1;
-		height: calc(100vh - #{em($p*2)});
+		height: calc(85vh - #{em($p*2)});
 		overflow: hidden;
 		.admin-bar.logged-in & {
-			height: calc(100vh - 32px - #{em($p*2)});
+			height: calc(85vh - 32px - #{em($p*2)});
 		}
 	}
 	&__item {
