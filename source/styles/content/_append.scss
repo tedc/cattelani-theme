@@ -19,9 +19,9 @@ body {
     color: $main-color;
     letter-spacing: $spacing;
     margin: 0;
-    padding: {
-        bottom: em(90px);
-    }
+    // padding: {
+    //     bottom: em(90px);
+    // }
     background-color: $dark-color;
     font-family: $main-font;
     -webkit-font-smoothing: antialiased;
