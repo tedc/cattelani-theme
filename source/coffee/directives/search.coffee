@@ -30,7 +30,7 @@ module.exports = ->
 				return
 			$scope.clear = (s)->
 				$scope.isLoading = on
-				$scope.search[s] = off
+				delete $scope.search[s]
 				return
 			wp
 				.collections()
