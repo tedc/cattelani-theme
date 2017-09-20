@@ -581,7 +581,7 @@ function my_rest_prepare_post( $data, $post, $request ) {
   $data->data = $_data;
   return $data;
 }
-add_filter( 'rest_prepare_post', 'my_rest_prepare_post', 10, 3 );
+add_filter( 'rest_prepare_lampade', 'my_rest_prepare_post', 10, 3 );
 
 function search_by_title_only( $search, &$wp_query )
 {
