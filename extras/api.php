@@ -577,9 +577,10 @@ function my_rest_prepare_post( $data, $post, $request ) {
   $params = $request->get_params();
   if ( ! isset( $params['id'] ) ) {
     unset( $_data['content'] );
-    unset($_data['acf']);
     unset($_data['yoats_title']);
     unset($_data['breadcrumbs']);
+    unset($_data['post_class']);
+    unset($_data['body_class']);
   }
   $data->data = $_data;
   return $data;
