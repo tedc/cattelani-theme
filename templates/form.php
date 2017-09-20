@@ -14,4 +14,7 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 	<div class="form__alert" ng-class="{'form__alert--visible' : isSubmitted}" ng-click="isSubmitted=false">
 		<div class="form__message" bind-html-compile="alert" ng-class="{'form__message--visible' : isContactSent}"></div>
 	</div>
+	<div class="form__loader" ng-class="{'form__loader--visible' : isSubmitted}">
+		<div class="form__spinner"></div>
+	</div>
 </form>
