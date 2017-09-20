@@ -8,7 +8,7 @@
 		);
 		$loopedSlides = count($terms) * 2;
 	?>
-	<ks-swiper-container class="collections__slider collections__slider--home" swiper="main" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'loopedSlides':<?php echo $loopedSlides; ?>, 'grabCursor' : true}" on-ready="sliderReady(main)">
+	<ks-swiper-container class="collections__slider collections__slider--home" swiper="main" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'loopedSlides':<?php echo $loopedSlides; ?>, 'centeredSlides':true, 'grabCursor' : true}" on-ready="sliderReady(main)">
 	<?php 
 		
 		foreach($terms as $term) :
@@ -19,7 +19,7 @@
 	</ks-swiper-container>
 	<div class="collections__nav collections__nav--shrink collections__nav--grow-md" ng-class="{'collections__nav--active' : navInit}">
 	<i class="icon-arrow icon-arrow-prev"></i>
-	<ks-swiper-container class="collections__container collections__container--shrink" swiper="nav" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'centeredSlides':true,'loopedSlides':<?php echo $loopedSlides; ?>, 'slideToClickedSlide' : true, 'nextButton' : '.collections__nav .icon-arrow-next', 'prevButton' : '.collections__nav .icon-arrow-prev', 'simulateTouch' : false}">
+	<ks-swiper-container class="collections__container collections__container--shrink" swiper="nav" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'centeredSlides':true,'loopedSlides':<?php echo $loopedSlides; ?>, 'slideToClickedSlide' : true, 'nextButton' : '.collections__nav .icon-arrow-next', 'prevButton' : '.collections__nav .icon-arrow-prev', 'grabCursor' : true}">
 		<?php $index = 0; foreach($terms as $term) : ?>
 		<ks-swiper-slide class="swiper-slide">
 			<span class="swiper-slide__item">
