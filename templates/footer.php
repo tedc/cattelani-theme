@@ -1,4 +1,4 @@
-<footer class="footer footer--grow-md footer--shrink-fw">
+<footer class="footer footer--grow footer--shrink-fw">
     <a class="footer__brand" href="<?= esc_url(home_url('/')); ?>">
     <?php 
         $custom_logo_id = get_theme_mod( 'custom_logo' );

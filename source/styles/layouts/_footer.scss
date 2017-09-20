@@ -24,6 +24,7 @@
 		}
 	}
 	a {
+		font-size: em($p);
 		color: $alternate-color;
 		&:hover {
 			color: $w;

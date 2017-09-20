@@ -1,5 +1,5 @@
 <?php $sm = '{"class":{"element":".main","classes" : "main--dark"},"triggerElement":"#video_'.$row.'","triggerHook":0.5,"duration":"60%","durationElement" : "#video_'.$row.'"}'; ?>
-<div class="video video--shrink-fw video--grow-lg<?php echo (get_sub_field('video_dark')) ? ' video--dark' : ''; ?>" id="video_<?php echo $row; ?>"<?php if(get_sub_field('video_dark')) : echo ' ng-sm=\''.$sm.'\''; endif; ?>>
+<div class="video video--shrink-fw video--grow-lg<?php echo (get_sub_field('video_dark')) ? ' video--dark' : ''; ?>" id="video_<?php echo $row; ?>">
 	<?php if(get_sub_field('video_title')) : ?>
 	<header class="video__header video__header--shrink">
 		<h3 class="video__title video__title--large-lighter"><?php the_sub_field('video_title'); ?></h3>
@@ -23,5 +23,3 @@
 	</footer>
 	<?php endif; ?>
 </div>
-<?php if(get_sub_field('video_dark')) : ?>
-<?php endif; ?>
