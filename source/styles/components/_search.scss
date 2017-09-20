@@ -132,10 +132,11 @@
 		}
 	}
 	&__loader {
-		transition: max-height $speed, opacity $speed;
+		transition: max-height $speed, opacity $speed, visibility $speed;
 		&--loading {
 			max-height: em($p*2);
 			opacity: 1;
+			visibility: visible;
 		}
 	}
 }
