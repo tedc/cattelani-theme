@@ -48,6 +48,12 @@
 			}
 		}
 	}
+	.social a {
+		font-size: em(18px, 11px);
+	}
+	.credits {
+		font-size: em(18px);
+	}
 	.home &, .tax-collezioni & {
 		display: none;
 	}
