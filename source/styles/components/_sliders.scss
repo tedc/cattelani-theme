@@ -160,6 +160,15 @@
 		padding: 0 em($p*2, 34px);
 		transition: transform $speed, opacity $speed;
 		opacity: 0;
+		&:after {
+			width: 1px;
+			background-color: $lighter-color;
+			height: em($p*2, 34px);
+			top: auto;
+			left: 50%;
+			content: '';
+			position: absolute;
+		}
 		.collections__cell:hover & {
 			opacity: 1;
 		}
@@ -168,7 +177,7 @@
 			transform: translate3d(0, $p*2, 0);
 		}
 		@extend %line_before;
-		.collections__cell:hover & {
+		&:hover {
 			&:before {
 				transform-origin: left center;
 				transform: scaleX(1) translateZ(0);
