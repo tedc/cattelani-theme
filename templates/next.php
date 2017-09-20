@@ -1,13 +1,7 @@
 <?php 
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
-	if(get_post_type() != 'lampade') :
-		$next = (is_singular('post')) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
-	else :
-		add_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 10, 1);
-		$next = get_next_post( true, null, 'collezioni');
-		remove_filter('get_next_post_sort', 'catellani_next_post_orderby_name', 10);
-	endif;
+	$next = (is_singular('post')) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
 	if($next) :
 ?>
 <a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element  href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})" ng-mouseenter="padding_class = 'next--grow-double'" ng-mouseleave="padding_class =''" ng-class="padding_class">
