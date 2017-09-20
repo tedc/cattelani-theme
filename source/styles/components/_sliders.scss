@@ -160,6 +160,9 @@
 		padding: 0 em($p, 34px) em($p/2, 34px);
 		transition: transform $speed, opacity $speed;
 		opacity: 0;
+		display: block;
+		backface-visibility: hidden;
+		perspective: 1000px;
 		&:after {
 			width: 1px;
 			background-color: $lighter-color;
@@ -168,9 +171,15 @@
 			left: 50%;
 			content: '';
 			position: absolute;
+			transition: transform $speed*0.75;
+			transform-origin: center bottom;
+			transform: scaleY(0) translateZ(0);
 		}
 		.collections__cell:hover & {
 			opacity: 1;
+			&:after {
+				transform: scaleY(1) translateZ(0);
+			}
 		}
 		.is-anim & {
 			opacity: 0;
