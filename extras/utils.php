@@ -135,7 +135,7 @@
 	        return "ORDER BY p.post_title ASC LIMIT 1";
 	    } );
 
-	    $where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type )
+	    $where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
 
 	    // Modify Next WHERE part
 	    return $where;    
