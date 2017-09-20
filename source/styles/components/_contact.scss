@@ -98,6 +98,7 @@
 		background-color: $w;
 		display: flex;
 		align-items: center;
+		text-align: center;
 		visibility: hidden;
 		opacity: 0;
 		transition: $speed visibility, $speed opacity;

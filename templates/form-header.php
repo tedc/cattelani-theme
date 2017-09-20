@@ -45,7 +45,7 @@
             if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
                 echo "<div id='form-alert-message'><h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__btn' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
             } else {
-                echo "<div id='form-alert-message'><h3 class='form__title'>".$error."</h3><p>".$errorMessage.' '.$pTo."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__btn' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
+                echo "<div id='form-alert-message'><h3 class='form__title'>".$error."</h3><p>".$errorMessage.' '.$pTo."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
             }
         }
     endif; 
