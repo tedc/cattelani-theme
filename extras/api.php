@@ -569,7 +569,7 @@ function reigel_rest_prepare_post( $response, $post, $request ) {
     }
     return $response;
 }
-add_filter( 'rest_prepare_post', 'reigel_rest_prepare_post', 10, 3 );
+add_filter( 'rest_prepare_wpsl_stores', 'reigel_rest_prepare_post', 10, 3 );
 
 
 function my_rest_prepare_post( $data, $post, $request ) {
@@ -577,6 +577,9 @@ function my_rest_prepare_post( $data, $post, $request ) {
   $params = $request->get_params();
   if ( ! isset( $params['id'] ) ) {
     unset( $_data['content'] );
+    unset($_data['acf']);
+    unset($_data['yoats_title']);
+    unset($_data['breadcrumbs']);
   }
   $data->data = $_data;
   return $data;
