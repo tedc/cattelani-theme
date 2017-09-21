@@ -55,6 +55,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
         $args['order'] = $request['order'];
         $args['orderby'] = $request['orderby'];
         $args['paged'] = $request['page'];
+        $args['post_type'] = $request['type'];
         $args['posts_per_page'] = $request['per_page'];
         $args['name'] = $request['slug'];
         $args['post_status'] = $request['status'];
@@ -349,7 +350,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
             'validate_callback' => 'rest_validate_request_arg',
         );
 
-        $params['per_page']['maximum'] = count(get_posts(array('post_type' => $post_type, 'posts_per_page' => -1)));
+        $params['per_page']['maximum'] = count(get_posts(array('post_type' => 'lampade', 'posts_per_page' => -1)));
 
         $taxonomies = wp_list_filter(get_object_taxonomies(get_post_types(array(), 'names'), 'objects'), array('show_in_rest' => true));
         foreach ($taxonomies as $taxonomy) {
