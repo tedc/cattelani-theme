@@ -622,18 +622,12 @@ function search_by_title_only( $search, &$wp_query )
 }
 add_filter( 'posts_search', 'search_by_title_only', 500, 2 );
 
+add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
 
-if (!class_exists('WP_REST_Cerca_Lampade_PostType_Controller')) {
+function my_prefix_change_post_per_page( $params ) {
+    if ( isset( $params['per_page'] ) ) {
+        $params['per_page']['maximum'] = $params['per_page']
+    }
 
-    require_once dirname(__FILE__) . '/cerca.php';
+    return $params;
 }
-
-function init_wp_rest_cerca_lampade_posttype_endpoint() {
-    $controller = new WP_REST_Cerca_Lampade_PostType_Controller();
-    $controller->register_routes();
-}
-
-/**
- * REST INIT
- */
-add_action('rest_api_init', 'init_wp_rest_cerca_lampade_posttype_endpoint');
