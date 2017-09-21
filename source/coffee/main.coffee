@@ -1,6 +1,6 @@
 angular = require 'angular'
 require 'angular-sanitize'
-require 'angular-ui-router'
+require '@uirouter/angularjs'
 require 'angular-animate'
 require 'ngmap'
 require '@iamadamjowett/angular-click-outside'
