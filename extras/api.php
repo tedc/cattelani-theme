@@ -35,13 +35,13 @@
                 return $items;
             }
         }
-        // register_rest_route('api/v1', '/lampade', array(
-        //     "methods" => 'GET',
-        //     "callback" => 'lampade_totali'
-        // ));
-        // function lampade_totali() {
-        //   return get_posts(array('posts_per_page' => -1, 'post_type' => 'lampade', 'orderby' => 'title', 'order'=>'ASC'));
-        // }
+        register_rest_route('api/v1', '/lampade', array(
+            "methods" => 'GET',
+            "callback" => 'lampade_totali'
+        ));
+        function lampade_totali() {
+          return get_posts(array('posts_per_page' => -1, 'post_type' => 'lampade', 'orderby' => 'title', 'order'=>'ASC'));
+        }
        //  register_api_field(  array('post', 'lampade', 'progetti', 'installazioni', 'page'),
        //     'post_thumbnail',
        //     array(
