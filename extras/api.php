@@ -624,10 +624,10 @@ add_filter( 'posts_search', 'search_by_title_only', 500, 2 );
 
 add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
 
-function my_prefix_change_post_per_page( $params ) {
-    if ( isset( $params['per_page'] ) ) {
-        $params['per_page']['maximum'] = $params['per_page'];
+add_filter( 'rest_endpoints', function( $endpoints ){
+    if ( ! isset( $endpoints['/wp/v2/lampde'] ) ) {
+        return $endpoints;
     }
-
-    return $params;
-}
+    unset( $endpoints['/wp/v2/posts'][0]['args']['per_page']['maximum'] );
+    return $endpoints;
+});
