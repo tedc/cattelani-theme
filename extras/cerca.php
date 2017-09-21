@@ -206,7 +206,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
         }
 
         // Only allow sticky psts if 'post' is one of the requested post types.
-        if (in_array('post', $query_args['post_type']) || !isset($query_args['ignore_sticky_posts'])) {
+        if (in_array('post', 'lampade') || !isset($query_args['ignore_sticky_posts'])) {
             $query_args['ignore_sticky_posts'] = true;
         }
 
