@@ -187,7 +187,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
      */
     protected function prepare_items_query($prepared_args = array(), $request = null) {
 
-        $valid_vars = array_flip($this->get_allowed_query_vars('lampade');
+        $valid_vars = array_flip($this->get_allowed_query_vars('lampade'));
         $query_args = array();
         foreach ($valid_vars as $var => $index) {
             if (isset($prepared_args[$var])) {
