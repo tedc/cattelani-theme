@@ -628,7 +628,7 @@ if (!class_exists('WP_REST_Cerca_Lampade_PostType_Controller')) {
     require_once dirname(__FILE__) . '/cerca.php';
 }
 
-function init_wp_rest_multiple_posttype_endpoint() {
+function init_wp_rest_cerca_lampade_posttype_endpoint() {
     $controller = new WP_REST_Multiple_PostType_Controller();
     $controller->register_routes();
 }
@@ -636,4 +636,4 @@ function init_wp_rest_multiple_posttype_endpoint() {
 /**
  * REST INIT
  */
-add_action('rest_api_init', 'init_wp_rest_multiple_posttype_endpoint');
+add_action('rest_api_init', 'init_wp_rest_cerca_lampade_posttype_endpoint');
