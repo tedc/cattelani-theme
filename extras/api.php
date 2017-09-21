@@ -629,7 +629,7 @@ if (!class_exists('WP_REST_Cerca_Lampade_PostType_Controller')) {
 }
 
 function init_wp_rest_cerca_lampade_posttype_endpoint() {
-    $controller = new WP_REST_Multiple_PostType_Controller();
+    $controller = new WP_REST_Cerca_Lampade_PostType_Controller();
     $controller->register_routes();
 }
 
