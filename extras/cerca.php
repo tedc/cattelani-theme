@@ -187,7 +187,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
      */
     protected function prepare_items_query($prepared_args = array(), $request = null) {
 
-        $valid_vars = array_flip($this->get_allowed_query_vars($request['type']));
+        $valid_vars = array_flip($this->get_allowed_query_vars('lampade');
         $query_args = array();
         foreach ($valid_vars as $var => $index) {
             if (isset($prepared_args[$var])) {
@@ -221,7 +221,7 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
      *
      * @return array
      */
-    protected function get_allowed_query_vars($post_types) {
+    protected function get_allowed_query_vars($post_type) {
         global $wp;
         $editPosts = true;
 
@@ -254,12 +254,10 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
         $edit_posts = true;
 
         # 'Type Param needs to ba an array e: &type[]=post'
-        foreach ($post_types as $post_type) {
-            $post_type_obj = get_post_type_object($post_type);
-            if (!current_user_can($post_type_obj->cap->edit_posts)) {
-                $edit_posts = false;
-                break;
-            }
+        $post_type_obj = get_post_type_object($post_type);
+        if (!current_user_can($post_type_obj->cap->edit_posts)) {
+            $edit_posts = false;
+            break;
         }
         if ($edit_posts) {
             $private = apply_filters('rest_private_query_vars', $wp->private_query_vars);
