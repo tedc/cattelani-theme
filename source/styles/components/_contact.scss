@@ -93,6 +93,22 @@
 	&__input, &__textarea {
 		width: $f;
 	}
+	&__loader {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: em($p*2) !important;
+		margin: {
+			left: em($p*-1);
+			top: em($p*-1);
+		}
+		min-height: em($p*2);
+		transition: opacity $speed, visibility $speed;
+		&--visible {
+			visibility: visible !important;
+			opacity: 1 !important;
+		}
+	}
 	&__alert {
 		@include full;
 		background-color: $w;
@@ -115,6 +131,9 @@
 		&--visible {
 			visibility: visible;
 			opacity: 1;
+		}
+		p {
+			padding-top: em($p);
 		}
 	}
 	&__privacy {

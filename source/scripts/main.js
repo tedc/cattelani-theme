@@ -64677,11 +64677,11 @@ module.exports = function($rootScope, $timeout, $state) {
       element.addClass('view-enter');
       if (!$rootScope.isTransitionerActive) {
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .75, {
+          TweenMax.fromTo(element, 1.25, {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Circ.easeIn,
+            ease: Circ.easeOut,
             onComplete: function() {
               $timeout(function() {
                 done();
@@ -64761,11 +64761,11 @@ module.exports = function($rootScope, $timeout, $state) {
       if (!$rootScope.isTransitionerActive) {
         element.addClass('view-leave');
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .75, {
+          TweenMax.fromTo(element, 1.25, {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Circ.easeIn,
+            ease: Circ.easeOut,
             onComplete: function() {
               $timeout(function() {
                 $rootScope.isLeaving = false;
@@ -65576,7 +65576,7 @@ module.exports = function() {
   return search = {
     scope: true,
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService) {
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter) {
         var close, getSearch, lang, per_page, searchBar, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('wp/v2', 'lampade/', {
@@ -65598,6 +65598,35 @@ module.exports = function() {
         $scope.search = {};
         $scope.select = {};
         $scope.items = [];
+        $scope.enabled = function(cat, id) {
+          var filter, filtered, obj;
+          filter = $filter('filter')($scope.items, (
+            obj = {},
+            obj["" + cat] = id,
+            obj
+          ), true);
+          return filtered = filter.length > 0 ? true : false;
+        };
+        $scope.page = 1;
+        getSearch = function() {
+          if ($scope.isSearchEnded) {
+            return;
+          }
+          $scope.isSearching = true;
+          wp.products().embed().order('asc').orderby('title').page($scope.page).then(function(results) {
+            $timeout(function() {
+              $scope.isLoading = false;
+              $scope.items = $scope.items.concat(results);
+              $scope.page += 1;
+              $rootScope.$broadcast('scrollBarUpdate');
+              $scope.isSearching = false;
+              if ($scope.page > parseInt(results._paging.totalPages)) {
+                $scope.isSearchEnded = true;
+              }
+            });
+          });
+        };
+        getSearch();
         $scope.collection = function(id) {
           if (id !== false) {
             $rootScope.$broadcast('collection_changed', {
@@ -65608,10 +65637,13 @@ module.exports = function() {
         $scope.isLoading = false;
         $scope.isSearchEnded = false;
         $scope.change = function(s, i) {
+          $scope.isSelect[s] = false;
+          if (!$scope.enabled(s, i.id)) {
+            return;
+          }
           $scope.isLoading = true;
           $scope.search[s] = i.id;
           $scope.select[s] = i.name;
-          $scope.isSelect[s] = false;
           $rootScope.$broadcast('scrollBarUpdate');
         };
         $scope.clear = function(s) {
@@ -65637,22 +65669,6 @@ module.exports = function() {
             alt: alt
           };
         };
-        $scope.page = 1;
-        getSearch = function() {
-          $scope.isSearching = true;
-          wp.products().embed().order('asc').orderby('title').page($scope.page).then(function(results) {
-            $timeout(function() {
-              $scope.isLoading = false;
-              $scope.items = $scope.items.concat(results);
-              $scope.page += 1;
-              $rootScope.$broadcast('scrollBarUpdate');
-              $scope.isSearching = false;
-              if ($scope.page > parseInt(results._paging.totalPages)) {
-                $scope.isSearchEnded = true;
-              }
-            });
-          });
-        };
         $rootScope.isSearch = false;
         $rootScope.startSearch = function() {
           if ($rootScope.isSearch) {
@@ -65660,7 +65676,6 @@ module.exports = function() {
           }
           $rootScope.isSearch = true;
         };
-        getSearch();
         wrapper = angular.element(document.querySelector('.search__items'));
         close = function(element, phase) {
           var searchTimeout;
@@ -65692,7 +65707,7 @@ module.exports = function() {
         searchBar.then(function(scrollbar) {
           scrollbar.addListener(function(s) {
             if (s.offset.y >= s.limit.y) {
-              if (!$scope.isSearchEnded) {
+              if (!$scope.isSearchEnded && !$scope.isSearching) {
                 $scope.$emit('loadMoreSearch');
               }
             }
@@ -66117,13 +66132,9 @@ module.exports = function($timeout, $rootScope) {
         scope.current = scope.main.realIndex;
       };
       scope.slideTo = function(index) {
-        if (scope.main.slideTo) {
-          scope.main.slideTo(index);
-        }
         if (scope.nav.slideTo) {
           scope.nav.slideTo(index);
         }
-        scope.current = scope.main.realIndex;
       };
       scope.$watch('main', function(newValue, oldValue) {
         if (oldValue === newValue) {
@@ -66131,10 +66142,18 @@ module.exports = function($timeout, $rootScope) {
         }
         scope.$watch('nav', function() {
           if (scope.nav.params && scope.main.params) {
-            scope.nav.params.control = scope.main;
-            scope.main.params.control = scope.nav;
             scope.nav.update();
             scope.main.update();
+            scope.nav.on('slideChangeStart', function(swiper) {
+              if (scope.main.realIndex !== swiper.realIndex) {
+                scope.main.slideTo(swiper.realIndex);
+              }
+            });
+            scope.main.on('slideChangeStart', function(swiper) {
+              if (scope.nav.realIndex !== swiper.realIndex) {
+                scope.nav.slideTo(swiper.realIndex);
+              }
+            });
             $timeout(function() {
               scope.navInit = true;
             });

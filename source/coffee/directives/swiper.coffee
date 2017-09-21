@@ -17,9 +17,9 @@ module.exports = ($timeout, $rootScope)->
 				scope.current = scope.main.realIndex
 				return
 			scope.slideTo = (index)->
-				scope.main.slideTo index if scope.main.slideTo
+				#scope.main.slideTo index if scope.main.slideTo
 				scope.nav.slideTo index if scope.nav.slideTo
-				scope.current = scope.main.realIndex
+				#scope.current = scope.main.realIndex
 				#console.log index
 				#slideChage() if scope.main.on
 				#scope.current = index
@@ -28,13 +28,15 @@ module.exports = ($timeout, $rootScope)->
 				return if oldValue is newValue
 				scope.$watch 'nav', ->
 					if scope.nav.params && scope.main.params
-						scope.nav.params.control = scope.main 
-						scope.main.params.control = scope.nav 
+						#scope.nav.params.control = scope.main 
+						#scope.main.params.control = scope.nav 
 						scope.nav.update()
 						scope.main.update()
-						scope.nav.on 'slideChangeEnd', (swiper)->
-							swiper.update()
-							console.log swiper
+						scope.nav.on 'slideChangeStart', (swiper)->
+							scope.main.slideTo swiper.realIndex if scope.main.realIndex isnt swiper.realIndex
+							return
+						scope.main.on 'slideChangeStart', (swiper)->
+							scope.nav.slideTo swiper.realIndex if scope.nav.realIndex isnt swiper.realIndex
 							return
 						$timeout ->
 							scope.navInit = on

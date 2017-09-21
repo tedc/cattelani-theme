@@ -42,13 +42,13 @@ module.exports = ($rootScope, $timeout, $state)->
 			element.addClass 'view-enter'
 			if not $rootScope.isTransitionerActive
 				if not $rootScope.prevElement
-					TweenMax.fromTo element, .75,
+					TweenMax.fromTo element, 1.25,
 						{
 							yPercent : fromY
 						}
 						{
 							yPercent : toY
-							ease: Circ.easeIn
+							ease: Circ.easeOut
 							onComplete : ->
 								$timeout ->
 									done()
@@ -113,13 +113,13 @@ module.exports = ($rootScope, $timeout, $state)->
 			if not $rootScope.isTransitionerActive
 				element.addClass 'view-leave'
 				if not $rootScope.prevElement
-					TweenMax.fromTo element, .75,
+					TweenMax.fromTo element, 1.25,
 						{
 							yPercent : fromY
 						}
 						{
 							yPercent : toY
-							ease: Circ.easeIn
+							ease: Circ.easeOut
 							onComplete : ->
 								$timeout ->
 									$rootScope.isLeaving = off

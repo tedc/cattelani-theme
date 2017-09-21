@@ -216,6 +216,10 @@
 		&--home {
 			.swiper-wrapper {
 				transition-timing-function: ceaser($easeOutQuad);
+				.swiper-slide {
+					width: $f;
+					flex: 0 0 auto;
+				}
 			}
 		}
 		&--archive {
@@ -424,6 +428,7 @@
 				color: $light-color;
 				transform: translate3d(-50%, 0, 0);
 				left: $f/2;
+				min-width: em($p*5, 18px);
 			}
 			&__item {
 				position: absolute;

@@ -19,7 +19,7 @@
 	&:focus, &:hover {
 		box-shadow: 0 3px 12px transparentize(#939598, .8);
 	}
-	&.ng-invalid.ng-pristine.ng-touched {
+	&.ng-invalid.ng-pristine.ng-touched, &.ng-invalid.ng-dirty.ng-touched {
 		background-color: #fde8e6;
 	}
 }
@@ -75,26 +75,25 @@
 	top: 0;
 	left: 0;
 	z-index: 901;
-	transition: visibility $speed, opacity $speed;
 	visibility: hidden;
 	opacity: 0;
 	background-color: $lighter-color;
 	box-shadow: 0 3px 12px transparentize(#939598, .8);
-	color: $alternate-color;
+	color: $main-color;
 	font-weight: 300;
 	[class*="__option"] {
 		line-height: percentage(27px/18px);
 		font-size: em(18px);
 		transition: $speed color;
 		&:hover {
-			color: $main-color;
+			color: $dark-color;
 		}
 	}
 	[class*="-gray"] & {
 		background-color: $w;
 	}
 	[class*="--selected"] {
-		color: $main-color;
+		color: $dark-gray;
 	}
 }
 [class*="__send"] {
@@ -126,5 +125,6 @@
 }
 [class*="__options--visible"] {
 	visibility: visible;
+	transition: visibility $speed, opacity $speed;
 	opacity: 1;
 }
