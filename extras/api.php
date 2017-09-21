@@ -622,8 +622,6 @@ function search_by_title_only( $search, &$wp_query )
 }
 add_filter( 'posts_search', 'search_by_title_only', 500, 2 );
 
-add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
-
 add_filter( 'rest_endpoints', function( $endpoints ){
     if ( ! isset( $endpoints['/wp/v2/lampade'] ) ) {
         return $endpoints;
