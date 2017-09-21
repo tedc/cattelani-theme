@@ -257,7 +257,6 @@ class WP_REST_Cerca_Lampade_PostType_Controller extends WP_REST_Controller {
         $post_type_obj = get_post_type_object($post_type);
         if (!current_user_can($post_type_obj->cap->edit_posts)) {
             $edit_posts = false;
-            break;
         }
         if ($edit_posts) {
             $private = apply_filters('rest_private_query_vars', $wp->private_query_vars);
