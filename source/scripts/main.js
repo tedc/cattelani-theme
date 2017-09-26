@@ -65658,7 +65658,14 @@ module.exports = function() {
           $scope.sources = res;
         });
         $scope.image = function(item) {
-          return console.log($scope.$eval(item.image));
+          var alt, array, img, url;
+          img = $scope.$eval(item.image);
+          url = typeof img['vertical-thumb'] !== 'undefined' ? img['vertical-thumb'] : img.large;
+          alt = item.title;
+          return array = {
+            url: url,
+            alt: alt
+          };
         };
         $rootScope.isSearch = false;
         $rootScope.startSearch = function() {

@@ -78,13 +78,13 @@ module.exports = ->
 					$scope.sources = res
 					return
 			$scope.image = (item)->
-				console.log $scope.$eval item.image
+				img = $scope.$eval item.image
 				# img = item._embedded['wp:featuredmedia'][0]
-				# url = if typeof img.media_details.sizes['vertical-thumb'] isnt 'undefined' then img.media_details.sizes['vertical-thumb'].source_url else img.media_details.sizes.full.source_url
-				# alt = img.alt_text
-				# array =
-				# 	url : url
-				# 	alt : alt
+				url = if typeof img['vertical-thumb'] isnt 'undefined' then img['vertical-thumb'] else img.large
+				alt = item.title
+				array =
+					url : url
+					alt : alt
 			$rootScope.isSearch = off
 			$rootScope.startSearch = ->
 				return if $rootScope.isSearch
