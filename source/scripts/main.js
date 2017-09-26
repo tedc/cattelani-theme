@@ -66744,21 +66744,26 @@ catellani.factory('WPAPI', function() {
 ]).filter('taxSearch', function() {
   return function(items, search) {
     var filtered;
-    console.log(search);
     filtered = [];
     angular.forEach(items, function(item) {
       var k, toArray, v;
-      for (k in search) {
-        v = search[k];
-        if (search.hasOwnProperty(k)) {
-          toArray = item[k].split(',');
-          if (v.indexOf(toArray !== -1)) {
-            items.push(item);
+      if (!angular.equals({}, search)) {
+        for (k in search) {
+          v = search[k];
+          if (search.hasOwnProperty(k)) {
+            toArray = item[k].split(',');
+            if (toArray.indexOf(v !== -1)) {
+              items.push(item);
+            }
           }
         }
       }
     });
-    return filtered;
+    if (angular.equals({}, search)) {
+      return items;
+    } else {
+      return filtered;
+    }
   };
 });
 

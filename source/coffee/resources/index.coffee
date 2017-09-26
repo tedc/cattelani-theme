@@ -51,13 +51,13 @@ catellani
 	]
 	.filter 'taxSearch', ->
 		(items, search)->
-			console.log search
 			filtered = []
 			angular.forEach items, (item)->
-				for k, v of search
-					if search.hasOwnProperty(k)
-						toArray = item[k].split(',')
-						if v.indexOf toArray isnt -1
-							items.push item
+				if not angular.equals({}, search)
+					for k, v of search
+						if search.hasOwnProperty(k)
+							toArray = item[k].split(',')
+							if toArray.indexOf v isnt -1
+								items.push item
 				return
-			return filtered
+			return if angular.equals({}, search) then items else filtered
