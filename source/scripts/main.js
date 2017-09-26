@@ -65582,8 +65582,8 @@ module.exports = function() {
       "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter) {
         var close, getSearch, lang, per_page, searchBar, wp, wrapper;
         wp = WPAPI;
-        wp.products = wp.registerRoute('wp/v2', 'lampade/', {
-          params: ['collezioni', 'posizioni', 'fonti']
+        wp.products = wp.registerRoute('api/v1', 'lampade/', {
+          params: ['lang']
         });
         wp.collections = wp.registerRoute('wp/v2', 'collezioni/', {
           params: ['lang']
@@ -65616,16 +65616,11 @@ module.exports = function() {
             return;
           }
           $scope.isSearching = true;
-          wp.products().embed().order('asc').orderby('title').page($scope.page).then(function(results) {
+          wp.products().order('asc').orderby('title').lang(lang).then(function(results) {
             $timeout(function() {
-              $scope.isLoading = false;
-              $scope.items = $scope.items.concat(results);
-              $scope.page += 1;
+              $scope.items = results;
               $rootScope.$broadcast('scrollBarUpdate');
               $scope.isSearching = false;
-              if ($scope.page > parseInt(results._paging.totalPages)) {
-                $scope.isSearchEnded = true;
-              }
             });
           });
         };
@@ -65663,14 +65658,7 @@ module.exports = function() {
           $scope.sources = res;
         });
         $scope.image = function(item) {
-          var alt, array, img, url;
-          img = item._embedded['wp:featuredmedia'][0];
-          url = typeof img.media_details.sizes['vertical-thumb'] !== 'undefined' ? img.media_details.sizes['vertical-thumb'].source_url : img.media_details.sizes.full.source_url;
-          alt = img.alt_text;
-          return array = {
-            url: url,
-            alt: alt
-          };
+          return console.log($scope.$eval(item.image));
         };
         $rootScope.isSearch = false;
         $rootScope.startSearch = function() {

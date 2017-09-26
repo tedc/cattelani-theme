@@ -2,7 +2,8 @@ catellani = angular.module 'catellani'
 catellani
 	.directive 'ngStore', [require './store.coffee'] 
 	.directive 'ngForm', [require './form.coffee'] 
-	.directive 'collectionSearch', [require './search.coffee']
+	#.directive 'collectionSearch', [require './search.coffee']
+	.directive 'collectionSearch', [require './search_full.coffee']
 	.directive 'postTypeArchive', [require './archive.coffee']
 	.directive 'ngSm', ["$rootScope", "$timeout", require './sm.coffee'] 
 	.directive 'ngSwiper', [ "$timeout", "$rootScope", require './swiper.coffee'] 
