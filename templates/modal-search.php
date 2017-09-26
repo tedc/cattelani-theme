@@ -52,7 +52,7 @@
 		<div class="search__items search__items--shrink-fw" scrollbar="search" ng-class="{'search__items--loading':isLoading}">
 			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
-					<span class="search__figure" ng-if="item.featured_media > 0">
+					<span class="search__figure">
 						<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />
 					</span>
 					<span class="search__title search__title--name">
