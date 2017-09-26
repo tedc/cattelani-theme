@@ -23,8 +23,6 @@ module.exports = ->
 				$scope.isSearching = on
 				wp
 					.products()
-					.order 'asc'
-					.orderby 'title'
 					.lang lang
 					.then (results)->
 						$timeout ->
@@ -38,7 +36,6 @@ module.exports = ->
 			$scope.collection = (id)->
 				$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
 				return
-
 			$scope.isLoading = off
 			$scope.isSearchEnded = off
 			$scope.change = (s, i)->
@@ -46,7 +43,7 @@ module.exports = ->
 				return if not $scope.enabled s, i.id
 				#e.stopPropagation();
 				$scope.isLoading = on
-				$scope.search[s] = i.id
+				$scope.search[s] = String(i.id)
 				$scope.select[s] = i.name
 				$rootScope.$broadcast 'scrollBarUpdate'
 				return

@@ -65616,7 +65616,7 @@ module.exports = function() {
             return;
           }
           $scope.isSearching = true;
-          wp.products().order('asc').orderby('title').lang(lang).then(function(results) {
+          wp.products().lang(lang).then(function(results) {
             $timeout(function() {
               $scope.items = results;
               $rootScope.$broadcast('scrollBarUpdate');
@@ -65640,7 +65640,7 @@ module.exports = function() {
             return;
           }
           $scope.isLoading = true;
-          $scope.search[s] = i.id;
+          $scope.search[s] = String(i.id);
           $scope.select[s] = i.name;
           $rootScope.$broadcast('scrollBarUpdate');
         };
@@ -66744,7 +66744,17 @@ catellani.factory('WPAPI', function() {
       return $sce.trustAsHtml(input);
     };
   }
-]);
+]).filter('taxSearch', function() {
+  return function(items, search) {
+    var filtered;
+    filtered = [];
+    angular.forEach(items, function(item) {
+      angular.forEach(search, function(s) {
+        console.log(s);
+      });
+    });
+  };
+});
 
 
 },{"153":153,"97":97}]},{},[178]);

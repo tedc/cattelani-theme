@@ -49,3 +49,12 @@ catellani
 					input = input.replace exp, "<strong>$1</strong>"
 			$sce.trustAsHtml input
 	]
+	.filter 'taxSearch', ->
+		(items, search)->
+			filtered = []
+			angular.forEach items, (item)->
+				angular.forEach search, (s)->
+					console.log s
+					return
+				return
+			return
