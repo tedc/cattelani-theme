@@ -53,8 +53,10 @@ catellani
 		(items, search)->
 			filtered = []
 			angular.forEach items, (item)->
-				angular.forEach search, (s)->
-					console.log s
-					return
+				for k, v of search
+					if search.hasOwnProperty(k)
+						toArray = item[k].split(',')
+						if v.indexOf toArray isnt -1
+							items.push item
 				return
-			return
+			return filtered

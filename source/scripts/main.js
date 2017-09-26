@@ -66749,10 +66749,18 @@ catellani.factory('WPAPI', function() {
     var filtered;
     filtered = [];
     angular.forEach(items, function(item) {
-      angular.forEach(search, function(s) {
-        console.log(s);
-      });
+      var k, toArray, v;
+      for (k in search) {
+        v = search[k];
+        if (search.hasOwnProperty(k)) {
+          toArray = item[k].split(',');
+          if (v.indexOf(toArray !== -1)) {
+            items.push(item);
+          }
+        }
+      }
     });
+    return filtered;
   };
 });
 
