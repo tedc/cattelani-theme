@@ -40,10 +40,9 @@ module.exports = ->
 			$scope.isSearchEnded = off
 			$scope.change = (s, i)->
 				$scope.isSelect[s] = false
-				return if not $scope.enabled s, i.id
 				#e.stopPropagation();
 				$scope.isLoading = on
-				$scope.search[s] = String(i.id)
+				$scope.search[s] = i.id
 				$scope.select[s] = i.name
 				$rootScope.$broadcast 'scrollBarUpdate'
 				return

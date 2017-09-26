@@ -65636,11 +65636,8 @@ module.exports = function() {
         $scope.isSearchEnded = false;
         $scope.change = function(s, i) {
           $scope.isSelect[s] = false;
-          if (!$scope.enabled(s, i.id)) {
-            return;
-          }
           $scope.isLoading = true;
-          $scope.search[s] = String(i.id);
+          $scope.search[s] = i.id;
           $scope.select[s] = i.name;
           $rootScope.$broadcast('scrollBarUpdate');
         };
@@ -66747,6 +66744,7 @@ catellani.factory('WPAPI', function() {
 ]).filter('taxSearch', function() {
   return function(items, search) {
     var filtered;
+    console.log(search);
     filtered = [];
     angular.forEach(items, function(item) {
       var k, toArray, v;

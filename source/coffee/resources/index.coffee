@@ -51,6 +51,7 @@ catellani
 	]
 	.filter 'taxSearch', ->
 		(items, search)->
+			console.log search
 			filtered = []
 			angular.forEach items, (item)->
 				for k, v of search
