@@ -65580,7 +65580,7 @@ module.exports = function() {
     scope: true,
     controller: [
       "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter) {
-        var close, getSearch, lang, per_page, searchBar, wp, wrapper;
+        var getSearch, lang, wp;
         wp = WPAPI;
         wp.products = wp.registerRoute('api/v1', 'lampade/', {
           params: ['lang']
@@ -65594,8 +65594,6 @@ module.exports = function() {
         wp.sources = wp.registerRoute('wp/v2', 'fonti/', {
           params: ['lang']
         });
-        $rootScope.collection = false;
-        per_page = vars.api.count_posts > 100 ? 100 : vars.api.count_posts;
         lang = $attrs.lang;
         $scope.isSelect = {};
         $scope.search = {};
@@ -65610,7 +65608,6 @@ module.exports = function() {
           ), true);
           return filtered = filter.length > 0 ? true : false;
         };
-        $scope.page = 1;
         getSearch = function() {
           if ($scope.isSearchEnded) {
             return;
@@ -65625,24 +65622,18 @@ module.exports = function() {
           });
         };
         getSearch();
-        $scope.collection = function(id) {
-          if (id !== false) {
-            $rootScope.$broadcast('collection_changed', {
-              id: id
-            });
-          }
-        };
         $scope.isLoading = false;
         $scope.isSearchEnded = false;
+        $rootScope.isChanging = false;
         $scope.change = function(s, i) {
           $scope.isSelect[s] = false;
-          $scope.isLoading = true;
-          $scope.search[s] = i.id;
+          $scope.search[s] = String(i.id);
+          $rootScope.isChanging = true;
           $scope.select[s] = i.name;
           $rootScope.$broadcast('scrollBarUpdate');
         };
         $scope.clear = function(s) {
-          $scope.isLoading = true;
+          $scope.isChanging = true;
           delete $scope.search[s];
         };
         wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
@@ -65671,19 +65662,17 @@ module.exports = function() {
           }
           $rootScope.isSearch = true;
         };
-        wrapper = angular.element(document.querySelector('.search__items'));
-        close = function(element, phase) {
-          var searchTimeout;
-          if (phase === 'close') {
-            searchTimeout = $timeout(function() {
-              $timeout.cancel(searchTimeout);
-              $scope.isLoading = false;
-            }, 250);
+        $scope.compareTaxes = function(actual, expected) {
+          var toArray;
+          if (!angular.equals({}, $scope.search)) {
+            toArray = actual.split(',');
+            return toArray.indexOf(expected) !== -1;
+          } else {
+            return angular.equals(actual, expected);
           }
         };
-        $animate.on('leave', wrapper, close);
-        $animate.on('enter', wrapper, close);
         $scope.$on('search_ended', function() {
+          console.log(true);
           $timeout(function() {
             $scope.isLoading = false;
           }, 250);
@@ -65697,17 +65686,6 @@ module.exports = function() {
           $rootScope.isPopup = !$rootScope.isPopup;
           $rootScope.modalId = id;
         };
-        $scope.$on('loadMoreSearch', getSearch);
-        searchBar = ScrollbarService.getInstance('search');
-        searchBar.then(function(scrollbar) {
-          scrollbar.addListener(function(s) {
-            if (s.offset.y >= s.limit.y) {
-              if (!$scope.isSearchEnded && !$scope.isSearching) {
-                $scope.$emit('loadMoreSearch');
-              }
-            }
-          });
-        });
       }
     ]
   };
@@ -66110,8 +66088,12 @@ module.exports = function($timeout, $rootScope) {
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
+      console.log(attr.isStoria);
       scope.main = {};
       scope.nav = {};
+      if (attr.isStoria) {
+        scope.storia = {};
+      }
       scope.current = 0;
       scope.navInit = false;
       scope.next = function(swiper) {
@@ -66129,6 +66111,9 @@ module.exports = function($timeout, $rootScope) {
       scope.slideTo = function(index) {
         if (scope.nav.slideTo) {
           scope.nav.slideTo(index);
+        }
+        if (scope.storia.slideTo && attr.isStoria) {
+          scope.storia.slideTo(index);
         }
       };
       scope.$watch('main', function(newValue, oldValue) {
@@ -66157,10 +66142,14 @@ module.exports = function($timeout, $rootScope) {
       });
       $rootScope.isYearsActive = false;
       scope.expandStory = function(cond) {
+        console.log($rootScope.isYearsActive);
         $rootScope.isYearsActive = !$rootScope.isYearsActive;
       };
       $rootScope.$on('swiperChaged', function() {
         scope.main.update();
+        if (attr.isStoria) {
+          scope.storia.update();
+        }
       });
     }
   };
@@ -66747,23 +66736,23 @@ catellani.factory('WPAPI', function() {
     filtered = [];
     angular.forEach(items, function(item) {
       var k, toArray, v;
-      if (!angular.equals({}, search)) {
-        for (k in search) {
-          v = search[k];
-          if (search.hasOwnProperty(k)) {
-            toArray = item[k].split(',');
-            if (toArray.indexOf(v !== -1)) {
-              items.push(item);
-            }
+      if (angular.equals({}, search)) {
+        return;
+      }
+      for (k in search) {
+        v = search[k];
+        if (search.hasOwnProperty(k)) {
+          v = String(v);
+          toArray = item[k].split(',');
+          if (toArray.indexOf(v) !== -1) {
+            console.log(item, toArray, toArray.indexOf(v));
+            filtered.push(item);
           }
         }
       }
     });
-    if (angular.equals({}, search)) {
-      return items;
-    } else {
-      return filtered;
-    }
+    filtered = angular.equals({}, search) ? items : filtered;
+    return filtered;
   };
 });
 

@@ -5,25 +5,26 @@
 	//$store_obj = get_post($store->ID);
     acf_unset_language_to_default(); 
 ?>
-<aside class="cat"<?php scrollmagic('"class":"cat--active", "triggerElement": "body", "triggerHook" : "onLeave", "offset" : "50%", "fixed" : true'); ?>>
-	<div class="cat__container cat__container--store">
-	<h4 class="cat__title cat__title--light"><?php _e('Trova il rivenditore più vicino', 'catellani'); ?></h4>
-	<a class="cat__button" href="<?php echo get_permalink($store_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
-		<span>
+<aside class="cat cat--grow-md-bottom" ng-sm='[{"class":"cat--active", "triggerElement": "body", "triggerHook" : "onLeave", "offset" : "50%", "fixed" : true},{"class":"cat--inactive", "triggerElement": ".footer__brand svg", "triggerHook" : "onEnter"}]' ng-class="{'cat--visible':isCat}">
+	<?php acf_set_language_to_default(); ?>
+	<a class="cat__dot" href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', get_field('phone', 'options'))); ?>">
+		<span class="cat__label">
+		<?php
+		the_field('phone', 'options'); ?>
+		</span>
+	</a>
+	<?php acf_unset_language_to_default(); ?>
+	<a class="cat__dot" href="<?php echo get_permalink($store_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
+		<span class="cat__label">
 		<?php
 		echo get_the_title($store); ?>
 		</span>
-		<i class="icon-arrow"></i>
 	</a>
-	</div>
-	<div class="cat__container cat__container--contact">
-	<h4 class="cat__title cat__title--light"><?php _e('Contattaci per un preventivo', 'catellani'); ?></h4>
-	<a class="cat__button" href="#contact" ng-click="$event.preventDefault(); modal('contact');">
-		<span>
+	<span class="cat__main" ng-click="isCat=!isCat">
+		<span class="cat__label" ng-click="modal('contact')">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
 		</span>
-		<i class="icon-arrow"></i>
-	</a>
-	</div>
+		<span class="cat__sym">@</span>
+	</span>
 </aside>

@@ -1,4 +1,4 @@
-.store(map-lazy-load="{{store.api}}")
+.store.store__form--shrink-fw(map-lazy-load="{{store.api}}")
 	form.store__form.store__form--shrink.store__form--gray.store__form--grow-md(ng-submit="store.onSubmit()")
 		input.store__input(ng-model="store.address" places-auto-complete on-place-changed="store.placeChanged()" ng-change="store.onInputChange()")
 		.store__select(ng-click="store.isSelected=!store.isSelected" click-outside="store.isSelected=false")

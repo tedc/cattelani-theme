@@ -15,7 +15,7 @@
 				</select>
 				<ul class="search__options" ng-class="{'store__options--visible':isSelect['collezioni']}">
 					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':search.collezioni==collection.id}"></li>
+					<li class="store__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':select.collezioni==collection.name}"></li>
 				</ul>
 			</div>
 
@@ -49,17 +49,17 @@
 				</ul>
 			</div>
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar="search" ng-class="{'search__items--loading':isLoading}">
-			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | taxSearch:search" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
+		<div class="search__items search__items--shrink-fw" scrollbar="search" ng-class="{'search__items--loading':isLoading, 'search__items--changing':isChanging}">
+			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:compareTaxes" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
 					<span class="search__figure">
 						<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />
+						<span class="search__mask"></span>
 					</span>
 					<span class="search__title search__title--name">
 						<span ng-bind-html="item.title"></span>
 					</span>
 				</span>
-				<span class="search__mask"></span>
 			</a>
 			<div class="search__loader" ng-hide="isSearchEnded" ng-class="{'search__loader--loading' : isSearching}">
 				<div class="search__spinner"></div>

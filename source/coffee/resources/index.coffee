@@ -53,11 +53,14 @@ catellani
 		(items, search)->
 			filtered = []
 			angular.forEach items, (item)->
-				if not angular.equals({}, search)
-					for k, v of search
-						if search.hasOwnProperty(k)
-							toArray = item[k].split(',')
-							if toArray.indexOf v isnt -1
-								items.push item
+				return if angular.equals({}, search)
+				for k, v of search
+					if search.hasOwnProperty(k)
+						v = String v
+						toArray = item[k].split(',')
+						if toArray.indexOf( v ) isnt -1	
+							console.log item, toArray, toArray.indexOf v
+							filtered.push item		
 				return
-			return if angular.equals({}, search) then items else filtered
+			filtered = if angular.equals({}, search) then items else filtered
+			return filtered

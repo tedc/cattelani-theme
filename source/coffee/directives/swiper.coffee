@@ -4,6 +4,7 @@ module.exports = ($timeout, $rootScope)->
 		link : (scope, element, attr)->
 			scope.main = {}
 			scope.nav = {}
+			scope.storia = {} if attr.isStoria
 			scope.current = 0
 			scope.navInit = off
 			scope.next = (swiper)->
@@ -19,6 +20,7 @@ module.exports = ($timeout, $rootScope)->
 			scope.slideTo = (index)->
 				#scope.main.slideTo index if scope.main.slideTo
 				scope.nav.slideTo index if scope.nav.slideTo
+				scope.storia.slideTo index if scope.storia.slideTo and attr.isStoria
 				#scope.current = scope.main.realIndex
 				#console.log index
 				#slideChage() if scope.main.on
@@ -50,6 +52,7 @@ module.exports = ($timeout, $rootScope)->
 				return
 			$rootScope.$on 'swiperChaged', ->
 				scope.main.update()
+				scope.storia.update() if attr.isStoria
 				return
 			# $rootScope.$on 'destroySwiper', ->
 			# 	console.log angular.equals({}, scope.main), angular.equals({}, scope.nav)

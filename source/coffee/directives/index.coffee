@@ -11,6 +11,7 @@ catellani
 	.directive 'ngVideo', [ "$rootScope", require './video.coffee'] 
 	.directive 'ngPlayer', [ "angularLoad", "$timeout", "$rootScope", require './player.coffee'] 
 	.directive 'ngMagazine', [ require './magazine.coffee'] 
+	#.directive 'storia', [ 'ScrollbarService', require './storia.coffee']
 	.directive 'ngLoader', [ '$timeout', require './loader.coffee'] 
 	.directive 'ngFooter', ["$window", require './footer.coffee']
 	.directive 'glossaryAutocomplete', [ require './glossary.coffee']

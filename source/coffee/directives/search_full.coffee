@@ -7,8 +7,6 @@ module.exports = ->
 			wp.collections = wp.registerRoute 'wp/v2', 'collezioni/', params : ['lang']
 			wp.positions = wp.registerRoute 'wp/v2', 'posizioni/', params : ['lang']
 			wp.sources = wp.registerRoute 'wp/v2', 'fonti/', params : ['lang']
-			$rootScope.collection = off
-			per_page = if vars.api.count_posts > 100 then 100 else vars.api.count_posts
 			lang = $attrs.lang
 			$scope.isSelect = {}
 			$scope.search = {}
@@ -17,7 +15,6 @@ module.exports = ->
 			$scope.enabled = (cat, id)->
 				filter = $filter('filter')($scope.items, {"#{cat}" : id}, on)
 				filtered = if filter.length > 0 then on else off
-			$scope.page = 1
 			getSearch = ->
 				return if $scope.isSearchEnded
 				$scope.isSearching = on
@@ -33,21 +30,22 @@ module.exports = ->
 						return
 				return
 			getSearch()
-			$scope.collection = (id)->
-				$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
-				return
+			# $scope.collection = (id)->
+			# 	$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
+			# 	return
 			$scope.isLoading = off
 			$scope.isSearchEnded = off
+			$rootScope.isChanging = off			
 			$scope.change = (s, i)->
 				$scope.isSelect[s] = false
-				#e.stopPropagation();
-				$scope.isLoading = on
-				$scope.search[s] = i.id
+				#$scope.isLoading = on
+				$scope.search[s] = String(i.id)
+				$rootScope.isChanging = on
 				$scope.select[s] = i.name
 				$rootScope.$broadcast 'scrollBarUpdate'
 				return
 			$scope.clear = (s)->
-				$scope.isLoading = on
+				$scope.isChanging = on
 				delete $scope.search[s]
 				return
 			wp
@@ -65,7 +63,6 @@ module.exports = ->
 				.then (res)->
 					$scope.positions = res
 					return
-					
 			wp
 				.sources()
 				.perPage "#{vars.api.count_sources}"
@@ -75,7 +72,6 @@ module.exports = ->
 					return
 			$scope.image = (item)->
 				img = $scope.$eval item.image
-				# img = item._embedded['wp:featuredmedia'][0]
 				url = if typeof img['vertical-thumb'] isnt 'undefined' then img['vertical-thumb'] else img.large
 				alt = item.title
 				array =
@@ -86,18 +82,15 @@ module.exports = ->
 				return if $rootScope.isSearch
 				$rootScope.isSearch = on
 				return
-			wrapper = angular.element document.querySelector '.search__items'
-			close =  (element, phase)->
-				if phase is 'close'
-					searchTimeout = $timeout ->
-						$timeout.cancel searchTimeout
-						$scope.isLoading = off
-						return
-					, 250
-				return
-			$animate.on 'leave', wrapper, close
-			$animate.on 'enter', wrapper, close
+			
+			$scope.compareTaxes = (actual, expected)->
+				if not angular.equals {}, $scope.search
+					toArray = actual.split ','
+					return toArray.indexOf(expected) isnt -1
+				else
+					return angular.equals actual, expected
 			$scope.$on 'search_ended', ->
+				console.log on
 				$timeout ->
 					$scope.isLoading = off
 					return
@@ -111,15 +104,5 @@ module.exports = ->
 				$rootScope.isPopup = !$rootScope.isPopup
 				$rootScope.modalId = id
 				return
-			$scope.$on 'loadMoreSearch', getSearch
-			## INFINITI SCROLL
-			searchBar = ScrollbarService.getInstance 'search'
-			searchBar
-				.then (scrollbar)->
-					scrollbar.addListener (s)->
-						if s.offset.y >= s.limit.y
-							$scope.$emit 'loadMoreSearch' if not $scope.isSearchEnded and not $scope.isSearching
-						return
-					return
 			return
 		]
