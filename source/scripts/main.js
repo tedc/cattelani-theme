@@ -65155,7 +65155,7 @@ module.exports = function() {
           collectionValue = $scope.projects.collezioni ? $scope.projects.collezioni : 0;
           collectionPar = collectionValue === 0 ? 'collezioni_exclude' : 'collezioni';
           kindPar = kindValue === 0 ? 'tipologie_exclude' : 'tipologie';
-          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).perPage(1).page($scope.page);
+          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
         };
         $scope.$on('projects_changed', function() {
           $scope.isNotLoading = false;

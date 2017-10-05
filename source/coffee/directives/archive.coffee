@@ -64,7 +64,6 @@ module.exports = ->
 					.param(kindPar, kindValue)
 					.before(before)
 					.after(after)
-					.perPage(1)
 					.page($scope.page)
 			# query()
 			# 	.then (results)->
