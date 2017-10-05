@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar="search" speed="0.15">
+		<div class="search__items search__items--shrink-fw" scrollbar="search" speed="1.5">
 			<p class="search__cell search__cell--found search__cell--grow-md" ng-if="filtered() && isLoading">
 				<span><?php _e('Nessuna lampada per la ricerca effettuata', 'catellani'); ?></span>
 			</p>
