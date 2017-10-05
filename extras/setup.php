@@ -440,3 +440,24 @@
 		return 35;
 	}
 	add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
+
+	add_action('restrict_manage_posts','lampade_filter_by_collection');
+	function lampade_filter_by_collection() {
+	    global $typenow;
+	    global $wp_query;
+	    if ($typenow=='listing') {
+	        $taxonomy = 'collezioni';
+	        $business_taxonomy = get_taxonomy($taxonomy);
+	        wp_dropdown_categories(array(
+	            'show_option_all' =>  __("Show All {$business_taxonomy->label}", 'catellani'),
+	            'taxonomy'        =>  $taxonomy,
+	            'name'            =>  'collezioni',
+	            'orderby'         =>  'name',
+	            'selected'        =>  $wp_query->query['term'],
+	            'hierarchical'    =>  true,
+	            'depth'           =>  3,
+	            'show_count'      =>  true, // Show # listings in parens
+	            'hide_empty'      =>  true, // Don't show businesses w/o listings
+	        ));
+	    }
+	}
