@@ -10,7 +10,6 @@ wp.tipologie = wp.registerRoute 'wp/v2', 'tipologie/',
 	params : ['lang']
 module.exports = ->
 	search =
-		scope : true
 		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", ($rootScope, $scope, $q, $attrs, $timeout)->
 			$rootScope.collection = off
 			per_page = if vars.api.count_posts > 100 then 100 else vars.api.count_posts

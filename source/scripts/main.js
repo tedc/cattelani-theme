@@ -65112,7 +65112,6 @@ wp.tipologie = wp.registerRoute('wp/v2', 'tipologie/', {
 module.exports = function() {
   var search;
   return search = {
-    scope: true,
     controller: [
       "$rootScope", "$scope", "$q", "$attrs", "$timeout", function($rootScope, $scope, $q, $attrs, $timeout) {
         var lang, per_page, query, type;
