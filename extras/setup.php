@@ -449,7 +449,7 @@
 	        $taxonomy = 'collezioni';
 	        $business_taxonomy = get_taxonomy($taxonomy);
 	        wp_dropdown_categories(array(
-	            'show_option_all' =>  __("Show All {$business_taxonomy->label}", 'catellani'),
+	            'show_option_all' =>  __("Mostra tutte le {$business_taxonomy->label}", 'catellani'),
 	            'taxonomy'        =>  $taxonomy,
 	            'name'            =>  'collezioni',
 	            'orderby'         =>  'name',
