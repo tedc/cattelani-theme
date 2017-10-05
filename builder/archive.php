@@ -1,5 +1,5 @@
 <div class="projects projects--grow-lg" post-type-archive post-type="<?php the_sub_field('post_type'); ?>" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
-	<div class="projects__filters projects__filters--gray projects__filters--grow-md projects__filters--grid"> 
+	<div class="projects__filters projects__filters--gray projects__filters--grow projects__filters--grid"> 
 		<div class="projects__select" click-outside="isSelect['collezioni']=false" ng-class="{'projects__select--filled' : projects.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">
 			<span class="projects__value" ng-bind-html="(projects.collezioni ? select['collezioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
 			<span class="projects__icons">

@@ -10,7 +10,7 @@
 	}
 	&__cell {
 		display: flex;
-		@include grow('md');
+		@include grow();
 		&:before {
 			display: block;
 			content: '';
