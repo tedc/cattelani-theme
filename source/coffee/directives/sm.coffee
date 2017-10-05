@@ -60,6 +60,7 @@ module.exports = ($rootScope, $timeout)->
 	scrollmagic =
 		scope : on
 		link : (scope, element, attrs)->
+			controller.update on
 			config = scope.$eval attrs.ngSm
 			if Array.isArray config
 				for i in config

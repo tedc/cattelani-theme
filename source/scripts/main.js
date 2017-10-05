@@ -66067,6 +66067,7 @@ module.exports = function($rootScope, $timeout) {
     scope: true,
     link: function(scope, element, attrs) {
       var config, i, j, len;
+      controller.update(true);
       config = scope.$eval(attrs.ngSm);
       if (Array.isArray(config)) {
         for (j = 0, len = config.length; j < len; j++) {

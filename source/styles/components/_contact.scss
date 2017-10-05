@@ -1,6 +1,12 @@
 .contact {
 	justify-content: center;
 	@include grow('md', 'bottom');
+	a {
+		color: $dark-color;
+		&:hover {
+			color: $alternate-color;
+		}
+	}
 	&__cell {
 		@include breakpoint() {
 			width: auto !important;
