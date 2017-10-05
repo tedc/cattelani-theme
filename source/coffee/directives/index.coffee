@@ -71,8 +71,12 @@ catellani
 							height : el.querySelector('image').getAttribute 'height'
 					wRatio = size.real.width / size.actual.width 
 					hRatio = size.real.height / size.actual.height
-					startX = rect.left + document.body.scrollLeft
-					startY = element[0].getBoundingClientRect().top + document.body.scrollTop
+					## For scrollX
+					scrollLeft = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollLeft == 'number' then t else document.body).scrollLeft
+					## For scrollY
+					scrollTop = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollTop == 'number' then t else document.body).scrollTop
+					startX = rect.left + scrollLeft
+					startY = element[0].getBoundingClientRect().top + scrollTop
 					moveX = evt.pageX
 					moveY = evt.pageY
 					TweenMax.to id, .5,

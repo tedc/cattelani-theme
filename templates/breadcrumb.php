@@ -17,7 +17,7 @@
 		if($post_type != 'page') :
 			if($post_type != 'lampade') :
 				$the_index_id = id_by_lang($index[$post_type], 'page', $lang);
-				$ancestor = ($the_index_id) ? '<a href="" ui-sref="app.page({slug : '.basename(get_permalink($the_index_id)).', lang : \''.$lang.'\'})">'.get_the_title($the_index_id).'</a>'.$sep : '';
+				$ancestor = ($the_index_id) ? '<a href="" ui-sref="app.page({slug : \''.basename(get_permalink($the_index_id)).'\', lang : \''.$lang.'\'})">'.get_the_title($the_index_id).'</a>'.$sep : '';
 			else :
 				$term = wp_get_post_terms( $post_obj->ID, 'collezioni' )[0];
 				$term = get_term(id_by_lang($term->term_id, 'collezioni', $lang));

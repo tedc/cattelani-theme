@@ -21,17 +21,41 @@
 	&__cell {
 		@include grow('md');
 		position: relative;
-		transition: {
-			property: transform, visibility, opacity;
-			duration: $speed*1.5;
-		}
 		display: block;
 		overflow: hidden;
 		@include breakpoint() {
 			width: $f/5;
 		}
+		&--found {
+			width: $f !important;
+			text-align: center;
+			span {
+				font-size: em(22px);
+				color: $dark-color;
+			}
+		}
 		img {
 			width: $f;
+		}
+		transform: translate3d(0, $p*2, 0);
+		opacity: 0;
+		transition: {
+			property: transform, opacity;
+			duration: $speed*2.25;
+			timing-function: ceaser($easeOutBack);
+		}
+		.modal--visible & {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			@for $i from 1 through 20 {
+				$delay: $speed*1.25 + (.1s * ($i - 1));
+				&:nth-child(#{$i}) {
+					transition-delay: $delay;
+				}
+			}
+		}
+		.modal--visible .search__items--changing & {
+			transition: none !important;
 		}
 	}
 	&__mask {
@@ -44,6 +68,7 @@
 	}
 	&__content {
 		display: block;
+		position: relative;
 		padding: {
 			left: em(15px);
 			right: em(15px);
@@ -54,8 +79,8 @@
 		display: block;
 		line-height: 0;
 		&:after {
-			content: '';
 			@include full;
+			content: '';
 			background-color: transparentize($dark-color, .25);
 			transition: opacity $speed;
 			opacity: 0;
@@ -106,30 +131,18 @@
 		flex: 10;
 		position: relative;
 		margin-top: em($p*2);
+		transition: opacity $speed*1.5, visibility $speed*1.5, transform $speed*1.5;
+		timing-function: ceaser($easeOutBack);
 		.scroll-content {
 			display: flex;
 			position: relative;
 			flex-wrap: wrap;
 			padding-bottom: em($p*2);
 		}
-		@for $n from 1 through 60 {
-			&:nth-child(#{$n}) {
-				$late: ($n - 1) * 0.015s;
-				transition-delay: $late;
-			}
-		}
-		&--loading {
-			.search__cell {
-				opacity: 0;
-				visibility: hidden;
-				transform: translate3d(0, $p, 0);
-				@for $n from 1 through 60 {
-					&:nth-child(#{$n}) {
-						$late: (60 - ($n - 1)) * 0.015s;
-						transition-delay: $late;
-					}
-				}
-			}
+		&--changing {
+			opacity: 0;
+			visibility: hidden;
+			transform: translate3d(0, $p*4, 0) skewY(0.5deg);
 		}
 	}
 	&__loader {

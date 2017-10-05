@@ -1,12 +1,12 @@
 <?php if (get_field('header_video')) { ?>       
 <div class="main-video" ng-player id="video_<?php echo get_the_ID(); ?>" ng-class="{'main-video--open' : isOpen}">
-    <span class="main-video__close main-video__close--shrink main-video__close--grow-md-top" ng-click="isOpen=false;player.pause();player.setCurrentTime(0)">
+    <span class="main-video__close main-video__close--shrink main-video__close--grow-md-top" ng-click="close()">
         <span class="main-video__label"><?php _e('Chiudi', 'catellani'); ?></span>
         <span class="main-video__close-sign"><span class="main-video__line"></span></span>
     </span>
 	<?php the_field('header_video'); ?>
     <div class="main-video__controls">
-        <span class="main-video__play-pause" ng-click="isPaused=!isPaused;play(isPaused)" ng-class="{'main-video__play-pause--playing': !isPaused}">
+        <span class="main-video__play-pause" ng-click="isPaused=!isPaused;play(isPaused)" ng-class="{'main-video__play-pause--paused': !isPaused}">
             <i class="icon-play"></i>
             <i class="icon-pause"></i>
         </span>

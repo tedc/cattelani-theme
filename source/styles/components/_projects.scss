@@ -15,6 +15,42 @@
 			content: '';
 			padding-top: percentage(410px/620px);
 		}
+		&.ng-animate {
+			&.ng-enter {
+				transform: translate3d(0, $p*2, 0);
+				opacity: 0;
+				visibility: hidden;
+				&-active {
+					transition: $speed opacity, $speed transform, $speed visibility;
+					transition-delay: $speed;
+					transform: translate3d(0, 0, 0);
+					opacity: 1;
+					visibility: visible;
+				}	
+			}
+			&.ng-leave {
+				transform: translate3d(0, 0, 0);
+				opacity: 1;
+				visibility: visible;
+				&-active {
+					transition: $speed opacity, $speed transform, $speed visibility;
+					transform: translate3d(0, $p, 0);
+					opacity: 0;
+					visibility: hidden;
+				}
+			}
+		}
+		&--found {
+			position: absolute;
+			top: auto;
+			left: 0;
+			width: $f !important;
+			text-align: center;
+			span {
+				font-size: em(22px);
+				color: $dark-color;
+			}
+		}
 	}
 	&__title {
 		line-height: percentage(27px/24px);

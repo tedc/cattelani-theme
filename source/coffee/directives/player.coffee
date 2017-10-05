@@ -88,6 +88,12 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 						return
 
 					return
+			scope.close = ->
+				scope.isOpen = off
+				scope.player.pause()
+				scope.player.setCurrentTime(0)
+				$rootScope.isVideo = off
+				return
 			scope.play = (cond)->
 				if cond then scope.player.play() else scope.player.pause()
 				return

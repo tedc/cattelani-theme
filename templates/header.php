@@ -1,4 +1,4 @@
-<header class="banner" ng-class="{opened : isPopup, 'menu-opened' : isMenu}">
+<header class="banner" ng-class="{opened : isPopup, 'menu-opened' : isMenu, 'video-opened' : isVideo && isVideo != false}">
     <a class="banner__brand" href="<?= esc_url(home_url('/')); ?>">
         <?php 
         $custom_logo_id = get_theme_mod( 'custom_logo' );

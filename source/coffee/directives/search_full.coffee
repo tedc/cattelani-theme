@@ -12,6 +12,7 @@ module.exports = ->
 			$scope.search = {}
 			$scope.select = {}
 			$scope.items = []
+			wrapper = angular.element document.querySelector '.search__items'
 			$scope.enabled = (cat, id)->
 				filter = $filter('filter')($scope.items, {"#{cat}" : id}, on)
 				filtered = if filter.length > 0 then on else off
@@ -30,24 +31,42 @@ module.exports = ->
 						return
 				return
 			getSearch()
-			# $scope.collection = (id)->
-			# 	$rootScope.$broadcast 'collection_changed', {id : id} if id isnt off			
-			# 	return
 			$scope.isLoading = off
 			$scope.isSearchEnded = off
-			$rootScope.isChanging = off			
+			$scope.isChanging = off	
+			closeAnim = (callback)->
+				$scope.isChanging = on
+				$animate.addClass wrapper, 'search__items--changing' 
+					.then ->
+						callback()
+						TweenMax.to {index : 0}, .25,
+							index : 10
+							onUpdateParams : ['{self}']
+							onComplete : ->
+								$timeout ->
+									$scope.isChanging = off
+									wrapper.removeClass 'search__items--changing'
+									return
+						return
+				return
 			$scope.change = (s, i)->
+				return if $scope.isChanging
 				$scope.isSelect[s] = false
-				#$scope.isLoading = on
-				$scope.search[s] = String(i.id)
-				$rootScope.isChanging = on
-				$scope.select[s] = i.name
-				$rootScope.$broadcast 'scrollBarUpdate'
+				$scope.select[s] = i.name	
+				callback = ->
+					$scope.search[s] = String(i.id)
+					$rootScope.$broadcast 'scrollBarUpdate'
+					return
+				closeAnim callback
 				return
 			$scope.clear = (s)->
-				$scope.isChanging = on
-				delete $scope.search[s]
+				return if $scope.isChanging
+				callback = ->
+					delete $scope.search[s]
+					return
+				closeAnim callback
 				return
+			
 			wp
 				.collections()
 				.perPage "#{vars.api.count_collections}"
@@ -55,7 +74,6 @@ module.exports = ->
 				.then (res)->
 					$scope.collections = res
 					return
-
 			wp
 				.positions()
 				.perPage "#{vars.api.count_positions}"
@@ -83,19 +101,22 @@ module.exports = ->
 				$rootScope.isSearch = on
 				return
 			
+			$scope.filtered = ->
+				return if $filter('filter')($scope.items, $scope.search, $scope.compareTaxes).length <= 0 then on else off
+
 			$scope.compareTaxes = (actual, expected)->
 				if not angular.equals {}, $scope.search
 					toArray = actual.split ','
 					return toArray.indexOf(expected) isnt -1
 				else
 					return angular.equals actual, expected
+			
 			$scope.$on 'search_ended', ->
-				console.log on
 				$timeout ->
-					$scope.isLoading = off
+					$scope.isLoading = on
 					return
-				, 250
 				return
+				
 			## MODAL
 			$rootScope.modal = (id)->
 				return if $rootScope.isRunning

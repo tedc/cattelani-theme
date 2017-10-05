@@ -3,7 +3,7 @@
 		array(
 			'post_type' => 'anni',
 			'posts_per_page' => -1,
-			'order_by' => 'title',
+			'orderby' => 'title',
 			'order' => 'ASC',
 			'suppress_filters' => 0
 		)

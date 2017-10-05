@@ -62,6 +62,11 @@
 }
 
 .banner {
+	transition: visibility $speed, opacity $speed;
+	&.video-opened {
+		visibility: hidden;
+		opacity: 0;
+	}
 	&:before {
 		width: 100vw;
 		top: 0;
@@ -144,7 +149,7 @@
 	&__tools {
 		@extend %tools;
 		@include grow('md', 'top');
-		z-index: 9999;
+		z-index: 9994;
 		position: fixed;
 		.logged-in.admin-bar & {
 			top: 32px;
@@ -181,7 +186,8 @@
 				visibility: hidden;
 			}
 		}
-		&--close {	
+		&--close {
+			opacity: 0;
 			&:hover {
 				.banner__line--center {
 					&:after, &:before {

@@ -8,7 +8,9 @@
 				<span class="search__value" ng-bind-html="(search.collezioni ? select['collezioni'] : '<?php _e('Collezione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();clear('collezioni')"></i>
+					<span class="close" ng-click="$event.stopPropagation();clear('collezioni')">
+						<i class="icon-close"></i>
+					</span>
 				</span>
 				<select ng-model="search.collezioni" ng-options="opt.id as opt.name for opt in collections">			
 					<option value=""></option>
@@ -23,14 +25,16 @@
 				<span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Posizione', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();clear('posizioni')"></i>
+					<span class="close" ng-click="$event.stopPropagation();clear('posizioni')">
+						<i class="icon-close"></i>
+					</span>
 				</span>
 				<select ng-model="search.posizioni" ng-options="opt.id as opt.name for opt in positions">			
 					<option value=""></option>
 				</select>
 				<ul class="search__options" ng-class="{'store__options--visible':isSelect['posizioni']}">
 					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="position in positions" ng-bind="position.name" ng-click="change('posizioni', position)" ng-class="{'search__option--selected':search.posizioni==position.id}"></li>
+					<li class="store__option" ng-repeat="position in positions" ng-bind="position.name" ng-click="$event.stopPropagation();change('posizioni', position)" ng-class="{'search__option--selected':search.posizioni==position.id}"></li>
 				</ul>
 			</div>
 
@@ -38,18 +42,23 @@
 				<span class="search__value" ng-bind-html="(search.fonti ? select['fonti'] : '<?php _e('Fonte luminosa', 'catellani'); ?>')"></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
-					<i class="icon-close" ng-click="$event.stopPropagation();clear('fonti')"></i>
+					<span class="close" ng-click="$event.stopPropagation();clear('fonti')">
+						<i class="icon-close"></i>
+					</span>
 				</span>
 				<select ng-model="search.fonti" ng-options="opt.id as opt.name for opt in sources">			
 					<option value=""></option>
 				</select>
 				<ul class="search__options" ng-class="{'store__options--visible':isSelect['fonti']}">
 					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
+					<li class="store__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
 				</ul>
 			</div>
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar="search" ng-class="{'search__items--loading':isLoading, 'search__items--changing':isChanging}">
+		<div class="search__items search__items--shrink-fw" scrollbar="search" speed="0.15">
+			<p class="search__cell search__cell--found search__cell--grow-md" ng-if="filtered() && isLoading">
+				<span><?php _e('Nessuna lampada per la ricerca effettuata', 'catellani'); ?></span>
+			</p>
 			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filter:search:compareTaxes" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
 					<span class="search__figure">

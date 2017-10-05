@@ -2,8 +2,6 @@ module.exports = ($timeout, $rootScope)->
 	TL = new TimelineMax
 			paused : on
 			ease: Linear.easeNone
-	Close = TweenMax.to '.banner__btn--close', .5, 
-		opacity : 1
 	LeftStagger = TweenMax.staggerTo ['.banner__footer', '.banner__quote'], .5, { y : 0, opacity : 1}, .05
 	RightStagger = TweenMax.staggerTo '.menu__item', .5, 
 		y : 0
@@ -20,7 +18,9 @@ module.exports = ($timeout, $rootScope)->
 		.to ['.banner__aside', '.banner__menu'], .5,
 			x : '0%'
 		, "-=.15"
-		.add [LeftStagger, RightStagger, Close], "+=.5"
+		.add [LeftStagger, RightStagger], "+=.5"
+		.to '.banner__btn--close', .5, 
+			opacity : 1
 	menu =
 		addClass : (element, className, done)->
 			return if className isnt 'menu-opened'

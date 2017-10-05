@@ -37,31 +37,34 @@
 	}
 	.icon-select {
 		font-size: 6px;
+		transition: opacity $speed $speed;
+	}
+	.close {
+		position: absolute;
+		height: em($p*2);
+		opacity: 0;
+		padding: 0 em($p);
+		visibility: hidden;
+		display: flex;
+		top: 0;
+		right: 0;
+		align-items: center;
+		z-index: 900;
+		transition: visibility $speed, opacity $speed;
 	}
 	.icon-close {
-		position: absolute;
 		font-size: 6px;
 		border-radius: $f;
-		width: 14px;
 		height: 14px;
+		width: 14px;
 		background-color: $main-color;
 		color: $lighter-color;
 		line-height: 14px;
-		text-align: center;
-		transform: translate3d(-50%, -50%, 0);
-		top: 50%;
-		left: 50%;
-		z-index: 900;
-		transition: visibility $speed, opacity $speed;
-		opacity: 0;
-		visibility: hidden;
+		text-align: center;		
 	}
 	[class*="__value"] {
 		font-size: em(18px);
 		color: $alternate-color;
-	}
-	[class*="__icons"] {
-		position: relative;
 	}
 	select {
 		display: none;
@@ -115,7 +118,11 @@
 	[class*="__value"] {
 		color: $main-color;
 	}
-	.icon-close {
+	.icon-select {
+		opacity: 0;
+		transition: opacity $speed/2;
+	}
+	.close {
 		opacity: 1;
 		visibility: visible;
 	}

@@ -49,13 +49,13 @@ module.exports = ->
 				$scope.isSelect[s] = false
 				return if not $scope.enabled s, i.id
 				#e.stopPropagation();
-				$scope.isLoading = on
+				$scope.isChanging = on
 				$scope.search[s] = i.id
 				$scope.select[s] = i.name
 				$rootScope.$broadcast 'scrollBarUpdate'
 				return
 			$scope.clear = (s)->
-				$scope.isLoading = on
+				$scope.isChanging = on
 				delete $scope.search[s]
 				return
 			wp
@@ -95,20 +95,26 @@ module.exports = ->
 				return
 			wrapper = angular.element document.querySelector '.search__items'
 			close =  (element, phase)->
+				console.log element, phase
 				if phase is 'close'
-					searchTimeout = $timeout ->
-						$timeout.cancel searchTimeout
-						$scope.isLoading = off
-						return
-					, 250
+					TweenMax.to {index : 0}, .25
+						onCompleteParams : ["{self}"]
+						onComplete : ->
+							$timeout ->
+								$scope.isChanging = off
+								return
+							return
 				return
 			$animate.on 'leave', wrapper, close
 			$animate.on 'enter', wrapper, close
 			$scope.$on 'search_ended', ->
-				$timeout ->
-					$scope.isLoading = off
-					return
-				, 250
+				TweenMax.to {index : 0}, .25
+					onCompleteParams : ["{self}"]
+					onComplete : ->
+						$timeout ->
+							$scope.isChanging = off
+							return
+						return
 				return
 			## MODAL
 			$rootScope.modal = (id)->

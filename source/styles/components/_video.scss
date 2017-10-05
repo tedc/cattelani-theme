@@ -139,18 +139,18 @@
 				property: visibility, opacity;
 			}
 		}
-		.icon-pause {
+		.icon-play {
 			visibility: hidden;
 			opacity: 0;
 		}
-		&--playing {
+		&--paused {
 			.icon-play {
-				visibility: hidden;
-				opacity: 0;
-			}
-			.icon-pause {
 				visibility: visible;
 				opacity: 1;
+			}
+			.icon-pause {
+				visibility: hidden;
+				opacity: 0;
 			}
 		}
 	}

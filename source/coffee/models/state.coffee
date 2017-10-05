@@ -72,7 +72,7 @@ module.exports = ($stateProvider, $locationProvider)->
 					return
 				]
 				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
-				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", require('./blocks.coffee').single]
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require('./blocks.coffee').single]
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/{collection:(?:collection|collezioni)}/:name'
@@ -103,7 +103,7 @@ module.exports = ($stateProvider, $locationProvider)->
 					return
 				]
 				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
-				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", require('./blocks.coffee').collection]		
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState",  "screenSize", require('./blocks.coffee').collection]		
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
 			url : "/#{vars.main.glossary}/:name"

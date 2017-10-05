@@ -11,8 +11,14 @@ closeBlocks = (size)->
 		clearProps : 'width'
 	return
 	
-exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState)->
+exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize)->
 	deferred = $q.defer()
+	screenSize.rules = {
+		min : "screen and (min-width: #{(850/16)}em)"
+	}
+	if screenSize.is 'min'
+		deferred.resolve on
+		return deferred.promise
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 	if $rootScope.PreviousState.Name isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
 		deferred.resolve on
@@ -58,8 +64,14 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState)->
 				return
 	TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
-exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState)->
+exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize)->
 	deferred = $q.defer()
+	screenSize.rules = {
+		min : "screen and (min-width: #{(850/16)}em)"
+	}
+	if screenSize.is 'min'
+		deferred.resolve on
+		return deferred.promise
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 	if $rootScope.PreviousState.Name isnt 'page' and not document.querySelector(".header--lampade")?
 		deferred.resolve on
