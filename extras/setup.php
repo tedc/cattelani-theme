@@ -445,7 +445,7 @@
 	function lampade_filter_by_collection() {
 	    global $typenow;
 	    global $wp_query;
-	    if ($typenow=='listing') {
+	    if ($typenow=='lampade') {
 	        $taxonomy = 'collezioni';
 	        $business_taxonomy = get_taxonomy($taxonomy);
 	        wp_dropdown_categories(array(
@@ -460,4 +460,15 @@
 	            'hide_empty'      =>  true, // Don't show businesses w/o listings
 	        ));
 	    }
+	}
+	add_filter('parse_query', 'tsm_convert_id_to_term_in_query');
+	function tsm_convert_id_to_term_in_query($query) {
+		global $pagenow;
+		$post_type = 'lampade'; // change to your post type
+		$taxonomy  = 'collezioni'; // change to your taxonomy
+		$q_vars    = &$query->query_vars;
+		if ( $pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == $post_type && isset($q_vars[$taxonomy]) && is_numeric($q_vars[$taxonomy]) && $q_vars[$taxonomy] != 0 ) {
+			$term = get_term_by('id', $q_vars[$taxonomy], $taxonomy);
+			$q_vars[$taxonomy] = $term->slug;
+		}
 	}
