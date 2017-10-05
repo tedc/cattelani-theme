@@ -450,7 +450,7 @@
 			$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
 			$info_taxonomy = get_taxonomy($taxonomy);
 			wp_dropdown_categories(array(
-				'show_option_all' => __("Mostra tutte le {$info_taxonomy->label}", 'catellani'),
+				'show_option_all' => __("Mostra tutte le collezioni", 'catellani'),
 				'taxonomy'        => $taxonomy,
 				'name'            => $taxonomy,
 				'orderby'         => 'name',
