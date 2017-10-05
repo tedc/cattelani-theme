@@ -445,7 +445,7 @@
 	function tsm_filter_post_type_by_taxonomy() {
 		global $typenow;
 		$post_type = 'lampade'; // change to your post type
-		$taxonomy  = 'grcollezionioup'; // change to your taxonomy
+		$taxonomy  = 'collezioni'; // change to your taxonomy
 		if ($typenow == $post_type) {
 			$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
 			$info_taxonomy = get_taxonomy($taxonomy);
