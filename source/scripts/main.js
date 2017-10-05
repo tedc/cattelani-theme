@@ -65184,6 +65184,7 @@ module.exports = function() {
           return;
         });
         $scope.$on('loadPojects', function() {
+          console.log($scope.page);
           query().then(function(results) {
             if (angular.equals(results, $scope.items)) {
               return;

@@ -90,6 +90,7 @@ module.exports = ->
 					return
 				return
 			$scope.$on 'loadPojects', ->
+				console.log $scope.page
 				query()
 					.then (results)->
 						return if angular.equals results, $scope.items
