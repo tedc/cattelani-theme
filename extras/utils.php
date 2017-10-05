@@ -129,13 +129,21 @@
 			}
 		}
 
+	    // // Next CPT order by last word in title
+	    // add_filter( 'get_next_post_sort', function( $orderby ) 
+	    // {
+	    //     return "ORDER BY p.post_title ASC LIMIT 1";
+	    // } );
+
 	    // Next CPT order by last word in title
 	    add_filter( 'get_next_post_sort', function( $orderby ) 
 	    {
-	        return "ORDER BY p.post_title ASC LIMIT 1";
+	        return "ORDER BY p.menu_order ASC LIMIT 1";
 	    } );
 
-	    $where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
+	    //$where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
+
+	    $where .= $wpdb->prepare( "WHERE p.menu_order > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
 
 	    // Modify Next WHERE part
 	    return $where;    

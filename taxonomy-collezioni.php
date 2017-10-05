@@ -4,8 +4,8 @@
 		array(
 			'post_type' => 'lampade',
 			'posts_per_page' => -1,
-			'orderby' => 'title',
-			'order' => 'ASC',
+			'orderby' => 'menu_order',
+			//'order' => 'ASC',
 			'tax_query' => array(
 				array(
 					'taxonomy' => $obj->taxonomy,
