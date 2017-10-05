@@ -21,7 +21,7 @@ module.exports = ->
 				periodi : false
 			}
 			$scope.page = 1
-
+			$scope.items = []
 			$scope.change = (s, i)->
 				#e.stopPropagation();
 				$scope.projects[s] = i.id
@@ -64,16 +64,17 @@ module.exports = ->
 					.param(kindPar, kindValue)
 					.before(before)
 					.after(after)
-					.page $scope.page
-			query()
-				.then (results)->
-					$timeout ->
-						$scope.items = results
-						$scope.page += 1
-						$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
-						return
-					, 0
-					return
+					.perPage(1)
+					.page($scope.page)
+			# query()
+			# 	.then (results)->
+			# 		$timeout ->
+			# 			$scope.items = results
+			# 			$scope.page += 1
+			# 			$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
+			# 			return
+			# 		, 0
+			# 		return
 			$scope.$on 'projects_changed', ->
 				$scope.isNotLoading = off			
 				$scope.page = 1
@@ -88,20 +89,19 @@ module.exports = ->
 						, 0
 					return
 				return
-			$scope.$on 'loadPojects', ->
-				console.log $scope.page
+			$scope.$on 'loadProjects', ->
 				query()
 					.then (results)->
 						return if angular.equals results, $scope.items
 						$timeout ->
 							return if $scope.isNotLoading
-							$scope.items = results
+							$scope.items = $scope.items.concat results
 							$scope.page += 1
 							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
 							return
 						, 0
 					return
-			$scope.$broadcast 'loadPojects'
+			$scope.$broadcast 'loadProjects'
 			$scope.image = (item)->
 				img = item._embedded['wp:featuredmedia'][0]
 				url = if img.media_details.sizes.large then img.media_details.sizes.large.source_url else img.media_details.sizes.full.source_url

@@ -65125,6 +65125,7 @@ module.exports = function() {
           periodi: false
         };
         $scope.page = 1;
+        $scope.items = [];
         $scope.change = function(s, i) {
           $scope.projects[s] = i.id;
           $scope.select[s] = i.name;
@@ -65154,17 +65155,8 @@ module.exports = function() {
           collectionValue = $scope.projects.collezioni ? $scope.projects.collezioni : 0;
           collectionPar = collectionValue === 0 ? 'collezioni_exclude' : 'collezioni';
           kindPar = kindValue === 0 ? 'tipologie_exclude' : 'tipologie';
-          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
+          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).perPage(1).page($scope.page);
         };
-        query().then(function(results) {
-          $timeout(function() {
-            $scope.items = results;
-            $scope.page += 1;
-            if ($scope.page > parseInt(results._paging.totalPages)) {
-              $scope.isNotLoading = true;
-            }
-          }, 0);
-        });
         $scope.$on('projects_changed', function() {
           $scope.isNotLoading = false;
           $scope.page = 1;
@@ -65182,8 +65174,7 @@ module.exports = function() {
           });
           return;
         });
-        $scope.$on('loadPojects', function() {
-          console.log($scope.page);
+        $scope.$on('loadProjects', function() {
           query().then(function(results) {
             if (angular.equals(results, $scope.items)) {
               return;
@@ -65192,7 +65183,7 @@ module.exports = function() {
               if ($scope.isNotLoading) {
                 return;
               }
-              $scope.items = results;
+              $scope.items = $scope.items.concat(results);
               $scope.page += 1;
               if ($scope.page > parseInt(results._paging.totalPages)) {
                 $scope.isNotLoading = true;
@@ -65200,7 +65191,7 @@ module.exports = function() {
             }, 0);
           });
         });
-        $scope.$broadcast('loadPojects');
+        $scope.$broadcast('loadProjects');
         $scope.image = function(item) {
           var alt, array, img, url;
           img = item._embedded['wp:featuredmedia'][0];
