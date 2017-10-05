@@ -75,6 +75,7 @@ catellani
 					scrollLeft = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollLeft == 'number' then t else document.body).scrollLeft
 					## For scrollY
 					scrollTop = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollTop == 'number' then t else document.body).scrollTop
+					console.log scrollTop
 					startX = rect.left + scrollLeft
 					startY = element[0].getBoundingClientRect().top + scrollTop
 					moveX = evt.pageX

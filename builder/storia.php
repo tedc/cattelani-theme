@@ -32,7 +32,7 @@
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</div>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true}">
+<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true,'simulateTouch':false}">
 	<?php foreach($storia as $s): ?>
 	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" history="storia_<?php echo $s->ID; ?>">
 		<figure class="swiper-slide__figure">

@@ -31,7 +31,9 @@
 			font-weight: 300;
 			padding-top: em($p, 14px);
 		}
-
+		&-active {
+			z-index: 500;
+		}
 	}
 	&__header {
 		@include grow('lg');
@@ -217,6 +219,7 @@
 		font-weight: 200;
 		color: $alternate-color;
 		z-index: 20;
+		opacity: .65;
 	}
 	&__footer {
 		@include grow('md', 'top');
