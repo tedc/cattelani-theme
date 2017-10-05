@@ -1,5 +1,5 @@
 <div class="projects projects--grow-lg" post-type-archive post-type="<?php the_sub_field('post_type'); ?>" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
-	<div class="projects__filters projects__filters--gray projects__filters--grow projects__filters--grid"> 
+	<div class="projects__filters projects__filters--gray projects__filters--grow-md projects__filters--grid"> 
 		<div class="projects__select" click-outside="isSelect['collezioni']=false" ng-class="{'projects__select--filled' : projects.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">
 			<span class="projects__value" ng-bind-html="(projects.collezioni ? select['collezioni'] : '<?php _e('Scegli una collezione', 'catellani'); ?>')"></span>
 			<span class="projects__icons">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="projects__items projects__items--grow-lg projects__items--shrink-fw projects__items--grid">
 		<span class="projects__cell projects__cell--found" ng-if="items.length <= 0"><span><?php _e('Nessun risultato trovato'); ?></span></span>
-		<a class="projects__cell projects__cell--s6 projects__cell--grow-md" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" clicked-element>
+		<a class="projects__cell projects__cell--s6 projects__cell--grow" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" clicked-element>
 			<span class="projects__content" ng-style="{'background-image' : 'url({{image(item).url}})'}">
 			<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />
 			<span class="projects__title" ng-bind-html="item.title.rendered"></span>
