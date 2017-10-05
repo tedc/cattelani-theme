@@ -460,6 +460,7 @@
 			));
 		};
 	}
+	add_filter('parse_query', 'tsm_convert_id_to_term_in_query');
 	function tsm_convert_id_to_term_in_query($query) {
 		global $pagenow;
 		$post_type = 'lampade'; // change to your post type
