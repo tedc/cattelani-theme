@@ -441,27 +441,25 @@
 	}
 	add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
-	add_action('restrict_manage_posts','lampade_filter_by_collection');
-	function lampade_filter_by_collection() {
-	    global $typenow;
-	    global $wp_query;
-	    if ($typenow=='lampade') {
-	        $taxonomy = 'collezioni';
-	        $business_taxonomy = get_taxonomy($taxonomy);
-	        wp_dropdown_categories(array(
-	            'show_option_all' =>  __("Mostra tutte le {$business_taxonomy->label}", 'catellani'),
-	            'taxonomy'        =>  $taxonomy,
-	            'name'            =>  'collezioni',
-	            'orderby'         =>  'name',
-	            'selected'        =>  $wp_query->query['term'],
-	            'hierarchical'    =>  true,
-	            'depth'           =>  3,
-	            'show_count'      =>  true, // Show # listings in parens
-	            'hide_empty'      =>  true, // Don't show businesses w/o listings
-	        ));
-	    }
+	add_action('restrict_manage_posts', 'tsm_filter_post_type_by_taxonomy');
+	function tsm_filter_post_type_by_taxonomy() {
+		global $typenow;
+		$post_type = 'lampade'; // change to your post type
+		$taxonomy  = 'grcollezionioup'; // change to your taxonomy
+		if ($typenow == $post_type) {
+			$selected      = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
+			$info_taxonomy = get_taxonomy($taxonomy);
+			wp_dropdown_categories(array(
+				'show_option_all' => __("Mostra tutte le {$info_taxonomy->label}", 'catellani'),
+				'taxonomy'        => $taxonomy,
+				'name'            => $taxonomy,
+				'orderby'         => 'name',
+				'selected'        => $selected,
+				'show_count'      => true,
+				'hide_empty'      => true,
+			));
+		};
 	}
-	add_filter('parse_query', 'tsm_convert_id_to_term_in_query');
 	function tsm_convert_id_to_term_in_query($query) {
 		global $pagenow;
 		$post_type = 'lampade'; // change to your post type
