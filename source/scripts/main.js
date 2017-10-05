@@ -65185,6 +65185,10 @@ module.exports = function() {
             }
             return $timeout(function() {
               $scope.items = results;
+              $scope.page += 1;
+              if ($scope.page > parseInt(results._paging.totalPages)) {
+                $scope.isNotLoading = true;
+              }
             }, 0);
           });
         });
@@ -65514,7 +65518,6 @@ catellani.directive('ngStore', [require(176)]).directive('ngForm', [require(167)
         hRatio = size.real.height / size.actual.height;
         scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
         scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-        console.log(scrollTop);
         startX = rect.left + scrollLeft;
         startY = element[0].getBoundingClientRect().top + scrollTop;
         moveX = evt.pageX;

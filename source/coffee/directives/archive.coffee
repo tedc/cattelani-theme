@@ -92,6 +92,8 @@ module.exports = ->
 						return if angular.equals results, $scope.items
 						$timeout ->
 							$scope.items = results
+							$scope.page += 1
+							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
 							return
 						, 0
 					return

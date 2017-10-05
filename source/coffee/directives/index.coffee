@@ -76,7 +76,6 @@ catellani
 					## For scrollX
 					scrollTop = window.pageYOffset or docEl.scrollTop or body.scrollTop
 					scrollLeft = window.pageXOffset or docEl.scrollLeft or body.scrollLeft
-					console.log scrollTop
 					startX = rect.left + scrollLeft
 					startY = element[0].getBoundingClientRect().top + scrollTop
 					moveX = evt.pageX
