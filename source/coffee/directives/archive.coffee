@@ -76,12 +76,15 @@ module.exports = ->
 					, 0
 					return
 			$scope.$on 'projects_changed', ->
+				$scope.isNotLoading = off			
 				$scope.page = 1
 				query()
 					.then (results)->
 						return if angular.equals results, $scope.items
 						$timeout ->
 							$scope.items = results
+							$scope.page += 1
+							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
 							return
 						, 0
 					return
@@ -91,6 +94,7 @@ module.exports = ->
 					.then (results)->
 						return if angular.equals results, $scope.items
 						$timeout ->
+							return if $scope.isNotLoading
 							$scope.items = results
 							$scope.page += 1
 							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages

@@ -65167,6 +65167,7 @@ module.exports = function() {
           }, 0);
         });
         $scope.$on('projects_changed', function() {
+          $scope.isNotLoading = false;
           $scope.page = 1;
           query().then(function(results) {
             if (angular.equals(results, $scope.items)) {
@@ -65174,6 +65175,10 @@ module.exports = function() {
             }
             return $timeout(function() {
               $scope.items = results;
+              $scope.page += 1;
+              if ($scope.page > parseInt(results._paging.totalPages)) {
+                $scope.isNotLoading = true;
+              }
             }, 0);
           });
           return;
@@ -65184,6 +65189,9 @@ module.exports = function() {
               return;
             }
             return $timeout(function() {
+              if ($scope.isNotLoading) {
+                return;
+              }
               $scope.items = results;
               $scope.page += 1;
               if ($scope.page > parseInt(results._paging.totalPages)) {
