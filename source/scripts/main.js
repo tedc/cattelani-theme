@@ -65498,7 +65498,9 @@ catellani.directive('ngStore', [require(176)]).directive('ngForm', [require(167)
   return mask = {
     link: function(scope, element) {
       scope.moveMask = function(evt, id) {
-        var el, hRatio, moveX, moveY, rect, scrollLeft, scrollTop, size, startX, startY, t, wRatio;
+        var body, docEl, el, hRatio, moveX, moveY, rect, scrollLeft, scrollTop, size, startX, startY, wRatio;
+        body = document.body;
+        docEl = document.documentElement;
         el = element[0].querySelector('svg');
         rect = el.getBoundingClientRect();
         size = {
@@ -65510,8 +65512,9 @@ catellani.directive('ngStore', [require(176)]).directive('ngForm', [require(167)
         };
         wRatio = size.real.width / size.actual.width;
         hRatio = size.real.height / size.actual.height;
-        scrollLeft = (((t = document.documentElement) || (t = document.body.parentNode)) && typeof t.scrollLeft === 'number' ? t : document.body).scrollLeft;
-        scrollTop = (((t = document.documentElement) || (t = document.body.parentNode)) && typeof t.scrollTop === 'number' ? t : document.body).scrollTop;
+        scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+        scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+        console.log(scrollTop);
         startX = rect.left + scrollLeft;
         startY = element[0].getBoundingClientRect().top + scrollTop;
         moveX = evt.pageX;

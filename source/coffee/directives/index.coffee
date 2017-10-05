@@ -62,6 +62,8 @@ catellani
 		mask =
 			link : (scope, element)->
 				scope.moveMask = (evt, id)->
+					body = document.body
+					docEl = document.documentElement
 					el = element[0].querySelector 'svg'
 					rect = el.getBoundingClientRect()
 					size = 
@@ -72,9 +74,8 @@ catellani
 					wRatio = size.real.width / size.actual.width 
 					hRatio = size.real.height / size.actual.height
 					## For scrollX
-					scrollLeft = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollLeft == 'number' then t else document.body).scrollLeft
-					## For scrollY
-					scrollTop = ( if ((t = document.documentElement) or (t = document.body.parentNode)) and typeof t.scrollTop == 'number' then t else document.body).scrollTop
+					scrollTop = window.pageYOffset or docEl.scrollTop or body.scrollTop
+					scrollLeft = window.pageXOffset or docEl.scrollLeft or body.scrollLeft
 					console.log scrollTop
 					startX = rect.left + scrollLeft
 					startY = element[0].getBoundingClientRect().top + scrollTop
