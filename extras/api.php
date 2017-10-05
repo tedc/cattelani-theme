@@ -579,7 +579,6 @@ function my_rest_prepare_post( $data, $post, $request ) {
     unset( $_data['content'] );
     unset($_data['yoats_title']);
     unset($_data['breadcrumbs']);
-    unset($_data['post_class']);
     unset($_data['body_class']);
     unset($_data['wpml_menu']);
     unset($_data['cover']);
