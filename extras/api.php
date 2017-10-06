@@ -66,6 +66,23 @@
             )
         );
 
+        register_rest_field(
+            array('progetti', 'installazioni'),
+            'acf',
+            array(
+                'get_callback' => 'add_acf_projects'
+            )
+        );
+
+        function add_acf_projects($object) {
+          return array(
+              'acf' => array(
+                'citta' => get_field('citta', $object['id']),
+                'stato' => get_field('stato', $object['id'])
+              )
+            );
+        }
+
         function add_post_class($object) {
           return join(' ',get_post_class( array( 'type-'.$object['type'].'--grow-md' ), $object['id']));
         }
