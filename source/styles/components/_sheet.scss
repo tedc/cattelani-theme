@@ -21,14 +21,18 @@
 			line-height: 1;
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
 			img {
-				width: em(150px) !important;
+				width: em(180px) !important;
 				height: auto !important;
 				flex: 0 0 auto;
+				font-size: 1em !important;
 			}
 			span {
-				width: calc(100% - #{em(120px)});
+				width: calc(100% - #{em(200px)});
+				flex: 0 0 auto;
 			}
+			padding-bottom: em($p);
 		}
 	}
 	&__table {
