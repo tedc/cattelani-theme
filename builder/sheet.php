@@ -32,8 +32,12 @@
 
 					//the_sub_field('sheet_content'); 
 					else :
-						$content = (!get_sub_field('is_size')) ? 'sheet_content' : 'sheet_content_size';
-						the_sub_field($content); 
+						$content_str = (!get_sub_field('is_size')) ? 'sheet_content' : 'sheet_content_size';
+						$content = get_sub_field($content_str);
+						$content = strip_tags($content, '<img>,<p><br>');
+						$content = preg_replace("/<img[^>]+\>/i", "$1<span>", $content);
+						$content = str_replace("</p>", "</span></p>", $content);
+						echo $content; 
 					endif;
 				endif;
 			?>
