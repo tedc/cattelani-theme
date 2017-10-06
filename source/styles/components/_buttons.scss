@@ -13,7 +13,16 @@
 	span {
 		font-size: em(18px);
 	}
-	&:before, &:after {
+	// &:before, &:after {
+	// 	content: '';
+	// 	height: 1px;
+	// 	position: absolute;
+	// 	top: $f/2;
+	// 	background-color: $main-color;
+	// 	transform: translate3d(0, ($f/2)*-1, 0) scaleX(1);
+	// 	backface-visibility: hidden;
+	// }
+	&:before {
 		content: '';
 		height: 1px;
 		position: absolute;
@@ -21,36 +30,45 @@
 		background-color: $main-color;
 		transform: translate3d(0, ($f/2)*-1, 0) scaleX(1);
 		backface-visibility: hidden;
-	}
-	&:after {
-		right: 0;
-		left: $f;
-		transition: $speed left;
-	}
-	&:before {
-		right: calc(100% - #{em($p)});
-		left: 0;
-		transition: {
-			property: transform;
-			duration: $speed;
-			delay: $speed;
-		}
+		width: em($p);
+		transition: transform $speed;
 		transform-origin: left center;
+		transform: scaleX(1) translate3d(0, 0, 0);
 	}
+	// &:after {
+	// 	right: 0;
+	// 	left: $f;
+	// 	transition: $speed left;
+	// }
+	// &:before {
+	// 	right: calc(100% - #{em($p)});
+	// 	left: 0;
+	// 	transition: {
+	// 		property: transform;
+	// 		duration: $speed;
+	// 		delay: $speed;
+	// 	}
+	// 	transform-origin: left center;
+	// }
 	&:hover {
-		&:after {
-			left: 0;
-			right: 0;
-			transition: {
-				property: left;
-				duration: 0s;
-				delay: $speed;
-			}
-		}
+		color: $dark-color;
+		// &:after {
+		// 	left: 0;
+		// 	right: 0;
+		// 	transition: {
+		// 		property: left;
+		// 		duration: 0s;
+		// 		delay: $speed;
+		// 	}
+		// }
+		// &:before {
+		// 	right: 0;
+		// 	transform: translate3d(0, ($f/2)*-1, 0) scaleX(0);
+		// 	transition: right $speed, transform 0s $speed;
+		// }
 		&:before {
-			right: 0;
-			transform: translate3d(0, ($f/2)*-1, 0) scaleX(0);
-			transition: right $speed, transform 0s $speed;
+			transform: scaleX(0) translate3d(0, 0, 0);
+			transform-origin: right center;
 		}
 	}
 }
