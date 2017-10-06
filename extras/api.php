@@ -75,12 +75,10 @@
         );
 
         function add_acf_projects($object) {
-          return array(
-              'acf' => array(
+          return  array(
                 'citta' => get_field('citta', $object['id']),
                 'stato' => get_field('stato', $object['id'])
-              )
-            );
+              );
         }
 
         function add_post_class($object) {
