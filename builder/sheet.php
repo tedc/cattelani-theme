@@ -32,7 +32,7 @@
 
 					//the_sub_field('sheet_content'); 
 					else :
-						$content = (get_sub_field('is_size')) ? 'sheet_content' : 'sheet_content_size';
+						$content = (!get_sub_field('is_size')) ? 'sheet_content' : 'sheet_content_size';
 						the_sub_field($content); 
 					endif;
 				endif;
