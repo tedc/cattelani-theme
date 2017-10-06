@@ -22,7 +22,7 @@
 	// 	transform: translate3d(0, ($f/2)*-1, 0) scaleX(1);
 	// 	backface-visibility: hidden;
 	// }
-	&:before {
+	&:before, &:after {
 		content: '';
 		height: 1px;
 		position: absolute;
@@ -32,8 +32,15 @@
 		backface-visibility: hidden;
 		width: em($p);
 		transition: transform $speed;
-		transform-origin: left center;
 		transform: scaleX(1) translate3d(0, 0, 0);
+	}
+	&:before {
+		left: 0;
+		transform-origin: left center;
+	}
+	&:before {
+		right: 0;
+		transform-origin: right center;
 	}
 	// &:after {
 	// 	right: 0;
@@ -66,9 +73,14 @@
 		// 	transform: translate3d(0, ($f/2)*-1, 0) scaleX(0);
 		// 	transition: right $speed, transform 0s $speed;
 		// }
-		&:before {
+		&:before, &:after {
 			transform: scaleX(0) translate3d(0, 0, 0);
+		}
+		&:before {
 			transform-origin: right center;
+		}
+		&:after {
+			transform-origin: left center;
 		}
 	}
 }
