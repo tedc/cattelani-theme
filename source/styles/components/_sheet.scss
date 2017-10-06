@@ -17,6 +17,19 @@
 		&--last {
 			border-bottom: 0;
 		}
+		p {
+			line-height: 1;
+			display: flex;
+			justify-content: space-between;
+			img {
+				width: em(150px) !important;
+				height: auto !important;
+				flex: 0 0 auto;
+			}
+			span {
+				width: calc(100% - #{em(120px)});
+			}
+		}
 	}
 	&__table {
 		td {
