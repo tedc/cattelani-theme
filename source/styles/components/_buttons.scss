@@ -58,7 +58,7 @@
 	// 	}
 	// 	transform-origin: left center;
 	// }
-	&:hover {
+	&:hover:not(:disabled) {
 		color: $dark-color;
 		// &:after {
 		// 	left: 0;
@@ -82,6 +82,9 @@
 			transform-origin: left center;
 			transform: scaleX(1) translate3d(0, 0, 0);
 		}
+	}
+	&:disabled {
+		cursor: not-allowed;
 	}
 }
 
