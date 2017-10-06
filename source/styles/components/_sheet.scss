@@ -17,8 +17,9 @@
 		&--last {
 			border-bottom: 0;
 		}
+		line-height: 1.2;
 		p {
-			line-height: 1;
+			line-height: 1.2;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -32,7 +33,15 @@
 				width: calc(100% - #{em(200px)});
 				flex: 0 0 auto;
 			}
-			padding-bottom: em($p);
+			padding-bottom: em($p*2);
+			
+		}
+		.sheet__cell {
+			p {
+				&:nth-last-child(1) {
+					padding-bottom: 0;
+				}
+			}
 		}
 	}
 	&__table {
