@@ -101,27 +101,38 @@
 			font-family: $alternate-font;
 			font-weight: 400;
 			padding-top: em($p, 18px);
+			text-align: center;
 			> span {
 				color: $main-color;
-				padding: 0 em($p, 18px);
+				padding: 0 em($p*1.5, 18px);
 				position: relative;
 				display: inline-block;
-				&:after {
+				&:before, &:after {
 					content: '';
 					height: 1px;
-					width: $f;
 					background-color: $main-color;
-					left: 0;
 					top: 50%;
 					transform: translate3d(0, -50%, 0) scaleX(0);
 					transition: transform $speed;
 					position: absolute;
+					width: em($p, 18px);
+				}
+				&:after {
+					right: 0;
+					transform-origin: left center;
+				}
+				&:before {
+					left: 0;
 					transform-origin: right center;
 				}
 				.search__cell:hover & {
-					&:after {
+					&:before {
 						transform: translate3d(0, -50%, 0) scaleX(1);
 						transform-origin: left center;
+					}
+					&:after {
+						transform: translate3d(0, -50%, 0) scaleX(1);
+						transform-origin: right center;
 					}
 				}
 			}

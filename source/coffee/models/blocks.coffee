@@ -14,8 +14,9 @@ closeBlocks = (size)->
 exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize)->
 	deferred = $q.defer()
 	screenSize.rules = {
-		min : "screen and (min-width: #{(850/16)}em)"
+		min : "screen and (max-width: #{(850/16)}em)"
 	}
+	console.log screenSize.is 'min'
 	if screenSize.is 'min'
 		deferred.resolve on
 		return deferred.promise
@@ -67,7 +68,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize)->
 	deferred = $q.defer()
 	screenSize.rules = {
-		min : "screen and (min-width: #{(850/16)}em)"
+		min : "screen and (max-width: #{(850/16)}em)"
 	}
 	if screenSize.is 'min'
 		deferred.resolve on

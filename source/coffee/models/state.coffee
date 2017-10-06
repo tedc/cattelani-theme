@@ -1,4 +1,5 @@
-module.exports = ($stateProvider, $locationProvider)->
+module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
+	cfpLoadingBarProvider.includeSpinner = off
 	$locationProvider.html5Mode
 		enabled: on
 		rewriteLinks: off

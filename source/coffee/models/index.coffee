@@ -1,6 +1,6 @@
 catellani = angular.module 'catellani'
 catellani
-	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
+	.config ["$stateProvider", "$locationProvider", "cfpLoadingBarProvider", require './state.coffee' ]
 	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", ($transitions, $state, $location, $rootScope, $timeout, angularLoad)->
 		$rootScope.isFinish = on
 		$rootScope.isAnim = 'is-anim'

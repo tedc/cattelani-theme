@@ -316,10 +316,6 @@
 			'menu_title'	=> 'Breadcrumb',
 			'parent_slug' => 'themes.php'
 		));
-		acf_add_options_page(array(
-			'page_title' 	=> 'Aforismi',
-			'menu_title'	=> 'Aforismi'
-		));
 	}
 
 	add_filter( 'manage_aforismi_posts_columns', 'set_custom_edit_aforismi_columns' );
