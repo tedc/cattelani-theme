@@ -5,7 +5,7 @@
 		opacity: 0;
 	}
 	&.ng-leave, &.ng-enter.ng-enter-active {
-		opacity: 1;
+		opacity: .75;
 	}
 	.bar {
 		position: fixed;
@@ -15,6 +15,7 @@
 		left: 0;
 		top: 0;
 		background-color: #f9faf3;
+		box-shadow: 0 0 $p/2 transparentize(#f6f7ea, .05);
 		transition: $speed width;
 		.admin-bar.logged-in & {
 			margin-top: 32px;
@@ -22,7 +23,7 @@
 	}
 	.peg {
 		background-color: #f6f7ea;
-		box-shadow: 0 0 $p #f6f7ea;
+		box-shadow: 0 0 $p/4 #f6f7ea;
 		position: absolute;
 		top: 0;
 		right: 0;
