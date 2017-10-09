@@ -15,9 +15,9 @@
 				<select ng-model="search.collezioni" ng-options="opt.id as opt.name for opt in collections">			
 					<option value=""></option>
 				</select>
-				<ul class="search__options" ng-class="{'store__options--visible':isSelect['collezioni']}">
-					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':select.collezioni==collection.name}"></li>
+				<ul class="search__options" ng-class="{'search__options--visible':isSelect['collezioni']}">
+					<li class="search__option"></li>
+					<li class="search__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':select.collezioni==collection.name}"></li>
 				</ul>
 			</div>
 
@@ -32,9 +32,9 @@
 				<select ng-model="search.posizioni" ng-options="opt.id as opt.name for opt in positions">			
 					<option value=""></option>
 				</select>
-				<ul class="search__options" ng-class="{'store__options--visible':isSelect['posizioni']}">
-					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="position in positions" ng-bind="position.name" ng-click="$event.stopPropagation();change('posizioni', position)" ng-class="{'search__option--selected':search.posizioni==position.id}"></li>
+				<ul class="search__options" ng-class="{'search__options--visible':isSelect['posizioni']}">
+					<li class="search__option"></li>
+					<li class="search__option" ng-repeat="position in positions" ng-bind="position.name" ng-click="$event.stopPropagation();change('posizioni', position)" ng-class="{'search__option--selected':search.posizioni==position.id}"></li>
 				</ul>
 			</div>
 
@@ -49,9 +49,26 @@
 				<select ng-model="search.fonti" ng-options="opt.id as opt.name for opt in sources">			
 					<option value=""></option>
 				</select>
-				<ul class="search__options" ng-class="{'store__options--visible':isSelect['fonti']}">
-					<li class="store__option"></li>
-					<li class="store__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
+				<ul class="search__options" ng-class="{'search__options--visible':isSelect['fonti']}">
+					<li class="search__option"></li>
+					<li class="search__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
+				</ul>
+			</div>
+			<div class="search__select" click-outside="isOrder=false" ng-click="isSelect['fonti']=!isSelect['fonti']">
+				<span class="search__value"><?php _e('Ordina', 'catellani'); ?>: <strong ng-bind-html="(order=='+title')?'A-Z':'Z-A'"></strong></span>
+				<span class="search__icons">
+					<i class="icon-select"></i>
+					<span class="close" ng-click="$event.stopPropagation();clear('fonti')">
+						<i class="icon-close"></i>
+					</span>
+				</span>
+				<select ng-model="order">			
+					<option value="+title">A-Z</option>
+					<option value="-title">A-Z</option>
+				</select>
+				<ul class="search__options" ng-class="{'search__options--visible':isOrder">
+					<li class="search__option" ng-class="{'search__option--selected':order=='+title'}" ng-click="$event.stopPropagation();order='+title'"></li>
+					<li class="search__option" ng-class="{'search__option--selected':order=='-title'}" ng-click="$event.stopPropagation();order='-title'"></li>
 				</ul>
 			</div>
 		</div>
