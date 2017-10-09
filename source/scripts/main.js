@@ -66893,7 +66893,6 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   screenSize.rules = {
     min: "screen and (max-width: " + (850 / 16) + "em)"
   };
-  console.log(screenSize.is('min'));
   if (screenSize.is('min')) {
     deferred.resolve(true);
     return deferred.promise;
@@ -67054,14 +67053,14 @@ catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider", require(186)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", function($transitions, $state, $location, $rootScope, $timeout, angularLoad) {
-    var oldUrl;
+    var closeBar, oldUrl;
     $rootScope.isFinish = true;
     $rootScope.isAnim = 'is-anim';
     $rootScope.isLeaving = 'is-leaving';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
-    return $transitions.onStart({}, function(trans) {
+    $transitions.onStart({}, function(trans) {
       var from, newUrl, to;
       $rootScope.scrollFrom = document.body.scrollTop;
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
@@ -67077,9 +67076,7 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
       if (newUrl === oldUrl) {
         return false;
       }
-      $rootScope.$on("cfpLoadingBar:started", function(evt) {
-        console.log(evt);
-      });
+      cfpLoadingBar.start();
       $rootScope.isAnim = 'is-anim';
       from = $rootScope.from ? $rootScope.from : trans.$from().name.replace('app.', '');
       to = trans.$to().name.replace('app.', '');
@@ -67089,6 +67086,11 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
       $rootScope.$broadcast('updateScenes');
       $rootScope.$broadcast('destroySwiper');
     });
+    closeBar = function() {
+      cfpLoadingBar.complete();
+    };
+    $transitions.onSuccess({}, closeBar);
+    return $transitions.onError({}, closeBar);
   }
 ]);
 

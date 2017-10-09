@@ -16,7 +16,6 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	screenSize.rules = {
 		min : "screen and (max-width: #{(850/16)}em)"
 	}
-	console.log screenSize.is 'min'
 	if screenSize.is 'min'
 		deferred.resolve on
 		return deferred.promise
