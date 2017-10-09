@@ -13,6 +13,7 @@
 		height: $p*2;
 		margin: 0 auto $p;
 		border-radius: $p*2;
+		@include cover;
 	}
 	&__name {
 		font-size: 14px;

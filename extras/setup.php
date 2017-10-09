@@ -443,3 +443,4 @@
 	      'lampade' => array('collezioni')
 	   ) 
 	);
+	add_filter('the_excerpt', 'do_shortcode');

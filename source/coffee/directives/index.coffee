@@ -82,8 +82,8 @@ catellani
 					moveY = evt.pageY
 					TweenMax.to id, .5,
 						attr :
-							cx : (moveX - startX ) * wRatio
-							cy : (moveY - startY) * hRatio
+							cx : ~~((moveX - startX ) * wRatio)
+							cy : ~~((moveY - startY) * hRatio)
 					return
 				return
 	.directive 'ngZoom', ['ScrollbarService', '$timeout', (ScrollbarService, $timeout)->

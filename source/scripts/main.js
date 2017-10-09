@@ -65870,8 +65870,8 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
         moveY = evt.pageY;
         TweenMax.to(id, .5, {
           attr: {
-            cx: (moveX - startX) * wRatio,
-            cy: (moveY - startY) * hRatio
+            cx: ~~((moveX - startX) * wRatio),
+            cy: ~~((moveY - startY) * hRatio)
           }
         });
       };
@@ -66855,7 +66855,7 @@ require(93);
 
 window.controller = new ScrollMagic.Controller();
 
-catellani = angular.module('catellani', ['angular-loading-bar', 'matchMedia', 'ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']);
+catellani = angular.module('catellani', ['cfp.loadingBar', 'matchMedia', 'ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']);
 
 require(183);
 
@@ -67077,6 +67077,9 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
       if (newUrl === oldUrl) {
         return false;
       }
+      $rootScope.$on("cfpLoadingBar:started", function(evt) {
+        console.log(evt);
+      });
       $rootScope.isAnim = 'is-anim';
       from = $rootScope.from ? $rootScope.from : trans.$from().name.replace('app.', '');
       to = trans.$to().name.replace('app.', '');

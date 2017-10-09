@@ -17,6 +17,9 @@ catellani
 			$rootScope.isAnim = off if newUrl is oldUrl
 			#$rootScope.fromParams = trans.params()
 			return false if newUrl is oldUrl
+			$rootScope.$on "cfpLoadingBar:started", (evt)->
+				console.log evt
+				return
 			$rootScope.isAnim = 'is-anim'
 			from = if $rootScope.from then $rootScope.from else trans.$from().name.replace('app.', '')
 			to = trans.$to().name.replace('app.', '')

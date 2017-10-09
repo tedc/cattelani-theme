@@ -8,7 +8,7 @@
 	<ul class="colors__list colors__list--mw colors__list--grid colors__list--grow-lg-bottom">
 		<?php foreach ($colors as $color) : ?>
 		<li class="colors__item colors__item--shrink">
-			<div class="colors__color" ng-style="{'background-color':'<?php the_field('colore', 'colori_materiali_'.$color->term_id); ?>'}"></div>
+			<div class="colors__color" ng-style="{<?php if(get_field('colore', 'colori_materiali_'.$color->term_id)):?>'background-color':'<?php the_field('colore', 'colori_materiali_'.$color->term_id); ?>'<?php endif; if(get_field('colore', 'colori_materiali_'.$color->term_id) && get_field('colore', 'colori_materiali_'.$color->term_id)):?>,<?php endif; if(get_field('colore', 'colori_materiali_'.$color->term_id)):?>'background-image':'<?php the_field('background', 'colori_materiali_'.$color->term_id); ?>'<?php endif; ?>}"></div>
 			<span class="colors__name colors__name--light"><?php echo $color->name; ?></span>
 		</li>
 		<?php endforeach; ?>
