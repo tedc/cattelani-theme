@@ -59,13 +59,9 @@
 				<span class="search__icons">
 					<i class="icon-select"></i>
 				</span>
-				<select ng-model="order">			
-					<option value="+title">A-Z</option>
-					<option value="-title">A-Z</option>
-				</select>
 				<ul class="search__options" ng-class="{'search__options--visible':isOrder}">
-					<li class="search__option" ng-class="{'search__option--selected':order=='+title'}" ng-click="$event.stopPropagation();order='+title'"></li>
-					<li class="search__option" ng-class="{'search__option--selected':order=='-title'}" ng-click="$event.stopPropagation();order='-title'"></li>
+					<li class="search__option" ng-class="{'search__option--selected':order=='+title'}" ng-click="$event.stopPropagation();order='+title'">A-Z</li>
+					<li class="search__option" ng-class="{'search__option--selected':order=='-title'}" ng-click="$event.stopPropagation();order='-title'">Z-A</li>
 				</ul>
 			</div>
 		</div>
