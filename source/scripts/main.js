@@ -67052,7 +67052,7 @@ var catellani;
 catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider", require(186)]).run([
-  "$transitions", "$state", "$location", "$rootScope", "$timeout", "angularLoad", function($transitions, $state, $location, $rootScope, $timeout, angularLoad) {
+  "$transitions", "$state", "$location", "$rootScope", "$timeout", "cfpLoadingBar", function($transitions, $state, $location, $rootScope, $timeout, cfpLoadingBar) {
     var closeBar, oldUrl;
     $rootScope.isFinish = true;
     $rootScope.isAnim = 'is-anim';
