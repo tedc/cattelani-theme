@@ -15,7 +15,7 @@
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['collezioni']}">
 				<li class="projects__option"></li>
 				<?php foreach($collezioni as $collezione) : ?>
-				<li class="projects__option" ng-click="$event.stopPropagation();change('collezioni', {id : <?php echo $collezione->term_id; ?>, name : '<?php echo $collezione->name; ?>'})" ng-class="{'projects__option--selected':projects.collezioni=='<?php echo addslashes($collezione->name); ?>'}"><?php echo $collezione->name; ?></li>
+				<li class="projects__option" ng-click="$event.stopPropagation();change('collezioni', {id : <?php echo $collezione->term_id; ?>, name : '<?php echo addslashes($collezione->name); ?>'})" ng-class="{'projects__option--selected':projects.collezioni==<?php echo $collezione->term_id; ?>}"><?php echo $collezione->name; ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
