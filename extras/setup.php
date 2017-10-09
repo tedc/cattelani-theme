@@ -459,7 +459,7 @@
 	function my_terms_clauses( $clauses, $taxonomy, $args ) {
 		global $wpdb;
 
-		if ( $args['post_types'] ) {
+		if ( !empty($args['post_types']) ) {
 			$post_types = $args['post_types'];
 
 			// allow for arrays
