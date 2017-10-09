@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 			<div class="search__select" click-outside="isOrder=false" ng-click="isOrder=!isOrder">
-				<span class="search__value"><?php _e('Ordina', 'catellani'); ?>: <strong ng-bind-html="(order=='+title')?'A-Z':'Z-A'"></strong></span>
+				<span class="search__value"><?php _e('Ordina', 'catellani'); ?>: {{(order=='+title')?'A-Z':'Z-A'"}}</span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 				</span>
