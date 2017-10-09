@@ -10,11 +10,11 @@
 	.bar {
 		position: fixed;
 		z-index: 10002;
-		height: $p/4;
+		height: $p/10;
 		width: $f;
 		left: 0;
 		top: 0;
-		background-color: #f6f7ea;
+		background-color: #f9faf3;
 		transition: $speed width;
 		.admin-bar.logged-in & {
 			margin-top: 32px;
@@ -28,6 +28,6 @@
 		right: 0;
 		border-radius: $f;
 		width: $p/2;
-		height: $p/4;
+		height: $p/10;
 	}
 }
