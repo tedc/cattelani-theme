@@ -13,6 +13,7 @@ module.exports = ($rootScope, $timeout, $state)->
 		return
 	views =
 		enter : (element, done)->
+			body = angular.element document.body
 			prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 			current = $state.current.name.replace 'app.', ''
 			endGlobalTransition = ->
@@ -84,13 +85,23 @@ module.exports = ($rootScope, $timeout, $state)->
 								endGlobalTransition()
 								element.removeClass 'view-enter'
 								$rootScope.isTransitionerActive = off
-								#element.removeClass 'view-enter'
 								return
 							return
 			if $rootScope.prevElement
 				element.removeClass 'view-enter'
 				done()
 				endGlobalTransition()
+
+			$rootScope.$on 'cfpLoadingBar:completed', ->
+				TweenMax.to {number : 0}, .2,
+					number : 1
+					onCompleteParams : ['{self}']
+					onComplete : ->
+						$timeout ->
+							body.removeClass 'is-transitioner'
+							return
+						return
+				return
 			return
 		leave : (element, done)->
 			prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''

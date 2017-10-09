@@ -65236,7 +65236,8 @@ module.exports = function($rootScope, $timeout, $state) {
   };
   return views = {
     enter: function(element, done) {
-      var current, endGlobalTransition, fromY, prev, toY;
+      var body, current, endGlobalTransition, fromY, prev, toY;
+      body = angular.element(document.body);
       prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
       current = $state.current.name.replace('app.', '');
       endGlobalTransition = function() {
@@ -65329,6 +65330,19 @@ module.exports = function($rootScope, $timeout, $state) {
         done();
         endGlobalTransition();
       }
+      $rootScope.$on('cfpLoadingBar:completed', function() {
+        TweenMax.to({
+          number: 0
+        }, .2, {
+          number: 1,
+          onCompleteParams: ['{self}'],
+          onComplete: function() {
+            $timeout(function() {
+              body.removeClass('is-transitioner');
+            });
+          }
+        });
+      });
     },
     leave: function(element, done) {
       var current, fromY, prev, toY;
@@ -66888,7 +66902,9 @@ closeBlocks = function(size) {
 };
 
 exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize) {
-  var cover, coverAnim, deferred, element, item, prev, rect, size, tl, total;
+  var body, cover, coverAnim, deferred, element, item, prev, rect, size, tl, total;
+  body = angular.element(document.body);
+  body.addClass('is-transitioner');
   deferred = $q.defer();
   screenSize.rules = {
     min: "screen and (max-width: " + (850 / 16) + "em)"
@@ -66897,8 +66913,10 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
     deferred.resolve(true);
     return deferred.promise;
   }
+  $rootScope.cantStart = true;
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
   if ($rootScope.PreviousState.Name !== 'collection' && (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null)) {
+    $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;
   }
@@ -66951,7 +66969,10 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
 };
 
 exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize) {
-  var cover, coverAnim, deferred, element, item, perc, prev, ratio, rect, size, tl, total;
+  var body, cover, coverAnim, deferred, element, item, perc, prev, ratio, rect, size, tl, total;
+  body = angular.element(document.body);
+  body.addClass('is-transitioner');
+  $rootScope.cantStart = false;
   deferred = $q.defer();
   screenSize.rules = {
     min: "screen and (max-width: " + (850 / 16) + "em)"
@@ -66962,6 +66983,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
   }
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
   if ($rootScope.PreviousState.Name !== 'page' && (document.querySelector(".header--lampade") == null)) {
+    $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;
   }
@@ -67061,8 +67083,11 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     $transitions.onStart({}, function(trans) {
-      var from, newUrl, to;
-      $rootScope.scrollFrom = document.body.scrollTop;
+      var body, docEl, newUrl, scrollTop;
+      body = document.body;
+      docEl = document.documentElement;
+      scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+      $rootScope.scrollFrom = scrollTop;
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
         absolute: true
       });
@@ -67076,11 +67101,7 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
       if (newUrl === oldUrl) {
         return false;
       }
-      cfpLoadingBar.start();
       $rootScope.isAnim = 'is-anim';
-      from = $rootScope.from ? $rootScope.from : trans.$from().name.replace('app.', '');
-      to = trans.$to().name.replace('app.', '');
-      $rootScope.isFinish = false;
       oldUrl = newUrl;
       $rootScope.$broadcast('sceneDestroy');
       $rootScope.$broadcast('updateScenes');
@@ -67096,11 +67117,12 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
 
 
 },{"186":186}],184:[function(require,module,exports){
-module.exports = function($q, $timeout, $rootScope) {
+module.exports = function($q, $timeout, $rootScope, cfpLoadingBar) {
   var deferred;
   if ($rootScope.prevElement) {
     return;
   }
+  cfpLoadingBar.start();
   deferred = $q.defer();
   if ($rootScope.scrollFrom > 0) {
     TweenMax.to(window, .3, {
@@ -67117,6 +67139,7 @@ module.exports = function($q, $timeout, $rootScope) {
   } else {
     deferred.resolve(true);
   }
+  $rootScope.cantStart = false;
   return deferred.promise;
 };
 
@@ -67196,14 +67219,14 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(184)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "$scope", "data", require(185)]
   }).state('app.page', {
     url: '/:slug',
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
-      PrevBefore: ["$rootScope", "$timeout", "$q", require(182).prev],
+      PrevBefore: ["$rootScope", "$timeout", "$q", "cfpLoadingBar", require(182).prev],
       data: [
         "$stateParams", "$q", "WPAPI", function($stateParams, $q, WPAPI) {
           var deferred, wp;
@@ -67228,8 +67251,8 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(184)],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require(182).single]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require(182).single],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "$scope", "data", require(185)]
   }).state('app.collection', {
@@ -67264,8 +67287,8 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(184)],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", require(182).collection]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", require(182).collection],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "data", "$scope", require(187)]
   }).state('app.glossary', {
@@ -67295,7 +67318,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", require(184)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "data", "$scope", require(187)]
   });

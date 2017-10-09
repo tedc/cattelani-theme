@@ -12,6 +12,8 @@ closeBlocks = (size)->
 	return
 	
 exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize)->
+	body = angular.element document.body
+	body.addClass 'is-transitioner'
 	deferred = $q.defer()
 	screenSize.rules = {
 		min : "screen and (max-width: #{(850/16)}em)"
@@ -19,8 +21,10 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	if screenSize.is 'min'
 		deferred.resolve on
 		return deferred.promise
+	$rootScope.cantStart = on
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
 	if $rootScope.PreviousState.Name isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
+		$rootScope.cantStart = off
 		deferred.resolve on
 		return deferred.promise 
 	$timeout ->
@@ -65,15 +69,19 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
 exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize)->
+	body = angular.element document.body
+	body.addClass 'is-transitioner'
+	$rootScope.cantStart = off
 	deferred = $q.defer()
 	screenSize.rules = {
 		min : "screen and (max-width: #{(850/16)}em)"
 	}
-	if screenSize.is 'min'
+	if screenSize.is 'min'	
 		deferred.resolve on
 		return deferred.promise
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
-	if $rootScope.PreviousState.Name isnt 'page' and not document.querySelector(".header--lampade")?
+	if $rootScope.PreviousState.Name isnt 'page' and not document.querySelector(".header--lampade")?	
+		$rootScope.cantStart = off
 		deferred.resolve on
 		return deferred.promise 
 	$timeout ->

@@ -1,6 +1,9 @@
 #loading-bar {
 	pointer-events: none;
 	transition: $speed opacity;
+	.is-transitioner & {
+		display: none;
+	}
 	&.ng-enter, &.ng-leave.ng-leave-active {
 		opacity: 0;
 	}

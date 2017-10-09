@@ -43,13 +43,13 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
-				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
+				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.page',
 			url: '/:slug'
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
-				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
+				PrevBefore : ["$rootScope", "$timeout", "$q", "cfpLoadingBar", require('./blocks.coffee').prev]	
 				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
 					wp = WPAPI
 					wp.multiple = wp.registerRoute 'wp/v2', 'multiple-post-type/',
@@ -72,8 +72,8 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						Slug: $stateParams.slug
 					return
 				]
-				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require('./blocks.coffee').single]
+				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/{collection:(?:collection|collezioni)}/:name'
@@ -103,8 +103,8 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
-				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
 				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState",  "screenSize", require('./blocks.coffee').collection]		
+				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
 			url : "/#{vars.main.glossary}/:name"
@@ -131,6 +131,6 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
-				ScrollBefore : ["$q", "$timeout", "$rootScope", require './resolveScroll.coffee']
+				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 	return
