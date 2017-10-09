@@ -85,6 +85,7 @@
 				transform: translate3d(0, 0, 0);
 			}
 			.successes__cover {
+				@include cover($pos: left bottom, $size: contain);
 				@include full;
 				transition: $speed visibility, opacity $speed;
 				&--hover {
