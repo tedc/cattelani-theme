@@ -15,7 +15,7 @@
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['collezioni']}">
 				<li class="projects__option"></li>
 				<?php foreach($collezioni as $collezione) : ?>
-				<li class="projects__option" ng-click="$event.stopPropagation();change('collezioni', {id : <php echo $collezione->term_id; ?>, name : '<php echo $collezione->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<php echo $tipologia->name; ?>}"><php echo $collezione->name; ?></li>
+				<li class="projects__option" ng-click="$event.stopPropagation();change('collezioni', {id : <?php echo $collezione->term_id; ?>, name : '<?php echo $collezione->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<?php echo $tipologia->name; ?>}"><?php echo $collezione->name; ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
@@ -30,7 +30,7 @@
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['tipologie']}">
 				<li class="projects__option"></li>
 				<?php foreach($tipologie as $tipologia) : ?>
-				<li class="projects__option" ng-click="$event.stopPropagation();change('tipologie', {id : <php echo $tipologia->term_id; ?>, name : '<php echo $tipologia->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<php echo $tipologia->name; ?>}"><php echo $tipologia->name; ?></li>
+				<li class="projects__option" ng-click="$event.stopPropagation();change('tipologie', {id : <?php echo $tipologia->term_id; ?>, name : '<?php echo $tipologia->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<?php echo $tipologia->name; ?>}"><?php echo $tipologia->name; ?></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
