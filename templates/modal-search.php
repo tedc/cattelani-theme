@@ -54,7 +54,7 @@
 					<li class="search__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':search.fonti==source.id, 'search__option--disabled' : !enabled('fonti', source.id)}"></li>
 				</ul>
 			</div>
-			<div class="search__select" click-outside="isOrder=false" ng-click="isSelect['fonti']=!isSelect['fonti']">
+			<div class="search__select" click-outside="isOrder=false" ng-click="isOrder=!isOrder">
 				<span class="search__value"><?php _e('Ordina', 'catellani'); ?>: <strong ng-bind-html="(order=='+title')?'A-Z':'Z-A'"></strong></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
