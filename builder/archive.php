@@ -1,3 +1,7 @@
+<?php
+	$collezioni = get_terms('post_types' => get_sub_field('post_type'), 'taxonomy' => 'collezioni'); 
+	$tipologie = get_terms('post_types' => get_sub_field('post_type'), 'taxonomy' => 'tipologie');
+?>
 <div class="projects projects--grow-lg" post-type-archive post-type="<?php the_sub_field('post_type'); ?>" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
 	<div class="projects__filters projects__filters--gray projects__filters--grow-md projects__filters--grid"> 
 		<div class="projects__select" click-outside="isSelect['collezioni']=false" ng-class="{'projects__select--filled' : projects.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">
@@ -8,12 +12,11 @@
 					<i class="icon-close"></i>
 				</span>
 			</span>
-			<select ng-model="projects.collezioni" ng-options="opt.id as opt.name for opt in collections">			
-				<option value=""></option>
-			</select>
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['collezioni']}">
 				<li class="projects__option"></li>
-				<li class="projects__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'projects__option--selected':projects.collezioni==collection.id}"></li>
+				<?php foreach($collezioni as $collezione) : ?>
+				<li class="projects__option" ng-click="$event.stopPropagation();change('collezioni', {id : <php echo $collezione->term_id; ?>, name : '<php echo $collezione->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<php echo $tipologia->name; ?>}"><php echo $collezione->name; ?></li>
+				<?php endforeach; ?>
 			</ul>
 		</div>
 		<div class="projects__select" click-outside="isSelect['tipologie']=false" ng-class="{'projects__select--filled' : projects.tipologie}" ng-click="isSelect['tipologie']=!isSelect['tipologie']">
@@ -24,12 +27,11 @@
 					<i class="icon-close"></i>
 				</span>
 			</span>
-			<select ng-model="projects.tipologie" ng-options="opt.id as opt.name for opt in tipologie">			
-				<option value=""></option>
-			</select>
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['tipologie']}">
 				<li class="projects__option"></li>
-				<li class="projects__option" ng-repeat="tipologia in tipologie" ng-bind="tipologia.name" ng-click="$event.stopPropagation();change('tipologie', tipologia)" ng-class="{'projects__option--selected':projects.tipologie==tipologia.id}"></li>
+				<?php foreach($tipologie as $tipologia) : ?>
+				<li class="projects__option" ng-click="$event.stopPropagation();change('tipologie', {id : <php echo $tipologia->term_id; ?>, name : '<php echo $tipologia->name; ?>'})" ng-class="{'projects__option--selected':projects.tipologie==<php echo $tipologia->name; ?>}"><php echo $tipologia->name; ?></li>
+				<?php endforeach; ?>
 			</ul>
 		</div>
 		<div class="projects__select" click-outside="isSelect['periodi']=false" ng-class="{'projects__select--filled' : select['periodi']!=false}" ng-click="isSelect['periodi']=!isSelect['periodi']">
