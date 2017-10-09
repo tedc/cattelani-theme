@@ -66275,8 +66275,14 @@ module.exports = function() {
           };
           closeAnim(callback);
         };
+        $scope.isOrder = false;
         $scope.changOrder = function() {
-          closeAnim();
+          var callback;
+          callback = function(val) {
+            $scope.isOrder = false;
+            $scope.order = val;
+          };
+          closeAnim(callback);
         };
         $scope.clear = function(s) {
           var callback;

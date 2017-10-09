@@ -60,8 +60,8 @@
 					<i class="icon-select"></i>
 				</span>
 				<ul class="search__options" ng-class="{'search__options--visible':isOrder}">
-					<li class="search__option" ng-class="{'search__option--selected':order=='+title'}" ng-click="$event.stopPropagation();isOrder=false;order='+title'">A-Z</li>
-					<li class="search__option" ng-class="{'search__option--selected':order=='-title'}" ng-click="$event.stopPropagation();isOrder=false;order='-title'">Z-A</li>
+					<li class="search__option" ng-class="{'search__option--selected':order=='+title'}" ng-click="$event.stopPropagation();hangOrder('+title')">A-Z</li>
+					<li class="search__option" ng-class="{'search__option--selected':order=='-title'}" ng-click="$event.stopPropagation();changOrder('-title')">Z-A</li>
 				</ul>
 			</div>
 		</div>

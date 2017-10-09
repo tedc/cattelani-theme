@@ -59,8 +59,13 @@ module.exports = ->
 					return
 				closeAnim callback
 				return
+			$scope.isOrder = off
 			$scope.changOrder = ->
-				closeAnim()
+				callback =(val) ->
+					$scope.isOrder = off
+					$scope.order = val
+					return
+				closeAnim callback
 				return
 			$scope.clear = (s)->
 				return if $scope.isChanging
