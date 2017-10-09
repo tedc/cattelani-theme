@@ -1,6 +1,6 @@
 <?php
-	$collezioni = get_terms('post_types' => get_sub_field('post_type'), 'taxonomy' => 'collezioni'); 
-	$tipologie = get_terms('post_types' => get_sub_field('post_type'), 'taxonomy' => 'tipologie');
+	$collezioni = get_terms(array('post_types' => get_sub_field('post_type'), 'taxonomy' => 'collezioni')); 
+	$tipologie = get_terms(array('post_types' => get_sub_field('post_type'), 'taxonomy' => 'tipologie'));
 ?>
 <div class="projects projects--grow-lg" post-type-archive post-type="<?php the_sub_field('post_type'); ?>" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
 	<div class="projects__filters projects__filters--gray projects__filters--grow-md projects__filters--grid"> 
