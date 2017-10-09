@@ -83,6 +83,17 @@
 				opacity: 1;
 				transform: translate3d(0, 0, 0);
 			}
+			.successes__cover {
+				visibility: hidden;
+				opacity: 0;
+				transition: $speed visibility, opacity $speed;
+			}
+			&:hover {
+				.successes__cover {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
 		}
 		&--content {
 			[class*="-inverted"] & {

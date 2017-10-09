@@ -36,7 +36,9 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	total = element.attr 'data-item-total'
 	size = element.attr 'data-item-size'
 	animationInner.addClass "transitioner__wrapper--s#{size}"
-	TweenMax.set animationCover,
+	# TweenMax.set animationCover,
+	# 	backgroundImage : "url(#{cover})"
+	TweenMax.set animationInner,
 		backgroundImage : "url(#{cover})"
 	animationDiv.addClass 'transitioner--flex'
 	if item is "0"
@@ -54,12 +56,14 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 				animationInner.removeClass "transitioner__wrapper--s#{size}"
 				animationInner.addClass "transitioner__wrapper--s12"
 				return
+	animationInner.removeClass "transitioner__wrapper--s#{size}"
+	animationInner.addClass "transitioner__wrapper--s12"
 	tl
-		.to animationCover, 1, coverAnim.to
+		#.to animationCover, 1, coverAnim.to
 		.to {val : 0}, .5,
 			val : 1
 			onCompleteParams : ['{self}']
-			delay : .05
+			#delay : .05
 			onComplete : ->
 				#closeBlocks $rootScope.transitionerSize
 				$timeout ->
@@ -93,7 +97,9 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 	total = element.attr 'data-item-total'
 	size = element.attr 'data-item-size'
 	animationInner.addClass "transitioner__wrapper--s12"
-	TweenMax.set animationCover,
+	# TweenMax.set animationCover,
+	# 	backgroundImage : "url(#{cover})"
+	TweenMax.set animationInner,
 		backgroundImage : "url(#{cover})"
 	animationDiv.addClass 'transitioner--flex'
 	if item is "0"
@@ -106,13 +112,30 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 	rect = animationDiv[0].getBoundingClientRect()
 	$rootScope.transitionerSize = size
 	$rootScope.carouselIndex = item
-	TweenMax.set animationCover,
-		width : rect.width
+	# TweenMax.set animationCover,
+	# 	width : rect.width
 	tl = new TimelineMax()
+	# coverAnim = 
+	# 	to :
+	# 		width : "100%"
+	# 		delay : .5
+	# 		# onStart : ->
+	# 		# 	$timeout ->
+	# 		# 		deferred.resolve on
+	# 		# 		return
+	# 		# 	, 0
+	# 		onComplete : ->
+	# 			$timeout ->
+	# 				deferred.resolve on
+	# 				return
+	# 			, 0
+	# 			#animationDiv.removeClass 'transitioner--flex-dark'
+	# 			return
+	# tl
+	# 	.to animationCover, 1, coverAnim.to
 	coverAnim = 
 		to :
-			width : "100%"
-			delay : .5
+			index : 10
 			# onStart : ->
 			# 	$timeout ->
 			# 		deferred.resolve on
@@ -126,7 +149,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 				#animationDiv.removeClass 'transitioner--flex-dark'
 				return
 	tl
-		.to animationCover, 1, coverAnim.to
+		.to {index:0}, 1, coverAnim.to
 		# .to {val : 0}, .5,
 		# 	val : 1
 		# 	onCompleteParams : ['{self}']

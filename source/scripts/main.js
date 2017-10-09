@@ -65276,6 +65276,7 @@ module.exports = function($rootScope, $timeout, $state) {
           }, {
             yPercent: toY,
             ease: Circ.easeOut,
+            delay: .25,
             onComplete: function() {
               $timeout(function() {
                 done();
@@ -65373,6 +65374,7 @@ module.exports = function($rootScope, $timeout, $state) {
           }, {
             yPercent: toY,
             ease: Circ.easeOut,
+            delay: .25,
             onComplete: function() {
               $timeout(function() {
                 $rootScope.isLeaving = false;
@@ -65861,6 +65863,7 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
   var mask;
   return mask = {
     link: function(scope, element) {
+      scope.onOff = false;
       scope.moveMask = function(evt, id) {
         var body, docEl, el, hRatio, moveX, moveY, rect, scrollLeft, scrollTop, size, startX, startY, wRatio;
         body = document.body;
@@ -65882,11 +65885,9 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
         startY = element[0].getBoundingClientRect().top + scrollTop;
         moveX = evt.pageX;
         moveY = evt.pageY;
-        TweenMax.to(id, .5, {
-          attr: {
-            cx: ~~((moveX - startX) * wRatio),
-            cy: ~~((moveY - startY) * hRatio)
-          }
+        TweenMax.to(id + " .light__circle", .5, {
+          x: ~~((moveX - startX) * wRatio),
+          y: ~~((moveY - startY) * hRatio)
         });
       };
     }
@@ -66929,7 +66930,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   total = element.attr('data-item-total');
   size = element.attr('data-item-size');
   animationInner.addClass("transitioner__wrapper--s" + size);
-  TweenMax.set(animationCover, {
+  TweenMax.set(animationInner, {
     backgroundImage: "url(" + cover + ")"
   });
   animationDiv.addClass('transitioner--flex');
@@ -66952,12 +66953,13 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
       }
     }
   };
-  tl.to(animationCover, 1, coverAnim.to).to({
+  animationInner.removeClass("transitioner__wrapper--s" + size);
+  animationInner.addClass("transitioner__wrapper--s12");
+  tl.to({
     val: 0
   }, .5, {
     val: 1,
     onCompleteParams: ['{self}'],
-    delay: .05,
     onComplete: function() {
       $timeout(function() {
         deferred.resolve(true);
@@ -66996,7 +66998,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
   total = element.attr('data-item-total');
   size = element.attr('data-item-size');
   animationInner.addClass("transitioner__wrapper--s12");
-  TweenMax.set(animationCover, {
+  TweenMax.set(animationInner, {
     backgroundImage: "url(" + cover + ")"
   });
   animationDiv.addClass('transitioner--flex');
@@ -67012,14 +67014,10 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
   rect = animationDiv[0].getBoundingClientRect();
   $rootScope.transitionerSize = size;
   $rootScope.carouselIndex = item;
-  TweenMax.set(animationCover, {
-    width: rect.width
-  });
   tl = new TimelineMax();
   coverAnim = {
     to: {
-      width: "100%",
-      delay: .5,
+      index: 10,
       onComplete: function() {
         $timeout(function() {
           deferred.resolve(true);
@@ -67027,7 +67025,9 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
       }
     }
   };
-  tl.to(animationCover, 1, coverAnim.to);
+  tl.to({
+    index: 0
+  }, 1, coverAnim.to);
   animationInner.removeClass("transitioner__wrapper--s12");
   animationInner.addClass("transitioner__wrapper--s" + size);
   return deferred.promise;

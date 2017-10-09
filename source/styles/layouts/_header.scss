@@ -73,11 +73,11 @@
 		right: 0;
 		z-index: 9993;
 		background-color: $w;
-		//content: '';
+		content: '';
 		position: fixed;
 		opacity: 0;
 		visibility: hidden;
-		height: em(90px);
+		height: em(80px);
 		transition: {
 			property: opacity, visibility;
 			duration: $speed;
@@ -85,7 +85,7 @@
 	}
 	.white & {
 		&:before {
-			opacity: .5;
+			opacity: 1;
 			visibility: visible
 		}
 	}
@@ -329,7 +329,10 @@
 	align-items: center;
 	align-content: center;
 	&__item {
-		min-width: $f/2;
+		width: $f;
+		@include breakpoint() {
+			width: $f/2;
+		}
 		@extend %menu_move;
 		@include normalize_padding;
 	}
@@ -393,6 +396,7 @@
 
 .breadcrumbs {
 	//position: fixed;
+	display: none;
 	position: absolute;
 	font-weight: 200;
 	top: 0;
@@ -426,6 +430,9 @@
 		.white & {
 			color: $dark-color;
 		}
+	}
+	@include breakpoint() {
+		display: inherit;
 	}
 }
 

@@ -14,32 +14,32 @@
 	.desktop & {
 		transition: transform $speed*1.25;
 		overflow: hidden;
-		.section__cell--even & {
-			transform: translate3d($f*-1, 0, 0);
-		}	
-		.section__cell--odd & {
+	}
+	.desktop .section__cell--even & {
+		transform: translate3d($f*-1, 0, 0);
+	}	
+	.desktop .section__cell--odd & {
+		transform: translate3d($f*1, 0, 0);
+	}
+	.desktop .section--active & {
+		transform: translate3d(0, 0, 0);
+	}
+	.desktop .section__cell--text & {
+		transition-delay: $speed*0.6;
+	}
+	> * {
+		transition: transform $speed*1.25;
+		.desktop .section__cell--even & {
 			transform: translate3d($f*1, 0, 0);
+		}	
+		.desktop .section__cell--odd & {
+			transform: translate3d($f*-1, 0, 0);
 		}
-		.section--active & {
+		.desktop .section--active & {
 			transform: translate3d(0, 0, 0);
 		}
-		.section__cell--text & {
+		.desktop .section__cell--text & {
 			transition-delay: $speed*0.6;
-		}
-		> * {
-			transition: transform $speed*1.25;
-			.section__cell--even & {
-				transform: translate3d($f*1, 0, 0);
-			}	
-			.section__cell--odd & {
-				transform: translate3d($f*-1, 0, 0);
-			}
-			.section--active & {
-				transform: translate3d(0, 0, 0);
-			}
-			.section__cell--text & {
-				transition-delay: $speed*0.6;
-			}
 		}
 	}
 }
@@ -70,7 +70,25 @@
 	&__content {
 		@include grow('lg');
 		position: relative;
-		@extend %scale;
+		&:not(.section__content--simple){ 
+			@extend %scale;
+		}
+		&--simple {
+			.desktop & {
+				transition: transform $speed*1.25 ceaser($easeOutBack), opacity $speed*1.25;
+				opacity: 0;
+			}
+			.desktop .section__cell--odd & {
+				transform: translate3d($p*4, 0, 0);
+			}	
+			.desktop .section__cell--even & {
+				transform: translate3d($p*-4, 0, 0);
+			}
+			.desktop .section--active & {
+				transform: translate3d(0, 0, 0);
+				opacity: 1;
+			}
+		}
 	}
 	&__text, &__link, &__sign {
 		@include grow('md', 'top');

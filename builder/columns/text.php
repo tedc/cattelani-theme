@@ -1,4 +1,9 @@
-<div class="section__content section__content--grow-lg">
+<?php $simple = '';
+	if(get_sub_field('random_quote') || get_sub_field('title_size') == 'section__title section__title--giant' || get_sub_field('col_sign')) {
+		$simple = ' section__content--simple';
+	}
+?>
+<div class="section__content section__content--grow-lg<?php echo $simple; ?>">
 	<?php if(get_sub_field('random_quote')) :
 	include(locate_template( 'builder/columns/aforisma.php', false, true ));
 	else :?>

@@ -3,9 +3,13 @@
 	<h3 class="successes__title successes__title--big-lighter"><?php the_sub_field('titolo_successi'); ?></h3>
 	<?php endif; ?>
 	<div class="successes__items successes__items--grid<?php echo (get_sub_field('inverti_successi')) ? ' successes__items--grid-inverted' : ''; ?>"<?php scrollmagic('"triggerHook":0.4,"class":"successes__items--active","reverse":false'); ?>>
-		<?php $image = get_sub_field('immagine_successi'); ?>
+		<?php 
+		$image = get_sub_field('immagine_successi');
+		$horse = get_sub_field('cavallo_successi');
+		?>
 		<div class="successes__cell successes__cell--image successes__cell--s6" ng-style="{'background-image':'url(<?php echo wp_get_attachment_image_src($image['ID'], 'full')[0]; ?>'}">
 			<?php echo wp_get_attachment_image($image['ID'], 'large'); ?>
+			<div class="success__cover" ng-style="{backgroundImage:'url(<?php echo wp_get_attachment_image_src($horse['ID'], 'full')[0]; ?>'}"></div>
 		</div>
 		<div class="successes__cell successes__cell--grow-lg successes__cell--content successes__cell--s6">
 			<?php if(get_sub_field('testo_successi')) : ?>

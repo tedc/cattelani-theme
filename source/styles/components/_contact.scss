@@ -8,9 +8,9 @@
 		}
 	}
 	&__cell {
-		@include breakpoint() {
-			width: auto !important;
-		}
+		// @include breakpoint() {
+		// 	width: 50% !important;
+		// }
 		&--content {
 			transform: translate3d($p*-2, 0, 0);
 			p {

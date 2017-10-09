@@ -78,11 +78,19 @@
 	&__wrapper {
 		overflow: hidden;
 		position: relative;
-		transition: $speed width, $speed height;
+		//transition: $speed width, $speed height;
+		transition: $speed*2.25 width;
 		backface-visibility: hidden;
 		perspective: 1000px;
 		transform-style: preserve-3d;
 		z-index: 1;
+		@include cover;
+		// .transitioner--flex-start & {
+		// 	background-position: left center;
+		// }
+		// .transitioner--flex-start & {
+		// 	background-position: right center;
+		// }
 	}
 	&__cover {
 		left: 50%;

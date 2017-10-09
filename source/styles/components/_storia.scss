@@ -196,8 +196,8 @@
 	}
 	.storia__nav {
 		position: sticky;
-		z-index: 25;
-		top: em($p*4);
+		z-index: 9999;
+		top: 0;
 	}
 }
 .type-anni {

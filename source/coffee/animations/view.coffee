@@ -50,6 +50,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							ease: Circ.easeOut
+							delay: .25
 							onComplete : ->
 								$timeout ->
 									done()
@@ -131,6 +132,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							ease: Circ.easeOut
+							delay: .25
 							onComplete : ->
 								$timeout ->
 									$rootScope.isLeaving = off

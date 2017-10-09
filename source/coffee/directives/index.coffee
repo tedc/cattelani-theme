@@ -61,6 +61,7 @@ catellani
 	.directive 'ngLightMask', ->
 		mask =
 			link : (scope, element)->
+				scope.onOff = off
 				scope.moveMask = (evt, id)->
 					body = document.body
 					docEl = document.documentElement
@@ -80,10 +81,12 @@ catellani
 					startY = element[0].getBoundingClientRect().top + scrollTop
 					moveX = evt.pageX
 					moveY = evt.pageY
-					TweenMax.to id, .5,
-						attr :
-							cx : ~~((moveX - startX ) * wRatio)
-							cy : ~~((moveY - startY) * hRatio)
+					TweenMax.to "#{id} .light__circle", .5,
+						# attr :
+						# 	cx : ~~((moveX - startX ) * wRatio)
+						# 	cy : ~~((moveY - startY) * hRatio)
+						x : ~~((moveX - startX ) * wRatio)
+						y : ~~((moveY - startY) * hRatio)
 					return
 				return
 	.directive 'ngZoom', ['ScrollbarService', '$timeout', (ScrollbarService, $timeout)->

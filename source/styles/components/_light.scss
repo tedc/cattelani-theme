@@ -51,6 +51,15 @@
 	&__text {
 		@include grow('md');
 	}
+	&__image {
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility $speed/2, opacity $speed/2;
+		.light--on & {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
 	&__circle {
 		visibility: hidden;
 		opacity: 0;
