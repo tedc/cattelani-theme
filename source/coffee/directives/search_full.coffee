@@ -67,6 +67,7 @@ module.exports = ->
 					return
 				closeAnim callback
 				return
+			$scope.orderValue = if $scope.order is '+title' then 'A-Z' else 'Z-A'
 			$scope.clear = (s)->
 				return if $scope.isChanging
 				callback = ->

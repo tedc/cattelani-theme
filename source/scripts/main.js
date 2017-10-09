@@ -66284,6 +66284,7 @@ module.exports = function() {
           };
           closeAnim(callback);
         };
+        $scope.orderValue = $scope.order === '+title' ? 'A-Z' : 'Z-A';
         $scope.clear = function(s) {
           var callback;
           if ($scope.isChanging) {
