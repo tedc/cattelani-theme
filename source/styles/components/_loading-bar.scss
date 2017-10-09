@@ -1,0 +1,33 @@
+#loading-bar {
+	pointer-events: none;
+	transition: $speed opacity;
+	&.ng-enter, &.ng-leave.ng-leave-active {
+		opacity: 0;
+	}
+	&.ng-leave, &.ng-enter.ng-enter-active {
+		opacity: 1;
+	}
+	.bar {
+		position: fixed;
+		z-index: 10002;
+		height: $p/4;
+		width: $f;
+		left: 0;
+		top: 0;
+		background-color: #f6f7ea;
+		transition: $speed width;
+		.admin-bar.logged-in & {
+			margin-top: 32px;
+		}
+	}
+	.peg {
+		background-color: #f6f7ea;
+		box-shadow: 0 0 $p #f6f7ea;
+		position: absolute;
+		top: 0;
+		right: 0;
+		border-radius: $f;
+		width: $p/2;
+		height: $p/4;
+	}
+}
