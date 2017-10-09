@@ -63,6 +63,7 @@
 			position: relative;
 			min-height: 75vw;
 			z-index: 2;
+			position: relative;
 			@include cover(left bottom, contain);
 			img {
 				display: none;
@@ -84,14 +85,21 @@
 				transform: translate3d(0, 0, 0);
 			}
 			.successes__cover {
-				visibility: hidden;
-				opacity: 0;
+				@include full;
 				transition: $speed visibility, opacity $speed;
+				&--hover {
+					visibility: hidden;
+					opacity: 0;
+				}
 			}
 			&:hover {
 				.successes__cover {
-					visibility: visible;
-					opacity: 1;
+					visibility: hidden;
+					opacity: 0;
+					&--hover {
+						visibility: visible;
+						opacity: 1;
+					}
 				}
 			}
 		}

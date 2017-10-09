@@ -7,9 +7,10 @@
 		$image = get_sub_field('immagine_successi');
 		$horse = get_sub_field('cavallo_successi');
 		?>
-		<div class="successes__cell successes__cell--image successes__cell--s6" ng-style="{'background-image':'url(<?php echo wp_get_attachment_image_src($image['ID'], 'full')[0]; ?>'}">
+		<div class="successes__cell successes__cell--image successes__cell--s6">
 			<?php echo wp_get_attachment_image($image['ID'], 'large'); ?>
-			<div class="successes__cover" ng-style="{backgroundImage:'url(<?php echo wp_get_attachment_image_src($horse['ID'], 'full')[0]; ?>'}"></div>
+			<div class="successes__cover"  ng-style="{'background-image':'url(<?php echo wp_get_attachment_image_src($image['ID'], 'full')[0]; ?>'}">
+			<div class="successes__cover successes__cover--hover" ng-style="{backgroundImage:'url(<?php echo wp_get_attachment_image_src($horse['ID'], 'full')[0]; ?>'}"></div>
 		</div>
 		<div class="successes__cell successes__cell--grow-lg successes__cell--content successes__cell--s6">
 			<?php if(get_sub_field('testo_successi')) : ?>
