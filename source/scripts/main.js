@@ -66275,6 +66275,9 @@ module.exports = function() {
           };
           closeAnim(callback);
         };
+        $scope.changOrder = function() {
+          closeAnim();
+        };
         $scope.clear = function(s) {
           var callback;
           if ($scope.isChanging) {
