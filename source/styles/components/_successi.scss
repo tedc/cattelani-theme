@@ -84,7 +84,7 @@
 				opacity: 1;
 				transform: translate3d(0, 0, 0);
 			}
-			.successes__cover {
+			.successes__contain {
 				@include cover($pos: left bottom, $size: contain);
 				@include full;
 				transition: $speed visibility, opacity $speed;
@@ -94,7 +94,7 @@
 				}
 			}
 			&:hover {
-				.successes__cover {
+				.successes__contain {
 					visibility: hidden;
 					opacity: 0;
 					&--hover {
