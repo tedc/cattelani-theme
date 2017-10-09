@@ -25,10 +25,10 @@
 		background-color: #f6f7ea;
 		box-shadow: 0 0 $p/4 #f6f7ea;
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: -1px;
+		right: ($p/10)*-2;
 		border-radius: $f;
 		width: $p/2;
-		height: $p/10;
+		height: $p/5;
 	}
 }
