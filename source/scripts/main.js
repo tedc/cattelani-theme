@@ -67071,7 +67071,7 @@ exports.prev = function($rootScope, $timeout, $q) {
       }
     });
   });
-  console.log($rootScope.prevElement[0].getBoundingClientRect());
+  console.log($rootScope.prevElement[0].getBoundingClientRect(), document.body.clientHeight, window.innerHeight);
   controller.scrollTo($rootScope.prevElement[0]);
   return deferred.promise;
 };
