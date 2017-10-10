@@ -56,4 +56,14 @@
 			}
 		}
 	}
+	&__cover {
+		top: 50%;
+		transform: translate3d(0, -50%, 0);
+		transition: height $speed*1.75;
+	}
+	&:hover:not(.next--fixed) {
+		.next__cover {
+			height: $f*2;
+		}
+	}
 }

@@ -4,7 +4,7 @@
 	$next = (is_singular('post')) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
 	if($next) :
 ?>
-<a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element  href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})" ng-mouseenter="padding_class = 'next--grow-double'" ng-mouseleave="padding_class =''" ng-class="padding_class">
+<a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})">
 	<span class="next__cover" ng-style="{'background-image':'url(<?php echo get_the_post_thumbnail_url($next->ID, 'full'); ?>)'}"></span>
 	<span class="next__container next__container--shrink-fw next__container--grow-md">
 	<?php if(!is_singular('lampade')) : ?>
