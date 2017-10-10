@@ -703,6 +703,15 @@
 			}
 		}
 	}
+	[class*="-gray"] + & {
+		.swiper-wrapper {
+			.desktop & {
+				&:before, &:after {
+					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
+				}
+			}
+		}
+	}
 	&--active {
 		.swiper-wrapper {
 			.desktop & {
