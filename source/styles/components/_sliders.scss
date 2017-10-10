@@ -688,18 +688,17 @@
 				height: $f;
 				position: absolute;
 				content: '';
-				top: 0;
-				transition: transform $speed*2.25;
+				transition: height $speed*2.25;
 				background-color: $w;
 				z-index: 5000;
 			}
 			&:before {
 				left: 0;
-				transform-origin: center top;
+				bottom: 0;
 			}
 			&:after {
 				left: 50%;
-				transform-origin: center bottom;
+				top: 0;
 			}
 		}
 	}
@@ -716,7 +715,7 @@
 		.swiper-wrapper {
 			.desktop & {
 				&:before, &:after {
-					transform: scaleY(0) translateZ(0);
+					height: 0%;
 				}
 			}
 		}
