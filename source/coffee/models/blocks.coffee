@@ -80,7 +80,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 					deferred.resolve on
 					return
 				return
-	TweenMax.to animationCover, .5, coverAnim.to
+	#TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
 exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar)->
 	body = angular.element document.body

@@ -66979,7 +66979,6 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
       });
     }
   });
-  TweenMax.to(animationCover, .5, coverAnim.to);
   return deferred.promise;
 };
 
