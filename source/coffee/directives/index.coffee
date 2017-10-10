@@ -30,7 +30,13 @@ catellani
 			restrict : 'A'
 			link : (scope, element, attr)->
 				element.on 'click', ->
+					rect = element[0].getBoundingClientRect()
 					element.addClass 'next--active'
+					top = rect.top
+					bottom = window.innerHeight - rect.bottom
+					TweenMax.set element,
+						top : top
+						bottom : bottom
 					$rootScope.prevElement = element
 					return
 				return

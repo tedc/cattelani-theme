@@ -65820,7 +65820,15 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
       restrict: 'A',
       link: function(scope, element, attr) {
         element.on('click', function() {
+          var bottom, rect, top;
+          rect = element[0].getBoundingClientRect();
           element.addClass('next--active');
+          top = rect.top;
+          bottom = window.innerHeight - rect.bottom;
+          TweenMax.set(element, {
+            top: top,
+            bottom: bottom
+          });
           $rootScope.prevElement = element;
         });
       }
@@ -67044,7 +67052,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 };
 
 exports.prev = function($rootScope, $timeout, $q) {
-  var body, bottom, deferred, height, rect, tl, top;
+  var body, deferred, height, tl;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
@@ -67053,13 +67061,9 @@ exports.prev = function($rootScope, $timeout, $q) {
   }
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 32 : 0;
-  rect = $rootScope.prevElement[0].getBoundingClientRect();
-  top = rect.top;
-  bottom = window.innerHeight - rect.bottom;
-  tl.fromTo($rootScope.prevElement, .75, {
-    top: top,
-    bottom: bottom
-  }, {
+  tl.set('body', {
+    className: '-=white'
+  }).to($rootScope.prevElement, .75, {
     top: height,
     bottom: 0,
     onComplete: function() {
