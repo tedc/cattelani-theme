@@ -66920,8 +66920,8 @@ closeBlocks = function(size) {
   });
 };
 
-exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize) {
-  var body, cover, coverAnim, deferred, element, item, prev, rect, size, tl, total;
+exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBarProvider) {
+  var body, cover, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
   body.addClass('is-transitioner');
   deferred = $q.defer();
@@ -66958,25 +66958,20 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   if (item === total) {
     animationDiv.addClass('transitioner--flex-end');
   }
-  rect = animationDiv[0].getBoundingClientRect();
   $rootScope.transitionerSize = 12;
   $rootScope.carouselIndex = item;
   tl = new TimelineMax();
-  coverAnim = {
-    to: {
-      width: rect.width,
-      onComplete: function() {
-        animationInner.removeClass("transitioner__wrapper--s" + size);
-        animationInner.addClass("transitioner__wrapper--s12");
-      }
-    }
-  };
   animationInner.removeClass("transitioner__wrapper--s" + size);
   animationInner.addClass("transitioner__wrapper--s12");
   tl.to({
     val: 0
   }, .5, {
     val: 1,
+    onStart: function() {
+      $timeout(function() {
+        cfpLoadingBarProvider.complete();
+      });
+    },
     onCompleteParams: ['{self}'],
     onComplete: function() {
       $timeout(function() {
@@ -66988,8 +66983,8 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   return deferred.promise;
 };
 
-exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize) {
-  var body, cover, coverAnim, deferred, element, item, perc, prev, ratio, rect, size, tl, total;
+exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBarProvider) {
+  var body, cover, coverAnim, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
   body.addClass('is-transitioner');
   $rootScope.cantStart = false;
@@ -67027,15 +67022,17 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
     animationDiv.addClass('transitioner--flex-end');
   }
   animationDiv.addClass('transitioner--flex-dark');
-  ratio = 12 / size;
-  perc = 100 * ratio;
-  rect = animationDiv[0].getBoundingClientRect();
   $rootScope.transitionerSize = size;
   $rootScope.carouselIndex = item;
   tl = new TimelineMax();
   coverAnim = {
     to: {
       index: 10,
+      onStart: function() {
+        $timeout(function() {
+          cfpLoadingBarProvider.complete();
+        });
+      },
       onComplete: function() {
         $timeout(function() {
           deferred.resolve(true);
@@ -67066,6 +67063,7 @@ exports.prev = function($rootScope, $timeout, $q) {
   }).to($rootScope.prevElement, .75, {
     top: height,
     bottom: 0,
+    delay: .5,
     onComplete: function() {
       $rootScope.prevElement.addClass('next--fixed');
       $timeout(function() {
@@ -67265,7 +67263,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require(182).single],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBarProvider", require(182).single],
       ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "$scope", "data", require(185)]
@@ -67301,7 +67299,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", require(182).collection],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", "cfpLoadingBarProvider", require(182).collection],
       ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "data", "$scope", require(187)]

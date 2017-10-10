@@ -12,7 +12,7 @@
 }
 %scale {
 	.desktop & {
-		transition: transform $speed*1.25;
+		transition: transform $speed*2.25;
 		overflow: hidden;
 	}
 	.desktop .section__cell--even & {
@@ -25,10 +25,10 @@
 		transform: translate3d(0, 0, 0);
 	}
 	.desktop .section__cell--text & {
-		transition-delay: $speed*0.6;
+		transition-delay: $speed*1.2;
 	}
 	> * {
-		transition: transform $speed*1.25;
+		transition: transform $speed*2.25;
 		.desktop .section__cell--even & {
 			transform: translate3d($f*1, 0, 0);
 		}	
@@ -39,7 +39,7 @@
 			transform: translate3d(0, 0, 0);
 		}
 		.desktop .section__cell--text & {
-			transition-delay: $speed*0.6;
+			transition-delay: $speed*1.2;
 		}
 	}
 }
@@ -75,7 +75,7 @@
 		}
 		&--simple {
 			.desktop & {
-				transition: transform $speed*1.25 ceaser($easeOutBack), opacity $speed*1.25;
+				transition: transform $speed*2.25 ceaser($easeOutBack), opacity $speed*2.25;
 				opacity: 0;
 			}
 			.desktop .section__cell--odd & {

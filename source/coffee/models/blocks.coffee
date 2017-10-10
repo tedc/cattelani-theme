@@ -11,7 +11,7 @@ closeBlocks = (size)->
 		clearProps : 'width'
 	return
 	
-exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize)->
+exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBarProvider)->
 	body = angular.element document.body
 	body.addClass 'is-transitioner'
 	deferred = $q.defer()
@@ -45,23 +45,33 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 		animationDiv.addClass 'transitioner--flex-start'
 	if item is total
 		animationDiv.addClass 'transitioner--flex-end'
-	rect = animationDiv[0].getBoundingClientRect()
+	#rect = animationDiv[0].getBoundingClientRect()
 	$rootScope.transitionerSize = 12
 	$rootScope.carouselIndex = item
 	tl = new TimelineMax()
-	coverAnim = 
-		to :
-			width : rect.width
-			onComplete : ->
-				animationInner.removeClass "transitioner__wrapper--s#{size}"
-				animationInner.addClass "transitioner__wrapper--s12"
-				return
+	# coverAnim = 
+	# 	to :
+	# 		width : rect.width
+	# 		onStart : ->
+	# 			$timeout ->
+	# 				cfpLoadingBarProvider.complete()
+	# 				return
+	# 			return
+	# 		onComplete : ->
+	# 			animationInner.removeClass "transitioner__wrapper--s#{size}"
+	# 			animationInner.addClass "transitioner__wrapper--s12"
+	# 			return
 	animationInner.removeClass "transitioner__wrapper--s#{size}"
 	animationInner.addClass "transitioner__wrapper--s12"
 	tl
 		#.to animationCover, 1, coverAnim.to
 		.to {val : 0}, .5,
 			val : 1
+			onStart : ->
+				$timeout ->
+					cfpLoadingBarProvider.complete()
+					return
+				return
 			onCompleteParams : ['{self}']
 			#delay : .05
 			onComplete : ->
@@ -72,7 +82,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 				return
 	TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
-exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize)->
+exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBarProvider)->
 	body = angular.element document.body
 	body.addClass 'is-transitioner'
 	$rootScope.cantStart = off
@@ -107,9 +117,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 	if item is total
 		animationDiv.addClass 'transitioner--flex-end'
 	animationDiv.addClass 'transitioner--flex-dark'
-	ratio = 12 / size
-	perc = 100 * ratio
-	rect = animationDiv[0].getBoundingClientRect()
+	#rect = animationDiv[0].getBoundingClientRect()
 	$rootScope.transitionerSize = size
 	$rootScope.carouselIndex = item
 	# TweenMax.set animationCover,
@@ -141,6 +149,11 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 			# 		deferred.resolve on
 			# 		return
 			# 	, 0
+			onStart : ->
+				$timeout ->
+					cfpLoadingBarProvider.complete()
+					return
+				return
 			onComplete : ->
 				$timeout ->
 					deferred.resolve on
