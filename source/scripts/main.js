@@ -67054,6 +67054,7 @@ exports.prev = function($rootScope, $timeout, $q) {
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 'calc(100vh - 32px)' : '100vh';
   controller.scrollTo(function(newPos) {
+    console.log(newPos);
     tl.set('body', {
       className: '-=white'
     }).to(window, .5, {

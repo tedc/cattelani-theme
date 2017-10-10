@@ -173,6 +173,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 	tl = new TimelineMax()
 	height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
 	controller.scrollTo (newPos)->
+		console.log newPos
 		tl
 			.set 'body',
 				className : '-=white'
