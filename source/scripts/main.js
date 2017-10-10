@@ -67044,7 +67044,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 };
 
 exports.prev = function($rootScope, $timeout, $q) {
-  var body, deferred, height, tl;
+  var body, deferred, tl;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
@@ -67052,7 +67052,6 @@ exports.prev = function($rootScope, $timeout, $q) {
     return deferred.promise;
   }
   tl = new TimelineMax();
-  height = body.hasClass('admin-bar') ? 'calc(100vh - 32px)' : '100vh';
   controller.scrollTo(function(newPos) {
     tl.set('body', {
       className: '-=white'
@@ -67061,7 +67060,7 @@ exports.prev = function($rootScope, $timeout, $q) {
         y: newPos
       }
     }).to($rootScope.prevElement, .5, {
-      height: height,
+      height: '100vh',
       onComplete: function() {
         $rootScope.prevElement.addClass('next--fixed');
         return $timeout(function() {

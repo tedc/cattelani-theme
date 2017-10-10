@@ -171,7 +171,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 		deferred.resolve on 
 		return deferred.promise
 	tl = new TimelineMax()
-	height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
+	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
 	controller.scrollTo (newPos)->
 		tl
 			.set 'body',
@@ -180,7 +180,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 				scrollTo :
 					y : newPos
 			.to $rootScope.prevElement, .5,
-				height : height
+				height : '100vh'
 				onComplete : ->
 					$rootScope.prevElement.addClass 'next--fixed'
 					$timeout ->
