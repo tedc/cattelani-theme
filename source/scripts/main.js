@@ -66961,14 +66961,14 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   $rootScope.transitionerSize = 12;
   $rootScope.carouselIndex = item;
   tl = new TimelineMax();
-  animationInner.removeClass("transitioner__wrapper--s" + size);
-  animationInner.addClass("transitioner__wrapper--s12");
   tl.to({
     val: 0
   }, .5, {
     val: 1,
     onStart: function() {
       $timeout(function() {
+        animationInner.removeClass("transitioner__wrapper--s" + size);
+        animationInner.addClass("transitioner__wrapper--s12");
         cfpLoadingBar.complete();
       });
     },
@@ -67029,6 +67029,8 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
       index: 10,
       onStart: function() {
         $timeout(function() {
+          animationInner.removeClass("transitioner__wrapper--s12");
+          animationInner.addClass("transitioner__wrapper--s" + size);
           cfpLoadingBar.complete();
         });
       },
@@ -67042,8 +67044,6 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
   tl.to({
     index: 0
   }, 1, coverAnim.to);
-  animationInner.removeClass("transitioner__wrapper--s12");
-  animationInner.addClass("transitioner__wrapper--s" + size);
   return deferred.promise;
 };
 

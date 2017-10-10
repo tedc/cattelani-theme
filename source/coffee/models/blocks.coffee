@@ -61,14 +61,14 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	# 			animationInner.removeClass "transitioner__wrapper--s#{size}"
 	# 			animationInner.addClass "transitioner__wrapper--s12"
 	# 			return
-	animationInner.removeClass "transitioner__wrapper--s#{size}"
-	animationInner.addClass "transitioner__wrapper--s12"
 	tl
 		#.to animationCover, 1, coverAnim.to
 		.to {val : 0}, .5,
 			val : 1
 			onStart : ->
 				$timeout ->
+					animationInner.removeClass "transitioner__wrapper--s#{size}"
+					animationInner.addClass "transitioner__wrapper--s12"
 					cfpLoadingBar.complete()
 					return
 				return
@@ -151,6 +151,8 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 			# 	, 0
 			onStart : ->
 				$timeout ->
+					animationInner.removeClass "transitioner__wrapper--s12"
+					animationInner.addClass "transitioner__wrapper--s#{size}"
 					cfpLoadingBar.complete()
 					return
 				return
@@ -174,8 +176,6 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		# 			$rootScope.isAnim = off
 		# 			return
 		# 		return
-	animationInner.removeClass "transitioner__wrapper--s12"
-	animationInner.addClass "transitioner__wrapper--s#{size}"
 	return deferred.promise
 exports.prev = ($rootScope, $timeout, $q)->
 	body = angular.element document.body
