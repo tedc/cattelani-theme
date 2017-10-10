@@ -190,5 +190,6 @@ exports.prev = ($rootScope, $timeout, $q)->
 						return
 					, 0
 		return
+	console.log $rootScope.prevElement[0].getBoundingClientRect()
 	controller.scrollTo $rootScope.prevElement[0]
 	return deferred.promise
