@@ -164,4 +164,48 @@
 			visibility: visible;
 		}
 	}
+	&__select--filled {
+		.icon-select {
+			opacity: 1 !important;
+		}
+	}
+	&__result{
+		&s {
+			font-weight: 300;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-top: em($p*2);
+		}
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		span {
+			padding-right: em($p/4);
+		}
+		strong {
+			font-weight: 400;
+			color: $dark-color;
+			display: inline-flex;
+			align-items: center;
+			.icon-close {
+				width: 14px;
+				height: 14px;
+				line-height: 14px;
+				border-radius: 14px;
+				text-align: center;
+				position: relative;
+				top: 1px;
+				background-color: $main-color;
+				color: $w;
+				font-size: 6px;
+				vertical-align: middle;
+				margin-left: $p/4;
+				transition: background-color $speed;
+				&:hover {
+					background-color: $dark-color;
+				}
+			}
+		}
+	}
 }

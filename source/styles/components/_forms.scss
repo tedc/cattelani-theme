@@ -96,7 +96,8 @@
 		background-color: $w;
 	}
 	[class*="--selected"] {
-		color: $dark-gray;
+		color: $dark-color;
+		font-weight: 400;
 	}
 }
 [class*="__send"] {

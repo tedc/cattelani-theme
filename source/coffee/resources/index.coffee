@@ -51,16 +51,17 @@ catellani
 	]
 	.filter 'taxSearch', ->
 		(items, search)->
-			filtered = []
-			angular.forEach items, (item)->
-				return if angular.equals({}, search)
+			if angular.equals {}, search
+				return items
+			filtered = items.filter (arrayItem)->
+				match = off
 				for k, v of search
+					if not arrayItem.hasOwnProperty(k) or k is '$$hashKey'
+						continue
 					if search.hasOwnProperty(k)
-						v = String v
-						toArray = item[k].split(',')
-						if toArray.indexOf( v ) isnt -1	
-							console.log item, toArray, toArray.indexOf v
-							filtered.push item		
-				return
-			filtered = if angular.equals({}, search) then items else filtered
+						regex = new RegExp "\\b(#{v.replace(',', '|')})\\b", 'g'
+						if regex.test( arrayItem[k] )
+							match = on
+							break
+				return match
 			return filtered

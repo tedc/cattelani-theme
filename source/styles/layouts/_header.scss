@@ -78,6 +78,9 @@
 		opacity: 0;
 		visibility: hidden;
 		height: em(80px);
+		.admin-bar.logged-in & {
+			margin-top: 32px;
+		}
 		transition: {
 			property: opacity, visibility;
 			duration: $speed;

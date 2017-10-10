@@ -66223,7 +66223,11 @@ module.exports = function() {
         lang = $attrs.lang;
         $scope.isSelect = {};
         $scope.search = {};
-        $scope.select = {};
+        $scope.select = {
+          collezioni: [],
+          fonti: [],
+          posizioni: []
+        };
         $scope.items = [];
         wrapper = angular.element(document.querySelector('.search__items'));
         $scope.enabled = function(cat, id) {
@@ -66271,37 +66275,64 @@ module.exports = function() {
           });
         };
         $scope.change = function(s, i) {
-          var callback;
+          var callback, selectIndex, val;
           if ($scope.isChanging) {
             return;
           }
           $scope.isSelect[s] = false;
-          $scope.select[s] = i.name;
+          selectIndex = $scope.select[s].indexOf(i.name);
+          if (selectIndex !== -1) {
+            $scope.select[s].splice(selectIndex, 1);
+          } else {
+            $scope.select[s].push(i.name);
+          }
+          val = String(i.id);
           callback = function() {
-            $scope.search[s] = String(i.id);
+            var index, toArray;
+            toArray = $scope.search[s] ? $scope.search[s].split(',') : [];
+            index = toArray.indexOf(val);
+            if (index !== -1) {
+              toArray.splice(index, 1);
+            } else {
+              toArray.push(val);
+            }
+            if (toArray.length > 0) {
+              $scope.search[s] = toArray.join();
+            } else {
+              delete $scope.search[s];
+            }
             $rootScope.$broadcast('scrollBarUpdate');
           };
           closeAnim(callback);
         };
+        $scope.order = '+title';
+        $scope.orderValue = function() {
+          var value;
+          return value = $scope.order === '+title' ? 'A-Z' : 'Z-A';
+        };
         $scope.isOrder = false;
-        $scope.changeOrder = function() {
+        $scope.changeOrder = function(val) {
           var callback;
-          callback = function(val) {
-            $scope.isOrder = false;
-            $scope.order = val;
+          callback = function() {
+            $timeout(function() {
+              $scope.isOrder = false;
+              $scope.order = val;
+            });
           };
           closeAnim(callback);
         };
-        $scope.orderValue = $scope.order === '+title' ? 'A-Z' : 'Z-A';
-        $scope.clear = function(s) {
-          var callback;
+        $scope.clear = function(name) {
+          var item;
           if ($scope.isChanging) {
             return;
           }
-          callback = function() {
-            delete $scope.search[s];
-          };
-          closeAnim(callback);
+          item = angular.element(document.querySelector("[data-select='" + name + "']"));
+          $timeout(function() {
+            item.triggerHandler('click');
+          });
+        };
+        $scope.selected = function(s, name) {
+          return $scope.select[s].indexOf(name) !== -1;
         };
         wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
           $scope.collections = res;
@@ -66330,20 +66361,7 @@ module.exports = function() {
           $rootScope.isSearch = true;
         };
         $scope.filtered = function() {
-          if ($filter('filter')($scope.items, $scope.search, $scope.compareTaxes).length <= 0) {
-            return true;
-          } else {
-            return false;
-          }
-        };
-        $scope.compareTaxes = function(actual, expected) {
-          var toArray;
-          if (!angular.equals({}, $scope.search)) {
-            toArray = actual.split(',');
-            return toArray.indexOf(expected) !== -1;
-          } else {
-            return angular.equals(actual, expected);
-          }
+          return $filter('taxSearch')($scope.items, $scope.search, true).length <= 0;
         };
         $scope.$on('search_ended', function() {
           $timeout(function() {
@@ -66902,13 +66920,15 @@ require(188);
 
 
 },{"1":1,"100":100,"105":105,"159":159,"165":165,"171":171,"183":183,"188":188,"2":2,"6":6,"90":90,"91":91,"93":93,"94":94,"96":96,"97":97,"98":98}],182:[function(require,module,exports){
-var animationCover, animationDiv, animationInner, closeBlocks;
+var animationCover, animationDiv, animationInner, closeBlocks, speed;
 
 animationDiv = angular.element(document.querySelector('.transitioner'));
 
 animationInner = angular.element(document.querySelector('.transitioner__wrapper'));
 
 animationCover = angular.element(document.querySelector('.transitioner__cover'));
+
+speed = 0.5 * 2.25;
 
 closeBlocks = function(size) {
   animationDiv.removeClass('transitioner--flex');
@@ -66963,13 +66983,13 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   tl = new TimelineMax();
   tl.to({
     val: 0
-  }, .5, {
+  }, speed, {
     val: 1,
     onStart: function() {
       $timeout(function() {
+        cfpLoadingBar.complete();
         animationInner.removeClass("transitioner__wrapper--s" + size);
         animationInner.addClass("transitioner__wrapper--s12");
-        cfpLoadingBar.complete();
       });
     },
     onCompleteParams: ['{self}'],
@@ -67043,7 +67063,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
   };
   tl.to({
     index: 0
-  }, 1, coverAnim.to);
+  }, speed, coverAnim.to);
   return deferred.promise;
 };
 
@@ -67431,25 +67451,27 @@ catellani.factory('WPAPI', function() {
 ]).filter('taxSearch', function() {
   return function(items, search) {
     var filtered;
-    filtered = [];
-    angular.forEach(items, function(item) {
-      var k, toArray, v;
-      if (angular.equals({}, search)) {
-        return;
-      }
+    if (angular.equals({}, search)) {
+      return items;
+    }
+    filtered = items.filter(function(arrayItem) {
+      var k, match, regex, v;
+      match = false;
       for (k in search) {
         v = search[k];
+        if (!arrayItem.hasOwnProperty(k) || k === '$$hashKey') {
+          continue;
+        }
         if (search.hasOwnProperty(k)) {
-          v = String(v);
-          toArray = item[k].split(',');
-          if (toArray.indexOf(v) !== -1) {
-            console.log(item, toArray, toArray.indexOf(v));
-            filtered.push(item);
+          regex = new RegExp("\\b(" + (v.replace(',', '|')) + ")\\b", 'g');
+          if (regex.test(arrayItem[k])) {
+            match = true;
+            break;
           }
         }
       }
+      return match;
     });
-    filtered = angular.equals({}, search) ? items : filtered;
     return filtered;
   };
 });

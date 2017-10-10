@@ -1,7 +1,7 @@
 animationDiv = angular.element document.querySelector '.transitioner'
 animationInner = angular.element document.querySelector '.transitioner__wrapper'
 animationCover = angular.element document.querySelector '.transitioner__cover'
-	
+speed = 0.5*2.25
 closeBlocks = (size)->
 	animationDiv.removeClass 'transitioner--flex'
 	animationDiv.removeClass 'transitioner--flex-start'
@@ -63,13 +63,13 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	# 			return
 	tl
 		#.to animationCover, 1, coverAnim.to
-		.to {val : 0}, .5,
+		.to {val : 0}, speed,
 			val : 1
 			onStart : ->
 				$timeout ->
+					cfpLoadingBar.complete()
 					animationInner.removeClass "transitioner__wrapper--s#{size}"
 					animationInner.addClass "transitioner__wrapper--s12"
-					cfpLoadingBar.complete()
 					return
 				return
 			onCompleteParams : ['{self}']
@@ -164,7 +164,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 				#animationDiv.removeClass 'transitioner--flex-dark'
 				return
 	tl
-		.to {index:0}, 1, coverAnim.to
+		.to {index:0}, speed, coverAnim.to
 		# .to {val : 0}, .5,
 		# 	val : 1
 		# 	onCompleteParams : ['{self}']

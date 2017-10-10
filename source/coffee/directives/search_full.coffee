@@ -10,7 +10,11 @@ module.exports = ->
 			lang = $attrs.lang
 			$scope.isSelect = {}
 			$scope.search = {}
-			$scope.select = {}
+			$scope.select = {
+				collezioni : []
+				fonti : []
+				posizioni : []
+			}
 			$scope.items = []
 			wrapper = angular.element document.querySelector '.search__items'
 			$scope.enabled = (cat, id)->
@@ -52,30 +56,49 @@ module.exports = ->
 			$scope.change = (s, i)->
 				return if $scope.isChanging
 				$scope.isSelect[s] = false
-				$scope.select[s] = i.name	
+				selectIndex = $scope.select[s].indexOf i.name
+				if selectIndex isnt -1
+					$scope.select[s].splice selectIndex, 1
+				else
+					$scope.select[s].push i.name
+				val = String(i.id)
 				callback = ->
-					$scope.search[s] = String(i.id)
+					toArray = if $scope.search[s] then $scope.search[s].split(',') else []
+					index = toArray.indexOf val
+					if index isnt -1
+						toArray.splice index, 1
+					else
+						toArray.push val
+					if toArray.length > 0
+						$scope.search[s] = toArray.join()
+					else
+						delete $scope.search[s]
 					$rootScope.$broadcast 'scrollBarUpdate'
 					return
 				closeAnim callback
 				return
+			$scope.order = '+title'
+			$scope.orderValue = ->
+				value = if $scope.order is '+title' then 'A-Z' else 'Z-A'
 			$scope.isOrder = off
-			$scope.changeOrder = ->
-				callback =(val) ->
-					$scope.isOrder = off
-					$scope.order = val
-					return
-				closeAnim callback
-				return
-			$scope.orderValue = if $scope.order is '+title' then 'A-Z' else 'Z-A'
-			$scope.clear = (s)->
-				return if $scope.isChanging
+			$scope.changeOrder = (val)->
 				callback = ->
-					delete $scope.search[s]
+					$timeout ->
+						$scope.isOrder = off
+						$scope.order = val
+						return
 					return
 				closeAnim callback
 				return
-			
+			$scope.clear = (name)->
+				return if $scope.isChanging
+				item = angular.element document.querySelector "[data-select='#{name}']"
+				$timeout ->
+					item.triggerHandler 'click'
+					return
+				return
+			$scope.selected = (s, name)->
+				$scope.select[s].indexOf( name ) isnt -1
 			wp
 				.collections()
 				.perPage "#{vars.api.count_collections}"
@@ -111,14 +134,20 @@ module.exports = ->
 				return
 			
 			$scope.filtered = ->
-				return if $filter('filter')($scope.items, $scope.search, $scope.compareTaxes).length <= 0 then on else off
+				return $filter('taxSearch')($scope.items, $scope.search, true).length <= 0
 
-			$scope.compareTaxes = (actual, expected)->
-				if not angular.equals {}, $scope.search
-					toArray = actual.split ','
-					return toArray.indexOf(expected) isnt -1
-				else
-					return angular.equals actual, expected
+			# $scope.compareTaxes = (actual, expected)->
+			# 	console.log actual, expected
+			# 	if not angular.equals {}, $scope.search
+			# 		regex = new RegExp "\\b(#{actual.replace(',', '|')})\\b", 'g'
+			# 		console.log regex.test( expected )
+			# 		return regex.test( expected )
+			# 		return true
+			# 		# for i in expected
+			# 		# 	console.log toArray.indexOf(i) isnt -1, i
+			# 		# 	return toArray.indexOf(i) isnt -1
+			# 	else
+			# 		return angular.equals actual, expected
 			
 			$scope.$on 'search_ended', ->
 				$timeout ->

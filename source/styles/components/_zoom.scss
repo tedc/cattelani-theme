@@ -6,7 +6,7 @@
 		&:before {
 			display: block;
 			content: '';
-			padding-top: em(350px);
+			padding-top: percentage(350px/1286px);
 			width: $f;
 		}
 		&:after {
