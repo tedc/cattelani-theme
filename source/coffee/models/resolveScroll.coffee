@@ -3,6 +3,8 @@ module.exports = ($q, $timeout, $rootScope, cfpLoadingBar)->
 	cfpLoadingBar.start()
 	deferred = $q.defer()
 	if $rootScope.scrollFrom > 0
+		TweenMax.set 'body',
+			className : '-=white'
 		TweenMax.to window, .3,
 			scrollTo :
 				y : 0

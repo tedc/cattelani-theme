@@ -67054,12 +67054,14 @@ exports.prev = function($rootScope, $timeout, $q) {
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 'calc(100vh - 32px)' : '100vh';
   controller.scrollTo(function(newPos) {
-    console.log(newPos);
     tl.set('body', {
       className: '-=white'
     }).to(window, .5, {
       scrollTo: {
         y: newPos
+      },
+      onComplete: function() {
+        console.log(newPos);
       }
     });
   });
@@ -67136,6 +67138,9 @@ module.exports = function($q, $timeout, $rootScope, cfpLoadingBar) {
   cfpLoadingBar.start();
   deferred = $q.defer();
   if ($rootScope.scrollFrom > 0) {
+    TweenMax.set('body', {
+      className: '-=white'
+    });
     TweenMax.to(window, .3, {
       scrollTo: {
         y: 0
