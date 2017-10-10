@@ -66920,7 +66920,7 @@ closeBlocks = function(size) {
   });
 };
 
-exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBarProvider) {
+exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBar) {
   var body, cover, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
   body.addClass('is-transitioner');
@@ -66969,7 +66969,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
     val: 1,
     onStart: function() {
       $timeout(function() {
-        cfpLoadingBarProvider.complete();
+        cfpLoadingBar.complete();
       });
     },
     onCompleteParams: ['{self}'],
@@ -66983,7 +66983,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   return deferred.promise;
 };
 
-exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBarProvider) {
+exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar) {
   var body, cover, coverAnim, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
   body.addClass('is-transitioner');
@@ -67030,7 +67030,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
       index: 10,
       onStart: function() {
         $timeout(function() {
-          cfpLoadingBarProvider.complete();
+          cfpLoadingBar.complete();
         });
       },
       onComplete: function() {
@@ -67263,7 +67263,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBarProvider", require(182).single],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBar", require(182).single],
       ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "$scope", "data", require(185)]
@@ -67299,7 +67299,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", "cfpLoadingBarProvider", require(182).collection],
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", "cfpLoadingBar", require(182).collection],
       ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
     },
     controller: ["$rootScope", "data", "$scope", require(187)]

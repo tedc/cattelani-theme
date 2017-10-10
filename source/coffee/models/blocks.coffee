@@ -11,7 +11,7 @@ closeBlocks = (size)->
 		clearProps : 'width'
 	return
 	
-exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBarProvider)->
+exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBar)->
 	body = angular.element document.body
 	body.addClass 'is-transitioner'
 	deferred = $q.defer()
@@ -54,7 +54,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	# 		width : rect.width
 	# 		onStart : ->
 	# 			$timeout ->
-	# 				cfpLoadingBarProvider.complete()
+	# 				cfpLoadingBar.complete()
 	# 				return
 	# 			return
 	# 		onComplete : ->
@@ -69,7 +69,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 			val : 1
 			onStart : ->
 				$timeout ->
-					cfpLoadingBarProvider.complete()
+					cfpLoadingBar.complete()
 					return
 				return
 			onCompleteParams : ['{self}']
@@ -82,7 +82,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 				return
 	TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
-exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBarProvider)->
+exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar)->
 	body = angular.element document.body
 	body.addClass 'is-transitioner'
 	$rootScope.cantStart = off
@@ -151,7 +151,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 			# 	, 0
 			onStart : ->
 				$timeout ->
-					cfpLoadingBarProvider.complete()
+					cfpLoadingBar.complete()
 					return
 				return
 			onComplete : ->

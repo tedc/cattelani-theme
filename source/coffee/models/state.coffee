@@ -72,7 +72,7 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						Slug: $stateParams.slug
 					return
 				]
-				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBarProvider", require('./blocks.coffee').single]
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBar", require('./blocks.coffee').single]
 				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
@@ -103,7 +103,7 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 						URL: $state.href $state.current.name, $state.params
 					return
 				]
-				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState",  "screenSize", "cfpLoadingBarProvider", require('./blocks.coffee').collection]		
+				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState",  "screenSize", "cfpLoadingBar", require('./blocks.coffee').collection]		
 				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
