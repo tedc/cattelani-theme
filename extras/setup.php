@@ -54,7 +54,7 @@
 			'post_type' => 'lampade',
 			'posts_per_page' => -1,
 			'orderby' => 'menu_order',
-			//'order' => 'ASC',
+			'order' => 'ASC',
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'collezioni',

@@ -8,7 +8,7 @@
 	$data = '';
 	if(get_post_type() == 'lampade')  :
 	$collection = wp_get_post_terms( $post->ID, 'collezioni' );
-	$lampade = get_posts(array('post_type'=>'lampade','posts_per_page'=>-1, 'orderby'=>'menu_order', 'tax_query' => array(array('taxonomy' => 'collezioni', 'field' => 'term_id', 'terms' => array($collection[0]->term_id)))));
+	$lampade = get_posts(array('post_type'=>'lampade','posts_per_page'=>-1, 'orderby'=>'menu_order', 'order' => 'ASC', 'tax_query' => array(array('taxonomy' => 'collezioni', 'field' => 'term_id', 'terms' => array($collection[0]->term_id)))));
     $class_lampada = count($lampade) >= 3 ? 3 : count($lampade);
     $class_lampada = 12 / $class_lampada;
     $index = 0;
