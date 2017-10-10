@@ -23,6 +23,36 @@
 		.admin-bar.logged-in & {
 			height: calc(85vh - 32px - #{em($p*2)});
 		}
+		.desktop & {
+			&:before, &:after {
+				width: 50%;
+				height: $f;
+				position: absolute;
+				content: '';
+				transition: transform $speed*2.25;
+				background-color: $w;
+				z-index: 5000;
+				top: 0;
+			}
+			&:before {
+				left: 0;
+				transform-origin: left center;
+			}
+			&:after {
+				left: 50%;
+				transform-origin: right center;
+			}
+		}
+		.desktop .video--dark & {
+			&:before, &:after {
+				background-color: $dark-color;
+			}
+		}
+		.desktop .video--dark & {
+			&:before, &:after {
+				transform: scaleX(0) translateZ(0);
+			}
+		}
 	}
 	&__item {
 		position: absolute;
