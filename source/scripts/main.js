@@ -67044,7 +67044,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 };
 
 exports.prev = function($rootScope, $timeout, $q) {
-  var body, deferred, tl;
+  var body, bottom, deferred, height, rect, tl, top;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
@@ -67052,27 +67052,25 @@ exports.prev = function($rootScope, $timeout, $q) {
     return deferred.promise;
   }
   tl = new TimelineMax();
-  controller.scrollTo(function(newPos) {
-    tl.set('body', {
-      className: '-=white'
-    }).to(window, .5, {
-      scrollTo: {
-        y: newPos
-      }
-    }).to($rootScope.prevElement, .5, {
-      height: '100vh',
-      onComplete: function() {
-        $rootScope.prevElement.addClass('next--fixed');
-        return $timeout(function() {
-          $rootScope.isLeaving = false;
-          window.scrollTo(0, 0);
-          deferred.resolve(true);
-        }, 0);
-      }
-    });
+  height = body.hasClass('admin-bar') ? 32 : 0;
+  rect = $rootScope.prevElement[0].getBoundingClientRect();
+  top = rect.top;
+  bottom = window.innerHeight - rect.bottom;
+  tl.fromTo($rootScope.prevElement, .75, {
+    top: top,
+    bottom: bottom
+  }, {
+    top: height,
+    bottom: 0,
+    onComplete: function() {
+      $rootScope.prevElement.addClass('next--fixed');
+      $timeout(function() {
+        $rootScope.isLeaving = false;
+        window.scrollTo(0, 0);
+        deferred.resolve(true);
+      }, 0);
+    }
   });
-  console.log($rootScope.prevElement[0].getBoundingClientRect(), document.body.clientHeight, window.innerHeight);
-  controller.scrollTo($rootScope.prevElement[0]);
   return deferred.promise;
 };
 

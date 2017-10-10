@@ -171,16 +171,19 @@ exports.prev = ($rootScope, $timeout, $q)->
 		deferred.resolve on 
 		return deferred.promise
 	tl = new TimelineMax()
-	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
-	controller.scrollTo (newPos)->
-		tl
-			.set 'body',
-				className : '-=white'
-			.to window, .5,
-				scrollTo :
-					y : newPos
-			.to $rootScope.prevElement, .5,
-				height : '100vh'
+	height = if body.hasClass 'admin-bar' then 32 else 0
+	rect = $rootScope.prevElement[0].getBoundingClientRect()
+	top = rect.top
+	bottom = window.innerHeight - rect.bottom
+	tl
+		.fromTo $rootScope.prevElement, .75,
+			{		
+				top : top
+				bottom : bottom
+			}
+			{
+				top : height
+				bottom : 0
 				onComplete : ->
 					$rootScope.prevElement.addClass 'next--fixed'
 					$timeout ->
@@ -189,7 +192,29 @@ exports.prev = ($rootScope, $timeout, $q)->
 						deferred.resolve on
 						return
 					, 0
-		return
-	console.log $rootScope.prevElement[0].getBoundingClientRect(), document.body.clientHeight, window.innerHeight
-	controller.scrollTo $rootScope.prevElement[0]
+					return
+			}
+
+	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
+	# controller.scrollTo (newPos)->
+	# 	tl
+	# 		.set 'body',
+	# 			className : '-=white'
+	# 		.to window, .5,
+	# 			scrollTo :
+	# 				y : newPos
+	# 		.to $rootScope.prevElement, .5,
+	# 			height : '100vh'
+	# 			onComplete : ->
+	# 				$rootScope.prevElement.addClass 'next--fixed'
+	# 				$timeout ->
+	# 					$rootScope.isLeaving = off
+	# 					window.scrollTo 0, 0
+	# 					deferred.resolve on
+	# 					return
+	# 				, 0
+	# 	return
+
+	# console.log $rootScope.prevElement[0].getBoundingClientRect(), document.body.clientHeight, window.innerHeight
+	# controller.scrollTo $rootScope.prevElement[0]
 	return deferred.promise
