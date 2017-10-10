@@ -48,7 +48,7 @@
 				background-color: $dark-color;
 			}
 		}
-		.desktop .video--dark & {
+		.desktop .video--active & {
 			&:before, &:after {
 				transform: scaleX(0) translateZ(0);
 			}
