@@ -704,8 +704,12 @@
 		}
 	}
 	&--active {
-		&:before, &:after {
-			transform: scaleY(0) translateZ(0);
+		.swiper-wrapper {
+			.desktop & {
+				&:before, &:after {
+					transform: scaleY(0) translateZ(0);
+				}
+			}
 		}
 	}
 }
