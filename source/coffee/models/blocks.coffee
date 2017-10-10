@@ -183,7 +183,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 					console.log newPos
 					return
 		return
-	console.log controller.scrollTo $rootScope.prevElement[0]
+	controller.scrollTo '#footer'
 	tl
 		.to $rootScope.prevElement, .5,
 			height : height
