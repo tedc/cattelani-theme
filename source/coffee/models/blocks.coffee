@@ -178,6 +178,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 		.to $rootScope.prevElement, .75,
 			top : height
 			bottom : 0
+			delay : .5
 			onComplete : ->
 				$rootScope.prevElement.addClass 'next--fixed'
 				$timeout ->

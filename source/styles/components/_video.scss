@@ -36,10 +36,12 @@
 		text-align: right;
 		@include grow('small', 'top');
 	}
-	&__send {
-		color: $w;
-		&:before, &:after {
+	&__send {	
+		.video--dark & {
 			color: $w;
+			&:before, &:after {
+				background-color: $lighter-color;
+			}
 		}
 		margin-right: em(30px)*-1;
 	}
