@@ -5,6 +5,7 @@
 	text-align: center;
 	position: relative;
 	transition: padding $speed*1.5;
+	overflow: hidden;
 	&--grow-double {
 		padding: {
 			top: em($p*4);
@@ -57,13 +58,11 @@
 		}
 	}
 	&__cover {
-		top: 50%;
-		transform: translate3d(0, -50%, 0);
-		transition: height $speed*1.75;
+		transition: transform $speed*1.5;
 	}
 	&:hover:not(.next--fixed) {
 		.next__cover {
-			height: $f*2;
+			transform: scale(1.15);
 		}
 	}
 }
