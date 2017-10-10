@@ -67059,24 +67059,20 @@ exports.prev = function($rootScope, $timeout, $q) {
     }).to(window, .5, {
       scrollTo: {
         y: newPos
-      },
+      }
+    }).to($rootScope.prevElement, .5, {
+      height: height,
       onComplete: function() {
-        console.log(newPos);
+        $rootScope.prevElement.addClass('next--fixed');
+        return $timeout(function() {
+          $rootScope.isLeaving = false;
+          window.scrollTo(0, 0);
+          deferred.resolve(true);
+        }, 0);
       }
     });
   });
-  controller.scrollTo('#footer');
-  tl.to($rootScope.prevElement, .5, {
-    height: height,
-    onComplete: function() {
-      $rootScope.prevElement.addClass('next--fixed');
-      return $timeout(function() {
-        $rootScope.isLeaving = false;
-        window.scrollTo(0, 0);
-        deferred.resolve(true);
-      }, 0);
-    }
-  });
+  controller.scrollTo($rootScope.prevElement[0]);
   return deferred.promise;
 };
 

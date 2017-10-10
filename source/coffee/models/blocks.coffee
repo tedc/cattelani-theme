@@ -179,20 +179,16 @@ exports.prev = ($rootScope, $timeout, $q)->
 			.to window, .5,
 				scrollTo :
 					y : newPos
+			.to $rootScope.prevElement, .5,
+				height : height
 				onComplete : ->
-					console.log newPos
-					return
+					$rootScope.prevElement.addClass 'next--fixed'
+					$timeout ->
+						$rootScope.isLeaving = off
+						window.scrollTo 0, 0
+						deferred.resolve on
+						return
+					, 0
 		return
-	controller.scrollTo '#footer'
-	tl
-		.to $rootScope.prevElement, .5,
-			height : height
-			onComplete : ->
-				$rootScope.prevElement.addClass 'next--fixed'
-				$timeout ->
-					$rootScope.isLeaving = off
-					window.scrollTo 0, 0
-					deferred.resolve on
-					return
-				, 0
-		return deferred.promise
+	controller.scrollTo $rootScope.prevElement[0]
+	return deferred.promise
