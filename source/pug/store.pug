@@ -17,10 +17,10 @@
 					.map__category(ng-bind-html="item.category" ng-if="item.category")
 					h3.map__title.map__title--small.map__title--lighter(ng-bind-html="item.title" ng-click="store.infoWindow(item.id, item.lat, item.lng)")
 					.map__content
-						p {{item.address}} {{item.city}}, {{item.country}}				
+						div(ng-bind-html="item.content.rendered")
 						p(ng-bind-html="item.email" ng-if="item.email")
-						p(ng-bind-html="item.phone" ng-if="item.phone")
-						p(ng-bind-html="item.fax" ng-if="item.fax")
+						p(ng-if="item.url")
+							a(ng-href="{{item.url}}") {{item.url.replace('http://', '')}}
 			.map__empty(ng-bind-html="store.empty" ng-if="store.items.length < 1")
 		.map__cell.map__cell--s6
 			ng-map(default-style="false" zoom="17" center="{{store.start}}" styles="{{store.styles}}" disable-default-u-i="true" scrollwheel="false")
@@ -28,8 +28,8 @@
 					.map__marker(ng-class="{'map__marker--active':store.isStore==marker.id}")
 						.icon-close(ng-click="store.isStore=false")
 						h4.map__title(ng-bind-html="marker.title")
-						p {{marker.address}} {{marker.cap}} {{marker.city}}, {{marker.country}}
-						p {{marker.phone}}#[br/]{{marker.email}}
+						div(ng-bind-html="marker.content.rendered")
+						p(ng-if="marker.email") {{marker.email}}
 						i.icon-select
 					i.icon-pittogramma(ng-click="store.infoWindow(marker.id, marker.lat, marker.lng)" ng-class="{'icon-pittogramma--active':store.isStore==marker.id}")
 				custom-control#zoom(position="BOTTOM_RIGHT" index="1")
