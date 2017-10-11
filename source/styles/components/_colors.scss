@@ -1,5 +1,5 @@
 .colors {
-	@include grow('lg');
+	@include grow('md');
 	&__header {
 		@include grow('md', 'bottom');
 		@include grow('lg', 'top');
@@ -9,10 +9,10 @@
 		@include grow('lg', 'bottom');
 	}
 	&__color {
-		width: $p*2;
-		height: $p*2;
+		width: $p*4;
+		height: $p*4;
 		margin: 0 auto $p;
-		border-radius: $p*2;
+		border-radius: $p*4;
 		@include cover;
 	}
 	&__name {
