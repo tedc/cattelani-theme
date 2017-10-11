@@ -575,8 +575,7 @@
 			content: '';
 			display: block;
 			width: $f;
-			padding-top: calc(100vh - #{em($p*2 + 18px)} - #{em($p*4)});
-			margin-bottom: em($p*2);
+			padding-top: calc(100vh - #{em($p*7)});
 		}
 	}
 	&--lampade {
@@ -627,7 +626,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		height: calc(100vh - #{em($p*2 + 18px)} - #{em($p*4)})
+		height: calc(100vh - #{em($p*8)});
 	}
 	.swiper-slide {
 		flex: 0 0 auto;
