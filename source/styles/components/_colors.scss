@@ -6,7 +6,7 @@
 	}
 	&__list {
 		justify-content: center;
-		@include grow('md', 'bottom');
+		@include grow('small', 'bottom');
 	}
 	&__color {
 		width: $p*4;
@@ -17,5 +17,9 @@
 	}
 	&__name {
 		font-size: 14px;
+	}
+	&__item {
+		text-align: center;
+		@include grow('small', 'bottom');
 	}
 }
