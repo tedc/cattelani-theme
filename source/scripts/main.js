@@ -65820,13 +65820,16 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
       restrict: 'A',
       link: function(scope, element, attr) {
         element.on('click', function() {
-          var bottom, divider, rect, top;
+          var bottom, divider, height, rect, top;
           rect = element[0].getBoundingClientRect();
           element.addClass('next--active');
           top = rect.top;
+          height = rect.height;
           bottom = window.innerHeight - rect.bottom;
           divider = angular.element('<div class="next-divider"></div>');
-          TweenMax.set(divider, height(rect.height));
+          TweenMax.set(divider, {
+            height: height
+          });
           element.after(divider);
           TweenMax.set(element, {
             top: top,
