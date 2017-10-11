@@ -1,7 +1,7 @@
 .sheet {
-	@include grow('lg');
+	@include grow();
 	&__container {
-		@include grow('lg');
+		@include grow();
 	}
 	&__title--small-lighter {
 		text-align: center;
