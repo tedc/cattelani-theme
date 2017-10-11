@@ -348,6 +348,31 @@
 	    }
 	}
 
+	add_filter( 'manage_lampade_posts_columns', 'set_custom_edit_lampade_columns' );
+	add_action( 'manage_lampade_posts_custom_column' , 'custom_lampade_column', 10, 2 );
+	
+	function set_custom_edit_aforismi_columns($columns) {
+	    $columns['lampade_colors'] = __( 'Colori', 'catellani' );
+
+	    return $columns;
+	}
+
+	function custom_aforismi_column( $column, $post_id ) {
+	    switch ( $column ) {
+
+	        case 'lampade_colors' :
+	        	$colors = wp_get_post_terms( $post_id, 'colori_materiali', array( '' ) );
+	        	$count = 0;
+	        	foreach($colors as $color) :
+	        	$comma = ($count>0) ? ', ' : '';
+	            echo $comma.$color->name; 
+	            $count++;
+	        	endforeach;
+	            break;
+
+	    }
+	}
+
 	function my_yoats_single_link($output, $link) {
 		$lang = (preg_match('/(en)/', $link['url'])) ? 'en' : 'it';
 		$url = str_replace(get_home_url(), '', $link['url']);
@@ -472,3 +497,12 @@
 		return $clauses;
 	}
 	add_filter('terms_clauses', 'my_terms_clauses', 99999, 3);
+
+	add_filter( 'wpsl_meta_box_fields', 'custom_meta_box_fields' );
+
+	function custom_meta_box_fields( $meta_fields ) {
+		$meta_fields[ __( 'Location', 'wpsl' )]['address']['required'] = false;
+		$meta_fields[ __( 'Location', 'wpsl' )]['city']['required'] = false;
+		$meta_fields[ __( 'Location', 'wpsl' )]['country']['required'] = false;
+		return $meta_fields;
+	}
