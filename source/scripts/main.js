@@ -65907,7 +65907,7 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
     }
   };
 }).directive('ngZoom', [
-  'ScrollbarService', '$timeout', function(ScrollbarService, $timeout) {
+  'ScrollbarService', '$timeout', "$document", function(ScrollbarService, $timeout, $document) {
     var zoom;
     return zoom = {
       scope: true,

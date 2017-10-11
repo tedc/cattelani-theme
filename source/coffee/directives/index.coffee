@@ -100,7 +100,7 @@ catellani
 						y : ~~((moveY - startY) * hRatio)
 					return
 				return
-	.directive 'ngZoom', ['ScrollbarService', '$timeout', (ScrollbarService, $timeout)->
+	.directive 'ngZoom', ['ScrollbarService', '$timeout', "$document", (ScrollbarService, $timeout, $document)->
 		zoom = 
 			scope : on
 			link : (scope, element)->
