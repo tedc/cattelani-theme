@@ -10,8 +10,8 @@
 				li.store__option(ng-bind-html="s.name" ng-click="store.store = s.id; store.selected = s.name;store.isSelected=false" ng-class="{'store__option--selected':store.store==s.id}" ng-repeat="s in store.stores")
 		button.store__send
 			span(ng-bind-html="store.buttonString")
-	.map.map--grid.map--grow-lg.map--shrin-fw
-		.map__cell.map__cell--s6(scrollbar)
+	.map.map--grid.map--grow-lg.map--shrink-fw
+		.map__cell.map__cell--s6(scrollbar continuous-scrolling="true")
 			ul.map__list.map__list--shrink-right-only(ng-if="store.items")
 				li.map__item.map__item--shrink(ng-repeat="item in store.items" ng-class="$index == $first ? 'map__item--grow-md-bottom' : 'map__item--grow-md'")
 					.map__category(ng-bind-html="item.category" ng-if="item.category")
