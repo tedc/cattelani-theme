@@ -575,7 +575,7 @@
 			content: '';
 			display: block;
 			width: $f;
-			padding-top: calc(85vh - #{em(130px)});
+			padding-top: calc(100vh - #{em($p*2 + 18px)} - #{em($p*4)});
 			margin-bottom: em($p*2);
 		}
 	}
@@ -627,7 +627,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		height: calc(85vh - #{em(130px)})
+		height: calc(100vh - #{em($p*2 + 18px)} - #{em($p*4)})
 	}
 	.swiper-slide {
 		flex: 0 0 auto;
