@@ -423,7 +423,7 @@ function glossary_category_rest_support() {
 //Remove Fields from API response
 function remove_content( $data, $post, $request ) {
     $_data = $data->data;
-    unset ($_data ['content']);
+    //unset ($_data ['content']);
     unset ($_data ['excerpt']);
     unset ($_data ['link']);
     unset ($_data ['author']);
