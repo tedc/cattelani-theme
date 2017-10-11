@@ -575,7 +575,7 @@
 			content: '';
 			display: block;
 			width: $f;
-			padding-top: calc(85vh - #{em(50px)});
+			padding-top: calc(85vh - #{em(130px)});
 			margin-bottom: em($p*2);
 		}
 	}
@@ -583,7 +583,7 @@
 		.swiper-container {
 			@include breakpoint() {
 				width: 88%;
-				margin: 0;
+				margin: 0 auto;
 
 			}
 			.swiper-slide {
@@ -627,7 +627,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		height: calc(85vh - #{em(50px)})
+		height: calc(85vh - #{em(130px)})
 	}
 	.swiper-slide {
 		flex: 0 0 auto;
