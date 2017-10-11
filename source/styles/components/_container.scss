@@ -165,4 +165,8 @@
             right: calc((100vw - #{$max-width}) / 2) !important;
         }
 	}
+	.is-to-next & {
+		transition: opacify $speed;
+		opacity: 0 !important;
+	}
 }

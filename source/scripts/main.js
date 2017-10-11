@@ -65820,13 +65820,15 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
       restrict: 'A',
       link: function(scope, element, attr) {
         element.on('click', function() {
-          var bottom, divider, height, rect, top;
+          var body, bottom, divider, height, rect, top;
+          body = angular.element(document.body);
+          body.addClass('is-to-next');
           rect = element[0].getBoundingClientRect();
           element.addClass('next--active');
           top = rect.top;
           height = rect.height;
           bottom = window.innerHeight - rect.bottom;
-          divider = angular.element('<div class="next-divider"></div>');
+          divider = angular.element('<div id="next-divider"></div>');
           TweenMax.set(divider, {
             height: height
           });
@@ -65912,68 +65914,17 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
     return zoom = {
       scope: true,
       link: function(scope, element) {
-        var zoomScrollbar;
+        var draggable;
         scope.isZoom = [];
-        zoomScrollbar = ScrollbarService.getInstance('zoom');
         scope.x = 0;
         scope.y = 0;
-        zoomScrollbar.then(function(scrollbar) {
-          var container, coords, events, mousemove, mouseup;
-          scope.updateScrollbar = function() {
-            $timeout(function() {
-              var size, x, y;
-              size = scrollbar.getSize();
-              x = size.content.width > size.container.width ? (size.content.width - size.container.width) / 2 : 0;
-              y = size.content.height > size.container.height ? (size.content.height - size.container.height) / 2 : 0;
-              scrollbar.setPosition(x, y);
-              scrollbar.update();
-            }, 500);
-          };
-          container = angular.element(scrollbar.targets.container);
-          coords = {
-            x: 0,
-            y: 0
-          };
-          events = {
-            mousedown: vars.main.mobile ? 'touchstart' : 'mousedown',
-            mouseup: vars.main.mobile ? 'touchend' : 'mouseup',
-            mousemove: vars.main.mobile ? 'touchmove' : 'mousemove'
-          };
-          element.on(events.mousedown, function(event) {
-            var ev;
-            event.preventDefault();
-            ev = vars.main.mobile ? event.touches[0] : event;
-            coords = {
-              x: ev.pageX,
-              y: ev.pageY
-            };
-            $document.on(events.mousemove, mousemove);
-            $document.on(events.mouseup, mouseup);
-          });
-          mousemove = function(event) {
-            var ev, oldCoords, x, y;
-            event.preventDefault();
-            ev = vars.main.mobile ? event.touches[0] : event;
-            oldCoords = coords;
-            coords = {
-              x: ev.pageX,
-              y: ev.pageY
-            };
-            x = coords.x > oldCoords.x ? scrollbar.offset.x - 1 : scrollbar.offset.x + 1;
-            y = coords.y > oldCoords.y ? scrollbar.offset.y - 1 : scrollbar.offset.y + 1;
-            scrollbar.scrollTo(x, y, 500);
-            oldCoords = coords;
-          };
-          mouseup = function(event) {
-            var ev;
-            ev = vars.main.mobile ? event.touches[0] : event;
-            coords = {
-              x: ev.pageX,
-              y: ev.pageY
-            };
-            $document.unbind(events.mousemove, mousemove);
-            $document.unbind(events.mouseup, mouseup);
-          };
+        draggable = element[0].querySelector('.zoom__scroll > img');
+        Draggable.create(draggable, {
+          type: 'x,y',
+          bounds: element[0].querySelector('.zoom__scroll'),
+          onDrag: function(evt) {
+            scope.cursor(evt);
+          }
         });
         scope.cursor = function(evt) {
           var $this, h, moveX, moveY, startX, startY, x, y;
@@ -67144,7 +67095,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 };
 
 exports.prev = function($rootScope, $timeout, $q) {
-  var body, deferred, height, tl;
+  var body, deferred, expand, height, scroll, tl, y;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
@@ -67153,6 +67104,28 @@ exports.prev = function($rootScope, $timeout, $q) {
   }
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 32 : 0;
+  y = parseInt(getComputedStyle($rootScope.prevElement[0])['top']);
+  expand = TweenMax.to($rootScope.prevElement, .75, {
+    top: height,
+    bottom: 0,
+    onComplete: function() {
+      $rootScope.prevElement.addClass('next--fixed');
+      body.removeClass('is-to-next');
+      $timeout(function() {
+        $rootScope.isLeaving = false;
+        window.scrollTo(0, 0);
+        deferred.resolve(true);
+      }, 0);
+    }
+  });
+  scroll = TweenMax.to(window, .75, {
+    scrollTo: {
+      y: "#next-divider"
+    }
+  });
+  tl.set('body', {
+    className: '-=white'
+  }).add([expand, scroll], "+=.5");
   return deferred.promise;
 };
 

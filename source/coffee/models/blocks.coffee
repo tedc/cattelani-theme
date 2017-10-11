@@ -185,22 +185,27 @@ exports.prev = ($rootScope, $timeout, $q)->
 		return deferred.promise
 	tl = new TimelineMax()
 	height = if body.hasClass 'admin-bar' then 32 else 0
-	# tl
-	# 	.set 'body',
-	#  		className : '-=white'
-	# 	.to $rootScope.prevElement, .75,
-	# 		top : height
-	# 		bottom : 0
-	# 		delay : .5
-	# 		onComplete : ->
-	# 			$rootScope.prevElement.addClass 'next--fixed'
-	# 			$timeout ->
-	# 				$rootScope.isLeaving = off
-	# 				window.scrollTo 0, 0
-	# 				deferred.resolve on
-	# 				return
-	# 			, 0
-	# 			return
+	y = parseInt getComputedStyle($rootScope.prevElement[0])['top']
+	expand = TweenMax.to $rootScope.prevElement, .75,
+				top : height
+				bottom : 0
+				onComplete : ->
+					$rootScope.prevElement.addClass 'next--fixed'
+					body.removeClass 'is-to-next'
+					$timeout ->
+						$rootScope.isLeaving = off
+						window.scrollTo 0, 0
+						deferred.resolve on
+						return
+					, 0
+					return
+	scroll = TweenMax.to window, .75,
+				scrollTo :
+					y : "#next-divider"
+	tl
+		.set 'body',
+	 		className : '-=white'
+		.add [expand, scroll], "+=.5"
 
 	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
 	# controller.scrollTo (newPos)->

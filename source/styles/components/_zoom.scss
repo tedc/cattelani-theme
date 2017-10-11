@@ -29,15 +29,16 @@
 		transition: opacity $speed, visibility $speed;
 		display: inline-flex;
 		align-items: center;
+		@include grow('md');
 		.icon-close {
-			font-size: em($p);
-			margin-right: em($p/2, $p);
+			font-size: 12px;
+			margin-right: em($p/2, 12px);
 		}
 	}
 	&__header {
 		top: $p;
 		position: relative;
-		z-index: 2;
+		z-index: 5;
 	}
 	&--active{
 		.zoom__figure {
@@ -46,6 +47,7 @@
 		}
 		.zoom__image {
 			visibility: visible;
+			cursor: none !important;
 		}
 		.zoom__drag {
 			display: block;

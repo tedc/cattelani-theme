@@ -30,12 +30,14 @@ catellani
 			restrict : 'A'
 			link : (scope, element, attr)->
 				element.on 'click', ->
+					body = angular.element document.body
+					body.addClass 'is-to-next'
 					rect = element[0].getBoundingClientRect()
 					element.addClass 'next--active'
 					top = rect.top
 					height = rect.height
 					bottom = window.innerHeight - rect.bottom
-					divider = angular.element '<div class="next-divider"></div>'
+					divider = angular.element '<div id="next-divider"></div>'
 					TweenMax.set divider,
 						height : height
 					element.after divider 
@@ -105,59 +107,17 @@ catellani
 			scope : on
 			link : (scope, element)->
 				scope.isZoom = []
-				zoomScrollbar = ScrollbarService.getInstance 'zoom'
+				#zoomScrollbar = ScrollbarService.getInstance 'zoom'
 				scope.x = 0
 				scope.y = 0
-				zoomScrollbar.then (scrollbar)->
-					scope.updateScrollbar = ->
-						$timeout ->
-							size = scrollbar.getSize()
-							x = if size.content.width > size.container.width then (size.content.width - size.container.width) / 2 else 0
-							y = if size.content.height > size.container.height then (size.content.height - size.container.height) / 2 else 0
-							scrollbar.setPosition x, y
-							scrollbar.update()
-							return
-						, 500
+				draggable = element[0].querySelector '.zoom__scroll > img'
+				Draggable.create draggable,
+					type : 'x,y'
+					bounds : element[0].querySelector '.zoom__scroll'
+					onDrag : (evt)->
+						scope.cursor evt
 						return
-					container = angular.element scrollbar.targets.container
-					coords =
-						x : 0
-						y : 0
-					events = 
-						mousedown : if vars.main.mobile then 'touchstart' else 'mousedown'
-						mouseup : if vars.main.mobile then 'touchend' else 'mouseup'
-						mousemove : if vars.main.mobile then 'touchmove' else 'mousemove'
-					element.on events.mousedown, (event)->
-						event.preventDefault()
-						ev = if vars.main.mobile then event.touches[0] else event
-						coords =
-							x : ev.pageX
-							y : ev.pageY
-						$document.on events.mousemove, mousemove
-						$document.on events.mouseup, mouseup
-						return
-					mousemove = (event)->
-						event.preventDefault()
-						ev = if vars.main.mobile then event.touches[0] else event
-						oldCoords = coords
-						coords =
-							x : ev.pageX
-							y : ev.pageY
-						x = if coords.x > oldCoords.x then scrollbar.offset.x - 1 else scrollbar.offset.x + 1
-						y = if coords.y > oldCoords.y then scrollbar.offset.y - 1 else scrollbar.offset.y + 1
-						scrollbar.scrollTo x, y, 500
-						oldCoords = coords
-						return
-					mouseup = (event)->
-						ev = if vars.main.mobile then event.touches[0] else event
-						coords =
-							x : ev.pageX
-							y : ev.pageY
-						$document.unbind events.mousemove, mousemove
-						$document.unbind events.mouseup, mouseup
-						return
-					return
-
+	
 				scope.cursor = (evt)->
 					startX = element[0].offsetLeft
 					startY = element[0].offsetTop

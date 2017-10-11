@@ -75,6 +75,10 @@
 			color: $dark-color;
 		}
 	}
+	.is-to-next & {
+		transition: opacify $speed;
+		opacity: 0 !important;
+	}
 }
 
 .posts {

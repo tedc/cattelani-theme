@@ -60,4 +60,8 @@
 			vertical-align: top;
 		}
 	}
+	.is-to-next & {
+		transition: opacify $speed;
+		opacity: 0 !important;
+	}
 }

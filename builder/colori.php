@@ -5,7 +5,7 @@
 	<header class="colors__header colors__header--mw colors__header--aligncenter colors__header--grow-md-bottom">
 		<h3 class="colors__title colors__title--small-lighter"><?php _e('Colori e materiali', 'catellani'); ?></h3>
 	</header>
-	<ul class="colors__list colors__list--mw colors__list--grid colors__list--grow-md-bottom">
+	<ul class="colors__list colors__list colors__list--grid colors__list--grow-md-bottom">
 		<?php foreach ($colors as $color) : ?>
 		<li class="colors__item colors__item--shrink">
 			<div class="colors__color" ng-style="{<?php if(get_field('colore', 'colori_materiali_'.$color->term_id)):?>'background-color':'<?php the_field('colore', 'colori_materiali_'.$color->term_id); ?>'<?php endif; if(get_field('bg', 'colori_materiali_'.$color->term_id) && get_field('background', 'colori_materiali_'.$color->term_id)):?>,<?php endif; if(get_field('background', 'colori_materiali_'.$color->term_id)):?>'background-image':'url(<?php the_field('background', 'colori_materiali_'.$color->term_id); ?>)'<?php endif; ?>}"></div>
