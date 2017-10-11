@@ -351,13 +351,13 @@
 	add_filter( 'manage_lampade_posts_columns', 'set_custom_edit_lampade_columns' );
 	add_action( 'manage_lampade_posts_custom_column' , 'custom_lampade_column', 10, 2 );
 	
-	function set_custom_edit_aforismi_columns($columns) {
+	function set_custom_edit_lampade_columns($columns) {
 	    $columns['lampade_colors'] = __( 'Colori', 'catellani' );
 
 	    return $columns;
 	}
 
-	function custom_aforismi_column( $column, $post_id ) {
+	function custom_lampade_column( $column, $post_id ) {
 	    switch ( $column ) {
 
 	        case 'lampade_colors' :
