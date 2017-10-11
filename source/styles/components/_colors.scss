@@ -6,7 +6,7 @@
 	}
 	&__list {
 		justify-content: center;
-		@include grow('lg', 'bottom');
+		@include grow('md', 'bottom');
 	}
 	&__color {
 		width: $p*4;
