@@ -185,22 +185,22 @@ exports.prev = ($rootScope, $timeout, $q)->
 		return deferred.promise
 	tl = new TimelineMax()
 	height = if body.hasClass 'admin-bar' then 32 else 0
-	tl
-		.set 'body',
-	 		className : '-=white'
-		.to $rootScope.prevElement, .75,
-			top : height
-			bottom : 0
-			delay : .5
-			onComplete : ->
-				$rootScope.prevElement.addClass 'next--fixed'
-				$timeout ->
-					$rootScope.isLeaving = off
-					window.scrollTo 0, 0
-					deferred.resolve on
-					return
-				, 0
-				return
+	# tl
+	# 	.set 'body',
+	#  		className : '-=white'
+	# 	.to $rootScope.prevElement, .75,
+	# 		top : height
+	# 		bottom : 0
+	# 		delay : .5
+	# 		onComplete : ->
+	# 			$rootScope.prevElement.addClass 'next--fixed'
+	# 			$timeout ->
+	# 				$rootScope.isLeaving = off
+	# 				window.scrollTo 0, 0
+	# 				deferred.resolve on
+	# 				return
+	# 			, 0
+	# 			return
 
 	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
 	# controller.scrollTo (newPos)->

@@ -65918,7 +65918,7 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
         scope.x = 0;
         scope.y = 0;
         zoomScrollbar.then(function(scrollbar) {
-          var container;
+          var container, coords, events, mousemove, mouseup;
           scope.updateScrollbar = function() {
             $timeout(function() {
               var size, x, y;
@@ -65930,6 +65930,50 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
             }, 500);
           };
           container = angular.element(scrollbar.targets.container);
+          coords = {
+            x: 0,
+            y: 0
+          };
+          events = {
+            mousedown: vars.main.mobile ? 'touchstart' : 'mousedown',
+            mouseup: vars.main.mobile ? 'touchend' : 'mouseup',
+            mousemove: vars.main.mobile ? 'touchmove' : 'mousemove'
+          };
+          element.on(events.mousedown, function(event) {
+            var ev;
+            event.preventDefault();
+            ev = vars.main.mobile ? event.touches[0] : event;
+            coords = {
+              x: ev.pageX,
+              y: ev.pageY
+            };
+            $document.on(events.mousemove, mousemove);
+            $document.on(events.mouseup, mouseup);
+          });
+          mousemove = function(event) {
+            var ev, oldCoords, x, y;
+            event.preventDefault();
+            ev = vars.main.mobile ? event.touches[0] : event;
+            oldCoords = coords;
+            coords = {
+              x: ev.pageX,
+              y: ev.pageY
+            };
+            x = coords.x > oldCoords.x ? scrollbar.offset.x - 1 : scrollbar.offset.x + 1;
+            y = coords.y > oldCoords.y ? scrollbar.offset.y - 1 : scrollbar.offset.y + 1;
+            scrollbar.scrollTo(x, y, 500);
+            oldCoords = coords;
+          };
+          mouseup = function(event) {
+            var ev;
+            ev = vars.main.mobile ? event.touches[0] : event;
+            coords = {
+              x: ev.pageX,
+              y: ev.pageY
+            };
+            $document.unbind(events.mousemove, mousemove);
+            $document.unbind(events.mouseup, mouseup);
+          };
         });
         scope.cursor = function(evt) {
           var $this, h, moveX, moveY, startX, startY, x, y;
@@ -67109,21 +67153,6 @@ exports.prev = function($rootScope, $timeout, $q) {
   }
   tl = new TimelineMax();
   height = body.hasClass('admin-bar') ? 32 : 0;
-  tl.set('body', {
-    className: '-=white'
-  }).to($rootScope.prevElement, .75, {
-    top: height,
-    bottom: 0,
-    delay: .5,
-    onComplete: function() {
-      $rootScope.prevElement.addClass('next--fixed');
-      $timeout(function() {
-        $rootScope.isLeaving = false;
-        window.scrollTo(0, 0);
-        deferred.resolve(true);
-      }, 0);
-    }
-  });
   return deferred.promise;
 };
 

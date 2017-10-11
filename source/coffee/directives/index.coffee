@@ -120,8 +120,44 @@ catellani
 						, 500
 						return
 					container = angular.element scrollbar.targets.container
+					coords =
+						x : 0
+						y : 0
+					events = 
+						mousedown : if vars.main.mobile then 'touchstart' else 'mousedown'
+						mouseup : if vars.main.mobile then 'touchend' else 'mouseup'
+						mousemove : if vars.main.mobile then 'touchmove' else 'mousemove'
+					element.on events.mousedown, (event)->
+						event.preventDefault()
+						ev = if vars.main.mobile then event.touches[0] else event
+						coords =
+							x : ev.pageX
+							y : ev.pageY
+						$document.on events.mousemove, mousemove
+						$document.on events.mouseup, mouseup
+						return
+					mousemove = (event)->
+						event.preventDefault()
+						ev = if vars.main.mobile then event.touches[0] else event
+						oldCoords = coords
+						coords =
+							x : ev.pageX
+							y : ev.pageY
+						x = if coords.x > oldCoords.x then scrollbar.offset.x - 1 else scrollbar.offset.x + 1
+						y = if coords.y > oldCoords.y then scrollbar.offset.y - 1 else scrollbar.offset.y + 1
+						scrollbar.scrollTo x, y, 500
+						oldCoords = coords
+						return
+					mouseup = (event)->
+						ev = if vars.main.mobile then event.touches[0] else event
+						coords =
+							x : ev.pageX
+							y : ev.pageY
+						$document.unbind events.mousemove, mousemove
+						$document.unbind events.mouseup, mouseup
+						return
 					return
-				
+
 				scope.cursor = (evt)->
 					startX = element[0].offsetLeft
 					startY = element[0].offsetTop
