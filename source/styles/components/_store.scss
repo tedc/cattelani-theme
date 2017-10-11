@@ -36,6 +36,12 @@
 			line-height: percentage(27px/18px);
 			font-size: em(18px);
 		}
+		a {
+			color: $dark-color;
+			&:hover {
+				color: $alternate-color;
+			}
+		}
 	}
 	&__category {
 		padding-bottom: em($p, 14px);
