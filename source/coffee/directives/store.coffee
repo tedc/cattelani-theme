@@ -40,6 +40,15 @@ module.exports = ->
 				store.map.setCenter LatLng
 				return
 
+			store.content = (content)->
+				content = content.replace('T. ', '<br/>T. ')
+				content = content.replace('M. ', '<br/>M. ')
+				content = content.replace('F. ', '<br/>F. ')
+				content = content.replace('T ', '<br/>T. ')
+				content = content.replace('M ', '<br/>M. ')
+				content = content.replace('F ', '<br/>M. ')
+				return content
+
 			$rootScope.$on 'markers_changed', ->
 				zoomChange()
 				return

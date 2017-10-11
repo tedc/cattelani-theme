@@ -66715,6 +66715,15 @@ module.exports = function() {
           LatLng = new google.maps.LatLng(vars.api.start_latlng);
           store.map.setCenter(LatLng);
         };
+        store.content = function(content) {
+          content = content.replace('T. ', '<br/>T. ');
+          content = content.replace('M. ', '<br/>M. ');
+          content = content.replace('F. ', '<br/>F. ');
+          content = content.replace('T ', '<br/>T. ');
+          content = content.replace('M ', '<br/>M. ');
+          content = content.replace('F ', '<br/>M. ');
+          return content;
+        };
         $rootScope.$on('markers_changed', function() {
           zoomChange();
         });

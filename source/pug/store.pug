@@ -1,5 +1,5 @@
-.store.store__form--shrink-fw(map-lazy-load="{{store.api}}")
-	form.store__form.store__form--shrink.store__form--gray.store__form--grow-md(ng-submit="store.onSubmit()")
+.store(map-lazy-load="{{store.api}}")
+	form.store__form--shrink-fw.store__form--gray.store__form--grow-md(ng-submit="store.onSubmit()")
 		input.store__input(ng-model="store.address" places-auto-complete on-place-changed="store.placeChanged()" ng-change="store.onInputChange()")
 		.store__select(ng-click="store.isSelected=!store.isSelected" click-outside="store.isSelected=false")
 			select(ng-model="store.store" ng-options="opt.id as opt.name for opt in store.stores")
@@ -10,14 +10,14 @@
 				li.store__option(ng-bind-html="s.name" ng-click="store.store = s.id; store.selected = s.name;store.isSelected=false" ng-class="{'store__option--selected':store.store==s.id}" ng-repeat="s in store.stores")
 		button.store__send
 			span(ng-bind-html="store.buttonString")
-	.map.map--grid.map--shrink.map--grow-lg
+	.map.map--grid.map--shrink.map--grow-lg.map--shrin-fw(scrollbar)
 		.map__cell.map__cell--s6
 			ul.map__list.map__list--shrink-right-only(ng-if="store.items")
 				li.map__item.map__item--shrink(ng-repeat="item in store.items" ng-class="$index == $first ? 'map__item--grow-md-bottom' : 'map__item--grow-md'")
 					.map__category(ng-bind-html="item.category" ng-if="item.category")
 					h3.map__title.map__title--small.map__title--lighter(ng-bind-html="item.title" ng-click="store.infoWindow(item.id, item.lat, item.lng)")
 					.map__content
-						div(ng-bind-html="item.content.rendered")
+						div(ng-bind-html="content(item.content.rendered)")
 						p(ng-bind-html="item.email" ng-if="item.email")
 						p(ng-if="item.url")
 							a(ng-href="{{item.url}}") {{item.url.replace('http://', '')}}
@@ -28,7 +28,7 @@
 					.map__marker(ng-class="{'map__marker--active':store.isStore==marker.id}")
 						.icon-close(ng-click="store.isStore=false")
 						h4.map__title(ng-bind-html="marker.title")
-						div(ng-bind-html="marker.content.rendered")
+						div(ng-bind-html="content(marker.content.rendered)")
 						p(ng-if="marker.email") {{marker.email}}
 						i.icon-select
 					i.icon-pittogramma(ng-click="store.infoWindow(marker.id, marker.lat, marker.lng)" ng-class="{'icon-pittogramma--active':store.isStore==marker.id}")
