@@ -34,6 +34,10 @@ catellani
 					element.addClass 'next--active'
 					top = rect.top
 					bottom = window.innerHeight - rect.bottom
+					divider = angular.element '<div class="next-divider"></div>'
+					TweenMax.set divider,
+						height rect.height
+					element.after divider 
 					TweenMax.set element,
 						top : top
 						bottom : bottom
