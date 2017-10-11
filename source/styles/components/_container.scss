@@ -15,6 +15,10 @@
 		> p {
 			font-size: em(18px);
 			padding-top: em($p*2, 18px);
+			.desktop [ng-sm] & {
+				opacity: 0;
+				transition: $speed*1.5 opacity;
+			}
 		}
 		&--alternate {
 			> p {
@@ -49,6 +53,20 @@
 				transform: perspective(10px) rotateX(-7deg);
 			}
 		}
+		.desktop .container--bg & {
+			&:before, &:after {
+				width: 0;
+				transition: $speed*1.5 width;
+			}
+		}
+		.desktop .container--active & {
+			> p {
+				opacity: 1;
+			}
+			&:before, &:after {
+				width: em(220px);
+			}
+		}
 	}
 	&__title {
 		text-align: center;
@@ -59,6 +77,13 @@
 			margin: 0 auto;
 			text-align: left;
 		}
+		.desktop [ng-sm] & {
+			opacity: 0;
+			transition: $speed*1.5 opacity;
+		}
+		.desktop [ng-sm].container--active & {
+			opacity: 1;
+		}
 	}
 	&__sign {
 		text-align: center;
@@ -66,6 +91,13 @@
 		padding-top: 2em;
 		color: $alternate-color;
 		position: relative;
+		.desktop [ng-sm] & {
+			opacity: 0;
+			transition: $speed*1.5 opacity;
+		}
+		.desktop [ng-sm].container--active & {
+			opacity: 1;
+		}
 	}
 	&--bg {
 		@include cover;

@@ -12,7 +12,7 @@
 }
 %scale {
 	.desktop & {
-		transition: transform $speed*2.25;
+		transition: transform $speed*1.75;
 		overflow: hidden;
 	}
 	.desktop .section__cell--even & {
@@ -25,10 +25,10 @@
 		transform: translate3d(0, 0, 0);
 	}
 	.desktop .section__cell--text & {
-		transition-delay: $speed*1.2;
+		transition-delay: $speed*0.875;
 	}
 	> * {
-		transition: transform $speed*2.25;
+		transition: transform $speed*1.75;
 		.desktop .section__cell--even & {
 			transform: translate3d($f*1, 0, 0);
 		}	
@@ -39,7 +39,7 @@
 			transform: translate3d(0, 0, 0);
 		}
 		.desktop .section__cell--text & {
-			transition-delay: $speed*1.2;
+			transition-delay: $speed*0.875;
 		}
 	}
 }

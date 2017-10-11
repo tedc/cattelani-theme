@@ -13,7 +13,7 @@
 		
 		foreach($terms as $term) :
 	?>
-		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>)'}">
+		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>">
 		</ks-swiper-slide>
 	<?php endforeach; ?>
 	</ks-swiper-container>

@@ -132,3 +132,26 @@ catellani
 					return
 				return
 	]
+	.directive 'ngLazyImg', ->
+		link : (scope, element, attrs)->
+			img = null
+			src = attrs.ngLazyImg	
+			_appendImg = ->
+				if not img
+					element.addClass 'lazy-loading'
+					img = angular.element "<img src='#{src}' />"
+					img.one 'load', _loaded
+					img.one 'error', _error
+					element.append img
+				return
+			_loaded = ->
+				element.removeClass 'lazy-loading'
+				element.addClass 'lazy-loaded'
+				img.remove()
+				return
+			_error = ->
+				element.addClass 'lazy-loading-error'
+				return
+			_appendImg()
+			return
+			

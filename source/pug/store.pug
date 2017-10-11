@@ -17,9 +17,10 @@
 					.map__category(ng-bind-html="item.category" ng-if="item.category")
 					h3.map__title.map__title--small.map__title--lighter(ng-bind-html="item.title" ng-click="store.infoWindow(item.id, item.lat, item.lng)")
 					.map__content
-						p {{item.address}} {{item.city}}, {{item.country}}
-						p(ng-bind-html="item.phone")
-						p(ng-bind-html="item.email")
+						p {{item.address}} {{item.city}}, {{item.country}}				
+						p(ng-bind-html="item.email" ng-if="item.email")
+						p(ng-bind-html="item.phone" ng-if="item.phone")
+						p(ng-bind-html="item.fax" ng-if="item.fax")
 			.map__empty(ng-bind-html="store.empty" ng-if="store.items.length < 1")
 		.map__cell.map__cell--s6
 			ng-map(default-style="false" zoom="17" center="{{store.start}}" styles="{{store.styles}}" disable-default-u-i="true" scrollwheel="false")

@@ -70,4 +70,85 @@
 			transition-delay: $speed;
 		}
 	}
+	&__lighter {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translate3d(-50%, 0, 0);
+		padding-bottom: em($p*2);
+		color: $lighter-color;
+		text-align: center;
+		z-index: 2;
+		&:after {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translate3d(-50%, 0, 0) scaleY(1);
+			width: 1px;
+			height: em($p*1.5);
+			border: transparent 1px solid;
+			background-color: $lighter-color;
+			border-radius: em($p*1.5);
+			content: '';
+			transition: {
+				property: width, bottom, border-color, height, background-color;
+				duration: $speed;
+			}
+			animation: 1.75s on infinite;
+		}
+		&--on {
+			&:after {
+				height: em($p);
+				width: em($p);
+				background-color: transparent;
+				border-color: $lighter-color;
+				bottom: em($p/2);
+				animation: 1.75s off infinite;
+			}
+		}
+	}
+	&__label {
+		font-size: em(14px);
+		white-space: nowrap;
+		transition: $speed color;
+		> span {
+			&:before {
+				content: attr(data-on-text);
+			}
+		}
+		.light--on & {
+			> span {
+				&:before {
+					content: attr(data-off-text);
+				}
+			}
+		}
+	}
+}
+
+@keyframes on {
+	0% {
+		transform: translate3d(-50%, 0, 0) scaleY(1);
+		transform-origin: center bottom;
+	}
+	49% {
+		transform-origin: center bottom;
+		transform: translate3d(-50%, 0, 0) scaleY(0);
+	}
+	51% {
+		transform-origin: center top;
+		transform: translate3d(-50%, 0, 0) scaleY(0);
+	}
+	100% {
+		transform-origin: center top;
+		transform: translate3d(-50%, 0, 0) scaleY(1);
+	}
+}
+@keyframes off {
+	0%, 100% {
+		box-shadow: 0 0 0 transparentize($w, .25);
+	}
+	50% {
+		box-shadow: 0 0 em($p) transparentize($w, .5);
+	}
 }

@@ -1,5 +1,5 @@
 <?php if(get_sub_field('immagine_accesa') && get_sub_field('immagine_spenta')) : ?>
-<div class="light light--shrink-fw light--grid">
+<div class="light light--shrink-fw light--grid" ng-class="{'light--on':isOn}">
 	<figure class="light__cell light__cell--figure light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 5 : 7; ?>" ng-light-mask ng-mousemove="moveMask($event, '#light_svg_<?php echo $row; ?>')">
 		<?php echo wp_get_attachment_image( get_sub_field('immagine_spenta')['ID'], 'full' ); ?>
 		<svg class="light__svg" viewBox="0 0 <?php echo get_sub_field('immagine_accesa')['width']; ?> <?php echo get_sub_field('immagine_accesa')['height']; ?>" id="light_svg_<?php echo $row; ?>">
@@ -19,6 +19,9 @@
 			<image xlink:href="" x="0" y="0" width="<?php echo get_sub_field('immagine_accesa')['width']; ?>" height="<?php echo get_sub_field('immagine_accesa')['height']; ?>" ng-attr-xlink:href="<?php echo wp_get_attachment_image_src( get_sub_field('immagine_accesa')['ID'], 'full')[0]; ?>" mask="url(#clip_<?php echo $row; ?>)" /></g>
 			<image class="light__image" xlink:href="" x="0" y="0" width="<?php echo get_sub_field('immagine_accesa')['width']; ?>" height="<?php echo get_sub_field('immagine_accesa')['height']; ?>" ng-attr-xlink:href="<?php echo wp_get_attachment_image_src( get_sub_field('immagine_accesa')['ID'], 'full')[0]; ?>" />
 		</svg>
+		<figcaption class="light__lighter" ng-class="{'light__lighter--on':isOn}" ng-click="isOn=!isOn">
+			<span class="light__label light__label--upper-light"><span data-off-text="<?php _e('Spegni', 'catellani'); ?>" data-on-text="<?php _e('Accendi', 'catellani'); ?>"></span> <?php _e('La luce', 'catellani'); ?></span>
+		</figcaption>
 	</figure>
 	<div class="light__cell light__cell--content light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 7 : 5; ?> light__cell--shrink-left-only">
 		<div class="light__text light__text--grow-md"><?php _e('Muovi il mouse sopra l’immagine per creare la luce.') ?></div>

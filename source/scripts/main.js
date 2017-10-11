@@ -65943,7 +65943,33 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
       }
     };
   }
-]);
+]).directive('ngLazyImg', function() {
+  return {
+    link: function(scope, element, attrs) {
+      var _appendImg, _error, _loaded, img, src;
+      img = null;
+      src = attrs.ngLazyImg;
+      _appendImg = function() {
+        if (!img) {
+          element.addClass('lazy-loading');
+          img = angular.element("<img src='" + src + "' />");
+          img.one('load', _loaded);
+          img.one('error', _error);
+          element.append(img);
+        }
+      };
+      _loaded = function() {
+        element.removeClass('lazy-loading');
+        element.addClass('lazy-loaded');
+        img.remove();
+      };
+      _error = function() {
+        element.addClass('lazy-loading-error');
+      };
+      _appendImg();
+    }
+  };
+});
 
 
 },{"166":166,"167":167,"168":168,"169":169,"170":170,"172":172,"173":173,"174":174,"175":175,"176":176,"177":177,"178":178,"179":179,"180":180}],172:[function(require,module,exports){

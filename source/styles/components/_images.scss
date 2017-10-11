@@ -6,3 +6,38 @@ figure {
 	@include full;
 	z-index: 0;
 }
+
+[ng-lazy-img] {
+	&:before {
+		@include full;
+		background-color: $dark-color;
+		content: '';
+	}
+	&:after {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: em($p*-1) 0 0 em($p*-1);
+		width: em($p*2);
+		height: em($p*2);
+		opacity: .5;
+		display: block;
+		background-color: $light-color;
+		border-radius: $f;
+		animation: pulse 2s infinite ease-in-out;
+		content: '';
+		visibility: hidden;
+		opacity: 0;
+		transition: $speed visibility, opacity $speed;
+	}
+	img {
+		display: none !important;
+	}
+	&.lazy-loaded {
+		&:before, &:after {
+			visibility: hidden;
+			opacity: 0;
+			transition: $speed visibility, opacity $speed;
+		}
+	}
+}

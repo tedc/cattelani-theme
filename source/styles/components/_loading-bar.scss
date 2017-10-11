@@ -13,7 +13,7 @@
 	.bar {
 		position: fixed;
 		z-index: 10002;
-		height: $p/10;
+		height: $p/5;
 		width: $f;
 		left: 0;
 		top: 0;
@@ -32,6 +32,6 @@
 		right: ($p/10)*-2;
 		border-radius: $f;
 		width: $p/2;
-		height: $p/5;
+		height: 6px;
 	}
 }

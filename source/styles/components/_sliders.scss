@@ -255,12 +255,14 @@
 		}
 		&--archive {
 			height: 100vh;
+			display: flex;
 			.logged-in.admin-bar & {
 				height: calc(100vh - 32px);
 			}
 			.scroll-content {
 				display: flex;
 				height: 100vh;
+				width: $f;
 				.logged-in.admin-bar & {
 					height: calc(100vh - 32px);
 				}
