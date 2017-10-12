@@ -43,9 +43,6 @@
 	@include grow('lg', 'top');
 	&__header {
 		@include grow('md', 'top');
-		.icon-close {
-			opacity: 0;
-		}
 	}
 	&__content {
 		margin-top: em($p);
