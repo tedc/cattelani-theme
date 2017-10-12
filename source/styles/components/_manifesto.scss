@@ -12,17 +12,29 @@
 		$rot: 0;
 		$translate: percentage($circle-size / $item-size) / 2;
 		&:before {
-			transition: box-shadow $speed;
+			transition: transform $speed;
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			transform: translate3d(-50%, -50%, 0);
+			transform: translate3d(-50%, -50%, 0) scale(0);
 			border-radius: 100%;
 			width:  $item-size;
 			height: $item-size;
 			margin: -($item-size / 2);
 			content: '';
-			background-color: $w;
+			border: 1px solid $w;
+		}
+		&:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			border-radius: 100%;
+			width:  $item-size/2;
+			height: $item-size/2;
+			margin: -($item-size / 4);
+			content: '';
+			background: $w;
 		}
 		@for $i from 1 through $item-count {
 			&:nth-child(#{$i}) {
@@ -115,7 +127,7 @@
 			}
 			&:hover, &--active {
 				&:before {
-					box-shadow: 0 0 $p transparentize(#fbcf00, .2);
+					transform: translate3d(-50%, -50%, 0) scale(1);
 				}
 			}
 		}
