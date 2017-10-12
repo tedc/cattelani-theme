@@ -5,7 +5,6 @@ module.exports = ($timeout, $rootScope)->
 			scope.main = {}
 			scope.nav = {}
 			scope.storia = {} if attr.isStoria
-			scope.current = 0
 			scope.navInit = off
 			if $rootScope.currentCollection
 				s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
@@ -20,9 +19,8 @@ module.exports = ($timeout, $rootScope)->
 			else		
 				scope.start = 0
 			scope.next = (swiper)->
-				scope.main.slideNext() if scope.main.slideNext
+				scope.storia.slideNext() if scope.storia.slideNext
 				#scope.nav.slideNext() if scope.nav.slideNext
-				scope.current = scope.main.realIndex
 				return
 			scope.prev = (swiper)->
 				scope.main.slidePrev() if scope.main.slidePrev

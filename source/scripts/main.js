@@ -66827,7 +66827,6 @@ module.exports = function($timeout, $rootScope) {
       if (attr.isStoria) {
         scope.storia = {};
       }
-      scope.current = 0;
       scope.navInit = false;
       if ($rootScope.currentCollection) {
         s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
@@ -66844,10 +66843,9 @@ module.exports = function($timeout, $rootScope) {
         scope.start = 0;
       }
       scope.next = function(swiper) {
-        if (scope.main.slideNext) {
-          scope.main.slideNext();
+        if (scope.storia.slideNext) {
+          scope.storia.slideNext();
         }
-        scope.current = scope.main.realIndex;
       };
       scope.prev = function(swiper) {
         if (scope.main.slidePrev) {
