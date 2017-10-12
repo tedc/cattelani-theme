@@ -45,11 +45,14 @@
 		@include grow('md', 'top');
 	}
 	&__content {
-		margin-top: em($p);
+		transition: margin-top $speed;
+		.accordion--active & {
+			margin-top: em($p);
+		}
 	}
 	&__term {
 		&s {
-			@include grow('md', 'bottom');
+			@include grow('lg');
 		}
 		line-height: percentage(40px/22px);
 		@include grow('small');
