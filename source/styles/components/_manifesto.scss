@@ -5,9 +5,13 @@
 		top:  50%; 
 		left: 50%;
 		border-radius: $item-size;
-		width:  ($item-size/1379px) * 100vw;
-		height: ($item-size/1379px) * 100vw;
-		margin: (($item-size / 2)/1379px) * -100vw;
+		// width:  ($item-size/1379px) * 100vw;
+		// height: ($item-size/1379px) * 100vw;
+		// margin: (($item-size / 2)/1379px) * -100vw;
+		width:  $item-size;
+		height: $item-size;
+		margin-top: -($item-size / 2);
+		margin-left: -($item-size / 2);
 		$angle: (360 / $item-count);
 		$rot: 0;
 		$translate: percentage($circle-size / $item-size) / 2;
