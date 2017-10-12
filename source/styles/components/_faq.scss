@@ -51,6 +51,7 @@
 		}
 	}
 	&__term {
+		@include grow('md', 'bottom');
 		&s {
 			@include grow('lg');
 		}

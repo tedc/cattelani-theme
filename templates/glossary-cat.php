@@ -22,7 +22,7 @@
 ?>
 <div class="glossary glossary--grow-lg-top">
 	<div class="glossary__terms glossary__terms--grow-md-bottom">
-		<div class="glossary__term" id="<?php echo $current->term_id; ?>">
+		<div class="glossary__term glossary__term--grow-md-bottom" id="<?php echo $current->term_id; ?>">
 			<span class="glossary__link glossary__link--mw">[<?php echo $current->term_order; ?>] / <?php echo $current->name; ?></span>
 			<ul class="glossary__list">
 				<?php while($glossary->have_posts()) : $glossary->the_post(); ?>
