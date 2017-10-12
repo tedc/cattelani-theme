@@ -65065,14 +65065,9 @@ module.exports = function() {
       TweenMax.to(desc, .5, {
         autoAlpha: true
       });
-      TweenMax.to(item, .5, {
+      TweenMax.to(name, .5, {
         marginBottom: height
       });
-      if (attr !== 3) {
-        TweenMax.to(line, .5, {
-          height: (lineHeight - offset) + "vw"
-        });
-      }
       done();
     },
     removeClass: function(element, className, done) {
@@ -65080,11 +65075,11 @@ module.exports = function() {
       if (className !== 'manifesto__item--active') {
         return;
       }
+      element.addClass('manifesto__item--active-remove');
       desc = element[0].querySelector('.manifesto__desc');
       TweenMax.set(element[0].querySelectorAll("*"), {
         clearProps: 'all'
       });
-      done();
     }
   };
 };

@@ -5,40 +5,35 @@
 		top:  50%; 
 		left: 50%;
 		border-radius: $item-size;
-		// width:  ($item-size/1379px) * 100vw;
-		// height: ($item-size/1379px) * 100vw;
-		// margin: (($item-size / 2)/1379px) * -100vw;
-		width:  $item-size;
-		height: $item-size;
-		margin-top: -($item-size / 2);
-		margin-left: -($item-size / 2);
+		width:  ($item-size/1379px) * 100vw;
+		height: ($item-size/1379px) * 100vw;
+		margin: (($item-size / 2)/1379px) * -100vw;
 		$angle: (360 / $item-count);
 		$rot: 0;
 		$translate: percentage($circle-size / $item-size) / 2;
 		&:before {
-			transition: transform $speed;
+			transition: box-shadow $speed, transform $speed;
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			//transform: translate3d(-50%, -50%, 0) scale(0);
-			transform: translate3d(0%, 0%, 0) scale(0);
 			border-radius: 100%;
 			width:  $item-size * 1.5;
 			height: $item-size * 1.5;
-			margin-top: -(($item-size * 1.5)/ 2);
-			margin-left: -(($item-size * 1.5)/ 2);
+			margin-top: -(($item-size * 1.5 )/ 2);
+			margin-left: -(($item-size * 1.5) / 2);
 			content: '';
 			border: 1px solid $w;
+			transform: translateZ(0) scale(0);
 		}
 		&:after {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			border-radius: 100%;
-			width:  $item-size/2;
-			height: $item-size/2;
-			margin-left: -($item-size / 4);
+			width:  $item-size / 2;
+			height: $item-size / 2;
 			margin-top: -($item-size / 4);
+			margin-left: -($item-size / 4);
 			content: '';
 			background: $w;
 		}
@@ -133,7 +128,8 @@
 			}
 			&:hover, &--active {
 				&:before {
-					transform: translate3d(0%, 0%, 0) scale(1);
+					box-shadow: 0 0 $p transparentize(#fbcf00, .2);
+					transform: translateZ(0) scale(1);
 				}
 			}
 		}
@@ -153,6 +149,7 @@
 			[data-manifesto-item="1"] & {
 				right: (195/12) * 100%;
 				text-align: right;
+				margin-left: 6px;
 				&:before {
 					width: (175/1379) * 100vw;
 					height: (175/1379) * 100vw;
@@ -161,6 +158,7 @@
 			[data-manifesto-item="2"] & {
 				right: (143/12) * 100%;
 				text-align: right;
+				margin-left: 9px;
 				&:before {
 					width: (124/1379) * 100vw;
 					height: (200/1379) * 100vw;
@@ -172,6 +170,7 @@
 				border-bottom-color: transparent;
 				text-align: center;
 				bottom: (177/12) * 100%;
+				margin-left: 6px;
 				&:before {
 					width: 1px;
 					left: 50%;
@@ -181,6 +180,7 @@
 			}
 			[data-manifesto-item="4"] & {
 				left: (143/12) * 100%;
+				margin-left: 9px;	
 				&:before {
 					left: auto;
 					right: $f;
@@ -191,6 +191,7 @@
 			}
 			[data-manifesto-item="5"] & {
 				left: (195/12) * 100%;
+				margin-left: 9px;	
 				&:before {
 					left: auto;
 					right: $f;
@@ -232,12 +233,15 @@
 			top: $f;
 			left: $f;
 			background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><line x1='0' y1='0' x2='100%' y2='100%' stroke='#fff' stroke-width='1'/></svg>") no-repeat;
-			transition: height $speed .125s, opacity $speed;
+			transition: opacity $speed;
 			.manifesto__item:hover & {
 				opacity: 1;
 			}
 			.manifesto__item--active & {
 				transition: none;
+			}
+			.manifesto__item--active-remove & {
+				transition: height $speed;
 			}
 			[data-manifesto-item="1"] & {
 				width: (175/1379) * 100vw;

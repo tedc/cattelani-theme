@@ -14,17 +14,17 @@ module.exports = ->
 			item = if attr == 3 then name else content
 			TweenMax.to desc, .5,
 				autoAlpha : on
-			TweenMax.to item, .5,
+			TweenMax.to name, .5,
 				marginBottom : height
-			if attr isnt 3
-				TweenMax.to line, .5,
-					height : "#{lineHeight - offset}vw"
+			# if attr isnt 3
+			# 	TweenMax.to line, .5,
+			# 		height : "#{lineHeight - offset}vw"
 			done()
 			return
 		removeClass : (element, className, done)->
 			return if className isnt 'manifesto__item--active'
+			element.addClass 'manifesto__item--active-remove'
 			desc = element[0].querySelector '.manifesto__desc'
 			TweenMax.set element[0].querySelectorAll("*"),
 				clearProps : 'all'
-			done()
 			return

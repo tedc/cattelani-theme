@@ -3,7 +3,7 @@
 	if($colors) : ?>
 <section class="colors colors--shrink colors--grow-md">
 	<header class="colors__header colors__header--mw colors__header--aligncenter colors__header--grow-md-bottom">
-		<h3 class="colors__title colors__title--small-lighter"><?php _e('Colori e materiali', 'catellani'); ?></h3>
+		<h3 class="colors__title colors__title--small-lighter"><?php _e('Varianti disponibili', 'catellani'); ?></h3>
 	</header>
 	<ul class="colors__list colors__list colors__list--grid colors__list--grow-bottom">
 		<?php foreach ($colors as $color) : ?>
