@@ -13,16 +13,18 @@
 		$translate: percentage($circle-size / $item-size) / 2;
 		&:before {
 			transition: transform $speed;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate3d(-50%, -50%, 0) scale(0);
+			// position: absolute;
+			// top: 50%;
+			// left: 50%;
+			//transform: translate3d(-50%, -50%, 0) scale(0);
+			transform: translate3d(0%, 0%, 0) scale(0);
 			border-radius: 100%;
 			width:  $item-size;
 			height: $item-size;
 			margin: -($item-size / 2);
 			content: '';
 			border: 1px solid $w;
+			@include full;
 		}
 		&:after {
 			position: absolute;
@@ -127,7 +129,7 @@
 			}
 			&:hover, &--active {
 				&:before {
-					transform: translate3d(-50%, -50%, 0) scale(1);
+					transform: translate3d(0%, 0%, 0) scale(1);
 				}
 			}
 		}
