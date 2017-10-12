@@ -7,6 +7,18 @@ module.exports = ($timeout, $rootScope)->
 			scope.storia = {} if attr.isStoria
 			scope.current = 0
 			scope.navInit = off
+			if $rootScope.currentCollection
+				s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
+				i = parseInt s.getAttribute 'data-index'
+				if $rootScope.homeClicked
+					scope.start = i
+				else	
+					i = if i - 1 is 0 then 0 else i - 1
+					scope.start = i
+				$rootScope.currentCollection = off
+				$rootScope.homeClicked = off
+			else		
+				scope.start = 0
 			scope.next = (swiper)->
 				scope.main.slideNext() if scope.main.slideNext
 				#scope.nav.slideNext() if scope.nav.slideNext
@@ -32,8 +44,6 @@ module.exports = ($timeout, $rootScope)->
 					if scope.nav.params && scope.main.params
 						#scope.nav.params.control = scope.main 
 						#scope.main.params.control = scope.nav 
-						scope.nav.update()
-						scope.main.update()
 						scope.nav.on 'slideChangeStart', (swiper)->
 							scope.main.slideTo swiper.realIndex if scope.main.realIndex isnt swiper.realIndex
 							return
@@ -43,8 +53,10 @@ module.exports = ($timeout, $rootScope)->
 						$timeout ->
 							scope.navInit = on
 							return
+						scope.nav.update()
+						scope.main.update()
+						scope.main.slideTo scope.start, 0
 					return
-			
 				return
 			$rootScope.isYearsActive = off
 			scope.expandStory = (cond)->
@@ -54,6 +66,7 @@ module.exports = ($timeout, $rootScope)->
 				scope.main.update()
 				scope.storia.update() if attr.isStoria
 				return
+			
 			# $rootScope.$on 'destroySwiper', ->
 			# 	console.log angular.equals({}, scope.main), angular.equals({}, scope.nav)
 			# 	scope.main.destroy() if not angular.equals({}, scope.main)

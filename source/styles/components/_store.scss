@@ -12,6 +12,9 @@
 		margin: 0 em($p);
 		min-width: em(200px);
 	}
+	&__input {
+		min-width: em(280px, 18px);
+	}
 }
 .map {
 	@include grow('lg');
@@ -21,7 +24,7 @@
 	&__cell {
 		position: relative;
 		@include breakpoint() {
-			height: 100vh;
+			height: calc(100vh - #{emm(80px)});
 			overflow: hidden;
 		}
 	}

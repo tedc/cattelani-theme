@@ -48,6 +48,14 @@ catellani
 					return
 				return
 	]
+	.directive 'homeElement', ['$rootScope', ($rootScope)->
+		restrict : 'A'
+		link : (scope, element)->
+			element.on 'click', ->
+				$rootScope.homeClicked = on
+				return
+			return
+	]
 	.directive 'menu', ['$rootScope', ($rootScope)->
 		restrict : 'A'
 		scope : 

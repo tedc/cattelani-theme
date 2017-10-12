@@ -15,7 +15,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		@include grow('md');
 		.icon-close {
 			transform: translateZ(0) rotate(45deg);
 			transition: transform $speed, opacity $speed;
@@ -35,20 +34,25 @@
 .faq {
 	&__header {		
 		border-bottom: 1px solid $lighter-color;
+		@include grow('md');
 	}
 }
 
 .glossary {
 	@include grow('lg');
 	@include grow('lg', 'top');
-	&__header {		
+	&__header {
+		@include grow('md', 'top');
 		.icon-close {
 			opacity: 0;
 		}
 	}
+	&__content {
+		margin-top: em($p);
+	}
 	&__term {
 		&s {
-			@include grow('lg');
+			@include grow('md', 'bottom');
 		}
 		line-height: percentage(40px/22px);
 		@include grow('small');

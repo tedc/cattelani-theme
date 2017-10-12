@@ -17,7 +17,7 @@
 	);
 	$count = $collezioni->found_posts;
 ?>
-<div class="collections collections--slider-h" ng-scroll-carousel>
+<div class="collections collections--slider-h" ng-scroll-carousel current-collection="<?php echo $obj->term_id; ?>">
 	<div class="collections__slider collections__slider--archive" scrollbar="carousel" axis-x="true">
 		<?php 
 			$c = 0;while($collezioni->have_posts()): $collezioni->the_post();

@@ -8,7 +8,7 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 		carousel
 			.then (scrollbar)->
 				scope.isState = off
-				scope.currentState = 
+				$rootScope.currentCollection = attrs.currentCollection 
 				$timeout ->
 					scope.isVisible = on
 					scope.isPrev = if scrollbar.offset.x > 0 then on else off

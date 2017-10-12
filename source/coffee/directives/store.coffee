@@ -1,16 +1,13 @@
-WPAPI = require 'wpapi'
-wp = new WPAPI
-	endpoint :
-		"#{vars.main.base}/wp-json/"
-wp.locations = wp.registerRoute 'wp/v2', 'locations/',
-	params : ['order_location', 'stores']
-wp.stores = wp.registerRoute 'wp/v2', 'stores/'
 module.exports = ->
 	s = 
 		templateUrl : "#{vars.main.assets}/tpl/store.tpl.html"
 		bindToController : on
 		controllerAs : "store"
-		controller : ['NgMap', "$timeout", "$rootScope", "$element", (NgMap, $timeout, $rootScope, $element)->
+		controller : ['NgMap', "$timeout", "$rootScope", "$element", "WPAPI", (NgMap, $timeout, $rootScope, $element, WPAPI)->
+			wp = WPAPI
+			wp.locations = wp.registerRoute 'wp/v2', 'locations/',
+				params : ['order_location', 'stores']
+			wp.stores = wp.registerRoute 'wp/v2', 'stores/'	
 			store = @
 			store.isSelected = false
 			store.buttonString = vars.strings.btn_stores
@@ -24,7 +21,9 @@ module.exports = ->
 				store.api = "https://maps.googleapis.com/maps/api/js?key=#{vars.api.google_api_key}&libraries=visualization,drawing,geometry,places"
 				store.styles = [{'featureType': 'all','elementType': 'labels.text.fill','stylers': [{'color': '#ffffff'}]},{'featureType': 'all','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'color': '#3e606f'},{'weight': 2},{'gamma': 0.84}]},{'featureType': 'all','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry','stylers': [{'weight': 0.6},{'color': '#1a3541'}]},{'featureType': 'administrative.locality','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'administrative.neighborhood','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative.land_parcel','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'landscape','elementType': 'geometry','stylers': [{'color': '#2c5a71'}]},{'featureType': 'landscape.natural','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'}]},{'featureType': 'landscape.natural.landcover','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'},{'lightness': '-38'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'poi','elementType': 'geometry','stylers': [{'color': '#406d80'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'color': '#2c5a71'}]},{'featureType': 'road','elementType': 'geometry','stylers': [{'color': '#29768a'},{'lightness': -37}]},{'featureType': 'transit','elementType': 'geometry','stylers': [{'color': '#406d80'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'color': '#193341'},{'visibility': 'simplified'}]}]
 				store.start = if $rootScope.address then $rootScope.address else vars.api.start_latlng
-				getMap()
+				$timeout ->
+					getMap()
+					return
 				return
 			store.placeChanged = ->
 				store.place = @getPlace()

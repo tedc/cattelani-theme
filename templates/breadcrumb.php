@@ -30,6 +30,6 @@
 		$current = ($term) ? '<span>'.$term->name.'</span>' : '';
 	endif;
 	if($current != '' && $home) : 
-		echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})">Home</a>'.$sep.$ancestor.$current;
+		echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
 	endif;
 ?>

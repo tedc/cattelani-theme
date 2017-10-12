@@ -65584,7 +65584,8 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
       carousel.then(function(scrollbar) {
         var items;
         scope.isState = false;
-        scope.currentState = $timeout(function() {
+        $rootScope.currentCollection = attrs.currentCollection;
+        $timeout(function() {
           scope.isVisible = true;
           scope.isPrev = scrollbar.offset.x > 0 ? true : false;
           scope.isNext = scrollbar.offset.x < scrollbar.limit.x ? true : false;
@@ -65838,6 +65839,17 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
             bottom: bottom
           });
           $rootScope.prevElement = element;
+        });
+      }
+    };
+  }
+]).directive('homeElement', [
+  '$rootScope', function($rootScope) {
+    return {
+      restrict: 'A',
+      link: function(scope, element) {
+        element.on('click', function() {
+          $rootScope.homeClicked = true;
         });
       }
     };
@@ -66508,20 +66520,6 @@ module.exports = function($rootScope, $timeout) {
 
 
 },{}],178:[function(require,module,exports){
-var WPAPI, wp;
-
-WPAPI = require(156);
-
-wp = new WPAPI({
-  endpoint: vars.main.base + "/wp-json/"
-});
-
-wp.locations = wp.registerRoute('wp/v2', 'locations/', {
-  params: ['order_location', 'stores']
-});
-
-wp.stores = wp.registerRoute('wp/v2', 'stores/');
-
 module.exports = function() {
   var s;
   return s = {
@@ -66529,8 +66527,13 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", function(NgMap, $timeout, $rootScope, $element) {
-        var getMap, store, zoomChange;
+      'NgMap', "$timeout", "$rootScope", "$element", "WPAPI", function(NgMap, $timeout, $rootScope, $element, WPAPI) {
+        var getMap, store, wp, zoomChange;
+        wp = WPAPI;
+        wp.locations = wp.registerRoute('wp/v2', 'locations/', {
+          params: ['order_location', 'stores']
+        });
+        wp.stores = wp.registerRoute('wp/v2', 'stores/');
         store = this;
         store.isSelected = false;
         store.buttonString = vars.strings.btn_stores;
@@ -66696,7 +66699,9 @@ module.exports = function() {
             }
           ];
           store.start = $rootScope.address ? $rootScope.address : vars.api.start_latlng;
-          getMap();
+          $timeout(function() {
+            getMap();
+          });
         };
         store.placeChanged = function() {
           var center;
@@ -66810,12 +66815,13 @@ module.exports = function() {
 };
 
 
-},{"156":156}],179:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 module.exports = function($timeout, $rootScope) {
   var ngSwiper;
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
+      var i, s;
       scope.main = {};
       scope.nav = {};
       if (attr.isStoria) {
@@ -66823,6 +66829,20 @@ module.exports = function($timeout, $rootScope) {
       }
       scope.current = 0;
       scope.navInit = false;
+      if ($rootScope.currentCollection) {
+        s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
+        i = parseInt(s.getAttribute('data-index'));
+        if ($rootScope.homeClicked) {
+          scope.start = i;
+        } else {
+          i = i - 1 === 0 ? 0 : i - 1;
+          scope.start = i;
+        }
+        $rootScope.currentCollection = false;
+        $rootScope.homeClicked = false;
+      } else {
+        scope.start = 0;
+      }
       scope.next = function(swiper) {
         if (scope.main.slideNext) {
           scope.main.slideNext();
@@ -66849,8 +66869,6 @@ module.exports = function($timeout, $rootScope) {
         }
         scope.$watch('nav', function() {
           if (scope.nav.params && scope.main.params) {
-            scope.nav.update();
-            scope.main.update();
             scope.nav.on('slideChangeStart', function(swiper) {
               if (scope.main.realIndex !== swiper.realIndex) {
                 scope.main.slideTo(swiper.realIndex);
@@ -66864,6 +66882,9 @@ module.exports = function($timeout, $rootScope) {
             $timeout(function() {
               scope.navInit = true;
             });
+            scope.nav.update();
+            scope.main.update();
+            scope.main.slideTo(scope.start, 0);
           }
         });
       });
@@ -66990,7 +67011,7 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   }
   $rootScope.cantStart = true;
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
-  if ($rootScope.PreviousState.Name !== 'collection' && (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null)) {
+  if (prev !== 'collection' && (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null)) {
     $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;
@@ -67052,7 +67073,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
     return deferred.promise;
   }
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
-  if ($rootScope.PreviousState.Name !== 'page' && (document.querySelector(".header--lampade") == null)) {
+  if (prev !== 'page' && (document.querySelector(".header--lampade") == null)) {
     $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;

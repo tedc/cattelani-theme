@@ -18,7 +18,7 @@
 	</div>
 </form>
 <div class="glossary glossary--grow-lg">
-<ul class="glossary__terms glossary__terms--grow-lg glossary__terms--shrink-fw">
+<ul class="glossary__terms glossary__terms--shrink-fw">
 	<?php foreach ($terms as $term) : ?>
 	<li class="glossary__term glossary__term--mw" id="<?php echo $term->term_id; ?>">
 		<a href="<?php echo get_term_link($term->term_id); ?>" ui-sref="app.glossary({name : '<?php echo $term->slug; ?>'})">[<?php echo $term->term_order; ?>] / <?php echo strtolower($term->name); ?></a>

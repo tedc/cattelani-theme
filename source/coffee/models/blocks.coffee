@@ -23,7 +23,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 		return deferred.promise
 	$rootScope.cantStart = on
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
-	if $rootScope.PreviousState.Name isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
+	if prev isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
 		$rootScope.cantStart = off
 		deferred.resolve on
 		return deferred.promise 
@@ -94,7 +94,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		deferred.resolve on
 		return deferred.promise
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
-	if $rootScope.PreviousState.Name isnt 'page' and not document.querySelector(".header--lampade")?	
+	if prev isnt 'page' and not document.querySelector(".header--lampade")?	
 		$rootScope.cantStart = off
 		deferred.resolve on
 		return deferred.promise 

@@ -192,12 +192,13 @@
 		transform: translate3d($p, -50%, 0);
 		opacity: 0;
 		transition: transform $speed, opacity $speed;
-		color: $main-color;
+		color: $dark-color;
 		padding: 0 $p/2;
 		border-radius: $p/2;
 		line-height: 1.5;
-		font-weight: 300;
-		background-color: $lighter-color;
+		font-weight: 400;
+		text-shadow: 0 1px 0 $w;
+		//background-color: $lighter-color;
 		font-size: 12px;
 		text-transform: uppercase;
 		white-space: nowrap;
@@ -230,19 +231,16 @@
 			top: 50%;
 			left: 50%;
 			margin-left: ($p/2) * -1;	
-			opacity: 1;
-			visibility: visible;
-			transition: opacity $speed, visibility $speed;
-			.cat--visible & {
-				opacity: 0;
-				visibility: hidden;
-			}
+			transition: transform $speed;	
 		}
 		&:before {	
 			transform: translate3d(0, -50%, 0);
 		}
 		&:after {
-			transform: translate3d(0, -50%, 0) rotate(90deg);
+			transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(1);
+			.cat--visible & {
+				transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(0);
+			}
 		}
 	}
 	&__sym {

@@ -10,12 +10,12 @@
 	?>
 	<ks-swiper-container class="collections__slider collections__slider--home" swiper="main" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'loopedSlides':<?php echo $loopedSlides; ?>, 'grabCursor' : true}" on-ready="sliderReady(main)">
 	<?php 
-		
+		$c = 0;
 		foreach($terms as $term) :
 	?>
-		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>">
+		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term->term_id)['url']; ?>" data-collection="<?php echo $term->term_id; ?>" data-index="<?php echo $c; ?>">
 		</ks-swiper-slide>
-	<?php endforeach; ?>
+	<?php $c++; endforeach; ?>
 	</ks-swiper-container>
 	<div class="collections__nav collections__nav--shrink collections__nav--grow-md" ng-class="{'collections__nav--active' : navInit}">
 	<i class="icon-arrow icon-arrow-prev"></i>

@@ -17,7 +17,7 @@
 <nav class="storia__nav storia__nav--shrink storia__nav--grow-md">
 	<div class="storia__items storia__items--shrink" scrollbar continuous-scrolling="true">
 		<?php $i = 0; foreach($storia as $s): ?>
-		<div class="storia__item storia__item--s2 storia__item"<?php if($i==0) : ?> ng-init="isYears = <?php echo $s->ID; ?>"<?php endif; ?> ng-class="{'storia__item--active' : isYears == <?php echo $s->ID; ?>}" ng-click="slideTo(<?php echo $i; ?>); isYears = <?php echo $s->ID;; ?>">
+		<div class="storia__item"<?php if($i==0) : ?> ng-init="isYears = <?php echo $s->ID; ?>"<?php endif; ?> ng-class="{'storia__item--active' : isYears == <?php echo $s->ID; ?>}" ng-click="slideTo(<?php echo $i; ?>); isYears = <?php echo $s->ID;; ?>">
 			<?php 
 				$split_title = get_the_title($s->ID);  
 				$split_title = explode('/', $split_title);

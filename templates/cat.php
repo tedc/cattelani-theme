@@ -20,11 +20,12 @@
 		echo get_the_title($store); ?>
 		</span>
 	</a>
-	<span class="cat__main" ng-click="isCat=!isCat">
-		<span class="cat__label" ng-click="modal('contact')">
+	<span class="cat__dot"  ng-click="modal('contact')">
+		<span class="cat__label">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
 		</span>
-		<span class="cat__sym">@</span>
+	</span>
+	<span class="cat__main" ng-click="isCat=!isCat">
 	</span>
 </aside>

@@ -107,6 +107,7 @@ class walker_texas_ranger extends Walker_Nav_Menu {
             } else {
                 $page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ).'\'' : '';
                 $sref =  ' ui-sref="app.'.$state.'({lang : \''.get_field('lingua', $item->ID).'\''.$page.'})"';
+                $sref .= $state == 'root' ? ' home-element' : '';
             }
         } else {
             $sref =  '';
