@@ -43,11 +43,9 @@
 	@include grow('lg', 'top');
 	&__header {
 		@include grow('md', 'top');
-	}
-	&__content {
-		transition: margin-top $speed;
+		transition: padding-bottom $speed;
 		.accordion--active & {
-			margin-top: em($p);
+			padding-bottom: em($p);
 		}
 	}
 	&__term {
