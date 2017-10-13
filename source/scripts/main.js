@@ -66804,7 +66804,9 @@ module.exports = function() {
         getMap = function() {
           NgMap.getMap().then(function(map) {
             store.map = map;
-            store.coords = (store.map.getCenter().lat()) + ", " + (store.map.getCenter().lng());
+            if (!angular.equals({}, store.map)) {
+              store.coords = (store.map.getCenter().lat()) + ", " + (store.map.getCenter().lng());
+            }
             store.onSubmit();
           });
         };

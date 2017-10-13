@@ -125,7 +125,7 @@ module.exports = ->
 					.getMap()
 					.then (map)-> 
 						store.map = map
-						store.coords = "#{store.map.getCenter().lat()}, #{store.map.getCenter().lng()}"
+						store.coords = "#{store.map.getCenter().lat()}, #{store.map.getCenter().lng()}" if not angular.equals {}, store.map 
 						store.onSubmit()
 						return
 				return
