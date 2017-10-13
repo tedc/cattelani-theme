@@ -19,11 +19,11 @@
 .map {
 	@include grow('lg');
 	&__loader {
-		max-height: none;
-		transition: $speed visibility, $speed opacity;
+		transition: $speed visibility, $speed opacity, max-height $speed;
 		&--visible {
 			visibility: visible;
 			opacity: 1;
+			max-height: em($p*2);
 		}
 	}
 	&__title {
