@@ -60,5 +60,7 @@
 			</span>
 		</a>
 	</div>
-	<?php loader('projects', 'loadProjects'); ?>
+	<div class="project__loader-wrapper" ng-if="firstLoad">
+		<?php loader('projects', 'loadProjects'); ?>
+	</div>
 </div>

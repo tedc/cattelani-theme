@@ -199,7 +199,7 @@
           } else {
             if($object['type'] == 'page') {
               $the_id = apply_filters('wpml_object_id', $object['id'], 'page', false, $sitepress->get_default_language());
-              $white = (get_field('header_kind', $object['id']) == 0) ? '' : ' white';
+              $white = (get_field('header_kind', $object['id']) == 0) ? '' : ' white-header';
               $white = ($the_id == get_option('page_on_front')) ? '' : $white;
               $contactBar = (get_field('is_contact_bar', $object['id'])) ? ' contact-bar' : '';
               $body_class .=  ' '.$object['slug'].$contactBar.$white;

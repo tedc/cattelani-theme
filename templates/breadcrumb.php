@@ -17,7 +17,7 @@
 		if($post_type != 'page') :
 			if($post_type != 'lampade') :
 				$the_index_id = id_by_lang($index[$post_type], 'page', $lang);
-				$ancestor = ($the_index_id) ? '<a ui-sref="app.page({slug : \''.basename(get_permalink($the_index_id)).'\', lang : \''.$lang.'\'})">'.get_the_title($the_index_id).'</a>'.$sep : $the_index_id;
+				$ancestor = ($the_index_id) ? '<a ui-sref="app.page({slug : \''.basename(get_permalink($the_index_id)).'\', lang : \''.$lang.'\'})">'.get_the_title($the_index_id).'</a>'.$sep : '';
 			else :
 				$term = wp_get_post_terms( $post_obj->ID, 'collezioni' )[0];
 				$term = get_term(id_by_lang($term->term_id, 'collezioni', $lang));
@@ -26,8 +26,9 @@
 		endif;
 		$current = ($post_id) ? '<span>'.get_the_title($post_id).'</span>' : '';
 	elseif($term_obj) :
+		$ancestor = ($term_obj->taxonomy == get_option('glossary-settings')['slug-cat']) : '<a ui-sref="app.page({slug : \''.basename(get_permalink($index['glossary'])).'\', lang : \''.$lang.'\'})">'.get_the_title(id_by_lang($index['glossary'], 'page', $lang)).'</a>'.$sep : '';
 		$term = get_term(id_by_lang($term_obj->term_id, $term_obj->taxonomy, $lang));
-		$current = ($term) ? '<span>'.$term->name.'</span>' : '';
+		$current = ($term) ? $ancestor.'<span>'.$term->name.'</span>' : '';
 	endif;
 	if($current != '' && $home) : 
 		echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
