@@ -26,6 +26,13 @@
 			max-height: em($p*2);
 		}
 	}
+	&__list, &__empty {
+		transition: $speed visibility, $speed opacity;
+		&--hidden {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
 	&__title {
 		color: $alternate-color;
 	}

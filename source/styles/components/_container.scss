@@ -166,7 +166,9 @@
         }
 	}
 	.is-to-next & {
-		transition: opacify $speed;
-		opacity: 0 !important;
+		> * {
+			transition: opacify $speed;
+			opacity: 0 !important;
+		}
 	}
 }

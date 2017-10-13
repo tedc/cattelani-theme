@@ -150,6 +150,23 @@
 
 	}, 10, 5 );
 
+	function get_slider($field, $id, $row, $main = false) {
+		if($main) {
+			if(get_field($field)) {
+				$slider = get_field($field);
+			} else {
+				$slider = get_field($field, $id);
+			}	
+		} else {
+			if(get_sub_field($field)) {
+				$slider = get_sub_field($field);
+			} else {
+				$slider = get_field('layout', $id)[$row][$field];
+			}
+		}
+		return $slider;
+	}
+
 
 	// function my_next_post_where() {
 

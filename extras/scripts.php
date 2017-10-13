@@ -1,6 +1,7 @@
 <?php
 	use Roots\Sage\Assets;
 	function catellani_script() {
+		global $sitepress;
 		// $terms = get_terms('collezioni');
 		// $max_posts = [];
 		// foreach ($terms as $term) {
@@ -23,6 +24,13 @@
 		wp_deregister_script( 'sage/js' );
 		wp_enqueue_script('lib', Assets\asset_path('scripts/lib.js'), null, null, true);
 		wp_enqueue_script('catellanijs', Assets\asset_path('scripts/main.js'), ['lib'], null, true);
+		$languages = apply_filters('wpml_active_languages', null);
+        $translations = [];
+        foreach ($languages as $language) {
+        	$translations[] = $language['language_code'];
+        }
+        $codes = join('|', $translations);
+            
 		$vars = array(
 			"main" => array(
 				'mobile' => (bool)is_handheld(),
@@ -32,7 +40,8 @@
 				'glossary_slug' => get_option('glossary-settings')['slug'],
 				'home' => get_post(get_option('page_on_front'))->post_name,
 				'logged_classes' => $log,
-				'body_classes' => $body_classes
+				'body_classes' => $body_classes,
+				'langs' => $codes
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),

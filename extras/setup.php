@@ -506,3 +506,8 @@
 		$meta_fields[ __( 'Location', 'wpsl' )]['country']['required'] = false;
 		return $meta_fields;
 	}
+
+	add_filter( 'wpseo_metadesc', 'fix_yoast_metadesc', 10, 1 );
+	function fix_yoast_metadesc( $str ) {
+	  return do_shortcode( $str );
+	}
