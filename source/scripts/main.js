@@ -65829,19 +65829,19 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
           body = angular.element(document.body);
           body.addClass('is-to-next');
           rect = element[0].getBoundingClientRect();
-          element.addClass('next--active');
           top = rect.top;
           height = rect.height;
           bottom = window.innerHeight - rect.bottom;
           divider = angular.element('<div id="next-divider"></div>');
-          TweenMax.set(element, {
-            top: top,
-            bottom: bottom
-          });
           TweenMax.set(divider, {
             height: height
           });
           element.after(divider);
+          element.addClass('next--active');
+          TweenMax.set(element, {
+            top: top,
+            bottom: bottom
+          });
           $rootScope.prevElement = element;
         });
       }
@@ -67140,7 +67140,6 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 
 exports.prev = function($rootScope, $timeout, $q) {
   var body, deferred, expand, height, scroll, tl, y;
-  return;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
@@ -67151,7 +67150,16 @@ exports.prev = function($rootScope, $timeout, $q) {
   height = body.hasClass('admin-bar') ? 32 : 0;
   y = parseInt(getComputedStyle($rootScope.prevElement[0])['top']);
   expand = TweenMax.to($rootScope.prevElement, .75, {
-    top: height,
+    top: height
+  });
+  scroll = TweenMax.to(window, .75, {
+    scrollTo: {
+      y: "#next-divider"
+    }
+  });
+  tl.set('body', {
+    className: '-=white'
+  }).add([expand, scroll], "+=.5").to($rootScope.prevElement, .75, {
     bottom: 0,
     onComplete: function() {
       $rootScope.prevElement.addClass('next--fixed');
@@ -67162,15 +67170,7 @@ exports.prev = function($rootScope, $timeout, $q) {
         deferred.resolve(true);
       }, 0);
     }
-  });
-  scroll = TweenMax.to(window, .75, {
-    scrollTo: {
-      y: "#next-divider"
-    }
-  });
-  tl.set('body', {
-    className: '-=white'
-  }).add([expand, scroll], "+=.5");
+  }, '-=.25');
   return deferred.promise;
 };
 

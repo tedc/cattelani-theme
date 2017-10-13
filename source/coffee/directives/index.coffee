@@ -39,17 +39,17 @@ catellani
 					body = angular.element document.body
 					body.addClass 'is-to-next'
 					rect = element[0].getBoundingClientRect()
-					element.addClass 'next--active'
 					top = rect.top
 					height = rect.height
 					bottom = window.innerHeight - rect.bottom
 					divider = angular.element '<div id="next-divider"></div>'
-					TweenMax.set element,
-						top : top
-						bottom : bottom
 					TweenMax.set divider,
 						height : height
 					element.after divider 
+					element.addClass 'next--active'
+					TweenMax.set element,
+						top : top
+						bottom : bottom
 					$rootScope.prevElement = element
 					return
 				return

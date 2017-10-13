@@ -178,7 +178,6 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		# 		return
 	return deferred.promise
 exports.prev = ($rootScope, $timeout, $q)->
-	return
 	body = angular.element document.body
 	deferred = $q.defer()
 	if not $rootScope.prevElement
@@ -189,6 +188,14 @@ exports.prev = ($rootScope, $timeout, $q)->
 	y = parseInt getComputedStyle($rootScope.prevElement[0])['top']
 	expand = TweenMax.to $rootScope.prevElement, .75,
 				top : height
+	scroll = TweenMax.to window, .75,
+				scrollTo :
+					y : "#next-divider"
+	tl
+		.set 'body',
+	 		className : '-=white'
+		.add [expand, scroll], "+=.5"
+		.to $rootScope.prevElement, .75,
 				bottom : 0
 				onComplete : ->
 					$rootScope.prevElement.addClass 'next--fixed'
@@ -200,13 +207,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 						return
 					, 0
 					return
-	scroll = TweenMax.to window, .75,
-				scrollTo :
-					y : "#next-divider"
-	tl
-		.set 'body',
-	 		className : '-=white'
-		.add [expand, scroll], "+=.5"
+		, '-=.25'
 
 	#height = if body.hasClass 'admin-bar' then 'calc(100vh - 32px)' else '100vh'
 	# controller.scrollTo (newPos)->
