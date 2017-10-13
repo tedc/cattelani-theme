@@ -21,6 +21,8 @@
 						p(ng-bind-html="item.email" ng-if="item.email")
 						p(ng-if="item.url")
 							a(ng-href="{{item.url}}") {{item.url.replace('http://', '')}}
+			.map__loader(ng-class"{'map__loader--visible':isStoreLoading}")
+				.map__spinner
 			.map__empty(ng-bind-html="store.empty" ng-if="store.items.length < 1")
 		.map__cell.map__cell--s6
 			ng-map(default-style="false" zoom="17" center="{{store.start}}" styles="{{store.styles}}" disable-default-u-i="true" scrollwheel="false")

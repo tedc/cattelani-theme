@@ -14,13 +14,14 @@ module.exports = ->
 			store.any = vars.strings.select_any
 			store.isStore = off
 			store.empty = vars.strings.empty_store
-			$rootScope.address = 'Via Giuseppe Tomaino, Lamezia Terme, CZ, Italia'
+			#$rootScope.address = 'Via Giuseppe Tomaino, Lamezia Terme, CZ, Italia'
+			store.isStoreLoading = off
 			store.$onInit = ->
 				store.map = {}
 				store.address = ''
 				store.api = "https://maps.googleapis.com/maps/api/js?key=#{vars.api.google_api_key}&libraries=visualization,drawing,geometry,places"
 				store.styles = [{'featureType': 'all','elementType': 'labels.text.fill','stylers': [{'color': '#ffffff'}]},{'featureType': 'all','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'color': '#3e606f'},{'weight': 2},{'gamma': 0.84}]},{'featureType': 'all','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry','stylers': [{'weight': 0.6},{'color': '#1a3541'}]},{'featureType': 'administrative.locality','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'administrative.neighborhood','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative.land_parcel','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'landscape','elementType': 'geometry','stylers': [{'color': '#2c5a71'}]},{'featureType': 'landscape.natural','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'}]},{'featureType': 'landscape.natural.landcover','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#0b1e2d'},{'lightness': '-38'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'poi','elementType': 'geometry','stylers': [{'color': '#406d80'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'color': '#2c5a71'}]},{'featureType': 'road','elementType': 'geometry','stylers': [{'color': '#29768a'},{'lightness': -37}]},{'featureType': 'transit','elementType': 'geometry','stylers': [{'color': '#406d80'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'color': '#193341'},{'visibility': 'simplified'}]}]
-				store.start = if $rootScope.address then $rootScope.address else vars.api.start_latlng
+				store.start = vars.api.start_latlng
 				$timeout ->
 					getMap()
 					return
@@ -49,6 +50,7 @@ module.exports = ->
 				return content
 
 			$rootScope.$on 'markers_changed', ->
+				store.isStoreLoading = off
 				zoomChange()
 				return
 			zoomChange = ()->
@@ -65,6 +67,8 @@ module.exports = ->
 				delete store.coords
 				return
 			store.onSubmit = ->
+				return if store.isStoreLoading
+				store.isStoreLoading = on
 				if store.coords
 					if store.store
 						wp.locations()

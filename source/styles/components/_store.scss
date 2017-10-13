@@ -18,6 +18,14 @@
 }
 .map {
 	@include grow('lg');
+	&__loader {
+		max-height: none;
+		transition: $speed visibility, $speed opacity;
+		&--visible {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
 	&__title {
 		color: $alternate-color;
 	}
@@ -142,6 +150,7 @@
 			&--active {
 				visibility: visible;
 				opacity: 1;
+				z-index: 999;
 			}
 		}
 		.icon-pittogramma {

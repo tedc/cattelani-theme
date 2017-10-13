@@ -66544,7 +66544,7 @@ module.exports = function() {
         store.any = vars.strings.select_any;
         store.isStore = false;
         store.empty = vars.strings.empty_store;
-        $rootScope.address = 'Via Giuseppe Tomaino, Lamezia Terme, CZ, Italia';
+        store.isStoreLoading = false;
         store.$onInit = function() {
           store.map = {};
           store.address = '';
@@ -66702,7 +66702,7 @@ module.exports = function() {
               ]
             }
           ];
-          store.start = $rootScope.address ? $rootScope.address : vars.api.start_latlng;
+          store.start = vars.api.start_latlng;
           $timeout(function() {
             getMap();
           });
@@ -66734,6 +66734,7 @@ module.exports = function() {
           return content;
         };
         $rootScope.$on('markers_changed', function() {
+          store.isStoreLoading = false;
           zoomChange();
         });
         zoomChange = function() {
@@ -66755,6 +66756,10 @@ module.exports = function() {
           delete store.coords;
         };
         store.onSubmit = function() {
+          if (store.isStoreLoading) {
+            return;
+          }
+          store.isStoreLoading = true;
           if (store.coords) {
             if (store.store) {
               wp.locations().stores(store.store).param('order_location', store.coords).then(function(res) {
