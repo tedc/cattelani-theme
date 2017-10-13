@@ -44,12 +44,12 @@ catellani
 					height = rect.height
 					bottom = window.innerHeight - rect.bottom
 					divider = angular.element '<div id="next-divider"></div>'
-					TweenMax.set divider,
-						height : height
-					element.after divider 
 					TweenMax.set element,
 						top : top
 						bottom : bottom
+					TweenMax.set divider,
+						height : height
+					element.after divider 
 					$rootScope.prevElement = element
 					return
 				return

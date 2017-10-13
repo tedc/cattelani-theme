@@ -178,6 +178,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		# 		return
 	return deferred.promise
 exports.prev = ($rootScope, $timeout, $q)->
+	return
 	body = angular.element document.body
 	deferred = $q.defer()
 	if not $rootScope.prevElement

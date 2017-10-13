@@ -65834,14 +65834,14 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
           height = rect.height;
           bottom = window.innerHeight - rect.bottom;
           divider = angular.element('<div id="next-divider"></div>');
-          TweenMax.set(divider, {
-            height: height
-          });
-          element.after(divider);
           TweenMax.set(element, {
             top: top,
             bottom: bottom
           });
+          TweenMax.set(divider, {
+            height: height
+          });
+          element.after(divider);
           $rootScope.prevElement = element;
         });
       }
@@ -67140,6 +67140,7 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
 
 exports.prev = function($rootScope, $timeout, $q) {
   var body, deferred, expand, height, scroll, tl, y;
+  return;
   body = angular.element(document.body);
   deferred = $q.defer();
   if (!$rootScope.prevElement) {
