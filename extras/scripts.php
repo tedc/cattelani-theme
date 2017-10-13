@@ -16,7 +16,7 @@
 		// }
 		$posts = get_posts(array('posts_per_page' => -1, 'post_type' => 'lampade'));
 		$posts = count($posts);
-		$white = (get_field('header_kind') != 0 && !is_front_page()) ? 'white' : ''; 
+		$white = (get_field('header_kind') != 0 && !is_front_page()) ? 'white-header' : ''; 
 		$contactBar = (get_field('is_contact_bar')) ? 'contact-bar' : ''; 
 		$log = (is_user_logged_in() && is_admin_bar_showing()) ? ' logged-in admin-bar' : ''; 
 		$body_classes = join( ' ', get_body_class( array($contactBar, $white ) ) );

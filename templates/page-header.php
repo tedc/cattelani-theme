@@ -20,7 +20,7 @@
 		}
 		$i++;
 	} 
-	$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($post->ID)).'"';
+	$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($post->ID)).'" light-collection="'.$collection[0]->term_id.'"';
 	endif;
 ?>
 

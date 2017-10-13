@@ -196,9 +196,11 @@
 		}
 	}
 	.storia__nav {
-		position: sticky;
-		z-index: 9993;
-		top: 0;
+		@include breakpoint() {
+			position: sticky;
+			z-index: 9993;
+			top: 0;
+		}
 	}
 }
 .type-anni {

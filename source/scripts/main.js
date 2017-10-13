@@ -65270,7 +65270,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Circ.easeOut,
+            ease: Linear.easeNone,
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65368,7 +65368,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Circ.easeOut,
+            ease: Linear.easeNone,
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65806,6 +65806,15 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
         element.on('click', function() {
           $rootScope.fromElement = element;
         });
+      }
+    };
+  }
+]).directive('lightCollection', [
+  '$rootScope', function($rootScope) {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attr) {
+        $rootScope.currentCollection = attr.lightCollection;
       }
     };
   }
@@ -66824,16 +66833,18 @@ module.exports = function($timeout, $rootScope) {
       }
       scope.navInit = false;
       if ($rootScope.currentCollection) {
-        s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
-        i = parseInt(s.getAttribute('data-index'));
-        if ($rootScope.homeClicked) {
-          scope.start = i;
-        } else {
-          i = i - 1 === 0 ? 0 : i - 1;
-          scope.start = i;
+        if (attr.isHome) {
+          s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
+          i = parseInt(s.getAttribute('data-index'));
+          if ($rootScope.homeClicked) {
+            scope.start = i;
+          } else {
+            i = i - 1 === 0 ? 0 : i - 1;
+            scope.start = i;
+          }
+          $rootScope.currentCollection = false;
+          $rootScope.homeClicked = false;
         }
-        $rootScope.currentCollection = false;
-        $rootScope.homeClicked = false;
       } else {
         scope.start = 0;
       }
@@ -66890,6 +66901,9 @@ module.exports = function($timeout, $rootScope) {
         if (attr.isStoria) {
           scope.storia.update();
         }
+      });
+      element.on('$destroy', function() {
+        $rootScope.isYearsActive = false;
       });
     }
   };

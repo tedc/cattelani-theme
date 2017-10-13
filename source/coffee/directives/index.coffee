@@ -25,6 +25,12 @@ catellani
 					return
 				return
 	]
+	.directive 'lightCollection', ['$rootScope', ($rootScope)->
+		restrict : 'A'
+		link : (scope, element, attr)->
+			$rootScope.currentCollection = attr.lightCollection
+			return
+	]
 	.directive 'nextElement', ['$rootScope', ($rootScope)->
 		clicked =
 			restrict : 'A'

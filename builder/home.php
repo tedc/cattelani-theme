@@ -1,4 +1,4 @@
-<div class="collections" ng-swiper>
+<div class="collections" ng-swiper is-home="true">
 	<?php $terms = get_terms(
 			array(
 				'taxonomy' => 'collezioni',

@@ -7,15 +7,16 @@ module.exports = ($timeout, $rootScope)->
 			scope.storia = {} if attr.isStoria
 			scope.navInit = off
 			if $rootScope.currentCollection
-				s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
-				i = parseInt s.getAttribute 'data-index'
-				if $rootScope.homeClicked
-					scope.start = i
-				else	
-					i = if i - 1 is 0 then 0 else i - 1
-					scope.start = i
-				$rootScope.currentCollection = off
-				$rootScope.homeClicked = off
+				if attr.isHome
+					s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
+					i = parseInt s.getAttribute 'data-index'
+					if $rootScope.homeClicked
+						scope.start = i
+					else	
+						i = if i - 1 is 0 then 0 else i - 1
+						scope.start = i
+					$rootScope.currentCollection = off
+					$rootScope.homeClicked = off
 			else		
 				scope.start = 0
 			scope.next = (swiper)->
@@ -72,4 +73,7 @@ module.exports = ($timeout, $rootScope)->
 			# 	return
 				
 			#slideChage()
+			element.on '$destroy', ->
+				$rootScope.isYearsActive = off
+				return
 			return

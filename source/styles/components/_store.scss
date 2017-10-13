@@ -24,7 +24,7 @@
 	&__cell {
 		position: relative;
 		@include breakpoint() {
-			height: calc(100vh - #{emm(80px)});
+			height: calc(100vh - #{em(80px)});
 			overflow: hidden;
 		}
 	}

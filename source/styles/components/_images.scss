@@ -5,6 +5,9 @@ figure {
 	@include cover;
 	@include full;
 	z-index: 0;
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+	perspective: 1000px;
 }
 
 [ng-lazy-img] {

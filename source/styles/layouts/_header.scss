@@ -3,7 +3,7 @@
 	background-color: $light-color;
 	transition: opacity $speed, transform $speed, background-color $speed;
 	display: inline-block;
-	.white & {
+	.white &, .white-header & {
 		background-color: $main-color;
 	}
 }
@@ -12,7 +12,7 @@
 	margin: em(5px) 0;
 	position: relative;
 	background-color: transparent;
-	.white & {
+	.white &, .white-header & {
 		background-color: transparent;
 	}
 	&:before, &:after {
@@ -20,7 +20,7 @@
 		content: '';
 		background-color: $light-color;
 		transition: transform $speed, background-color $speed;
-		.menu-opened &, .white & {
+		.menu-opened &, .white &, .white-header & {
 			background-color: $main-color;
 		}
 	}
@@ -38,7 +38,7 @@
 	display: flex;
 	align-items: center;
 	transition: $speed color;
-	.menu-opened &, .white & {
+	.menu-opened &, .white &, .white-header & {
 		color: $main-color;
 	}
 }
@@ -86,7 +86,7 @@
 			duration: $speed;
 		}
 	}
-	.white & {
+	.white &, .white-header & {
 		&:before {
 			opacity: 1;
 			visibility: visible
@@ -137,7 +137,7 @@
 			width: em(93px);
 			path {
 				transition: fill $speed;
-				.opened &, .white & {
+				.opened &, .white &, .white-header & {
 					fill: $dark-color !important;
 				}
 			}
@@ -398,9 +398,9 @@
 }
 
 .breadcrumbs {
-	//position: fixed;
+	position: fixed;
 	display: none;
-	position: absolute;
+	//position: absolute;
 	font-weight: 200;
 	top: 0;
 	left: 50%;
@@ -409,6 +409,10 @@
 	z-index: 9995;
 	opacity: 1;
 	transition: transform $speed, opacity $speed, visibility $speed;
+	&--hidden {
+		visibility: hidden;
+		opacity: 0;
+	}
 	.is-anim & {
 		transform: translate3d(-50%, $p*-2, 0);
 		opacity: 0;
@@ -430,7 +434,7 @@
 		&:hover {
 			opacity: .5;
 		}
-		.white & {
+		.white &, .white-header & {
 			color: $dark-color;
 		}
 	}

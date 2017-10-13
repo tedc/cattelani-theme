@@ -239,6 +239,7 @@
 			}
 			.manifesto__item--active & {
 				transition: none;
+				opacity: 1;
 			}
 			.manifesto__item--active-remove & {
 				transition: height $speed;
@@ -323,8 +324,9 @@
 			.manifesto__item:hover & {
 				transform: translate3d(0, ($p/2)*-1, 0)
 			}
-			.manifesto__item--active & {
+			.manifesto__item--active &, .manifesto__item--active:hover & {
 				transition: transform $speed;
+				transform: translate3d(0, 0, 0)
 			}
 			font-size: vw(24px);
 			display: inline-block;
