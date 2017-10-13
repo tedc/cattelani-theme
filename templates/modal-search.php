@@ -66,7 +66,7 @@
 			<p class="search__cell search__cell--found search__cell--grow-md" ng-if="filtered() && isLoading">
 				<span><?php _e('Nessuna lampada per la ricerca effettuata', 'catellani'); ?></span>
 			</p>
-			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | taxSearch:search | orderBy:order" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
+			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | filterMultiple:search | orderBy:order" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">
 					<span class="search__figure">
 						<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />
