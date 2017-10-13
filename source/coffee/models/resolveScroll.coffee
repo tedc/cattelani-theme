@@ -5,7 +5,7 @@ module.exports = ($q, $timeout, $rootScope, cfpLoadingBar)->
 	if $rootScope.scrollFrom > 0
 		TweenMax.set 'body',
 			className : '-=white'
-		TweenMax.to window, .3,
+		TweenMax.to window, .75,
 			scrollTo :
 				y : 0
 			onComplete : ->
