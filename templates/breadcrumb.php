@@ -26,7 +26,7 @@
 		endif;
 		$current = ($post_id) ? '<span>'.get_the_title($post_id).'</span>' : '';
 	elseif($term_obj) :
-		$ancestor = ($term_obj->taxonomy == get_option('glossary-settings')['slug-cat']) : '<a ui-sref="app.page({slug : \''.basename(get_permalink($index['glossary'])).'\', lang : \''.$lang.'\'})">'.get_the_title(id_by_lang($index['glossary'], 'page', $lang)).'</a>'.$sep : '';
+		$ancestor = ($term_obj->taxonomy == get_option('glossary-settings')['slug-cat']) ? '<a ui-sref="app.page({slug : \''.basename(get_permalink($index['glossary'])).'\', lang : \''.$lang.'\'})">'.get_the_title(id_by_lang($index['glossary'], 'page', $lang)).'</a>'.$sep : '';
 		$term = get_term(id_by_lang($term_obj->term_id, $term_obj->taxonomy, $lang));
 		$current = ($term) ? $ancestor.'<span>'.$term->name.'</span>' : '';
 	endif;
