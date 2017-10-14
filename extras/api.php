@@ -190,7 +190,7 @@
         );
 
         register_rest_field(
-            array('post', , 'progetti', 'installazioni'),
+            array('post', 'progetti', 'installazioni'),
             'post_thumbnail',
             array(
               'get_callback' => 'add_post_thumb'
