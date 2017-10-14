@@ -62,7 +62,12 @@
 				<?php 
 					$oldPost = $post;
 					$post = $s;
+
+					add_filter( 'get_next_post_where', 'my_next_post_where' );
+					add_filter( 'get_next_post_sort', 'my_next_post_sort' );
 					$next = get_next_post(); 
+					remove_filter( 'get_next_post_where', 'my_next_post_where' );
+					remove_filter( 'get_next_post_sort', 'my_next_post_sort' );
 					if($next) : 
 				?>
 				<span class="type-anni__next" ng-click="next();isYears = <?php echo $next->ID; ?>"><?php echo get_the_title($next->ID); ?></span>
