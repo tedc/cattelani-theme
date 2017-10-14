@@ -1,5 +1,9 @@
 .storia {
 	@include grow('lg');
+	transition: background-color $speed;
+	&--visible {
+		background: $w;
+	}
 	.swiper-container {
 		margin: 0 auto;
 	}
