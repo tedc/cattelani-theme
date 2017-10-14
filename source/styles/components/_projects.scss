@@ -47,6 +47,11 @@
 			left: 0;
 			width: $f !important;
 			text-align: center;
+			padding-top: 0;
+			display: none;
+			&-visible {
+				display: block;
+			}
 			span {
 				font-size: em(22px);
 				color: $dark-color;
