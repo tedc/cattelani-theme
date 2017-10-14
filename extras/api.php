@@ -189,6 +189,21 @@
             )
         );
 
+        register_rest_field(
+            array('post', , 'progetti', 'installazioni'),
+            'post_thumbnail',
+            array(
+              'get_callback' => 'add_post_thumb'
+            )
+        );
+
+        function add_post_thumbnail_src($object) {
+           $id = get_post_thumbnail_id($object['id']);
+           $alt = get_post_meta($id, '_wp_attachment_image_alt', true);
+           return array('alt' => $alt, 'magazine' => get_the_post_thumbnail_url( $id, 'magazine' ), 'large' => get_the_post_thumbnail_url( $id, 'large' ), 'full' => get_the_post_thumbnail_url( $id, 'full' ));
+        }// POST THUMBNAIL
+    
+
         function add_body_class($object, $field_name, $request)
         {
           global $sitepress;
@@ -597,6 +612,8 @@ function my_rest_prepare_post( $data, $post, $request ) {
     unset($_data['body_class']);
     unset($_data['wpml_menu']);
     unset($_data['cover']);
+  } else {
+    unset( $_data['post_thumbnail'] ); 
   }
   $data->data = $_data;
   return $data;
