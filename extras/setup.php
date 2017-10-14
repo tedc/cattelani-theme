@@ -598,12 +598,11 @@
 
 	}, 10, 5 );
 
-	function filter_next_post_sort($sort) {
-	    $sort = "ORDER BY p.post_title ASC LIMIT 1";
-	    return $sort;
+	function my_next_post_sort() {
+	    return "ORDER BY p.post_title ASC LIMIT 1";
 	}
 
 	function my_next_post_where() {
 		global $post, $wpdb;
-		return $wpdb->prepare( "WHERE p.menu_order > %s AND p.post_type = %s AND p.post_status = 'publish'", $post->menu_order, $post->post_type);
+		return $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND p.post_status = 'publish'", $post->post_title, $post->post_type);
 	}
