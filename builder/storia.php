@@ -70,7 +70,7 @@
 					remove_filter( 'get_next_post_sort', 'my_next_post_sort' );
 					if($next) : 
 				?>
-				<span class="type-anni__next" ng-click="next();isYears = <?php echo $next->ID; ?>"><?php echo get_the_title($next->ID); ?></span>
+				<span class="type-anni__next" ng-click="next(<?php echo $next->ID; ?>);isYears"><?php echo get_the_title($next->ID); ?></span>
 				<?php endif;
 					$post = $oldPost;
 				 ?>
