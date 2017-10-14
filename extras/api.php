@@ -197,7 +197,7 @@
             )
         );
 
-        function add_post_thumbnail_src($object) {
+        function add_post_thumb($object) {
            $id = get_post_thumbnail_id($object['id']);
            $alt = get_post_meta($id, '_wp_attachment_image_alt', true);
            return array('alt' => $alt, 'magazine' => get_the_post_thumbnail_url( $id, 'magazine' ), 'large' => get_the_post_thumbnail_url( $id, 'large' ), 'full' => get_the_post_thumbnail_url( $id, 'full' ));
