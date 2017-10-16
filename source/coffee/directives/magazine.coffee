@@ -4,8 +4,12 @@ module.exports = ->
 		$scope.page = 1
 		$scope.lang = $attrs.lang
 		$scope.isNotLoading = off
+		$scope.firstLoad = off
+		$scope.isLoading = off
 		wp = WPAPI
 		getPosts = ->
+			return if $scope.isLoading
+			$scope.isLoading = on	
 			return if $scope.isNotLoading
 			wp
 				.posts()
@@ -14,6 +18,8 @@ module.exports = ->
 				.page $scope.page
 				.then (res)->
 					$timeout ->
+						$scope.isLoading = off
+						$scope.firstLoad = on
 						$scope.posts = $scope.posts.concat res
 						$scope.page += 1
 						$scope.isNotLoading = on if $scope.page > parseInt res._paging.totalPages
@@ -21,11 +27,9 @@ module.exports = ->
 					return
 			return
 		$scope.image = (item)->
-			return if not item._embedded['wp:featuredmedia']? or typeof item._embedded['wp:featuredmedia'] is 'undefined'
-			return if item._embedded['wp:featuredmedia'][0].code
-			img = item._embedded['wp:featuredmedia'][0]
-			url = if img.media_details.sizes.magazine then img.media_details.sizes.large.source_url else img.media_details.sizes.full.source_url
-			alt = img.alt_text
+			img = item.post_thumbnail
+			url = if img.magazine then img.magazine else img.large
+			alt = img.alt
 			array =
 				url : url
 				alt : alt

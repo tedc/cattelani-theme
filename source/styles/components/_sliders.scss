@@ -61,6 +61,7 @@
 }
 
 .collections {
+	background-color: $dark-color;
 	@include full;
 	height: 100vh;
 	overflow: hidden;
@@ -69,6 +70,7 @@
 	}
 	.swiper-wrapper {
 		display: flex;
+		@extend %blurry_fix;
 	}
 	&__cell {
 		position: relative;
@@ -78,6 +80,9 @@
 		justify-content: center;
 		@include grow('md');
 
+	}
+	.swiper-slide {
+		@extend %blurry_fix;
 	}
 	// &__mask {
 	// 	@include full;

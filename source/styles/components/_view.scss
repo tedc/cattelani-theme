@@ -9,12 +9,16 @@
 		height: calc(100vh - 32px);
 	}
 }
+%blurry_fix {
+	transform-style: preserve-3d;
+	backface-visibility: hidden;
+	perspective: 1000px;
+	filter: blur(0);
+}
 .view {
 	&.ng-animate {
-		@extend %pos_Abs !optional;
-		transform-style: preserve-3d;
-		backface-visibility: hidden;
-		perspective: 1000px;
+		@extend %blurry_fix, %pos_Abs !optional;
+		
 	}
 	&.view-enter {
 		z-index: 3;

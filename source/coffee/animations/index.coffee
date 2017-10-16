@@ -6,11 +6,11 @@ catellani
 	.animation '.storia', ["$rootScope", "$timeout", ($rootScope)->
 		storia =
 			addClass : (element, className, done)->
-				return if className isnt 'storia__slider--years-visible'
+				return if className isnt 'storia--visible'
 				$rootScope.$broadcast 'swiperChaged'
 				return
 			removeClass : (element, className, done)->
-				return if className isnt 'storia__slider--years-visible'
+				return if className isnt 'storia--visible'
 				$rootScope.$broadcast 'swiperChaged'
 				return
 	]

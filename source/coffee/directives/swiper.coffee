@@ -1,4 +1,4 @@
-module.exports = ($timeout, $rootScope)->
+module.exports = ($timeout, $rootScope, $location)->
 	ngSwiper =
 		scope : on
 		link : (scope, element, attr)->
@@ -6,6 +6,8 @@ module.exports = ($timeout, $rootScope)->
 			scope.nav = {}
 			scope.storia = {} if attr.isStoria
 			scope.navInit = off
+			scope.current = 0
+			$rootScope.isYears = 0 if attr.isStoria
 			if $rootScope.currentCollection
 				if attr.isHome
 					s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
@@ -19,14 +21,17 @@ module.exports = ($timeout, $rootScope)->
 					$rootScope.homeClicked = off
 			else		
 				scope.start = 0
-			scope.next = (swiper)->
+			scope.next = (val)->
 				scope.storia.slideNext() if scope.storia.slideNext
+				$timeout ->
+					$rootScope.isYears = val
+					return
 				#scope.nav.slideNext() if scope.nav.slideNext
 				return
 			scope.prev = (swiper)->
 				scope.main.slidePrev() if scope.main.slidePrev
 				#scope.nav.slidePrev() if scope.nav.slidePrev
-				scope.current = scope.main.realIndex
+				#scope.current = scope.main.realIndex
 				return
 			scope.slideTo = (index)->
 				#scope.main.slideTo index if scope.main.slideTo
@@ -55,24 +60,32 @@ module.exports = ($timeout, $rootScope)->
 						scope.nav.update()
 						scope.main.update()
 						scope.main.slideTo scope.start, 0
+
 					return
 				return
 			$rootScope.isYearsActive = off
+			scope.$watch 'storia', (newValue, oldValue)->
+				return if oldValue is newValue
+				scope.storia.on 'slideChangeStart', (swiper)->
+					scope.current = swiper.realIndex
+					return
+				hash = $location.hash()
+				if hash and hash isnt 'contact' and hash isnt 'search' and hash isnt 'languages' and hash isnt 'downloads'
+					slide = element[0].querySelector "[data-hash='#{hash}']"
+					index = parseInt slide.getAttribute 'data-current'
+					scope.current = index
+				return
+				# swiper.on 'slideChangeStart', (swiper)->
+				# 	scope.current = swiper.realIndex 
+				# 	return
 			scope.expandStory = (cond)->
 				$rootScope.isYearsActive = !$rootScope.isYearsActive
 				return
-			$rootScope.$on 'swiperChaged', ->
-				scope.main.update()
-				scope.storia.update() if attr.isStoria
+			scope.$on 'swiperChaged', ->
+				scope.main.update() if not angular.equals {}, scope.main
+				scope.storia.update() if attr.isStoria and not angular.equals {}, scope.storia
 				return
 			
-			# $rootScope.$on 'destroySwiper', ->
-			# 	console.log angular.equals({}, scope.main), angular.equals({}, scope.nav)
-			# 	scope.main.destroy() if not angular.equals({}, scope.main)
-			# 	#scope.nav.destroy() if not angular.equals({}, scope.nav)
-			# 	return
-				
-			#slideChage()
 			element.on '$destroy', ->
 				$rootScope.isYearsActive = off
 				return

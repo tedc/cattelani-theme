@@ -13,7 +13,6 @@ closeBlocks = (size)->
 	
 exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBar)->
 	body = angular.element document.body
-	body.addClass 'is-transitioner'
 	deferred = $q.defer()
 	screenSize.rules = {
 		min : "screen and (max-width: #{(850/16)}em)"
@@ -23,10 +22,13 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 		return deferred.promise
 	$rootScope.cantStart = on
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
-	if prev isnt 'collection' and not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
+	if not document.querySelector("[data-item-slug='#{$stateParams.slug}']")?
+		body.removeClass 'is-transitioner'	
 		$rootScope.cantStart = off
 		deferred.resolve on
-		return deferred.promise 
+		return deferred.promise
+	else
+		body.addClass 'is-transitioner'
 	$timeout ->
 		$rootScope.isTransitionerActive = on
 		return
@@ -84,7 +86,6 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 	return deferred.promise
 exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar)->
 	body = angular.element document.body
-	body.addClass 'is-transitioner'
 	$rootScope.cantStart = off
 	deferred = $q.defer()
 	screenSize.rules = {
@@ -94,10 +95,13 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 		deferred.resolve on
 		return deferred.promise
 	prev = if $rootScope.PreviousState.Name is '' then $rootScope.fromState else $rootScope.PreviousState.Name.replace 'app.', ''
-	if prev isnt 'page' and not document.querySelector(".header--lampade")?	
+	if not document.querySelector(".header--lampade")?
+		body.removeClass 'is-transitioner'	
 		$rootScope.cantStart = off
 		deferred.resolve on
 		return deferred.promise 
+	else
+		body.addClass 'is-transitioner'
 	$timeout ->
 		$rootScope.isTransitionerActive = on
 		return

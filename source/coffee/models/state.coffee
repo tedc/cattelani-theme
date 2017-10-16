@@ -8,13 +8,15 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 	$stateProvider
 		.state 'app',
 			abstract : on
-			url : '/{lang:(?:it|en)}?search'
+			url : "/{lang:(?:#{vars.main.langs})}"
 			params: 
 				lang : 
 					squash : true
 					value: 'it'
 				search :
 					dynamic : true
+				'#' :
+					dynamic : on
 			template: '<ui-view class="view" />'
 			controller: ["$rootScope", "$stateParams", ($rootScope, $stateParams)->
 				$rootScope.$broadcast 'collection_changed', {id : $stateParams.search } if  $stateParams.search
@@ -50,6 +52,7 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
 				PrevBefore : ["$rootScope", "$timeout", "$q", "cfpLoadingBar", require('./blocks.coffee').prev]	
+				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
 					wp = WPAPI
 					wp.multiple = wp.registerRoute 'wp/v2', 'multiple-post-type/',
@@ -73,7 +76,6 @@ module.exports = ($stateProvider, $locationProvider, cfpLoadingBarProvider)->
 					return
 				]
 				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBar", require('./blocks.coffee').single]
-				ScrollBefore : ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require './resolveScroll.coffee']
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/{collection:(?:collection|collezioni)}/:name'

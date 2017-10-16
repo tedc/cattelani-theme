@@ -44,7 +44,10 @@
 	}
 	&__items {
 		margin: 0 auto;
+		display: flex;
+		justify-content: center;
 		.scroll-content {
+			margin: 0 auto;
 			display: flex;
 			padding: em($p*2) 0;
 			@include normalize_padding;
@@ -200,6 +203,7 @@
 		}
 	}
 	.storia__nav {
+		display: flex;
 		@include breakpoint() {
 			position: sticky;
 			z-index: 9993;

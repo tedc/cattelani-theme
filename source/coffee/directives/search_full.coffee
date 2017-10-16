@@ -1,7 +1,7 @@
 module.exports = ->
 	search =
 		scope : true
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", "$location", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter, $location)->
 			wp = WPAPI
 			wp.products = wp.registerRoute 'api/v1', 'lampade/', params : ['lang']
 			wp.collections = wp.registerRoute 'wp/v2', 'collezioni/', params : ['lang']
@@ -38,6 +38,7 @@ module.exports = ->
 			$scope.isLoading = off
 			$scope.isSearchEnded = off
 			$scope.isChanging = off	
+			$rootScope.closingModal = off
 			closeAnim = (callback)->
 				$scope.isChanging = on
 				$animate.addClass wrapper, 'search__items--changing' 
@@ -89,6 +90,18 @@ module.exports = ->
 						return
 					return
 				closeAnim callback
+				return
+			$rootScope.closeModal = ->
+				if window.history && window.history.pushState
+					history.pushState '', document.title, $location.path()
+				else
+					$location.hash ''
+				# $rootScope.closingModal = on
+				# hash = $location.hash()
+				# console.log $location.state()
+				# if hash 
+				# 	url = $location.url().split('#')[0]
+				# 	$location.path(url).replace()
 				return
 			$scope.clear = (name)->
 				return if $scope.isChanging

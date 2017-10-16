@@ -6,7 +6,7 @@ catellani
 	.directive 'collectionSearch', [require './search_full.coffee']
 	.directive 'postTypeArchive', [require './archive.coffee']
 	.directive 'ngSm', ["$rootScope", "$timeout", require './sm.coffee'] 
-	.directive 'ngSwiper', [ "$timeout", "$rootScope", require './swiper.coffee'] 
+	.directive 'ngSwiper', [ "$timeout", "$rootScope", '$location', require './swiper.coffee'] 
 	.directive 'ngInstagram', [ require './instagram.coffee']
 	.directive 'ngVideo', [ "$rootScope", require './video.coffee'] 
 	.directive 'ngPlayer', [ "angularLoad", "$timeout", "$rootScope", require './player.coffee'] 
@@ -120,10 +120,12 @@ catellani
 		zoom = 
 			scope : on
 			link : (scope, element)->
+				scope.closeHover = off
 				scope.isZoom = []
 				#zoomScrollbar = ScrollbarService.getInstance 'zoom'
 				scope.x = 0
 				scope.y = 0
+				scope.isCursor = off
 				draggable = element[0].querySelector '.zoom__scroll > img'
 				Draggable.create draggable,
 					type : 'x,y'
@@ -133,17 +135,23 @@ catellani
 						return
 	
 				scope.cursor = (evt)->
-					startX = element[0].offsetLeft
-					startY = element[0].offsetTop
+					el = element[0].querySelector '.zoom__container'
+					startX = el.offsetLeft
+					startY = el.offsetTop
 					moveX = evt.pageX
 					moveY = evt.pageY
 					$this = element[0].querySelector '.zoom__cursor'
 					h = $this.offsetHeight
 					x = if element.hasClass 'zoom--active' then evt.clientX else moveX - startX
 					y = if element.hasClass 'zoom--active' then evt.clientY - h else moveY - startY
-					TweenMax.set $this,
+					TweenMax.to $this, .15,
 						left : x
 						top : y
+					return
+				scope.leave = ->
+					TweenMax.to element[0].querySelector('.zoom__cursor'), .5,
+						left : '50%'
+						top : '50%'
 					return
 				return
 	]

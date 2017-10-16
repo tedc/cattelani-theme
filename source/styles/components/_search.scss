@@ -13,10 +13,17 @@
 	&__filters {
 		justify-content: center;
 		flex: 0 0 auto;
+		padding-top: em($p*1.5);
+		@include breakpoint() {
+			margin: 0 em($p*6);
+		}
 	}
 	&__select {
 		width: em(260px);
 		margin: 0 em($p);
+		@include breakpoint() {
+			width: calc(#{$f/4} - #{em($p*2)});
+		}
 	}
 	&__cell {
 		@include grow('md');
@@ -168,6 +175,9 @@
 		.icon-select {
 			opacity: 1 !important;
 		}
+	}
+	&__sep {
+		padding: 0 em($p/2);
 	}
 	&__result{
 		&s {

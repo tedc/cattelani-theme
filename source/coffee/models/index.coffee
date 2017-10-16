@@ -1,7 +1,7 @@
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", "cfpLoadingBarProvider", require './state.coffee' ]
-	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "cfpLoadingBar", ($transitions, $state, $location, $rootScope, $timeout, cfpLoadingBar)->
+	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "cfpLoadingBar", "$stateParams", ($transitions, $state, $location, $rootScope, $timeout, cfpLoadingBar, $stateParams)->
 		$rootScope.isFinish = on
 		$rootScope.isAnim = 'is-anim'
 		$rootScope.isLeaving = 'is-leaving'
@@ -10,6 +10,12 @@ catellani
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
 		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onStart {}, (trans)->
+			hash = $location.hash()
+			if hash
+				$timeout ->
+					return if hash isnt 'contact' and hash isnt 'downloads' and hash isnt 'search' and hash isnt 'languages'
+					$rootScope.modal hash
+					return
 			body = document.body
 			docEl = document.documentElement
 			scrollTop = window.pageYOffset or docEl.scrollTop or body.scrollTop
@@ -19,7 +25,11 @@ catellani
 			$rootScope.isLeaving = off if newUrl is oldUrl
 			$rootScope.isAnim = off if newUrl is oldUrl
 			#$rootScope.fromParams = trans.params()
-			return false if newUrl is oldUrl
+			#console.log newUrl is oldUrl.split('#')[0], console.log /#/.test oldUrl, oldUrl.split('#')[0]
+			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0]
+			#return false if hash
+			#return false if /#/.test(oldUrl) and newUrl is oldUrl.split('#')[0]
+			return false if newUrl.split('#')[0] is oldUrl.split('#')[0]
 			$rootScope.isAnim = 'is-anim'
 			# from = if $rootScope.from then $rootScope.from else trans.$from().name.replace('app.', '')
 			# to = trans.$to().name.replace('app.', '')

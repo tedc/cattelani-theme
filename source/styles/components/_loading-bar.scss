@@ -18,20 +18,25 @@
 		left: 0;
 		top: 0;
 		background-color: #f9faf3;
-		box-shadow: 0 0 $p/2 transparentize(#f6f7ea, .05);
+		transition: background-color $speed;
+
+		.white &, .white-header & {
+			background-color: $dark-color;
+		}
+		box-shadow: 0 0 $p/2 transparentize($main-color, .65);
 		transition: $speed width;
 		.admin-bar.logged-in & {
 			margin-top: 32px;
 		}
 	}
-	.peg {
-		background-color: #f6f7ea;
-		box-shadow: 0 0 $p/4 #f6f7ea;
-		position: absolute;
-		top: -1px;
-		right: ($p/10)*-2;
-		border-radius: $f;
-		width: $p/2;
-		height: 6px;
-	}
+	// .peg {
+	// 	background-color: #f6f7ea;
+	// 	box-shadow: 0 0 $p/4 #f6f7ea;
+	// 	position: absolute;
+	// 	top: -1px;
+	// 	right: ($p/10)*-2;
+	// 	border-radius: $f;
+	// 	width: $p/2;
+	// 	height: 6px;
+	// }
 }

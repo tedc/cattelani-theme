@@ -65027,13 +65027,13 @@ catellani.animation('.banner', ["$timeout", "$rootScope", require(161)]).animati
     var storia;
     return storia = {
       addClass: function(element, className, done) {
-        if (className !== 'storia__slider--years-visible') {
+        if (className !== 'storia--visible') {
           return;
         }
         $rootScope.$broadcast('swiperChaged');
       },
       removeClass: function(element, className, done) {
-        if (className !== 'storia__slider--years-visible') {
+        if (className !== 'storia--visible') {
           return;
         }
         $rootScope.$broadcast('swiperChaged');
@@ -65266,7 +65266,7 @@ module.exports = function($rootScope, $timeout, $state) {
       element.addClass('view-enter');
       if (!$rootScope.isTransitionerActive) {
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, 1.25, {
+          TweenMax.fromTo(element, .75, {
             yPercent: fromY
           }, {
             yPercent: toY,
@@ -65364,7 +65364,7 @@ module.exports = function($rootScope, $timeout, $state) {
       if (!$rootScope.isTransitionerActive) {
         element.addClass('view-leave');
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, 1.25, {
+          TweenMax.fromTo(element, .75, {
             yPercent: fromY
           }, {
             yPercent: toY,
@@ -65484,6 +65484,8 @@ module.exports = function() {
         };
         $scope.page = 1;
         $scope.items = [];
+        $scope.firstLoad = false;
+        $scope.isLoading = false;
         $scope.change = function(s, i) {
           $scope.projects[s] = i.id;
           $scope.select[s] = i.name;
@@ -65499,22 +65501,49 @@ module.exports = function() {
           $scope.$broadcast('projects_changed');
           $scope.isSelect['periodi'] = false;
         };
-        wp.collections().lang(lang).then(function(res) {
-          $scope.collections = res;
-        });
-        wp.tipologie().lang(lang).then(function(res) {
-          $scope.tipologie = res;
-        });
+        $scope.image = function(item) {
+          var alt, array, img, url;
+          img = item.post_thumbnail;
+          url = img.magazine ? img.magazine : img.large;
+          alt = img.alt;
+          return array = {
+            url: url,
+            alt: alt
+          };
+        };
         query = function() {
           var after, before, collectionPar, collectionValue, kindPar, kindValue;
+          if ($scope.isLoading) {
+            return;
+          }
+          $scope.isLoading = true;
           before = $scope.projects.before ? new Date($scope.projects.before) : new Date();
           after = $scope.projects.after ? new Date($scope.projects.after) : new Date(-8000000000);
           kindValue = $scope.projects.tipologie ? $scope.projects.tipologie : 0;
           collectionValue = $scope.projects.collezioni ? $scope.projects.collezioni : 0;
           collectionPar = collectionValue === 0 ? 'collezioni_exclude' : 'collezioni';
           kindPar = kindValue === 0 ? 'tipologie_exclude' : 'tipologie';
-          return wp.types().type([type]).embed().param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
+          return wp.types().type([type]).param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
         };
+        query().then(function(results) {
+          $timeout(function() {
+            $scope.isLoading = false;
+          });
+          if (angular.equals(results, $scope.items)) {
+            return;
+          }
+          $timeout(function() {
+            if ($scope.isNotLoading) {
+              return;
+            }
+            $scope.items = $scope.items.concat(results);
+            $scope.page += 1;
+            if ($scope.page > parseInt(results._paging.totalPages)) {
+              $scope.isNotLoading = true;
+            }
+            $scope.firstLoad = true;
+          }, 0);
+        });
         $scope.$on('projects_changed', function() {
           $scope.isNotLoading = false;
           $scope.page = 1;
@@ -65533,6 +65562,9 @@ module.exports = function() {
           return;
         });
         $scope.$on('loadProjects', function() {
+          if ($scope.isLoading) {
+            return;
+          }
           query().then(function(results) {
             if (angular.equals(results, $scope.items)) {
               return;
@@ -65546,20 +65578,16 @@ module.exports = function() {
               if ($scope.page > parseInt(results._paging.totalPages)) {
                 $scope.isNotLoading = true;
               }
+              $scope.firstLoad = true;
             }, 0);
           });
         });
-        $scope.$broadcast('loadProjects');
-        $scope.image = function(item) {
-          var alt, array, img, url;
-          img = item._embedded['wp:featuredmedia'][0];
-          url = img.media_details.sizes.large ? img.media_details.sizes.large.source_url : img.media_details.sizes.full.source_url;
-          alt = img.alt_text;
-          return array = {
-            url: url,
-            alt: alt
-          };
-        };
+        wp.collections().lang(lang).then(function(res) {
+          $scope.collections = res;
+        });
+        wp.tipologie().lang(lang).then(function(res) {
+          $scope.tipologie = res;
+        });
       }
     ]
   };
@@ -65797,7 +65825,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)]).directive('collectionSearch', [require(176)]).directive('postTypeArchive', [require(166)]).directive('ngSm', ["$rootScope", "$timeout", require(177)]).directive('ngSwiper', ["$timeout", "$rootScope", require(179)]).directive('ngInstagram', [require(172)]).directive('ngVideo', ["$rootScope", require(180)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(175)]).directive('ngMagazine', [require(174)]).directive('ngLoader', ['$timeout', require(173)]).directive('ngFooter', ["$window", require(168)]).directive('glossaryAutocomplete', [require(170)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(167)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)]).directive('collectionSearch', [require(176)]).directive('postTypeArchive', [require(166)]).directive('ngSm', ["$rootScope", "$timeout", require(177)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', require(179)]).directive('ngInstagram', [require(172)]).directive('ngVideo', ["$rootScope", require(180)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(175)]).directive('ngMagazine', [require(174)]).directive('ngLoader', ['$timeout', require(173)]).directive('ngFooter', ["$window", require(168)]).directive('glossaryAutocomplete', [require(170)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(167)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -65931,9 +65959,11 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
       scope: true,
       link: function(scope, element) {
         var draggable;
+        scope.closeHover = false;
         scope.isZoom = [];
         scope.x = 0;
         scope.y = 0;
+        scope.isCursor = false;
         draggable = element[0].querySelector('.zoom__scroll > img');
         Draggable.create(draggable, {
           type: 'x,y',
@@ -65943,18 +65973,25 @@ catellani.directive('ngStore', [require(178)]).directive('ngForm', [require(169)
           }
         });
         scope.cursor = function(evt) {
-          var $this, h, moveX, moveY, startX, startY, x, y;
-          startX = element[0].offsetLeft;
-          startY = element[0].offsetTop;
+          var $this, el, h, moveX, moveY, startX, startY, x, y;
+          el = element[0].querySelector('.zoom__container');
+          startX = el.offsetLeft;
+          startY = el.offsetTop;
           moveX = evt.pageX;
           moveY = evt.pageY;
           $this = element[0].querySelector('.zoom__cursor');
           h = $this.offsetHeight;
           x = element.hasClass('zoom--active') ? evt.clientX : moveX - startX;
           y = element.hasClass('zoom--active') ? evt.clientY - h : moveY - startY;
-          TweenMax.set($this, {
+          TweenMax.to($this, .15, {
             left: x,
             top: y
+          });
+        };
+        scope.leave = function() {
+          TweenMax.to(element[0].querySelector('.zoom__cursor'), .5, {
+            left: '50%',
+            top: '50%'
           });
         };
       }
@@ -66063,13 +66100,21 @@ module.exports = function() {
         $scope.page = 1;
         $scope.lang = $attrs.lang;
         $scope.isNotLoading = false;
+        $scope.firstLoad = false;
+        $scope.isLoading = false;
         wp = WPAPI;
         getPosts = function() {
+          if ($scope.isLoading) {
+            return;
+          }
+          $scope.isLoading = true;
           if ($scope.isNotLoading) {
             return;
           }
           wp.posts().param('lang', $scope.lang).embed().page($scope.page).then(function(res) {
             $timeout(function() {
+              $scope.isLoading = false;
+              $scope.firstLoad = true;
               $scope.posts = $scope.posts.concat(res);
               $scope.page += 1;
               if ($scope.page > parseInt(res._paging.totalPages)) {
@@ -66080,15 +66125,9 @@ module.exports = function() {
         };
         $scope.image = function(item) {
           var alt, array, img, url;
-          if ((item._embedded['wp:featuredmedia'] == null) || typeof item._embedded['wp:featuredmedia'] === 'undefined') {
-            return;
-          }
-          if (item._embedded['wp:featuredmedia'][0].code) {
-            return;
-          }
-          img = item._embedded['wp:featuredmedia'][0];
-          url = img.media_details.sizes.magazine ? img.media_details.sizes.large.source_url : img.media_details.sizes.full.source_url;
-          alt = img.alt_text;
+          img = item.post_thumbnail;
+          url = img.magazine ? img.magazine : img.large;
+          alt = img.alt;
           return array = {
             url: url,
             alt: alt
@@ -66248,7 +66287,7 @@ module.exports = function() {
   return search = {
     scope: true,
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter) {
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", "$location", function($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter, $location) {
         var closeAnim, getSearch, lang, wp, wrapper;
         wp = WPAPI;
         wp.products = wp.registerRoute('api/v1', 'lampade/', {
@@ -66299,6 +66338,7 @@ module.exports = function() {
         $scope.isLoading = false;
         $scope.isSearchEnded = false;
         $scope.isChanging = false;
+        $rootScope.closingModal = false;
         closeAnim = function(callback) {
           $scope.isChanging = true;
           $animate.addClass(wrapper, 'search__items--changing').then(function() {
@@ -66363,6 +66403,13 @@ module.exports = function() {
             });
           };
           closeAnim(callback);
+        };
+        $rootScope.closeModal = function() {
+          if (window.history && window.history.pushState) {
+            history.pushState('', document.title, $location.path());
+          } else {
+            $location.hash('');
+          }
         };
         $scope.clear = function(name) {
           var item;
@@ -66827,7 +66874,7 @@ module.exports = function() {
 
 
 },{}],179:[function(require,module,exports){
-module.exports = function($timeout, $rootScope) {
+module.exports = function($timeout, $rootScope, $location) {
   var ngSwiper;
   return ngSwiper = {
     scope: true,
@@ -66839,6 +66886,10 @@ module.exports = function($timeout, $rootScope) {
         scope.storia = {};
       }
       scope.navInit = false;
+      scope.current = 0;
+      if (attr.isStoria) {
+        $rootScope.isYears = 0;
+      }
       if ($rootScope.currentCollection) {
         if (attr.isHome) {
           s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
@@ -66855,16 +66906,18 @@ module.exports = function($timeout, $rootScope) {
       } else {
         scope.start = 0;
       }
-      scope.next = function(swiper) {
+      scope.next = function(val) {
         if (scope.storia.slideNext) {
           scope.storia.slideNext();
         }
+        $timeout(function() {
+          $rootScope.isYears = val;
+        });
       };
       scope.prev = function(swiper) {
         if (scope.main.slidePrev) {
           scope.main.slidePrev();
         }
-        scope.current = scope.main.realIndex;
       };
       scope.slideTo = function(index) {
         if (scope.nav.slideTo) {
@@ -66900,12 +66953,29 @@ module.exports = function($timeout, $rootScope) {
         });
       });
       $rootScope.isYearsActive = false;
+      scope.$watch('storia', function(newValue, oldValue) {
+        var hash, index, slide;
+        if (oldValue === newValue) {
+          return;
+        }
+        scope.storia.on('slideChangeStart', function(swiper) {
+          scope.current = swiper.realIndex;
+        });
+        hash = $location.hash();
+        if (hash && hash !== 'contact' && hash !== 'search' && hash !== 'languages' && hash !== 'downloads') {
+          slide = element[0].querySelector("[data-hash='" + hash + "']");
+          index = parseInt(slide.getAttribute('data-current'));
+          scope.current = index;
+        }
+      });
       scope.expandStory = function(cond) {
         $rootScope.isYearsActive = !$rootScope.isYearsActive;
       };
-      $rootScope.$on('swiperChaged', function() {
-        scope.main.update();
-        if (attr.isStoria) {
+      scope.$on('swiperChaged', function() {
+        if (!angular.equals({}, scope.main)) {
+          scope.main.update();
+        }
+        if (attr.isStoria && !angular.equals({}, scope.storia)) {
           scope.storia.update();
         }
       });
@@ -67014,7 +67084,6 @@ closeBlocks = function(size) {
 exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBar) {
   var body, cover, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
-  body.addClass('is-transitioner');
   deferred = $q.defer();
   screenSize.rules = {
     min: "screen and (max-width: " + (850 / 16) + "em)"
@@ -67025,10 +67094,13 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
   }
   $rootScope.cantStart = true;
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
-  if (prev !== 'collection' && (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null)) {
+  if (document.querySelector("[data-item-slug='" + $stateParams.slug + "']") == null) {
+    body.removeClass('is-transitioner');
     $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;
+  } else {
+    body.addClass('is-transitioner');
   }
   $timeout(function() {
     $rootScope.isTransitionerActive = true;
@@ -67076,7 +67148,6 @@ exports.single = function($rootScope, $stateParams, $timeout, $q, PreviousState,
 exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar) {
   var body, cover, coverAnim, deferred, element, item, prev, size, tl, total;
   body = angular.element(document.body);
-  body.addClass('is-transitioner');
   $rootScope.cantStart = false;
   deferred = $q.defer();
   screenSize.rules = {
@@ -67087,10 +67158,13 @@ exports.collection = function($rootScope, $stateParams, $timeout, $q, ScrollBefo
     return deferred.promise;
   }
   prev = $rootScope.PreviousState.Name === '' ? $rootScope.fromState : $rootScope.PreviousState.Name.replace('app.', '');
-  if (prev !== 'page' && (document.querySelector(".header--lampade") == null)) {
+  if (document.querySelector(".header--lampade") == null) {
+    body.removeClass('is-transitioner');
     $rootScope.cantStart = false;
     deferred.resolve(true);
     return deferred.promise;
+  } else {
+    body.addClass('is-transitioner');
   }
   $timeout(function() {
     $rootScope.isTransitionerActive = true;
@@ -67181,7 +67255,7 @@ var catellani;
 catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider", require(186)]).run([
-  "$transitions", "$state", "$location", "$rootScope", "$timeout", "cfpLoadingBar", function($transitions, $state, $location, $rootScope, $timeout, cfpLoadingBar) {
+  "$transitions", "$state", "$location", "$rootScope", "$timeout", "cfpLoadingBar", "$stateParams", function($transitions, $state, $location, $rootScope, $timeout, cfpLoadingBar, $stateParams) {
     var closeBar, oldUrl;
     $rootScope.isFinish = true;
     $rootScope.isAnim = 'is-anim';
@@ -67190,7 +67264,16 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     $transitions.onStart({}, function(trans) {
-      var body, docEl, newUrl, scrollTop;
+      var body, docEl, hash, newUrl, scrollTop;
+      hash = $location.hash();
+      if (hash) {
+        $timeout(function() {
+          if (hash !== 'contact' && hash !== 'downloads' && hash !== 'search' && hash !== 'languages') {
+            return;
+          }
+          $rootScope.modal(hash);
+        });
+      }
       body = document.body;
       docEl = document.documentElement;
       scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
@@ -67205,7 +67288,7 @@ catellani.config(["$stateProvider", "$locationProvider", "cfpLoadingBarProvider"
       if (newUrl === oldUrl) {
         $rootScope.isAnim = false;
       }
-      if (newUrl === oldUrl) {
+      if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
         return false;
       }
       $rootScope.isAnim = 'is-anim';
@@ -67235,7 +67318,7 @@ module.exports = function($q, $timeout, $rootScope, cfpLoadingBar) {
     TweenMax.set('body', {
       className: '-=white'
     });
-    TweenMax.to(window, .3, {
+    TweenMax.to(window, .75, {
       scrollTo: {
         y: 0
       },
@@ -67285,13 +67368,16 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
   });
   $stateProvider.state('app', {
     abstract: true,
-    url: '/{lang:(?:it|en)}?search',
+    url: "/{lang:(?:" + vars.main.langs + ")}",
     params: {
       lang: {
         squash: true,
         value: 'it'
       },
       search: {
+        dynamic: true
+      },
+      '#': {
         dynamic: true
       }
     },
@@ -67337,6 +67423,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
       PrevBefore: ["$rootScope", "$timeout", "$q", "cfpLoadingBar", require(182).prev],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)],
       data: [
         "$stateParams", "$q", "WPAPI", function($stateParams, $q, WPAPI) {
           var deferred, wp;
@@ -67361,8 +67448,7 @@ module.exports = function($stateProvider, $locationProvider, cfpLoadingBarProvid
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBar", require(182).single],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", "cfpLoadingBar", "PreviousState", require(184)]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", "cfpLoadingBar", require(182).single]
     },
     controller: ["$rootScope", "$scope", "data", require(185)]
   }).state('app.collection', {
@@ -67534,26 +67620,81 @@ catellani.factory('WPAPI', function() {
       return items;
     }
     filtered = items.filter(function(arrayItem) {
-      var k, match, regex, v;
+      var cond1, cond2, cond3, match, regex;
+      regex = {};
+      angular.forEach(search, function(v, k) {
+        regex[k] = new RegExp("\\b(" + (v.replace(/,/g, '|')) + ")\\b", 'g');
+      });
       match = false;
-      for (k in search) {
-        v = search[k];
-        if (!arrayItem.hasOwnProperty(k) || k === '$$hashKey') {
-          continue;
-        }
-        if (search.hasOwnProperty(k)) {
-          regex = new RegExp("\\b(" + (v.replace(',', '|')) + ")\\b", 'g');
-          if (regex.test(arrayItem[k])) {
-            match = true;
-            break;
-          }
-        }
+      if (search.hasOwnProperty('collezioni') && search.hasOwnProperty('posizioni') && search.hasOwnProperty('fonti')) {
+        cond1 = regex['collezioni'].test(arrayItem['collezioni']);
+        cond2 = regex['posizioni'].test(arrayItem['posizioni']);
+        cond3 = regex['fonti'].test(arrayItem['fonti']);
+        match = cond1 && cond2 && cond3;
+      } else if (search.hasOwnProperty('collezioni') && search.hasOwnProperty('posizioni')) {
+        cond1 = regex['collezioni'].test(arrayItem['collezioni']);
+        cond2 = regex['posizioni'].test(arrayItem['posizioni']);
+        match = cond1 && cond2;
+      } else if (search.hasOwnProperty('posizioni') && search.hasOwnProperty('fonti')) {
+        cond2 = regex['posizioni'].test(arrayItem['posizioni']);
+        cond3 = regex['fonti'].test(arrayItem['fonti']);
+        match = cond2 && cond3;
+      } else if (search.hasOwnProperty('collezioni') && search.hasOwnProperty('fonti')) {
+        cond1 = regex['collezioni'].test(arrayItem['collezioni']);
+        cond3 = regex['fonti'].test(arrayItem['fonti']);
+        match = cond1 && cond3;
+      } else {
+        angular.forEach(search, function(v, k) {
+          var cond;
+          cond = regex[k].test(arrayItem[k]);
+          match = cond;
+        });
       }
       return match;
     });
     return filtered;
   };
-});
+}).filter('filterMultiple', [
+  '$filter', function($filter) {
+    return function(items, keyObj) {
+      var filterObj;
+      if (angular.equals({}, keyObj)) {
+        return items;
+      }
+      filterObj = {
+        data: items,
+        filteredData: [],
+        compare: function(actual, expected) {
+          var cond, regex;
+          regex = new RegExp("\\b(" + (expected.replace(/,/g, '|')) + ")\\b", 'g');
+          cond = regex.test(actual);
+          return cond;
+        },
+        applyFilter: function(obj, key) {
+          var fData, fObj;
+          fData = [];
+          if (this.filteredData.length === 0) {
+            this.filteredData = this.data;
+          }
+          if (obj) {
+            fObj = {};
+            fObj[key] = obj;
+            fData = fData.concat($filter('filter')(this.filteredData, fObj, this.compare));
+            if (fData.length > 0) {
+              this.filteredData = fData;
+            }
+          }
+        }
+      };
+      if (keyObj) {
+        angular.forEach(keyObj, function(obj, key) {
+          filterObj.applyFilter(obj, key);
+        });
+      }
+      return filterObj.filteredData;
+    };
+  }
+]);
 
 
 },{"100":100,"156":156}]},{},[181]);
