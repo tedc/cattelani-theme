@@ -20,12 +20,12 @@
 		echo get_the_title($store); ?>
 		</span>
 	</a>
-	<span class="cat__dot" ui-sref="app({'#':'contact'})">
+	<a class="cat__dot" href="#contact">
 		<span class="cat__label">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
 		</span>
-	</span>
+	</a>
 	<span class="cat__main" ng-click="isCat=!isCat">
 	</span>
 </aside>
