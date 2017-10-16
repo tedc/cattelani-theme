@@ -1,8 +1,9 @@
 .zoom {
 	transition: $speed*2;
-	cursor: none !important;
 	&__container {
+		cursor: none !important;
 		position: relative;
+		overflow: hidden;
 		&:before {
 			display: block;
 			content: '';
@@ -12,10 +13,14 @@
 		&:after {
 			content: '';
 			@include full;
-			z-index: 9999;
+			z-index: 9990;
 			.zoom--active & {
 				display: none;
+				cursor: pointer !important;
 			}
+		}
+		.zoom--active & {
+			cursor: move !important;
 		}
 	}
 	&__close {
@@ -40,14 +45,14 @@
 		position: relative;
 		z-index: 5;
 	}
-	&--active{
+	&--active {
 		.zoom__figure {
 			position: fixed;
 			z-index: 9999;
 		}
 		.zoom__image {
 			visibility: visible;
-			cursor: none !important;
+			cursor: move !important;
 		}
 		.zoom__drag {
 			display: block;
@@ -102,6 +107,7 @@
 			}
 			.zoom__icn {
 				transform: translateZ(0) rotate(45deg);
+				opacity: 0;
 			}
 			.zoom__open {
 				display: none;
@@ -120,6 +126,9 @@
 			property: visibility, opacity;
 			duration: $speed;
 		}
+		.zoom--active & {
+			cursor: move !important;
+		}
 	}
 	&__image {
 		visibility: hidden;
@@ -129,7 +138,9 @@
 	}
 	&__cursor {
 		position: absolute;
-		opacity: 0;
+		//opacity: 0;
+		top: 50%;
+		left: 50%;
 		z-index: 9999;
 		transition: opacity $speed;
 		transform: translate3d(-50%, -50%, 0);
@@ -141,8 +152,11 @@
 			font-size: 14px;
 			white-space: nowrap;
 		}
-		.zoom:hover & {
-			opacity: 1;
+		// .zoom:hover & {
+		// 	opacity: 1;
+		// }
+		&--hidden {
+			opacity: 0;
 		}
 	}
 	&__icn {
@@ -150,7 +164,8 @@
 		height: em(25px);
 		margin-right: em($p/2);
 		position: relative;
-		transition: transform $speed $speed;
+		transition: transform $speed $speed, opacity $speed;
+		opacity: 1;
 		&:before, &:after {
 			position: absolute;
 			top: 50%;
@@ -169,6 +184,7 @@
 		}
 		.zoom--active & {
 			transform: translateZ(0) rotate(45deg);
+			opacity: 0;
 		}
 	}
 	&__drag {
