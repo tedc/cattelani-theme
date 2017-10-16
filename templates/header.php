@@ -12,12 +12,12 @@
         <?php $term_obj = is_tax() ? get_queried_object() : false; $post_obj = (is_single() || is_page()) ? $post : false; $lang = ICL_LANGUAGE_CODE; include(locate_template( 'templates/breadcrumb.php', false, true )); ?>
     </p>
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
-        <span class="banner__btn banner__btn--search" ng-click="modal('search'); startSearch();">
+        <a class="banner__btn banner__btn--search" href="#search" ng-click="startSearch();">
             <span class="banner__label">
                 <?php _e('Cerca', 'catellani'); ?>
             </span>
             <i class="icon-search"></i>
-        </span>
+        </a>
         <?php
             $strings = array(__('Menu', 'catellani'), __('Chiudi', 'catellani'));
             $mapped = array_map('strlen', $strings);
