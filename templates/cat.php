@@ -20,7 +20,7 @@
 		echo get_the_title($store); ?>
 		</span>
 	</a>
-	<span class="cat__dot"  ng-click="modal('contact')">
+	<span class="cat__dot" ui-sref="app({'#':'contact'})">
 		<span class="cat__label">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
