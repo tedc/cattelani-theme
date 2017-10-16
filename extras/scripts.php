@@ -24,7 +24,7 @@
 		wp_deregister_script( 'sage/js' );
 		wp_enqueue_script('lib', Assets\asset_path('scripts/lib.js'), null, null, true);
 		wp_enqueue_script('catellanijs', Assets\asset_path('scripts/main.js'), ['lib'], null, true);
-		$languages = apply_filters('wpml_active_languages', null);
+		$languages = icl_get_languages('skip_missing=0&orderby=code');;
         $translations = [];
         foreach ($languages as $language) {
         	$translations[] = $language['language_code'];

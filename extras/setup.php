@@ -509,7 +509,12 @@
 
 	add_filter( 'wpseo_metadesc', 'fix_yoast_metadesc', 10, 1 );
 	function fix_yoast_metadesc( $str ) {
-	  return do_shortcode( $str );
+		$str = do_shortcode( $str );
+		$str= preg_replace('/\s/', ' ', wp_strip_all_tags($str));
+		$str= explode(' ', $str, 35);
+		array_pop($str);
+		$str= implode(' ', $str);
+		return $str;
 	}
 
 

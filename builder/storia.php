@@ -10,7 +10,7 @@
 	);
 	if($storia) :
 ?>
-<div class="storia storia--grow-lg" ng-swiper  ng-class="{'storia--visible':isYearsActive}" is-storia="true">
+<div class="storia storia--grow-lg" ng-swiper  ng-class="{'storia--visible':isYearsActive}" is-storia="true"">
 <header class="storia__header storia__header--grow-lg storia__header--shrink-fw">
 	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php _e('La Storia', 'catellani'); ?></h3>
 </header>
@@ -32,7 +32,7 @@
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</div>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'simulateTouch':false}" on-ready="onReadySwiper(storia)">
+<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'simulateTouch':false}" on-ready="onReadySwiper(storia)" id="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
 	<?php $current = 0; foreach($storia as $s): ?>
 	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
 		<figure class="swiper-slide__figure">
