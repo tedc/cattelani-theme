@@ -20,7 +20,7 @@
 		echo get_the_title($store); ?>
 		</span>
 	</a>
-	<a class="cat__dot" href="#contact">
+	<a class="cat__dot" ui-sref="{'#':'prova'}">
 		<span class="cat__label">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
