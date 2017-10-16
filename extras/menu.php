@@ -103,7 +103,8 @@ class walker_texas_ranger extends Walker_Nav_Menu {
         if(! empty($state)) {
             if($state == 'popup') {
                 $hash = str_replace('#', '', esc_attr($item->url));
-                $sref = ' ng-click="$event.preventDefault();modal(\''.$hash.'\')"';
+                //$sref = ' ng-click="$event.preventDefault();modal(\''.$hash.'\')"';
+                $sref = '';
             } else {
                 $page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ).'\'' : '';
                 $sref =  ' ui-sref="app.'.$state.'({lang : \''.get_field('lingua', $item->ID).'\''.$page.'})"';
