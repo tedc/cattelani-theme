@@ -1,4 +1,5 @@
 <?php
+	var_dump($images);
 	if($images):
 	$imgs = '';
 	$count=0; foreach($images as $img) :
