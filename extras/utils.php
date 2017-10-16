@@ -79,6 +79,7 @@
 				$slider = get_field('layout', $id)[$row][$field];
 			}
 		}
+		var_dump($slider);
 		return $slider;
 	}
 
