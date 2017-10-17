@@ -31,9 +31,8 @@
 		$current = ($term) ? $ancestor.'<span>'.$term->name.'</span>' : '';
 	endif;
 	if($current != '') :
-		if(($post_obj && !$term_obj) && ($home != $post_obj->ID)) :
-			echo $home . $post_obj->ID;
-		echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+		if(($post_obj && !$term_obj) && $home != $post_obj->ID) :
+			echo $home . $post_obj->ID . '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
 		else :
 			echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
 		endif;
