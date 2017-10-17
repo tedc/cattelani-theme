@@ -138,13 +138,20 @@
 		flex-wrap: wrap;
 	}
 	&__updated {
-		top: 0;
 		position: sticky;
 		display: block;
+		top: em(80px);
+		.admin-bar.logged-in & {
+			top: em(112px);
+		}
 	}
 	&__share {
 		text-align: center;
 		position: sticky;
+		top: em(80px);
+		.admin-bar.logged-in & {
+			top: em(112px);
+		}
 		a {
 			color: $alternate-color;
 			margin-bottom: $p;
