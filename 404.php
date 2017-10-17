@@ -14,7 +14,7 @@
 		<h1 class="error__title">
 			<?php _e('Oops, pagina non trovata', 'catellani'); ?>
 		</h1>
-		<h2 class="erro__title">
+		<h2 class="error__title">
 			<?php _e('Accendi Miracolo per tornare alla Home', 'catellani'); ?>
 		</h2>
 	</div>
