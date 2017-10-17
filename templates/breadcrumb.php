@@ -30,7 +30,11 @@
 		$term = get_term(id_by_lang($term_obj->term_id, $term_obj->taxonomy, $lang));
 		$current = ($term) ? $ancestor.'<span>'.$term->name.'</span>' : '';
 	endif;
-	if($current != '' && $home) : 
+	if($current != '') :
+		if(($post_obj && !$term_obj) && ($home != $post_obj->ID)) :
 		echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+		else :
+			echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+		endif;
 	endif;
 ?>

@@ -5,7 +5,7 @@
 		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php _e('Le lampade utilizzate', 'catellani'); ?></h4>
 	</header>
 	<div class="related__items related__items--grow-lg-bottom related__items--grow-md-top">
-		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow-next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow-prev'}">
+		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php 
 			$rels = get_posts(
 				array(
@@ -37,8 +37,8 @@
 		</ks-swiper-slide>
 		<?php endforeach; ?>
 		</ks-swiper-container>
-		<i class="icon-arrow icon-arrow-prev"></i>
-		<i class="icon-arrow icon-arrow-next"></i>
+		<i class="icon-arrow icon-arrow--prev"></i>
+		<i class="icon-arrow icon-arrow--next"></i>
 	</div>
 </div>
 <?php endif; ?>
