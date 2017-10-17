@@ -45,7 +45,8 @@
 				'home' => get_post(get_option('page_on_front'))->post_name,
 				'logged_classes' => $log,
 				'body_classes' => $body_classes,
-				'langs' => $codes
+				'langs' => $codes,
+				'error' => $error
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
