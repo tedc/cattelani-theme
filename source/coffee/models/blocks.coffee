@@ -11,7 +11,7 @@ closeBlocks = (size)->
 		clearProps : 'width'
 	return
 	
-exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize, cfpLoadingBar)->
+exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenSize)->
 	body = angular.element document.body
 	deferred = $q.defer()
 	screenSize.rules = {
@@ -69,7 +69,6 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 			val : 1
 			onStart : ->
 				$timeout ->
-					cfpLoadingBar.complete()
 					animationInner.removeClass "transitioner__wrapper--s#{size}"
 					animationInner.addClass "transitioner__wrapper--s12"
 					return
@@ -84,7 +83,7 @@ exports.single = ($rootScope, $stateParams, $timeout, $q, PreviousState, screenS
 				return
 	#TweenMax.to animationCover, .5, coverAnim.to
 	return deferred.promise
-exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize, cfpLoadingBar)->
+exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, PreviousState, screenSize)->
 	body = angular.element document.body
 	$rootScope.cantStart = off
 	deferred = $q.defer()
@@ -157,7 +156,7 @@ exports.collection = ($rootScope, $stateParams, $timeout, $q, ScrollBefore, Prev
 				$timeout ->
 					animationInner.removeClass "transitioner__wrapper--s12"
 					animationInner.addClass "transitioner__wrapper--s#{size}"
-					cfpLoadingBar.complete()
+					#cfpLoadingBar.complete()
 					return
 				return
 			onComplete : ->
@@ -205,7 +204,6 @@ exports.prev = ($rootScope, $timeout, $q)->
 					$rootScope.prevElement.addClass 'next--fixed'
 					body.removeClass 'is-to-next'
 					$timeout ->
-						$rootScope.isLeaving = off
 						window.scrollTo 0, 0
 						deferred.resolve on
 						return

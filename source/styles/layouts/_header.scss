@@ -133,6 +133,7 @@
 		@include normalize_padding;
 		transition: $speed opacity;
 		svg {
+			transition: visibility $speed, opacity $speed;
 			height: em($p*2);
 			width: em(93px);
 			path {
@@ -141,9 +142,45 @@
 					fill: $dark-color !important;
 				}
 			}
+			.is-anim & {
+				visibility: hidden;
+				opacity: 0;
+			}
 		}
 		.logged-in.admin-bar & {
 			top: calc(#{em($p)} + 32px);
+		}
+		&:before, &:after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: em($p*2);
+			height: em($p*2);
+			margin: {
+				top: em($p*-1);
+				left: em($p*-1);
+			}
+			border-radius: em($p*2);
+			display: block;
+			background-color: $lighter-color;
+			border-radius: $f;
+			animation: pulse 2s infinite ease-in-out;
+			animation-play-state: paused;
+			transition: opacity $speed, visibility $speed;
+			visibility: hidden;
+			opacity: 0;
+			.white &, .white-header & {
+				background-color: $light-color;
+			}
+			.is-anim & {
+				visibility: visible;
+				opacity: .5;
+				animation-play-state: running;
+			}
+		}
+		&:before {
+			animation-delay: -1s;
 		}
 		&:hover {
 			opacity: .5;

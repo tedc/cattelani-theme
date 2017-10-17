@@ -22,7 +22,7 @@ module.exports = ($rootScope, $timeout, $state)->
 					onCompleteParams: ['{self}']
 					onComplete : ->
 						$timeout ->
-							$rootScope.isAnim = off
+							$rootScope.isAnim = ''
 							return
 						, 0
 						return
@@ -50,8 +50,9 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
+							ease: Back.easeOut.config(1)
 							#ease: Linear.easeNone
-							ease: Power4.easeInOut
+							#ease: Power4.easeInOut
 							delay: .25
 							onComplete : ->
 								$timeout ->
@@ -95,15 +96,15 @@ module.exports = ($rootScope, $timeout, $state)->
 				done()
 				endGlobalTransition()
 
-			$rootScope.$on 'cfpLoadingBar:completed', ->
-				TweenMax.to {number : 0}, .2,
-					number : 1
-					onCompleteParams : ['{self}']
-					onComplete : ->
-						$timeout ->
-							body.removeClass 'is-transitioner'
-							return
-						return
+			# $rootScope.$on 'cfpLoadingBar:completed', ->
+			# 	TweenMax.to {number : 0}, .2,
+			# 		number : 1
+			# 		onCompleteParams : ['{self}']
+			# 		onComplete : ->
+			# 			$timeout ->
+			# 				body.removeClass 'is-transitioner'
+			# 				return
+			# 			return
 				return
 			return
 		leave : (element, done)->
@@ -134,12 +135,12 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
+							ease: Back.easeOut.config(1)
 							#ease: Linear.easeNone
-							ease: Power4.easeInOut
+							#ease: Power4.easeInOut
 							delay: .25
 							onComplete : ->
 								$timeout ->
-									$rootScope.isLeaving = off
 									done()
 									element.removeClass 'view-leave'
 									TweenMax.set element,
@@ -148,7 +149,6 @@ module.exports = ($rootScope, $timeout, $state)->
 								return
 						}
 			else
-				$rootScope.isLeaving = off
 				done()
 				#element.removeClass 'view-leave'
 			if $rootScope.prevElement

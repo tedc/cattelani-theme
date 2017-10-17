@@ -9,10 +9,12 @@ require '../../bower_components/angular-bind-html-compile/angular-bind-html-comp
 require 'angular-smooth-scrollbar'
 require 'angular-swiper'
 require 'angular-load'
-require 'angular-loading-bar'
+#require 'angular-loading-bar'
 window.controller = new ScrollMagic.Controller()
 
-catellani = angular.module 'catellani', ['cfp.loadingBar', 'matchMedia', 'ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']
+catellani = angular.module 'catellani', [
+	#'cfp.loadingBar', 
+	'matchMedia', 'ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']
 require './models/index.coffee'
 require './directives/index.coffee'
 require './animations/index.coffee'

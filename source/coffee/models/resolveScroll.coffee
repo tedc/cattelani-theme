@@ -1,6 +1,6 @@
-module.exports = ($q, $timeout, $rootScope, cfpLoadingBar)->
+module.exports = ($q, $timeout, $rootScope)->
 	return if $rootScope.prevElement
-	cfpLoadingBar.start()
+	# cfpLoadingBar.start()
 	deferred = $q.defer()
 	if $rootScope.scrollFrom > 0
 		TweenMax.set 'body',

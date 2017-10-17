@@ -177,4 +177,16 @@ catellani
 				return
 			_appendImg()
 			return
+	.directive 'ngErrorPage', ['$state', '$animate', ($state, $animate)->
+		restrict : 'A'
+		link : (scope, element)->
+			btn = angular.element element[0].querySelector '.error__image--on'
+			scope.goToHome = ->
+				$animate.addClass btn, 'error__image--on-visible'
+					.then ->
+						$state.go 'app.root'
+						return
+				return
+			return
+	]
 			
