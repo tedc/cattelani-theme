@@ -5,7 +5,7 @@
 			</div>
 			<div class="error__contain" ng-style="{backgroundImage : 'url(<?php echo get_stylesheet_directory_uri() . '/assets/images/404-off.jpg' ?>)'}"></div>
 			<img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/404-on.jpg' ?>" alt="<?php echo get_bloginfo('name'); ?> - 404">
-			<a href="<?php echo home_url(); ?>" ng-click="goToHome()">
+			<a href="<?php echo home_url(); ?>" ng-click="goToHome($event)">
 				<?php _e('Torna alla', 'catellani'); ?><br />
 				<?php _e('Home', 'catellani'); ?>
 			</a>
