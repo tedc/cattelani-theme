@@ -14,7 +14,7 @@
 		</span>
 	</a>
 	<?php acf_unset_language_to_default(); ?>
-	<a class="cat__dot" href="<?php echo get_permalink($store_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
+	<a class="cat__dot" href="<?php echo get_permalink($store); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
 		<span class="cat__label">
 		<?php
 		echo get_the_title($store); ?>
