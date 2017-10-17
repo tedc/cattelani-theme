@@ -65296,13 +65296,17 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
           var left, width;
           scrollbar.removeListener();
           if (scrollbar.isVisible(items[index])) {
-            if (index !== 0 && index !== 1 && index !== parseInt(items[index].getAttribute('data-item-total'))) {
+            if (index !== 0 && index !== parseInt(items[index].getAttribute('data-item-total'))) {
               left = items[index].offsetWidth !== scrollbar.getSize().container.width ? items[index].offsetLeft - items[index].offsetWidth : items[index].offsetLeft;
-              scrollbar.scrollTo(left, 0, 750, function() {
-                scope.isState = true;
-                scope.currentState = params.slug;
+              if (index === 1 && items.length <= 3) {
                 $state.go('app.page', params);
-              });
+              } else {
+                scrollbar.scrollTo(left, 0, 750, function() {
+                  scope.isState = true;
+                  scope.currentState = params.slug;
+                  $state.go('app.page', params);
+                });
+              }
             } else {
               $state.go('app.page', params);
             }
