@@ -1,3 +1,79 @@
+
+%single {
+	.single & {
+		a {
+			color: $dark-color;
+			&:hover {
+				color: $dark-gray;
+			}
+		}
+		strong {
+			color: $dark-gray;
+		}
+		blockquote {
+			font-family: $alternate-font;
+			font-size: em(36px);
+			line-height: percentage(42px/36px);
+			margin: 0;
+			padding: em($p*2, 36px);
+			p {
+				padding: em($p/2, 36px);
+			}
+		}
+		cite {
+			font-style: normal;
+			font-weight: 200;
+			font-size: em($p, 18px);
+		}
+		ul, ol {
+			padding: {
+				top: em($p);
+				bottom: em($p);
+			}
+			li {
+				display: flex;
+				align-items: flex-start;
+				font-size: em(18px);
+				> ul {
+					width: $f;
+					flex: 0 0 auto;
+					padding: em($p, 18px) 0 em($p*2, 18px) em($p, 18px);
+				}
+			}
+		}
+		ul {
+			li {
+				&:before {
+					position: relative;
+					border-radius: $p/5;
+					width: $p/5;
+					height: $p/5;
+					background-color: $dark-color;
+					display: inline-block;
+					top: 6px;
+					margin-right: em(16px, 18px);
+					content: '';
+				}
+			}
+		}
+		ol {
+			counter-reset: section;
+			li {
+				counter-increment: section;
+				&:before {
+					content: counter(section) ".";
+					display: inline-block;
+					padding-right: em($p*1.5, 18px);
+					color: $dark-color;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}
+
+
+
 .divider {
 	border: 0;
 	margin: 0;
@@ -10,6 +86,7 @@
 	@include grow('lg');
 	@include grow('lg', 'bottom');
 	&__content {
+		@extend %single;
 		@include grow('md', 'top');
 		position: relative;
 		> p {
@@ -140,17 +217,17 @@
 	&__updated {
 		position: sticky;
 		display: block;
-		top: em(80px);
+		top: em(100px);
 		.admin-bar.logged-in & {
-			top: em(112px);
+			top: em(132px);
 		}
 	}
 	&__share {
 		text-align: center;
 		position: sticky;
-		top: em(80px);
+		top: em(100px);
 		.admin-bar.logged-in & {
-			top: em(112px);
+			top: em(132px);
 		}
 		a {
 			color: $alternate-color;
