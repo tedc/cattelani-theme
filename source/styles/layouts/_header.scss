@@ -141,6 +141,9 @@
 				.opened &, .white &, .white-header & {
 					fill: $dark-color !important;
 				}
+				.menu-opened & {
+					fill: $w !important;
+				}
 			}
 			.is-anim & {
 				visibility: hidden;
