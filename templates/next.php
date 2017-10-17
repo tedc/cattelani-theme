@@ -1,7 +1,7 @@
 <?php 
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
-	$next = (is_singular('post')) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
+	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_next_post( ) : get_next_post( true, null, 'collezioni');
 	if($next) :
 ?>
 <a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element href="<?php echo get_permalink($next->ID); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next->ID)); ?>'})">
