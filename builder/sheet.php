@@ -9,10 +9,10 @@
 			</div>
 			<div class="sheet__cell sheet__cell--shrink-left-only sheet__cell--s8">
 				<?php 
-				if(have_rows('sheet_links')) :
-					while(have_rows('sheet_links')) : ?>
-					<p><a href="<?php the_sub_field('sheet_link'); ?>" class="sheet__send" target="_blank"><span><?php the_sub_field('sheet_link_name'); ?></span></a></p>
-				<?php endwhile;
+				if(get_sub_field('sheet_links')) :
+					foreach (get_sub_field('sheet_links') as $link) : ?>
+					<p><a href="<?php echo $link['sheet_link']; ?>" class="sheet__send" target="_blank"><span><?php echo $$link['sheet_link_name']; ?></span></a></p>
+				<?php endforeach;
 				else :
 					if(get_sub_field('cod')):
 						$table = trim( get_sub_field('sheet_content'));
