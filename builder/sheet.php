@@ -11,7 +11,7 @@
 				<?php 
 				if(get_sub_field('sheet_links')) :
 					foreach (get_sub_field('sheet_links') as $link) : ?>
-					<p><a href="<?php echo $link['sheet_link']; ?>" class="sheet__send" target="_blank"><span><?php echo $$link['sheet_link_name']; ?></span></a></p>
+					<p><a href="<?php echo $link['sheet_link']; ?>" class="sheet__send" target="_blank"><span><?php echo $link['sheet_link_name']; ?></span></a></p>
 				<?php endforeach;
 				else :
 					if(get_sub_field('cod')):
