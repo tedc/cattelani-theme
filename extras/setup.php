@@ -409,7 +409,7 @@
 	    echo $titletag;
 	}
 
-	add_filter('wp_render_title_tag_filter','custom_wp_render_title_tag');
+	//add_filter('wp_render_title_tag_filter','custom_wp_render_title_tag');
 
 	function custom_wp_render_title_tag($titletag) {
 	    $titletag = str_replace('<title','<title ng-bind-html="(title || \''.addslashes(wp_get_document_title()).'\')"',$titletag);

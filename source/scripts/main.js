@@ -67172,7 +67172,7 @@ module.exports = function($stateProvider, $locationProvider) {
 },{"180":180,"182":182,"183":183,"185":185}],185:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
   $scope.content = data.content;
-  $rootScope.title = data.yoats_title;
+  document.title = data.yoats_title;
   $rootScope.lang_menu = data.wpml_menu[0];
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;
