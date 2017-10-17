@@ -2,7 +2,7 @@ catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
 	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", ($transitions, $state, $location, $rootScope, $timeout, $stateParams)->
-		$rootScope.isFinish = on
+		FastClick.attach document.body
 		$rootScope.isAnim = 'is-anim'
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
