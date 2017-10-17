@@ -1,6 +1,6 @@
 <?php
 	$post_type = get_post_type();
-	$home = get_post(id_by_lang(get_option('page_on_front'), 'page', $lang));
+	$home = id_by_lang(get_option('page_on_front'), 'page', $lang);
 	acf_set_language_to_default();
 	$index = array(
 		'post' => get_field('magazine_index', 'options'),
@@ -33,10 +33,8 @@
 	if($current != '') :
 		if($post_obj && !$term_obj) :
 			$post_id = id_by_lang($post_obj->ID, $post_type, $lang);
-			echo $post_id;
-			echo $home;
 			if($home != $post_id) :
-				echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+				echo '<a href="'.get_permalink($home).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
 			endif;
 		else :
 
