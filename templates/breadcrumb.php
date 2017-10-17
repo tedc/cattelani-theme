@@ -33,8 +33,10 @@
 	if($current != '') :
 		if($post_obj && !$term_obj) :
 			$post_id = id_by_lang($post_obj->ID, $post_type, $lang);
+			echo $post_id;
+			echo $home;
 			if($home != $post_id) :
-				echo $home . $post_id .'<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+				echo '<a href="'.get_permalink($home->ID).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
 			endif;
 		else :
 
