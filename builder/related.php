@@ -37,8 +37,8 @@
 		</ks-swiper-slide>
 		<?php endforeach; ?>
 		</ks-swiper-container>
-		<i class="icon-arrow icon-arrow--prev" ng-click="prev()"></i>
-		<i class="icon-arrow icon-arrow--next" ng-click="next()"></i>
+		<i class="icon-arrow icon-arrow--prev"></i>
+		<i class="icon-arrow icon-arrow--next"></i>
 	</div>
 </div>
 <?php endif; ?>
