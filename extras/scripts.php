@@ -45,7 +45,8 @@
 				'logged_classes' => $log,
 				'body_classes' => $body_classes,
 				'langs' => $codes,
-				'error' => $error
+				'error' => $error,
+				'errorTitle' => __('Pagina non trovata', 'catellani')
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
