@@ -16,6 +16,7 @@
 		align-items: center;
 		justify-content: space-between;
 		.icon-close {
+			margin-left: em($p);
 			transform: translateZ(0) rotate(45deg);
 			transition: transform $speed, opacity $speed;
 			.accordion--active & {
