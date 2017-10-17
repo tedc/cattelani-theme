@@ -56,6 +56,7 @@
 			}
 		}
 		cite {
+			display: block;
 			font-style: normal;
 			font-weight: 200;
 			font-size: em($p, 18px);
@@ -107,6 +108,16 @@
 					color: $dark-color;
 					font-weight: 300;
 				}
+			}
+		}
+		table {
+			border-collapse: collapse;
+			tr {
+				border-top: 1px solid $lighter-color;
+				border-bottom: 1px solid $lighter-color;
+			}
+			td {
+				padding: em($p/2) em($p/2) em($p/2) 0;
 			}
 		}
 	}
