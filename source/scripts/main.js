@@ -65270,7 +65270,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Linear.easeNone,
+            ease: Power4.easeInOut,
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65368,7 +65368,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Linear.easeNone,
+            ease: Power4.easeInOut,
             delay: .25,
             onComplete: function() {
               $timeout(function() {
