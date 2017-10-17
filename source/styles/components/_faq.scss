@@ -27,6 +27,12 @@
 	}
 	&__content {
 		@extend %accordion_content;
+		a {
+			color: $dark-color;
+			&:hover {
+				color: $dark-gray;
+			}
+		}
 	}
 	&__text {
 		@include grow('md');
