@@ -5,10 +5,12 @@
 		</figure>
 		<div class="error__image error__image--on" ng-style="{backgroundImage : 'url(<?php echo get_stylesheet_directory_uri() . '/assets/images/404-on.jpg' ?>)'}">
 		</div>
-		<a href="<?php echo home_url(); ?>" ng-click="goToHome()">
-			<?php _e('Torna alla', 'catellani'); ?><br />
-			<?php _e('Home', 'catellani'); ?>
-		</a>
+		<nav class="error__link">
+			<a href="<?php echo home_url(); ?>" ng-click="goToHome()">
+				<?php _e('Torna alla', 'catellani'); ?><br />
+				<?php _e('Home', 'catellani'); ?>
+			</a>
+		</nav>
 	</div>
 	<div class="error__cell error__cell--content">
 		<h1 class="error__title error__title--huge-lighter">
