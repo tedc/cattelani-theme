@@ -25,10 +25,9 @@
 		wp_enqueue_script('lib', Assets\asset_path('scripts/lib.js'), null, null, true);
 		wp_enqueue_script('catellanijs', Assets\asset_path('scripts/main.js'), ['lib'], null, true);
 		$languages = icl_get_languages('skip_missing=0&orderby=code');
-		// ob_start();
-		// include(locate_template( '404.php', false, true ));
-		// $error = ob_get_clean();
-		// ob_end_clean();
+		ob_start();
+		include(locate_template( '404.php', false, true ));
+		$error = ob_get_clean();
         $translations = [];
         foreach ($languages as $language) {
         	$translations[] = $language['language_code'];
@@ -46,7 +45,7 @@
 				'logged_classes' => $log,
 				'body_classes' => $body_classes,
 				'langs' => $codes,
-				//'error' => $error
+				'error' => $error
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
