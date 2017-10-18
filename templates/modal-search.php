@@ -17,8 +17,8 @@
 			</div>
 
 			<div class="search__select" click-outside="isSelect['posizioni']=false" ng-class="{'search__select--filled' : search.posizioni}" ng-click="isSelect['posizioni']=!isSelect['posizioni']">
-				<!-- <span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Posizione', 'catellani'); ?>')"></span> -->
-				<span class="search__value"><?php _e('Posizione', 'catellani'); ?></span>
+				<!-- <span class="search__value" ng-bind-html="(search.posizioni ? select['posizioni'] : '<?php _e('Tipologia', 'catellani'); ?>')"></span> -->
+				<span class="search__value"><?php _e('Tipologia', 'catellani'); ?></span>
 				<span class="search__icons">
 					<i class="icon-select"></i>
 				</span>
@@ -58,7 +58,7 @@
 		</div>
 		<div class="search__results" ng-if="select.collezioni.length > 0 || select.posizioni.length > 0 || select.fonti.length > 0">
 			<div class="search__result" ng-if="select.collezioni.length > 0"><span><?php _e('Collezioni'); ?>:</span> <strong ng-repeat="c in select.collezioni">{{($index > 0) ? ', ' : ' '}}{{c}} <i class="icon-close" ng-click="clear(c)"></i></strong></div>
-			<div class="search__result" ng-if="select.posizioni.length > 0"><span class="search__sep" ng-if="select.collezioni.length > 0">&mdash;</span><span><?php _e('Posizioni', 'catellani'); ?>:</span> <strong ng-repeat="p in select.posizioni">{{($index > 0) ? ', ' : ' '}}{{p}} <i class="icon-close" ng-click="clear( p)"></i></strong></div>
+			<div class="search__result" ng-if="select.posizioni.length > 0"><span class="search__sep" ng-if="select.collezioni.length > 0">&mdash;</span><span><?php _e('Tipologie', 'catellani'); ?>:</span> <strong ng-repeat="p in select.posizioni">{{($index > 0) ? ', ' : ' '}}{{p}} <i class="icon-close" ng-click="clear( p)"></i></strong></div>
 			<div class="search__result" ng-if="select.fonti.length > 0"><span class="search__sep" ng-if="select.collezioni.length > 0 || select.posizioni.length > 0">&mdash;</span><span><?php _e('Fonti'); ?>:</span> <strong ng-repeat="f in select.fonti">{{($index > 0) ? ', ' : ' '}}{{f}} <i class="icon-close" ng-click="clear(f)"></i></strong></div>
 
 		</div>
