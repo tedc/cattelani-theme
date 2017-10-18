@@ -171,7 +171,7 @@
 			transition: opacity $speed, visibility $speed;
 			visibility: hidden;
 			opacity: 0;
-			.white &, .white-header & {
+			.white &, .white-header &, .opened & {
 				background-color: $light-color;
 			}
 			.is-anim & {
