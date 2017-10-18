@@ -59,7 +59,7 @@
 			<span class="projects__location" ng-bind-html="item.acf.citta+', '+item.acf.stato+', '+(item.date | date: 'yyyy')"></span>
 			</span>
 		</a>
-		<div class="projects__loader projects__loader--middle" ng-class="{'projects__loader--middle-visible':isLoading}"><div class="<projects__spinner"></div></div>
+		<div class="projects__loader projects__loader--middle" ng-class="{'projects__loader--middle-visible':isLoading}"><div class="projects__spinner"></div></div>
 	</div>
 	<?php loader('projects', 'loadProjects'); ?>
 </div>
