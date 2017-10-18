@@ -50,7 +50,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
-							ease: Back.easeOut.config(1.75)
+							ease: Back.easeOut.config(1)
 							#ease: Linear.easeNone
 							#ease: Power4.easeInOut
 							delay: .25
@@ -135,7 +135,7 @@ module.exports = ($rootScope, $timeout, $state)->
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
-							ease: Back.easeOut.config(1.75)
+							ease: Back.easeOut.config(1)
 							#ease: Linear.easeNone
 							#ease: Power4.easeInOut
 							delay: .25

@@ -83,7 +83,6 @@
 			position: absolute;
 			bottom: 0;
 			left: 50%;
-			transform: translate3d(-50%, 0, 0) scaleY(1);
 			width: 1px;
 			height: em($p*1.5);
 			border: transparent 1px solid;
@@ -147,8 +146,10 @@
 @keyframes off {
 	0%, 100% {
 		box-shadow: 0 0 0 transparentize($w, .25);
+		transform: translate3d(-50%, 0, 0);
 	}
 	50% {
 		box-shadow: 0 0 em($p) transparentize($w, .5);
+		transform: translate3d(-50%, 0, 0);
 	}
 }
