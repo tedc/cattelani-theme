@@ -57,7 +57,7 @@
 	}
 
 	function loader($name, $event) { ?>
-		<div class="<?php echo $name; ?>__loader" ng-loader="<?php echo $event; ?>" ng-hide="isNotLoading"><div class="<?php echo $name; ?>__spinner"></div></div>
+		<div class="<?php echo $name; ?>__loader" ng-loader="<?php echo $event; ?>" ng-if="!isNotLoading"><div class="<?php echo $name; ?>__spinner"></div></div>
 	<?php }
 
 	function id_by_lang($id, $type, $lang) {
