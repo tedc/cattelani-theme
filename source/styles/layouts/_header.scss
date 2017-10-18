@@ -168,8 +168,6 @@
 			display: block;
 			background-color: $lighter-color;
 			border-radius: $f;
-			animation: pulse 2s infinite ease-in-out;
-			animation-play-state: paused;
 			transition: opacity $speed, visibility $speed;
 			visibility: hidden;
 			opacity: 0;
@@ -178,8 +176,8 @@
 			}
 			.is-anim & {
 				visibility: visible;
-				opacity: .5;
-				animation-play-state: running;
+				opacity: .5;	
+				animation: pulse 2s infinite ease-in-out;
 			}
 		}
 		&:before {

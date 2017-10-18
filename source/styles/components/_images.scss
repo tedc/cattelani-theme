@@ -23,14 +23,13 @@ figure {
 		margin: em($p*-1) 0 0 em($p*-1);
 		width: em($p*2);
 		height: em($p*2);
+		visibility: visible;
 		opacity: .5;
 		display: block;
 		background-color: $light-color;
 		border-radius: $f;
 		animation: pulse 2s infinite ease-in-out;
 		content: '';
-		visibility: hidden;
-		opacity: 0;
 		transition: $speed visibility, opacity $speed;
 	}
 	img {

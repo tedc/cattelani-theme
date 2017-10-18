@@ -180,9 +180,10 @@ catellani
 	.directive 'ngErrorPage', ['$state', '$animate', ($state, $animate)->
 		restrict : 'A'
 		link : (scope, element)->
-			btn = angular.element element[0].querySelector '.error__image--on'
-			scope.goToHome = ->
-				$animate.addClass btn, 'error__image--on-visible'
+			btn = angular.element element[0].querySelector '.error__contain'
+			scope.goToHome = (evt)->
+				evt.preventDefault();
+				$animate.addClass btn, 'error__contain--hidden'
 					.then ->
 						$state.go 'app.root'
 						return

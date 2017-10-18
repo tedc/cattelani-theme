@@ -64919,11 +64919,11 @@ module.exports = function($rootScope, $timeout, $state) {
       element.addClass('view-enter');
       if (!$rootScope.isTransitionerActive) {
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .75, {
+          TweenMax.fromTo(element, 1.25, {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Back.easeOut.config(1),
+            ease: Back.easeOut.config(1.75),
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65005,11 +65005,11 @@ module.exports = function($rootScope, $timeout, $state) {
       if (!$rootScope.isTransitionerActive) {
         element.addClass('view-leave');
         if (!$rootScope.prevElement) {
-          TweenMax.fromTo(element, .75, {
+          TweenMax.fromTo(element, 1.25, {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Back.easeOut.config(1),
+            ease: Back.easeOut.config(1.75),
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65672,9 +65672,10 @@ catellani.directive('ngStore', [require(176)]).directive('ngForm', [require(167)
       restrict: 'A',
       link: function(scope, element) {
         var btn;
-        btn = angular.element(element[0].querySelector('.error__image--on'));
-        scope.goToHome = function() {
-          $animate.addClass(btn, 'error__image--on-visible').then(function() {
+        btn = angular.element(element[0].querySelector('.error__contain'));
+        scope.goToHome = function(evt) {
+          evt.preventDefault();
+          $animate.addClass(btn, 'error__contain--hidden').then(function() {
             $state.go('app.root');
           });
         };
@@ -66910,7 +66911,7 @@ catellani = angular.module('catellani');
 catellani.config(["$stateProvider", "$locationProvider", require(184)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", function($transitions, $state, $location, $rootScope, $timeout, $stateParams) {
     var oldUrl;
-    $rootScope.isFinish = true;
+    FastClick.attach(document.body);
     $rootScope.isAnim = 'is-anim';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
@@ -66989,9 +66990,12 @@ module.exports = function($q, $timeout, $rootScope) {
 },{}],183:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
+  $scope.content = data ? $scope.post.content.rendered : vars.main.error;
+  document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
+  if (!data) {
+    return;
+  }
   $scope.type = $scope.post.type;
-  $scope.content = $scope.post.content.rendered;
-  document.title = $scope.post.yoats_title;
   $rootScope.lang_menu = $scope.post.wpml_menu;
   $rootScope.body_class = $scope.post.body_class + vars.main.logged_classes;
   if ($rootScope.isMenu) {
@@ -67171,8 +67175,14 @@ module.exports = function($stateProvider, $locationProvider) {
 
 },{"180":180,"182":182,"183":183,"185":185}],185:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
-  $scope.content = data.content;
-  document.title = data.yoats_title;
+  $scope.content = data ? data.content : vars.main.error;
+  document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
+  if (typeof data === 'undefined') {
+    $rootScope.isAnim = '';
+  }
+  if (!data) {
+    return;
+  }
   $rootScope.lang_menu = data.wpml_menu[0];
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;

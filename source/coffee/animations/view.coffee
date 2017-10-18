@@ -43,14 +43,14 @@ module.exports = ($rootScope, $timeout, $state)->
 			element.addClass 'view-enter'
 			if not $rootScope.isTransitionerActive
 				if not $rootScope.prevElement
-					TweenMax.fromTo element, .75,
+					TweenMax.fromTo element, 1.25,
 						{
 							yPercent : fromY
 						}
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
-							ease: Back.easeOut.config(1)
+							ease: Back.easeOut.config(1.75)
 							#ease: Linear.easeNone
 							#ease: Power4.easeInOut
 							delay: .25
@@ -128,14 +128,14 @@ module.exports = ($rootScope, $timeout, $state)->
 			if not $rootScope.isTransitionerActive
 				element.addClass 'view-leave'
 				if not $rootScope.prevElement
-					TweenMax.fromTo element, .75,
+					TweenMax.fromTo element, 1.25,
 						{
 							yPercent : fromY
 						}
 						{
 							yPercent : toY
 							#ease: Circ.easeOut
-							ease: Back.easeOut.config(1)
+							ease: Back.easeOut.config(1.75)
 							#ease: Linear.easeNone
 							#ease: Power4.easeInOut
 							delay: .25

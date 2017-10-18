@@ -1,10 +1,10 @@
 module.exports = ($rootScope, $scope, data)->
-	console.log data.length
 	$scope.post = data
+	$scope.content = if data then $scope.post.content.rendered else vars.main.error
+	document.querySelector('title').innerHTML = if data then data.yoats_title else vars.main.errorTitle
+	return if not data
 	$scope.type = $scope.post.type
-	$scope.content = if data.length > 0 then $scope.post.content.rendered else vars.main.error
 	#$rootScope.title = $scope.post.yoats_title
-	document.title = $scope.post.yoats_title
 	$rootScope.lang_menu = $scope.post.wpml_menu
 	$rootScope.body_class = $scope.post.body_class + vars.main.logged_classes
 	$rootScope.isMenu = off if $rootScope.isMenu
