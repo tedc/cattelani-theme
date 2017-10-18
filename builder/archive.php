@@ -8,7 +8,7 @@
 			'post_status' => 'publish',
 			'post_type' => get_sub_field('post_type')
 		)
-	);
+	)[0];
 ?>
 <div class="projects projects--grow-lg" post-type-archive post-type="<?php the_sub_field('post_type'); ?>" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
 	<div class="projects__filters projects__filters--gray projects__filters--grow-md projects__filters--grid"> 
@@ -51,8 +51,8 @@
 				</span>
 			</span>
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['periodi']}">
-				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=<?php echo get_the_time('Y', $first->ID); ?>;beforeAfter({before : <?php echo get_the_time('Y', $first->ID); ?>, after : false})" ng-class="{'projects__option--selected':select['periodi']==<?php echo get_the_time('Y', $first->ID); ?>}"><?php _e('Pre', 'catellani'); ?> <?php echo get_the_time('Y', $first->ID); ?></li>
-				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=2005;beforeAfter({after : <?php echo get_the_date('Y', $first->ID); ?>, before : 2010})" ng-class="{'projects__option--selected':select['periodi']==2005}"> <?php echo get_the_time('Y', $first->ID); ?> - 2010</li>
+				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=<?php echo ucfirst(get_the_time('Y', $first->ID)); ?>;beforeAfter({before : <?php echo ucfirst(get_the_time('Y', $first->ID)); ?>, after : false})" ng-class="{'projects__option--selected':select['periodi']==<?php echo ucfirst(get_the_time('Y', $first->ID)); ?>}"><?php _e('Pre', 'catellani'); ?> <?php echo ucfirst(get_the_time('Y', $first->ID)); ?></li>
+				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=2005;beforeAfter({after : <?php echo get_the_date('Y', $first->ID); ?>, before : 2010})" ng-class="{'projects__option--selected':select['periodi']==2005}"> <?php echo ucfirst(get_the_time('Y', $first->ID)); ?> - 2010</li>
 				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=2012;beforeAfter({after : 2010, before : 2015})" ng-class="{'projects__option--selected':select['periodi']==2012}">2010 - 2015</li>
 				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=2015;beforeAfter({after : 2015, before : false})" ng-class="{'projects__option--selected':select['periodi']==2015}"><?php _e('Post 2015', 'catellani'); ?></li>
 			</ul>
