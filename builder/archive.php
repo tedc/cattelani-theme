@@ -51,7 +51,6 @@
 		</div>
 	</div>
 	<div class="projects__items projects__items--grow-lg projects__items--shrink-fw projects__items--grid">
-		<div class="projects__loader projects__loader--middle" ng-class="{'projects__loader--middle-middle':isLoading}"><div class="<projects__spinner"></div></div>
 		<span class="projects__cell projects__cell--found" ng-if="items.length <= 0 && firstLoad" ng-class="{'projects__cell--found-visible':firstLoad}"><span><?php _e('Nessun risultato trovato'); ?></span></span>
 		<a class="projects__cell projects__cell--s6 projects__cell--grow" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" clicked-element>
 			<span class="projects__content" ng-style="{'background-image' : 'url({{image(item).url}})'}">
@@ -60,6 +59,7 @@
 			<span class="projects__location" ng-bind-html="item.acf.citta+', '+item.acf.stato+', '+(item.date | date: 'yyyy')"></span>
 			</span>
 		</a>
+		<div class="projects__loader projects__loader--middle" ng-class="{'projects__loader--middle-visible':isLoading}"><div class="<projects__spinner"></div></div>
 	</div>
 	<?php loader('projects', 'loadProjects'); ?>
 </div>
