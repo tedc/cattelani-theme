@@ -81,9 +81,6 @@
 		@include grow('md');
 
 	}
-	.swiper-slide {
-		@extend %blurry_fix;
-	}
 	// &__mask {
 	// 	@include full;
 	// 	background-color: $dark-color;
@@ -255,6 +252,7 @@
 				.swiper-slide {
 					width: $f;
 					flex: 0 0 auto;
+					@extend %blurry_fix;
 				}
 			}
 		}

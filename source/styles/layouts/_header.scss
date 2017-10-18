@@ -182,7 +182,7 @@
 		}
 		&:before {	
 			.is-anim & {
-				animation-delay: 1s;
+				animation-delay: -1s;
 			}
 		}
 		&:hover {
