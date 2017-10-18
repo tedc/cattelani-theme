@@ -80,6 +80,7 @@
 		text-align: center;
 		z-index: 2;
 		&:after {
+			display: block;
 			position: absolute;
 			bottom: 0;
 			left: 50%;
@@ -97,6 +98,7 @@
 		}
 		&--on {
 			&:after {
+				margin-left: em($p/2)*-1;
 				height: em($p);
 				width: em($p);
 				background-color: transparent;
@@ -127,29 +129,27 @@
 
 @keyframes on {
 	0% {
-		transform: translate3d(-50%, 0, 0) scaleY(1);
+		transform: translate3d(0, 0, 0) scaleY(1);
 		transform-origin: center bottom;
 	}
 	49% {
 		transform-origin: center bottom;
-		transform: translate3d(-50%, 0, 0) scaleY(0);
+		transform: translate3d(0, 0, 0) scaleY(0);
 	}
 	51% {
 		transform-origin: center top;
-		transform: translate3d(-50%, 0, 0) scaleY(0);
+		transform: translate3d(0, 0, 0) scaleY(0);
 	}
 	100% {
 		transform-origin: center top;
-		transform: translate3d(-50%, 0, 0) scaleY(1);
+		transform: translate3d(0, 0, 0) scaleY(1);
 	}
 }
 @keyframes off {
 	0%, 100% {
 		box-shadow: 0 0 0 transparentize($w, .25);
-		transform: translate3d(-50%, 0, 0);
 	}
 	50% {
 		box-shadow: 0 0 em($p) transparentize($w, .5);
-		transform: translate3d(-50%, 0, 0);
 	}
 }
