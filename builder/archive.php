@@ -62,7 +62,7 @@
 	<div class="projects__items projects__items--grow-lg projects__items--shrink-fw projects__items--grid">
 		<span class="projects__cell projects__cell--found" ng-if="items.length <= 0 && firstLoad" ng-class="{'projects__cell--found-visible':firstLoad}"><span><?php _e('Nessun risultato trovato'); ?></span></span>
 		<a class="projects__cell projects__cell--s6 projects__cell--grow" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" clicked-element>
-			<span class="projects__content" ng-style="{'background-image' : 'url({{image(item).url}})'}">
+			<span class="projects__content" ng-style="{'background-image' : 'url({{image(item).url}})'}" lazy-load-img="{{image(item).url}}">
 			<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />
 			<span class="projects__title" ng-bind-html="item.title.rendered"></span>
 			<span class="projects__location" ng-bind-html="item.acf.citta+', '+item.acf.stato+', '+(item.date | date: 'yyyy')"></span>
