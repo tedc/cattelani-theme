@@ -52,7 +52,7 @@
 				</span>
 			</span>
 			<ul class="projects__options" ng-class="{'projects__options--visible':isSelect['periodi']}">
-				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']=<?php echo $year; ?>;beforeAfter({before : <?php echo $year; ?>, after : false})" ng-class="{'projects__option--selected':select['periodi']=='<?php echo $year; ?>'}"><?php _e('Pre', 'catellani'); ?> <?php echo $year; ?></li>
+				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']='<?php echo $year; ?>';beforeAfter({before : '<?php echo $year; ?>', after : false})" ng-class="{'projects__option--selected':select['periodi']=='<?php echo $year; ?>'}"><?php _e('Pre', 'catellani'); ?> <?php echo $year; ?></li>
 				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']='2005';beforeAfter({after : '<?php echo $year; ?>', before : '2010'})" ng-class="{'projects__option--selected':select['periodi']=='2005'}"> <?php echo $year; ?> - 2010</li>
 				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']='2012';beforeAfter({after : '2010', before : '2015'})" ng-class="{'projects__option--selected':select['periodi']=='2012'}">2010 - 2015</li>
 				<li class="projects__option" ng-click="$event.stopPropagation();select['periodi']='2015';beforeAfter({after : '2015', before : false})" ng-class="{'projects__option--selected':select['periodi']=='2015'}"><?php _e('Post 2015', 'catellani'); ?></li>
