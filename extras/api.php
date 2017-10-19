@@ -419,7 +419,7 @@ function glossary_rest_support() {
 }
 
 
-add_action( 'init', 'glossary_category_rest_support', 25 );
+add_action( 'init', 'glossary_category_rest_support', 999 );
 function glossary_category_rest_support() {
     global $wp_taxonomies;
 
