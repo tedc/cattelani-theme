@@ -427,7 +427,7 @@ function glossary_category_rest_support() {
     $taxonomy_name = get_option('glossary-settings')['slug-cat'];
 
     if ( isset( $wp_taxonomies[ $taxonomy_name ] ) ) {
-        $wp_taxonomies[ $taxonomy_name ]->rewrite = array('slug' => 'g');
+        $wp_taxonomies[ $taxonomy_name ]->rewrite['slug'] = 'g';
         $wp_taxonomies[ $taxonomy_name ]->show_in_rest = true;
 
         // Optionally customize the rest_base or controller class
