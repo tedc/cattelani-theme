@@ -7,6 +7,18 @@ catellani = angular.module 'catellani'
 catellani
 	.factory 'WPAPI', ->
 		wp
+	.factory 'wpApi', ['$http', ($http)->
+		deafults =
+			name : 'wp'
+			ver : 'v2'
+			endpoint : ''
+			params : {}
+		(options)->
+			options = angular.extend {}, deafults, options
+			$http
+				.get "#{vars.main.base}/options.name/options.ver/options.endpoint",
+					data : options.params
+	]
 	.factory 'transformRequestAsFormPost', ->
 		serializeData = (data)->
 			if not require('angular').isObject data

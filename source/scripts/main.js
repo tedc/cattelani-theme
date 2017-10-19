@@ -67078,8 +67078,18 @@ module.exports = function($stateProvider, $locationProvider) {
       PrevBefore: ["$rootScope", "$timeout", "$q", require(180).prev],
       ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(182)],
       data: [
-        "$stateParams", "$q", "WPAPI", function($stateParams, $q, WPAPI) {
+        "$stateParams", "$q", "WPAPI", 'wpApi', function($stateParams, $q, WPAPI, wpApi) {
           var deferred, wp;
+          wpApi({
+            endpoint: 'multiple-post-type',
+            params: {
+              type: ['type', 'lang', 'collezioni'],
+              slug: $stateParams.slug,
+              lang: $stateParams.lang
+            }
+          }).then(function(res) {
+            console.log(res);
+          });
           wp = WPAPI;
           wp.multiple = wp.registerRoute('wp/v2', 'multiple-post-type/', {
             params: ['type', 'lang', 'collezioni']
@@ -67198,7 +67208,23 @@ catellani = angular.module('catellani');
 
 catellani.factory('WPAPI', function() {
   return wp;
-}).factory('transformRequestAsFormPost', function() {
+}).factory('wpApi', [
+  '$http', function($http) {
+    var deafults;
+    deafults = {
+      name: 'wp',
+      ver: 'v2',
+      endpoint: '',
+      params: {}
+    };
+    return function(options) {
+      options = angular.extend({}, deafults, options);
+      return $http.get(vars.main.base + "/options.name/options.ver/options.endpoint", {
+        data: options.params
+      });
+    };
+  }
+]).factory('transformRequestAsFormPost', function() {
   var serializeData, transformRequest;
   serializeData = function(data) {
     var buffer, k, key, source, string, v, value, values;

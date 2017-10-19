@@ -55,7 +55,16 @@ module.exports = ($stateProvider, $locationProvider)->
 			resolve : 
 				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
 				ScrollBefore : ["$q", "$timeout", "$rootScope", "PreviousState", require './resolveScroll.coffee']
-				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
+				data : ["$stateParams", "$q", "WPAPI", 'wpApi', ($stateParams, $q, WPAPI, wpApi)->
+					wpApi({
+						endpoint : 'multiple-post-type'
+						params :
+							type : ['type', 'lang', 'collezioni']
+							slug : $stateParams.slug
+							lang : $stateParams.lang
+					}).then (res)->
+						console.log res
+						return
 					wp = WPAPI
 					wp.multiple = wp.registerRoute 'wp/v2', 'multiple-post-type/',
 						params : ['type', 'lang', 'collezioni']
