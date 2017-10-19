@@ -1,3 +1,8 @@
+%move_title {
+	top: $p;
+	position: relative;
+	z-index: 5;
+}
 .video {
 	@include grow('lg');
 	overflow: hidden;
@@ -11,9 +16,7 @@
 		// }
 	}
 	&__header {
-		top: $p;
-		position: relative;
-		z-index: 2;
+		@extend %move_title;
 	}
 	&__container {
 		position: relative;

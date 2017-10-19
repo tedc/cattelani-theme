@@ -173,7 +173,7 @@ module.exports = ->
 				return if $rootScope.isRunning
 				$rootScope.oldMenu = $rootScope.isMenu
 				$rootScope.isMenu = off
-				$rootScope.isPopup = !$rootScope.isPopup
+				$rootScope.isPopup = on
 				$rootScope.modalId = id
 				return
 			return

@@ -48,6 +48,9 @@ module.exports = ($stateProvider, $locationProvider)->
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.page',
 			url: '/:slug'
+			params :
+				term : 
+					value : null
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
 				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
@@ -77,10 +80,7 @@ module.exports = ($stateProvider, $locationProvider)->
 				BlocksBefore : ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require('./blocks.coffee').single]
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
-			url : '/{collection:(?:collection|collezioni)}/:name'
-			params : 
-				collection :
-					value : 'collezioni'
+			url : '/c/:name'
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
 				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->

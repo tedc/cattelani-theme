@@ -41,14 +41,13 @@
 		}
 	}
 	&__header {
-		top: $p;
-		position: relative;
-		z-index: 5;
+		@extend %move_title;
 	}
 	&--active {
 		.zoom__figure {
 			position: fixed;
 			z-index: 9999;
+			background-image: none !important;
 		}
 		.zoom__image {
 			visibility: visible;
@@ -120,6 +119,7 @@
 	&__figure {
 		@include full;
 		@include cover;
+		background-color: $w;
 		cursor: none !important;
 		z-index: 2;
 		transition: {

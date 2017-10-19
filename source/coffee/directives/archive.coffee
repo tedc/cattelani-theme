@@ -10,7 +10,7 @@ wp.tipologie = wp.registerRoute 'wp/v2', 'tipologie/',
 	params : ['lang']
 module.exports = ->
 	search =
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", ($rootScope, $scope, $q, $attrs, $timeout)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "$stateParams", ($rootScope, $scope, $q, $attrs, $timeout, $stateParams)->
 			$rootScope.collection = off
 			per_page = if vars.api.count_posts > 100 then 100 else vars.api.count_posts
 			lang = $attrs.lang
@@ -24,6 +24,7 @@ module.exports = ->
 			$scope.items = []
 			$scope.firstLoad = off
 			$scope.isLoading = off
+			$scope.isNotLoading = on
 			$scope.change = (s, i)->
 				#e.stopPropagation();
 				$scope.projects[s] = i.id
@@ -47,8 +48,6 @@ module.exports = ->
 					alt : alt
 			
 			query = ->
-				return if $scope.isLoading
-				$scope.isLoading = on
 				before = if $scope.projects.before then new Date($scope.projects.before) else new Date()
 				after = if $scope.projects.after then new Date($scope.projects.after) else new Date(-8000000000)
 				kindValue = if $scope.projects.tipologie then $scope.projects.tipologie else 0
@@ -64,54 +63,54 @@ module.exports = ->
 					.before(before)
 					.after(after)
 					.page($scope.page)
-			query()
-				.then (results)->
-					$timeout ->
-						$scope.isLoading = off
-						return
-					return if angular.equals results, $scope.items
-					$timeout ->
-						return if $scope.isNotLoading
-						$scope.items = $scope.items.concat results
-						$scope.page += 1
-						$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
-						$scope.firstLoad = on
-						return
-					, 0
-					return
+			
 			$scope.$on 'projects_changed', ->
-				$scope.isNotLoading = off			
+				$scope.isNotLoading = on
+				$scope.isLoading = on
+				$scope.firstLoad = off
+				$scope.items = []
 				$scope.page = 1
 				query()
 					.then (results)->
-						return if angular.equals results, $scope.items
 						$timeout ->
-							$scope.items = results
-							$scope.page += 1
-							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
+							if not angular.equals results, $scope.items
+								$scope.items = results
+								$scope.page += 1
+							if results.length > 0
+								$scope.isNotLoading = if $scope.page > parseInt results._paging.totalPages then on else off
+							else
+								$scope.isNotLoading = on
+							$scope.isLoading = off
+							$scope.firstLoad = on
 							return
 						, 0
 					return
 				return
 			$scope.$on 'loadProjects', ->
 				return if $scope.isLoading
+				$scope.isLoading = on
 				query()
 					.then (results)->
-						return if angular.equals results, $scope.items
 						$timeout ->
-							return if $scope.isNotLoading
-							$scope.items = $scope.items.concat results
-							$scope.page += 1
-							$scope.isNotLoading = on if $scope.page > parseInt results._paging.totalPages
+							if not angular.equals results, $scope.items
+								$scope.items = $scope.items.concat results
+								$scope.page += 1
+							if results.length > 0
+								$scope.isNotLoading = if $scope.page > parseInt results._paging.totalPages then on else off
+							else
+								$scope.isNotLoading = on
+							$scope.isLoading = off
 							$scope.firstLoad = on
 							return
-						, 0
-					return
+						return
+			$scope.$emit 'loadProjects'
 			wp
 				.collections()
 				.lang lang
 				.then (res)->
 					$scope.collections = res
+					if $stateParams.term?
+						$scope.change('collezioni', $stateParams.term)
 					return
 
 			wp

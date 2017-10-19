@@ -16,7 +16,33 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 					return
 				, 0
 				items = scrollbar.targets.content.querySelectorAll '[data-carousel-item]'
+				# customController = new ScrollMagic.Controller {container : scrollbar.targets.container, vertical : off}
+				# scenes = off
+				# addScenes = ->
+				# 	return if scenes
+				# 	for el in items
+				# 		width = el.offsetWidth
+				# 		duration = width * 1.5
+				# 		scene1 = new ScrollMagic.Scene
+				# 				triggerHook : 1
+				# 				triggerElement : el
+				# 				duration : duration
+				# 			.setTween TweenMax.from el.querySelector('.collections__cover'), .5, {backgroundPosition : "85% 50%"}
+				# 		scene2 = new ScrollMagic.Scene
+				# 				triggerHook : 0.5
+				# 				triggerElement : el
+				# 				duration : duration
+				# 				offset : width / 2
+				# 			.setTween TweenMax.to el.querySelector('.collections__cover'), .5, {backgroundPosition : "15% 50%"}
+				# 		scene1.addTo customController
+				# 		scene2.addTo customController
+				# 	return
+				# customController.scrollPos ->
+				# 	scrollbar.offset.x
 				scrollbar.addListener (status)->
+					# addScenes()
+					# scenes = on
+					# customController.update()
 					$timeout ->
 						scope.inView = []
 						for i in items

@@ -8,6 +8,23 @@
 		width: em(260px);
 		margin: 0 em($p);
 	}
+	&__loader {
+		&--middle {
+			position: absolute;
+			top: em($p*2);
+			left: 0;
+			width: $f;
+			max-height: em($p*2);
+			transition: $speed opacity, $speed visibility;
+			@include breakpoint() {			
+				top: em($p*4);
+			}
+			&-visible {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
 	&__cell {
 		display: flex;
 		@include grow();
@@ -49,6 +66,9 @@
 			text-align: center;
 			padding-top: 0;
 			display: none;
+			&:before {
+				display: none;
+			}
 			&-visible {
 				display: block;
 			}
@@ -89,12 +109,18 @@
 		position: relative;
 		@include cover;
 		padding: em($p*2);
-		&:before {
+		&:before, &[ng-lazy-img]:before {
 			@include full;
 			content: '';
 			background-color: $b;
 			opacity: 0;
-			transition: opacity $speed;
+			visibility: hidden;
+			transition: opacity $speed, visibility $speed;
+		}
+		&[ng-lazy-img]:not(.lazy-loaded):before {
+			background-color: $dark-color;
+			opacity: 1;
+			visibility: visible;
 		}
 		> * {
 			width: $f;
@@ -106,9 +132,10 @@
 			top: 0;
 			left: 0;
 		}
-		&:hover {
+		&:hover, &[ng-lazy-img].lazy-loaded:hover {
 			&:before {
 				opacity: .8;
+				visibility: visible;
 			}
 			.projects__title {
 				opacity: 1;
@@ -122,6 +149,8 @@
 	}
 	&__items {
 		@include grow('lg');
+		min-height: em($p*8);
+		position: relative;
 		.projects__cell {
 			@include breakpoint() {
 				&:nth-child(odd) {

@@ -23,6 +23,9 @@ module.exports = ($rootScope, $timeout, $state)->
 					onComplete : ->
 						$timeout ->
 							$rootScope.isAnim = ''
+							$rootScope.isMenu = off if $rootScope.isMenu
+							if typeof $rootScope.PreviousState.Params['#'] is 'undefined'
+								$rootScope.isPopup = off if $rootScope.isPopup
 							return
 						, 0
 						return

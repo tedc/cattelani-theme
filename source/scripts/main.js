@@ -64897,6 +64897,14 @@ module.exports = function($rootScope, $timeout, $state) {
           onComplete: function() {
             $timeout(function() {
               $rootScope.isAnim = '';
+              if ($rootScope.isMenu) {
+                $rootScope.isMenu = false;
+              }
+              if (typeof $rootScope.PreviousState.Params['#'] === 'undefined') {
+                if ($rootScope.isPopup) {
+                  $rootScope.isPopup = false;
+                }
+              }
             }, 0);
           }
         });
@@ -64923,7 +64931,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Back.easeOut.config(1.75),
+            ease: Back.easeOut.config(1),
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65009,7 +65017,7 @@ module.exports = function($rootScope, $timeout, $state) {
             yPercent: fromY
           }, {
             yPercent: toY,
-            ease: Back.easeOut.config(1.75),
+            ease: Back.easeOut.config(1),
             delay: .25,
             onComplete: function() {
               $timeout(function() {
@@ -65110,7 +65118,7 @@ module.exports = function() {
   var search;
   return search = {
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", function($rootScope, $scope, $q, $attrs, $timeout) {
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "$stateParams", function($rootScope, $scope, $q, $attrs, $timeout, $stateParams) {
         var lang, per_page, query, type;
         $rootScope.collection = false;
         per_page = vars.api.count_posts > 100 ? 100 : vars.api.count_posts;
@@ -65125,6 +65133,7 @@ module.exports = function() {
         $scope.items = [];
         $scope.firstLoad = false;
         $scope.isLoading = false;
+        $scope.isNotLoading = true;
         $scope.change = function(s, i) {
           $scope.projects[s] = i.id;
           $scope.select[s] = i.name;
@@ -65152,10 +65161,6 @@ module.exports = function() {
         };
         query = function() {
           var after, before, collectionPar, collectionValue, kindPar, kindValue;
-          if ($scope.isLoading) {
-            return;
-          }
-          $scope.isLoading = true;
           before = $scope.projects.before ? new Date($scope.projects.before) : new Date();
           after = $scope.projects.after ? new Date($scope.projects.after) : new Date(-8000000000);
           kindValue = $scope.projects.tipologie ? $scope.projects.tipologie : 0;
@@ -65164,38 +65169,25 @@ module.exports = function() {
           kindPar = kindValue === 0 ? 'tipologie_exclude' : 'tipologie';
           return wp.types().type([type]).param(collectionPar, collectionValue).param(kindPar, kindValue).before(before).after(after).page($scope.page);
         };
-        query().then(function(results) {
-          $timeout(function() {
-            $scope.isLoading = false;
-          });
-          if (angular.equals(results, $scope.items)) {
-            return;
-          }
-          $timeout(function() {
-            if ($scope.isNotLoading) {
-              return;
-            }
-            $scope.items = $scope.items.concat(results);
-            $scope.page += 1;
-            if ($scope.page > parseInt(results._paging.totalPages)) {
-              $scope.isNotLoading = true;
-            }
-            $scope.firstLoad = true;
-          }, 0);
-        });
         $scope.$on('projects_changed', function() {
-          $scope.isNotLoading = false;
+          $scope.isNotLoading = true;
+          $scope.isLoading = true;
+          $scope.firstLoad = false;
+          $scope.items = [];
           $scope.page = 1;
           query().then(function(results) {
-            if (angular.equals(results, $scope.items)) {
-              return;
-            }
             return $timeout(function() {
-              $scope.items = results;
-              $scope.page += 1;
-              if ($scope.page > parseInt(results._paging.totalPages)) {
+              if (!angular.equals(results, $scope.items)) {
+                $scope.items = results;
+                $scope.page += 1;
+              }
+              if (results.length > 0) {
+                $scope.isNotLoading = $scope.page > parseInt(results._paging.totalPages) ? true : false;
+              } else {
                 $scope.isNotLoading = true;
               }
+              $scope.isLoading = false;
+              $scope.firstLoad = true;
             }, 0);
           });
           return;
@@ -65204,25 +65196,29 @@ module.exports = function() {
           if ($scope.isLoading) {
             return;
           }
-          query().then(function(results) {
-            if (angular.equals(results, $scope.items)) {
-              return;
-            }
-            return $timeout(function() {
-              if ($scope.isNotLoading) {
-                return;
+          $scope.isLoading = true;
+          return query().then(function(results) {
+            $timeout(function() {
+              if (!angular.equals(results, $scope.items)) {
+                $scope.items = $scope.items.concat(results);
+                $scope.page += 1;
               }
-              $scope.items = $scope.items.concat(results);
-              $scope.page += 1;
-              if ($scope.page > parseInt(results._paging.totalPages)) {
+              if (results.length > 0) {
+                $scope.isNotLoading = $scope.page > parseInt(results._paging.totalPages) ? true : false;
+              } else {
                 $scope.isNotLoading = true;
               }
+              $scope.isLoading = false;
               $scope.firstLoad = true;
-            }, 0);
+            });
           });
         });
+        $scope.$emit('loadProjects');
         wp.collections().lang(lang).then(function(res) {
           $scope.collections = res;
+          if ($stateParams.term != null) {
+            $scope.change('collezioni', $stateParams.term);
+          }
         });
         wp.tipologie().lang(lang).then(function(res) {
           $scope.tipologie = res;
@@ -66123,7 +66119,7 @@ module.exports = function() {
           }
           $rootScope.oldMenu = $rootScope.isMenu;
           $rootScope.isMenu = false;
-          $rootScope.isPopup = !$rootScope.isPopup;
+          $rootScope.isPopup = true;
           $rootScope.modalId = id;
         };
       }
@@ -66213,17 +66209,20 @@ module.exports = function($rootScope, $timeout) {
   return scrollmagic = {
     scope: true,
     link: function(scope, element, attrs) {
-      var config, i, j, len;
+      var config;
       controller.update(true);
       config = scope.$eval(attrs.ngSm);
-      if (Array.isArray(config)) {
-        for (j = 0, len = config.length; j < len; j++) {
-          i = config[j];
-          createScene(element, i);
+      $timeout(function() {
+        var i, j, len;
+        if (Array.isArray(config)) {
+          for (j = 0, len = config.length; j < len; j++) {
+            i = config[j];
+            createScene(element, i);
+          }
+        } else {
+          createScene(element, config);
         }
-      } else {
-        createScene(element, config);
-      }
+      }, 10);
     }
   };
 };
@@ -66945,6 +66944,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(184)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
+      if (newUrl.split('#')[0] === oldUrl.split('#')[0] && hash === '') {
+        $rootScope.isPopup = false;
+      }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
         return false;
       }
@@ -66998,12 +67000,6 @@ module.exports = function($rootScope, $scope, data) {
   $scope.type = $scope.post.type;
   $rootScope.lang_menu = $scope.post.wpml_menu;
   $rootScope.body_class = $scope.post.body_class + vars.main.logged_classes;
-  if ($rootScope.isMenu) {
-    $rootScope.isMenu = false;
-  }
-  if ($rootScope.isPopup) {
-    $rootScope.isPopup = false;
-  }
   $rootScope.breadcrumbs = $scope.post.breadcrumbs;
   if ($scope.post.type !== 'lampade') {
     $rootScope.fromElement = false;
@@ -67072,6 +67068,11 @@ module.exports = function($stateProvider, $locationProvider) {
     controller: ["$rootScope", "$scope", "data", require(183)]
   }).state('app.page', {
     url: '/:slug',
+    params: {
+      term: {
+        value: null
+      }
+    },
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
       PrevBefore: ["$rootScope", "$timeout", "$q", require(180).prev],
@@ -67104,12 +67105,7 @@ module.exports = function($stateProvider, $locationProvider) {
     },
     controller: ["$rootScope", "$scope", "data", require(183)]
   }).state('app.collection', {
-    url: '/{collection:(?:collection|collezioni)}/:name',
-    params: {
-      collection: {
-        value: 'collezioni'
-      }
-    },
+    url: '/c/:name',
     templateUrl: vars.main.assets + "tpl/post.tpl.html",
     resolve: {
       data: [

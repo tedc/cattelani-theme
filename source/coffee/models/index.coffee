@@ -31,6 +31,7 @@ catellani
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0]
 			#return false if hash
 			#return false if /#/.test(oldUrl) and newUrl is oldUrl.split('#')[0]
+			$rootScope.isPopup = off if newUrl.split('#')[0] is oldUrl.split('#')[0] and hash is ''	
 			return false if newUrl.split('#')[0] is oldUrl.split('#')[0]
 			# from = if $rootScope.from then $rootScope.from else trans.$from().name.replace('app.', '')
 			# to = trans.$to().name.replace('app.', '')
