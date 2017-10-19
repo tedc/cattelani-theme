@@ -9,7 +9,7 @@
 			<h4 class="modal__title modal__title--small modal__title--small-light"><?php echo $title; ?></h4>	
 		</header>
 		<?php while(have_rows('downloads', 'options')) : the_row(); ?>
-		<a href="<?php the_sub_field('file');  ?>" class="modal__button" target="_blank"><span class="download"><?php echo $string; ?> <?php the_sub_field('year'); ?></span><i class="icon-arrow-download"></i></a>
+		<a href="<?php the_sub_field('file');  ?>" class="modal__button" target="_blank"><span class="download"><?php //echo $string; ?><?php the_sub_field('year'); ?></span><i class="icon-arrow-download"></i></a>
 		<?php endwhile; ?>
 	</nav>
 	<?php endif; acf_unset_language_to_default(); ?>
