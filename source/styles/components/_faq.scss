@@ -24,6 +24,11 @@
 				opacity: 1;
 			}
 		}
+		&:hover {
+			.faq__title, .glossary__title {
+				color: $dark-color;
+			}
+		}
 	}
 	&__content {
 		@extend %accordion_content;
@@ -33,6 +38,9 @@
 				color: $dark-gray;
 			}
 		}
+	}
+	&__title {
+		transition: color $speed;
 	}
 	&__text {
 		@include grow('md');

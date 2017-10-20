@@ -22,7 +22,28 @@ module.exports = ->
 				filtered = if filter.length > 0 then on else off
 			getSearch = ->
 				return if $scope.isSearchEnded
-				$scope.isSearching = on
+				$scope.isSearchEnded = on
+				wp
+					.collections()
+					.perPage "#{vars.api.count_collections}"
+					.lang lang
+					.then (res)->
+						$scope.collections = res
+						return
+				wp
+					.positions()
+					.perPage "#{vars.api.count_positions}"
+					.lang lang
+					.then (res)->
+						$scope.positions = res
+						return
+				wp
+					.sources()
+					.perPage "#{vars.api.count_sources}"
+					.lang lang
+					.then (res)->
+						$scope.sources = res
+						return
 				wp
 					.products()
 					.lang lang
@@ -34,7 +55,9 @@ module.exports = ->
 							return
 						return
 				return
-			getSearch()
+			$scope.$on 'hash_change', (evt, data)->
+				getSearch() if data.hash == 'search'
+				return
 			$scope.isLoading = off
 			$scope.isSearchEnded = off
 			$scope.isChanging = off	
@@ -112,27 +135,6 @@ module.exports = ->
 				return
 			$scope.selected = (s, name)->
 				$scope.select[s].indexOf( name ) isnt -1
-			wp
-				.collections()
-				.perPage "#{vars.api.count_collections}"
-				.lang lang
-				.then (res)->
-					$scope.collections = res
-					return
-			wp
-				.positions()
-				.perPage "#{vars.api.count_positions}"
-				.lang lang
-				.then (res)->
-					$scope.positions = res
-					return
-			wp
-				.sources()
-				.perPage "#{vars.api.count_sources}"
-				.lang lang
-				.then (res)->
-					$scope.sources = res
-					return
 			$scope.image = (item)->
 				img = $scope.$eval item.image
 				url = if typeof img['vertical-thumb'] isnt 'undefined' then img['vertical-thumb'] else img.large

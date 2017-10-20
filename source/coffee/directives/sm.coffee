@@ -62,12 +62,10 @@ module.exports = ($rootScope, $timeout)->
 		link : (scope, element, attrs)->
 			controller.update on
 			config = scope.$eval attrs.ngSm
-			$timeout ->
-				if Array.isArray config
-					for i in config
-						createScene element, i
-				else
-					createScene element, config
-				return
-			, 10
+			if Array.isArray config
+				for i in config
+					createScene element, i
+			else
+				createScene element, config
+			return
 			return

@@ -40,6 +40,30 @@
 			margin-right: em($p/2, 12px);
 		}
 	}
+	&__close-sign {
+		@extend %burger;
+	}
+	&__label {
+		padding-right: em($p);
+	}
+	&__line {
+		@extend %open_close;
+		@extend %open_close_center;
+		&:before, &:after {
+			background-color: $main-color;
+		}
+		&:before {
+			transform: rotate(45deg) translateZ(0);
+		}
+		&:after {
+			transform: rotate(-45deg) translateZ(0);
+		}
+		.zoom__close:hover & {
+			&:after, &:before {
+				transform: rotate(0deg) translateZ(0) scaleX(0.75);
+			}
+		}
+	}
 	&__header {
 		@extend %move_title;
 	}

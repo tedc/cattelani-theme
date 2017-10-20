@@ -1,10 +1,10 @@
 <?php if(get_field('related')) : 
 ?>
-<div class="related related--shrink-fw related--grow-lg related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
-	<header class="related__header related__header--grow-lg">
+<div class="related related--shrink-fw related--grow-md related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
+	<header class="related__header related__header--grow-md">
 		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php _e('Le lampade utilizzate', 'catellani'); ?></h4>
 	</header>
-	<div class="related__items related__items--grow-lg-bottom related__items--grow-md-top">
+	<div class="related__items related__items--grow-md-bottom related__items--grow-top">
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php 
 			$rels = get_posts(

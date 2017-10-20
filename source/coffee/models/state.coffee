@@ -59,7 +59,7 @@ module.exports = ($stateProvider, $locationProvider)->
 					wpApi({
 						endpoint : 'multiple-post-type'
 						params :
-							type : ['post', 'page', 'lampade', 'progetti', 'installazioni']
+							"type[]" : ['post', 'page', 'lampade', 'progetti', 'installazioni']
 							slug : $stateParams.slug
 							lang : $stateParams.lang
 					}).then (res)->

@@ -103,7 +103,10 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 						return
 					return
 				
-
+				scope.key = (e)->
+					move on if e.keyCode is 40 or e.keyCode is 39
+					move off if e.keyCode is 38 or e.keyCode is 37
+					return
 				w.on 'resize', ->
 					$timeout ->
 						#scrollbar.update()

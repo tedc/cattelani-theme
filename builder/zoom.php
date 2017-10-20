@@ -11,7 +11,8 @@
 				<span class="zoom__drag"><?php _e('Trascina ed esplora', 'catellani'); ?></span>
 			</figcaption>
 			<span class="zoom__close zoom__close--shrink zoom__close--grow-md" ng-click="$event.stopPropagation();isZoom[<?php echo $row; ?>]=false" ng-mouseenter="closeHover = true" ng-mouseleave="closeHover = false">
-				<i class="icon-close"></i><?php _e('Chiudi', 'catellani'); ?>
+				<span class="zoom__label"><?php _e('Chiudi', 'catellani'); ?></span>
+				<span class="zoom__close-sign"><span class="zoom__line"></span></span>
 			</span>
 		</figure>
 	</div>

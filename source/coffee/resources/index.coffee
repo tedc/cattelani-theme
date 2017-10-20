@@ -16,8 +16,8 @@ catellani
 		(options)->
 			options = angular.extend {}, deafults, options
 			$http
-				.get "#{vars.main.base}/options.name/options.ver/options.endpoint",
-					data : options.params
+				.get "#{vars.main.base}/wp-json/#{options.name}/#{options.ver}/#{options.endpoint}",
+					params : options.params
 	]
 	.factory 'transformRequestAsFormPost', ->
 		serializeData = (data)->

@@ -8,6 +8,7 @@ module.exports = ($q, $timeout, $rootScope)->
 		TweenMax.to window, .75,
 			scrollTo :
 				y : 0
+				autoKill : off
 			onComplete : ->
 				$timeout ->
 					window.scrollTo 0, 0

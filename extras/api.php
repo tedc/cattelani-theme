@@ -555,11 +555,12 @@ add_filter( 'posts_where', 'my_geo_where', 10, 2 );
 
 // filter functions for our query
 function my_geo_fields( $fields, $query ) {
+    $radius = ( wpsl_get_distance_unit() == 'km' ) ? 6371 : 3959;
     if (isset($query->query_vars['order_location'])) {
         $coords = explode(',', $query->query_vars['order_location']);
         $lat = $coords[0];
         $lon = $coords[1];    
-        $fields .= ", pm1.meta_value as lat, pm2.meta_value as lon, ACOS(SIN(RADIANS($lat))*SIN(RADIANS(pm1.meta_value))+COS(RADIANS($lat))*COS(RADIANS(pm1.meta_value))*COS(RADIANS(pm2.meta_value)-RADIANS($lon))) * 6371 AS distance";
+        $fields .= ", pm1.meta_value as lat, pm2.meta_value as lon, ACOS(SIN(RADIANS($lat))*SIN(RADIANS(pm1.meta_value))+COS(RADIANS($lat))*COS(RADIANS(pm1.meta_value))*COS(RADIANS(pm2.meta_value)-RADIANS($lon))) * $radius AS distance";
     }
     return $fields;
 }
@@ -583,7 +584,7 @@ function my_geo_where( $where, $query ) {
     if (isset($query->query_vars['order_location'])) {
         $radius =  preg_match('/\[(.*?)\]/', get_option('wpsl_settings')['search_radius'], $matches);
         $radius = str_replace(array('[',']'), '', $matches[0]);
-        $where .= " HAVING distance < ".$radius;
+        $where .= " HAVING distance <= ".$radius;
     }
     return $where;
 }

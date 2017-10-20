@@ -142,7 +142,10 @@
 					fill: $dark-color !important;
 				}
 				.menu-opened & {
-					fill: $w !important;
+					fill: $dark-color !important;
+					@include breakpoint() {
+						fill: $w !important;
+					}	
 				}
 			}
 			.is-anim & {
@@ -173,6 +176,12 @@
 			opacity: 0;
 			.white &, .white-header &, .opened & {
 				background-color: $light-color;
+			}	
+			.menu-opened & {
+				background-color: $light-color;
+				@include breakpoint() {
+					background-color: $w;
+				}	
 			}
 			.is-anim & {
 				visibility: visible;

@@ -65326,6 +65326,14 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
             scrollbar.scrollTo(left, 0, 0);
           });
         });
+        scope.key = function(e) {
+          if (e.keyCode === 40 || e.keyCode === 39) {
+            move(true);
+          }
+          if (e.keyCode === 38 || e.keyCode === 37) {
+            move(false);
+          }
+        };
         w.on('resize', function() {
           $timeout(function() {
             scope.isPrev = scrollbar.offset.x > 0 ? true : false;
@@ -65980,7 +65988,16 @@ module.exports = function() {
           if ($scope.isSearchEnded) {
             return;
           }
-          $scope.isSearching = true;
+          $scope.isSearchEnded = true;
+          wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
+            $scope.collections = res;
+          });
+          wp.positions().perPage("" + vars.api.count_positions).lang(lang).then(function(res) {
+            $scope.positions = res;
+          });
+          wp.sources().perPage("" + vars.api.count_sources).lang(lang).then(function(res) {
+            $scope.sources = res;
+          });
           wp.products().lang(lang).then(function(results) {
             $timeout(function() {
               $scope.items = results;
@@ -65989,7 +66006,11 @@ module.exports = function() {
             });
           });
         };
-        getSearch();
+        $scope.$on('hash_change', function(evt, data) {
+          if (data.hash === 'search') {
+            getSearch();
+          }
+        });
         $scope.isLoading = false;
         $scope.isSearchEnded = false;
         $scope.isChanging = false;
@@ -66079,15 +66100,6 @@ module.exports = function() {
         $scope.selected = function(s, name) {
           return $scope.select[s].indexOf(name) !== -1;
         };
-        wp.collections().perPage("" + vars.api.count_collections).lang(lang).then(function(res) {
-          $scope.collections = res;
-        });
-        wp.positions().perPage("" + vars.api.count_positions).lang(lang).then(function(res) {
-          $scope.positions = res;
-        });
-        wp.sources().perPage("" + vars.api.count_sources).lang(lang).then(function(res) {
-          $scope.sources = res;
-        });
         $scope.image = function(item) {
           var alt, array, img, url;
           img = $scope.$eval(item.image);
@@ -66236,13 +66248,8 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", "WPAPI", function(NgMap, $timeout, $rootScope, $element, WPAPI) {
-        var getMap, store, wp, zoomChange;
-        wp = WPAPI;
-        wp.locations = wp.registerRoute('wp/v2', 'locations/', {
-          params: ['order_location', 'stores']
-        });
-        wp.stores = wp.registerRoute('wp/v2', 'stores/');
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation) {
+        var getLocations, getMap, store, zoomChange;
         store = this;
         store.isSelected = false;
         store.buttonString = vars.strings.btn_stores;
@@ -66412,18 +66419,6 @@ module.exports = function() {
             getMap();
           });
         };
-        store.placeChanged = function() {
-          var center;
-          store.place = this.getPlace();
-          center = store.place.geometry.location;
-          store.coords = (center.lat()) + ", " + (center.lng());
-        };
-        store.onInputChange = function() {
-          if (store.address === '') {
-            delete store.coords;
-          }
-          google.maps.event.trigger(store.autoComplete, 'place_changed');
-        };
         store.storeCallback = function() {
           var LatLng;
           LatLng = new google.maps.LatLng(vars.api.start_latlng);
@@ -66460,48 +66455,53 @@ module.exports = function() {
           }
           delete store.coords;
         };
+        getLocations = function() {
+          var obj, options, storeParam, storeValue;
+          storeValue = store.store ? store.store : 0;
+          storeParam = storeValue === 0 ? 'stores_exclude' : 'stores';
+          options = {
+            endpoint: 'locations',
+            params: (
+              obj = {
+                order_location: store.coords
+              },
+              obj["" + storeParam] = storeValue,
+              obj.per_page = vars.api.store_limit,
+              obj
+            )
+          };
+          return wpApi(options);
+        };
         store.onSubmit = function() {
           if (store.isStoreLoading) {
             return;
           }
           store.isStoreLoading = true;
-          if (store.coords) {
-            if (store.store) {
-              wp.locations().stores(store.store).param('order_location', store.coords).then(function(res) {
+          if (store.address.trim() !== '') {
+            GeoCoder.geocode({
+              address: store.address
+            }).then(function(res) {
+              store.coords = (res[0].geometry.location.lat()) + "," + (res[0].geometry.location.lng());
+              getLocations().then(function(res) {
                 $timeout(function() {
-                  store.items = res;
+                  store.items = res.data;
                   $rootScope.$broadcast('markers_changed');
                 }, 10);
               });
-            } else {
-              wp.locations().param('order_location', store.coords).then(function(res) {
-                $timeout(function() {
-                  store.items = res;
-                  $rootScope.$broadcast('markers_changed');
-                }, 10);
-              });
-            }
+            });
           } else {
-            if (store.store) {
-              wp.locations().stores(store.store).then(function(res) {
-                console.log(res);
-                $timeout(function() {
-                  store.items = res;
-                  $rootScope.$broadcast('markers_changed');
-                }, 10);
-              });
-            } else {
-              wp.locations().then(function(res) {
-                $timeout(function() {
-                  store.items = res;
-                  $rootScope.$broadcast('markers_changed');
-                }, 10);
-              });
-            }
+            getLocations().then(function(res) {
+              $timeout(function() {
+                store.items = res.data;
+                $rootScope.$broadcast('markers_changed');
+              }, 10);
+            });
           }
         };
-        wp.stores().then(function(res) {
-          store.stores = res;
+        wpApi({
+          endpoint: 'stores'
+        }).then(function(res) {
+          store.stores = res.data;
         });
         store.infoWindow = function(id, lat, lng) {
           var pos;
@@ -66514,9 +66514,27 @@ module.exports = function() {
         getMap = function() {
           NgMap.getMap().then(function(map) {
             store.map = map;
-            if (!angular.equals({}, store.map)) {
-              store.coords = (store.map.getCenter().lat()) + ", " + (store.map.getCenter().lng());
+            if (navigator.gelocation) {
+              NavigatorGeolocation.getCurrentPosition().then(function(position) {
+                store.coords = position.coords.latitude + "," + position.coords.longitude;
+              })["catch"](function(err) {
+                if (!angular.equals({}, store.map)) {
+                  store.coords = (store.map.getCenter().lat()) + "," + (store.map.getCenter().lng());
+                }
+              });
+            } else {
+              if (!angular.equals({}, store.map)) {
+                store.coords = (store.map.getCenter().lat()) + "," + (store.map.getCenter().lng());
+              }
             }
+            GeoCoder.geocode({
+              location: {
+                lat: parseInt(store.coords.split(',')[0]),
+                lng: parseInt(store.coords.split(',')[1])
+              }
+            }).then(function(res) {
+              store.address = res[0].formatted_address;
+            });
             store.onSubmit();
           });
         };
@@ -66931,8 +66949,12 @@ catellani.config(["$stateProvider", "$locationProvider", require(184)]).run([
             return;
           }
           $rootScope.modal(hash);
+          $rootScope.$broadcast('hash_change', {
+            hash: hash
+          });
         });
       }
+      console.log(hash);
       body = document.body;
       docEl = document.documentElement;
       scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
@@ -66944,7 +66966,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(184)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
-      if (newUrl.split('#')[0] === oldUrl.split('#')[0] && hash === '') {
+      if (newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '') {
         $rootScope.isPopup = false;
       }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
@@ -66972,7 +66994,8 @@ module.exports = function($q, $timeout, $rootScope) {
     });
     TweenMax.to(window, .75, {
       scrollTo: {
-        y: 0
+        y: 0,
+        autoKill: false
       },
       onComplete: function() {
         $timeout(function() {
@@ -67083,7 +67106,7 @@ module.exports = function($stateProvider, $locationProvider) {
           wpApi({
             endpoint: 'multiple-post-type',
             params: {
-              type: ['type', 'lang', 'collezioni'],
+              "type[]": ['post', 'page', 'lampade', 'progetti', 'installazioni'],
               slug: $stateParams.slug,
               lang: $stateParams.lang
             }
@@ -67219,8 +67242,8 @@ catellani.factory('WPAPI', function() {
     };
     return function(options) {
       options = angular.extend({}, deafults, options);
-      return $http.get(vars.main.base + "/options.name/options.ver/options.endpoint", {
-        data: options.params
+      return $http.get(vars.main.base + "/wp-json/" + options.name + "/" + options.ver + "/" + options.endpoint, {
+        params: options.params
       });
     };
   }

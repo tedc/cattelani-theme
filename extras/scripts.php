@@ -51,6 +51,7 @@
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
 				'start_latlng' => get_option('wpsl_settings')['start_latlng'],
+				'store_limit' => get_option('wpsl_settings')['autoload_limit'],
 				'count_posts' => $posts,
 				'count_collections' => count(get_terms(array('taxonomy' => 'collezioni'))),
 				'count_positions' => count(get_terms(array('taxonomy' => 'posizioni'))),

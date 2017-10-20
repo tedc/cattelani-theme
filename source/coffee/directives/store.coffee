@@ -3,11 +3,11 @@ module.exports = ->
 		templateUrl : "#{vars.main.assets}/tpl/store.tpl.html"
 		bindToController : on
 		controllerAs : "store"
-		controller : ['NgMap', "$timeout", "$rootScope", "$element", "WPAPI", (NgMap, $timeout, $rootScope, $element, WPAPI)->
-			wp = WPAPI
-			wp.locations = wp.registerRoute 'wp/v2', 'locations/',
-				params : ['order_location', 'stores']
-			wp.stores = wp.registerRoute 'wp/v2', 'stores/'	
+		controller : ['NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", (NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation)->
+			# wp = WPAPI
+			# wp.locations = wp.registerRoute 'wp/v2', 'locations/',
+			# 	params : ['order_location', 'stores']
+			# wp.stores = wp.registerRoute 'wp/v2', 'stores/'	
 			store = @
 			store.isSelected = false
 			store.buttonString = vars.strings.btn_stores
@@ -26,15 +26,15 @@ module.exports = ->
 					getMap()
 					return
 				return
-			store.placeChanged = ->
-				store.place = @getPlace()
-				center = store.place.geometry.location
-				store.coords = "#{center.lat()}, #{center.lng()}"
-				return
-			store.onInputChange = ->
-				delete store.coords if store.address is ''
-				google.maps.event.trigger store.autoComplete, 'place_changed'
-				return
+			# store.placeChanged = ->
+			# 	store.place = @getPlace()
+			# 	center = store.place.geometry.location
+			# 	store.coords = "#{center.lat()}, #{center.lng()}"
+			# 	return
+			# store.onInputChange = ->
+			# 	delete store.coords if store.address is ''
+			# 	google.maps.event.trigger store.autoComplete, 'place_changed'
+			# 	return
 			store.storeCallback = ->
 				LatLng = new google.maps.LatLng vars.api.start_latlng
 				store.map.setCenter LatLng
@@ -66,57 +66,94 @@ module.exports = ->
 					store.map.setCenter latLng
 				delete store.coords
 				return
+
+			getLocations = ()->
+				storeValue = if store.store then store.store else 0
+				storeParam = if storeValue is 0 then 'stores_exclude' else 'stores'
+				options = 
+					endpoint : 'locations'
+					params :
+						order_location : store.coords
+						"#{storeParam}" : storeValue
+						per_page : vars.api.store_limit
+				wpApi options
+				
 			store.onSubmit = ->
 				return if store.isStoreLoading
 				store.isStoreLoading = on
-				if store.coords
-					if store.store
-						wp.locations()
-							.stores store.store
-							.param 'order_location', store.coords
-							.then (res)->
-								$timeout ->
-									store.items = res
-									$rootScope.$broadcast 'markers_changed'
+				if store.address.trim() isnt ''
+					GeoCoder.geocode { address : store.address}
+						.then (res)->
+							store.coords = "#{res[0].geometry.location.lat()},#{res[0].geometry.location.lng()}"
+							getLocations()
+								.then (res)->
+									$timeout ->
+										store.items = res.data
+										$rootScope.$broadcast 'markers_changed'
+										return
+									, 10
 									return
-								, 10
-								return
-					else
-						wp.locations()
-							.param 'order_location', store.coords
-							.then (res)->
-								$timeout ->
-									store.items = res
-									$rootScope.$broadcast 'markers_changed'
-									return
-								, 10
-								return
+							return
 				else
-					if store.store
-						wp.locations()
-							.stores store.store
-							.then (res)->
-								console.log res
-								$timeout ->
-									store.items = res
-									$rootScope.$broadcast 'markers_changed'
-									return
-								, 10
+					getLocations()
+						.then (res)->
+							$timeout ->
+								store.items = res.data
+								$rootScope.$broadcast 'markers_changed'
 								return
-					else
-						wp.locations()
-							.then (res)->
-								$timeout ->
-									store.items = res
-									$rootScope.$broadcast 'markers_changed'
-									return
-								, 10
-								return
+							, 10
+							return
+				# if store.coords
+				# 	if store.store
+				# 		wp.locations()
+				# 			.stores store.store
+				# 			.param 'order_location', store.coords
+				# 			.perPage vars.api.store_limit
+				# 			.then (res)->
+				# 				$timeout ->
+				# 					store.items = res
+				# 					$rootScope.$broadcast 'markers_changed'
+				# 					return
+				# 				, 10
+				# 				return
+				# 	else
+				# 		wp.locations()
+				# 			.param 'order_location', store.coords
+				# 			.perPage vars.api.store_limit
+				# 			.then (res)->
+				# 				$timeout ->
+				# 					store.items = res
+				# 					$rootScope.$broadcast 'markers_changed'
+				# 					return
+				# 				, 10
+				# 				return
+				# else
+				# 	if store.store
+				# 		wp.locations()
+				# 			.stores store.store
+				# 			.perPage vars.api.store_limit
+				# 			.then (res)->
+				# 				console.log res
+				# 				$timeout ->
+				# 					store.items = res
+				# 					$rootScope.$broadcast 'markers_changed'
+				# 					return
+				# 				, 10
+				# 				return
+				# 	else
+				# 		wp.locations()
+				# 			.perPage vars.api.store_limit
+				# 			.then (res)->
+				# 				$timeout ->
+				# 					store.items = res
+				# 					$rootScope.$broadcast 'markers_changed'
+				# 					return
+				# 				, 10
+				# 				return
 				return
-			wp
-				.stores()
+			wpApi { endpoint : 'stores' }
 				.then (res)->
-					store.stores = res
+					store.stores = res.data
 					return
 			store.infoWindow = (id, lat, lng)->
 				store.isStore = if store.isStore is id then off else id
@@ -129,7 +166,22 @@ module.exports = ->
 					.getMap()
 					.then (map)-> 
 						store.map = map
-						store.coords = "#{store.map.getCenter().lat()}, #{store.map.getCenter().lng()}" if not angular.equals {}, store.map 
+						if navigator.gelocation
+								NavigatorGeolocation
+									.getCurrentPosition()
+										.then (position)->
+											store.coords = "#{position.coords.latitude},#{position.coords.longitude}"
+											return
+										.catch (err)->
+											store.coords = "#{store.map.getCenter().lat()},#{store.map.getCenter().lng()}" if not angular.equals {}, store.map		
+											return
+						else
+							store.coords = "#{store.map.getCenter().lat()},#{store.map.getCenter().lng()}" if not angular.equals {}, store.map 
+						
+						GeoCoder.geocode { location : {lat : parseInt(store.coords.split(',')[0]), lng : parseInt(store.coords.split(',')[1])}}
+							.then (res)->
+								store.address = res[0].formatted_address
+								return
 						store.onSubmit()
 						return
 				return
