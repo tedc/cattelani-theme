@@ -66221,20 +66221,18 @@ module.exports = function($rootScope, $timeout) {
   return scrollmagic = {
     scope: true,
     link: function(scope, element, attrs) {
-      var config;
+      var config, i, j, len;
       controller.update(true);
       config = scope.$eval(attrs.ngSm);
-      $timeout(function() {
-        var i, j, len;
-        if (Array.isArray(config)) {
-          for (j = 0, len = config.length; j < len; j++) {
-            i = config[j];
-            createScene(element, i);
-          }
-        } else {
-          createScene(element, config);
+      if (Array.isArray(config)) {
+        for (j = 0, len = config.length; j < len; j++) {
+          i = config[j];
+          createScene(element, i);
         }
-      }, 10);
+      } else {
+        createScene(element, config);
+      }
+      return;
     }
   };
 };
