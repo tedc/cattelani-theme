@@ -1,6 +1,6 @@
 .meta {
 	@include grow('small');
-	align-items: center;
+	align-items: flex-start;
 	text-align: center;
 	@include breakpoint() {
 		text-align: left;
