@@ -1,6 +1,7 @@
 <?php 
 global $sitepress;
 $lang = $_GET['lang'] ? $_GET['lang'] : 'it';
+echo $sitepress->get_current_language();
 $sitepress->switch_lang($lang, true);
 ?>
 <aside class="meta meta--grow meta--gray meta--grid meta--shrink-fw">
