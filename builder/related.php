@@ -14,6 +14,7 @@ if(get_field('related')) :
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php
 			$ids = array();
+			echo $sitepress->get_default_language().', '.$sitepress->get_current_language(); 
 			foreach (get_field('related') as $i) {
 				$new_id = id_by_lang($i, 'lampade', $sitepress->get_current_language());
 				if($sitepress->get_default_language() != $sitepress->get_current_language()) {
