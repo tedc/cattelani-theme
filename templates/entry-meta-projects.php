@@ -1,11 +1,10 @@
 <?php 
+setlocale(LC_ALL, 'en_EN');
 $lang = $_GET['lang'] ? $_GET['lang'] : 'it'; ?>
 <aside class="meta meta--grow meta--gray meta--grid meta--shrink-fw">
 	<time class="meta__cell meta__cell--grow meta__cell--shrink-right-only meta__cell--s3" pudate datetime="<?php the_time('Y:m:d'); ?>">
 		<?php 
-		setlocale(LC_ALL, 'en_EN');
 		echo ucfirst(get_the_time('F Y'));
-		setlocale(LC_ALL, 'it_IT');
  ?>
 	</time>
 	<?php if(get_field('luogo') || get_field('citta')) : ?>
