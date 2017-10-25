@@ -7,7 +7,7 @@ if(get_field('related')) :
 			
 			<?php 
 			do_action( 'wpml_register_single_string', 'catellani', 'Related', 'Le lampade utilizzate' );
-			echo apply_filters( 'wpml_translate_single_string', 'Le lampade utilizzate', 'catellani', 'Related', $sitepress->default_language() ); ?>
+			echo apply_filters( 'wpml_translate_single_string', 'Le lampade utilizzate', 'catellani', 'Related', $sitepress->get_default_language() ); ?>
 		</h4>
 	</header>
 	<div class="related__items related__items--grow-md-bottom related__items--grow-top">
