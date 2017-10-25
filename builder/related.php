@@ -27,7 +27,7 @@ if(get_field('related')) :
 			$rels = get_posts(
 				array(
 					'post_type' => 'lampade',
-					'post__in' => $sitepress->get_default_language() != $sitepress->get_current_language() ? $ids : get_field('related'),
+					'post__in' => get_field('related'),
 					'posts_per_page' => count(get_field('realted')),
 					'orderby' => 'post__in',
 					'suppress_filters' => 0
