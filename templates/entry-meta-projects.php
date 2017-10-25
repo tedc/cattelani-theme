@@ -4,7 +4,7 @@ $lang = $_GET['lang'] ? $_GET['lang'] : 'it';
 ?>
 <aside class="meta meta--grow meta--gray meta--grid meta--shrink-fw">
 	<time class="meta__cell meta__cell--grow meta__cell--shrink-right-only meta__cell--s3" pudate datetime="<?php the_time('Y:m:d'); ?>">
-		<?php echo ucfirst(get_option( 'date_format' ),date_i18n( strtotime(get_the_time('F Y') ))); ?>
+		<?php echo ucfirst(get_option( 'date_format' ),date_i18n( strtotime( '11/15-1976' ))); ?>
 	</time>
 	<?php if(get_field('luogo') || get_field('citta')) : ?>
 	<div class="meta__cell meta__cell--grow meta__cell--shrink-right-only meta__cell--s3">
