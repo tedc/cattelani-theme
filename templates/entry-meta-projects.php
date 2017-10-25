@@ -1,3 +1,4 @@
+<?php echo $lang; ?>
 <aside class="meta meta--grow meta--gray meta--grid meta--shrink-fw">
 	<time class="meta__cell meta__cell--grow meta__cell--shrink-right-only meta__cell--s3" pudate datetime="<?php the_time('Y:m:d'); ?>">
 		<?php echo ucfirst(get_the_time('F Y')); ?>
