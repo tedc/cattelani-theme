@@ -1,6 +1,6 @@
-<?php global $sitepress;
-echo $sitepress->get_default_language().', '.$sitepress->get_current_language(); 
-			
+<?php 
+var_dump($sitepress);
+
 if(get_field('related')) : 
 ?>
 <div class="related related--shrink-fw related--grow-md related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
