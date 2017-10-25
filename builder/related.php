@@ -12,11 +12,20 @@ if(get_field('related')) :
 	</header>
 	<div class="related__items related__items--grow-md-bottom related__items--grow-top">
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
-		<?php 
+		<?php
+			$ids = array();
+			foreach (get_field('related') as $i) {
+				$new_id = id_by_lang($i, 'lampade', $sitepress->get_current_language());
+				if($sitepress->get_default_language() != $sitepress->get_current_language()) {
+					if($new_id) {
+						array_push($ids, $new_id);
+					}
+				}
+			}
 			$rels = get_posts(
 				array(
 					'post_type' => 'lampade',
-					'post__in' => get_field('related'),
+					'post__in' => $sitepress->get_default_language() != $sitepress->get_current_language() ? $ids : get_field('related'),
 					'posts_per_page' => count(get_field('realted')),
 					'orderby' => 'post__in',
 					'suppress_filters' => 0
