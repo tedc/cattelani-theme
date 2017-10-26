@@ -9,12 +9,12 @@
     <p class="breadcrumbs" bind-html-compile="breadcrumbs" ng-if="breadcrumbs" ng-class="{'breadcrumbs--hidden':isYearsActive}">
     </p>
     <p class="breadcrumbs" ng-if="!breadcrumbs" ng-class="{'breadcrumbs--hidden':isYearsActive}">
-        <?php $term_obj = is_tax() ? get_queried_object() : false; $post_obj = (is_single() || is_page()) ? $post : false; $lang = ICL_LANGUAGE_CODE; include(locate_template( 'templates/breadcrumb.php', false, true )); ?>
+        <?php $term_obj = is_tax() ? get_queried_object() : false; $post_obj = (is_single() || is_page()) ? $post : false; include(locate_template( 'templates/breadcrumb.php', false, true )); ?>
     </p>
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
         <a class="banner__btn banner__btn--search" href="#search" ng-click="startSearch();">
             <span class="banner__label">
-                <?php _e('Cerca', 'catellani'); ?>
+                <?php echo my_wpml_string('Cerca', 'catellani'); ?>
             </span>
             <i class="icon-search"></i>
         </a>
@@ -25,7 +25,7 @@
         ?>
         <span class="banner__btn banner__btn--toggle" menu="true">
             <span class="banner__label banner__label--menu">
-                <?php _e('Menu', 'catellani'); ?>
+                <?php echo my_wpml_string('Menu', 'catellani'); ?>
             </span>
             <span class="banner__burger">
                 <span class="banner__line banner__line--top"></span>
@@ -37,7 +37,7 @@
     <nav class="banner__nav banner__nav--grid">
          <span class="banner__btn banner__btn--shrink banner__btn--grow-md-top banner__btn--close" menu="false">
             <span class="banner__label banner__label--close">
-                <?php _e('Chiudi', 'catellani'); ?>
+                <?php echo my_wpml_string('Chiudi', 'catellani'); ?>
             </span>
             <span class="banner__burger">
                 <span class="banner__line banner__line--top"></span>

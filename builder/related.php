@@ -5,25 +5,11 @@ if(get_field('related')) :
 ?>
 <div class="related related--shrink-fw related--grow-md related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
 	<header class="related__header related__header--grow-md">
-		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php _e('Le lampade utilizzate', 'catellani'); ?>
-			
-			<?php 
-			do_action( 'wpml_register_single_string', 'catellani', 'Related', 'Le lampade utilizzate' );
-			echo apply_filters( 'wpml_translate_single_string', 'Le lampade utilizzate', 'catellani', 'Related', 'en' ); ?>
-		</h4>
+		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php echo my_wpml_string('Le lampade utilizzate'); ?></h4>
 	</header>
 	<div class="related__items related__items--grow-md-bottom related__items--grow-top">
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php
-			$ids = array();
-			foreach (get_field('related') as $i) {
-				$new_id = id_by_lang($i, 'lampade', $sitepress->get_current_language());
-				if($sitepress->get_default_language() != $sitepress->get_current_language()) {
-					if($new_id) {
-						array_push($ids, $new_id);
-					}
-				}
-			}
 			$rels = get_posts(
 				array(
 					'post_type' => 'lampade',

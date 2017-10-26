@@ -8,6 +8,6 @@
 		</li>
 	</ul>	
 	<div class="instagram__link instagram__link--grow-top">
-		<a href="<?php get_social_link('Instagram'); ?>" target="_blank" class="instagram__send"><?php _e('Seguici su instagram', 'catellani'); ?></a>
+		<a href="<?php get_social_link('Instagram'); ?>" target="_blank" class="instagram__send"><?php echo my_wpml_string('Seguici su instagram', 'catellani'); ?></a>
 	</div>
 </div>

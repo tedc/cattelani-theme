@@ -19,7 +19,7 @@ $lang = $_GET['lang'] ? $_GET['lang'] : 'it'; ?>
 	<?php endif; ?>
 	<?php if(get_field('photo_credits')) : ?>
 	<div class="meta__cell meta__cell--grow meta__cell--shrink-right-only meta__cell--s3">
-		<?php _e('Photo by', 'catellani'); ?> <?php the_field('photo_credits'); ?>
+		<?php echo my_wpml_string('Photo by', 'catellani'); ?> <?php the_field('photo_credits'); ?>
 	</div>
 	<?php endif; ?>
 </aside>
