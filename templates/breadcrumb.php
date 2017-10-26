@@ -1,6 +1,6 @@
 <?php
-	global $sitpress;
-	$lang = $sitpress->get_current_language();
+	global $sitepress;
+	$lang = $sitepress->get_current_language();
 	$post_type = get_post_type();
 	$home = id_by_lang(get_option('page_on_front'), 'page', $lang);
 	acf_set_language_to_default();
