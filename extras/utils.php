@@ -107,6 +107,6 @@
 	// add_filter( 'get_next_post_sort', 'my_next_post_sort' );
 	function my_wpml_string($string, $domain = 'catellani', $name = 'Catellani') {
 		global $sitepress;
-		do_action( 'wpml_register_single_string', $domain, $name, $string );
-		return apply_filters( 'wpml_translate_single_string', $string, $domain, $name, $sitepress->get_current_language()); 
+		do_action( 'wpml_register_single_string', $domain, $name . ': ' .$string , $string );
+		return apply_filters( 'wpml_translate_single_string', $string, $domain, $name. ': ' .$string, $sitepress->get_current_language()); 
 	}
