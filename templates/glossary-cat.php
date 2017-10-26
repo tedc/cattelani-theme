@@ -27,7 +27,7 @@
 			<ul class="glossary__list">
 				<?php while($glossary->have_posts()) : $glossary->the_post(); ?>
 				<li class="glossary__item accordion" id="glossary_<?php the_ID(); ?>" ng-class="{'accordion--active':isGlossary[<?php the_ID(); ?>]}">
-					<header class="glossary__header glossary__header--mw glossary__header--grow-md-top" ng-click="isGlossary[<?php the_ID(); ?>]=!isGlossary[<?php the_ID(); ?>]">
+					<header class="glossary__header glossary__header--shrink glossary__header--mw glossary__header--grow-md-top" ng-click="isGlossary[<?php the_ID(); ?>]=!isGlossary[<?php the_ID(); ?>]">
 						<h3 class="glossary__title glossary__title--small-lighter"><?php the_title(); ?></h3>
 						<i class="icon-close"></i>
 					</header>
