@@ -346,7 +346,7 @@
 
     }
 
-    add_action( 'rest_api_init', 'wpml_wp_rest_api_init' );
+    //add_action( 'rest_api_init', 'wpml_wp_rest_api_init' );
 
     function wpml_wp_rest_api_init( $server ) {
         global $sitepress;
