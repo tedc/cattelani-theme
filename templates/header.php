@@ -14,7 +14,7 @@
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
         <a class="banner__btn banner__btn--search" href="#search" ng-click="startSearch();">
             <span class="banner__label">
-                <?php echo my_wpml_string('Cerca', 'catellani'); ?>
+                <?php _e('Cerca', 'catellani'); ?>
             </span>
             <i class="icon-search"></i>
         </a>
@@ -25,7 +25,7 @@
         ?>
         <span class="banner__btn banner__btn--toggle" menu="true">
             <span class="banner__label banner__label--menu">
-                <?php echo my_wpml_string('Menu', 'catellani'); ?>
+                <?php _e('Menu', 'catellani'); ?>
             </span>
             <span class="banner__burger">
                 <span class="banner__line banner__line--top"></span>
@@ -37,7 +37,7 @@
     <nav class="banner__nav banner__nav--grid">
          <span class="banner__btn banner__btn--shrink banner__btn--grow-md-top banner__btn--close" menu="false">
             <span class="banner__label banner__label--close">
-                <?php echo my_wpml_string('Chiudi', 'catellani'); ?>
+                <?php _e('Chiudi', 'catellani'); ?>
             </span>
             <span class="banner__burger">
                 <span class="banner__line banner__line--top"></span>

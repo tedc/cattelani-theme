@@ -38,7 +38,7 @@
 			"main" => array(
 				'mobile' => (bool)is_handheld(),
 				'assets' => get_stylesheet_directory_uri() . '/assets/',
-				'base' => str_replace('/en', '', get_home_url()),
+				'base' => get_home_url(),
 				'glossary' => get_option('glossary-settings')['slug-cat'],
 				'glossary_slug' => get_option('glossary-settings')['slug'],
 				'home' => get_post(get_option('page_on_front'))->post_name,

@@ -12,7 +12,7 @@
 ?>
 <div class="storia storia--grow-lg" ng-swiper  ng-class="{'storia--visible':isYearsActive}" is-storia="true"">
 <header class="storia__header storia__header--grow-lg storia__header--shrink-fw">
-	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php echo my_wpml_string('La Storia', 'catellani'); ?></h3>
+	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php _e('La Storia', 'catellani'); ?></h3>
 </header>
 <nav class="storia__nav storia__nav--shrink storia__nav--grow-md">
 	<div class="storia__items storia__items--shrink" scrollbar continuous-scrolling="true">
@@ -25,8 +25,8 @@
 			<span class="storia__year storia__year--first"><span class="storia__date"><?php echo trim($split_title[0]); ?></span></span>
 			<span class="storia__year storia__year--last"><span class="storia__date"><?php echo trim($split_title[1]); ?></span></span>
 			<span class="storia__label" ng-click="expandStory()">
-				<span><?php echo my_wpml_string('Esplora', 'catellani'); ?></span>
-				<span><?php echo my_wpml_string('Chiudi', 'catellani'); ?></span>
+				<span><?php _e('Esplora', 'catellani'); ?></span>
+				<span><?php _e('Chiudi', 'catellani'); ?></span>
 			</span>
 		</div>
 		<?php $i++; endforeach; wp_reset_postdata();?>
@@ -58,7 +58,7 @@
 			</h2>
 			<?php include(locate_template( 'templates/content-single-'.$s->post_type .'.php', false, true)); ?>
 			<footer class="type-anni__footer anni__footer--shrink type-anni__footer--grid type-anni__footer--grow-md-top">
-				<span class="type-anni__send" ng-click="expandStory()"><?php echo my_wpml_string('Torna alla storia', 'catellani'); ?></span>
+				<span class="type-anni__send" ng-click="expandStory()"><?php _e('Torna alla storia', 'catellani'); ?></span>
 				<?php 
 					$oldPost = $post;
 					$post = $s;

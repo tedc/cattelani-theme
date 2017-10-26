@@ -10,6 +10,6 @@
 		</scrollbar>
 	</div>
 	<div class="facebook__cell facebook__cell--grow facebook__cell--shrink facebook__cell--s5 facebook__cell--align-end">
-	<p><a href="<?php get_social_link('Facebook'); ?>" target="_blank" class="facebook__send"><?php echo my_wpml_string('Seguici su Facebook', 'catellani'); ?></a></p>
+	<p><a href="<?php get_social_link('Facebook'); ?>" target="_blank" class="facebook__send"><?php _e('Seguici su Facebook', 'catellani'); ?></a></p>
 	</div>
 </div>

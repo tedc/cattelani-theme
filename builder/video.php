@@ -2,7 +2,7 @@
 <div class="video video--shrink-fw video--grow-lg<?php echo (get_sub_field('video_dark')) ? ' video--dark' : ''; ?>" id="video_<?php echo $row; ?>"<?php scrollmagic('"triggerHook":0.4,"class":"video--active","reverse":false,"triggerElement":"#video_'.$row.' .video__container"'); ?>>
 	<?php //if(get_sub_field('video_title')) : echo '<header class="video__header video__header--shrink"><h3 class="video__title video__title--large-lighter">'.get_sub_field('video_title').'</h3></header>'; endif; ?>
 	<header class="video__header video__header--shrink">
-		<h3 class="video__title video__title--large-lighter"><?php echo my_wpml_string('Come nasce', 'catellani'); ?></h3>
+		<h3 class="video__title video__title--large-lighter"><?php _e('Come nasce', 'catellani'); ?></h3>
 	</header>
 	<?php 
 		$file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_sub_field('video')['url']);

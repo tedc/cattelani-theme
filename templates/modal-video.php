@@ -1,7 +1,7 @@
 <?php if (get_field('header_video')) { ?>       
 <div class="main-video" ng-player id="video_<?php echo get_the_ID(); ?>" ng-class="{'main-video--open' : isOpen}">
     <span class="main-video__close main-video__close--shrink main-video__close--grow-md-top" ng-click="close()">
-        <span class="main-video__label"><?php echo my_wpml_string('Chiudi', 'catellani'); ?></span>
+        <span class="main-video__label"><?php _e('Chiudi', 'catellani'); ?></span>
         <span class="main-video__close-sign"><span class="main-video__line"></span></span>
     </span>
 	<?php the_field('header_video'); ?>

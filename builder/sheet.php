@@ -1,7 +1,7 @@
 <?php if(have_rows('sheet_items')) : ?>
 <section class="sheet sheet--shrink-fw sheet--grow-md sheet--gray">
 	<div class="sheet__container sheet__container--grow-md">
-		<h3 class="sheet__title sheet__title--small-lighter"><?php echo my_wpml_string('Scheda tecnica', 'catellani'); ?></h3>
+		<h3 class="sheet__title sheet__title--small-lighter"><?php _e('Scheda tecnica', 'catellani'); ?></h3>
 		<?php $count = count(get_field('sheet_items')) - 1; $c = 0; while(have_rows('sheet_items')) : the_row(); ?>
 		<div class="sheet__item sheet__item--grow-md<?php echo ($c==$count) ? '-top' : ''; ?> sheet__item--mw <?php echo ($c==$count) ? 'sheet__item--last ' : ''; ?>sheet__item--grid">
 			<div class="sheet__cell sheet__cell--shrink-right-only sheet__cell--s4">

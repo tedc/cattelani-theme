@@ -1,3 +1,4 @@
+html = document.getElementsByTagName('html')[0]
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
