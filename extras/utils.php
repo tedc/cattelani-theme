@@ -104,7 +104,7 @@
 	    $index = 0;
 	    $i = 0;
 	    $count = $collezioni->found_posts - 1;
-	    while($collezioni->have_posts()) : $collezioni->the_post();
+	    while($collezioni->have_posts()) : $collezioni->the_post(); setup_postdata($post);
 			if($post->ID == $lampada){
 			    $index = $i;
 			    break;
