@@ -70,7 +70,6 @@
 				'posts_per_page' => -1,
 				'orderby' => 'menu_order',
 				'order' => 'ASC',
-				'sort_column' => 'menu_order',
 				'tax_query' => array(
 					array(
 						'taxonomy' => 'collezioni',
