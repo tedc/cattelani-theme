@@ -99,7 +99,7 @@
 				)
 			)
 		);
-		$class_lampada = count($lampade) >= 3 ? 3 : count($lampade);
+		$class_lampada = $count >= 3 ? 3 : $count;
 	    $class_lampada = 12 / $class_lampada;
 	    $index = 0;
 	    $i = 0;
