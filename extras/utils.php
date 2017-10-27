@@ -82,6 +82,41 @@
 		return $slider;
 	}
 
+	function get_lamps_order($lampada) {
+		$collection = wp_get_post_terms( $lampada, 'collezioni' );
+		$collezioni = new WP_Query(
+			array(
+				'post_type' => 'lampade',
+				'posts_per_page' => -1,
+				'orderby' => 'menu_order',
+				'order' => 'ASC',
+				'sort_column' => 'menu_order',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'collezioni',
+						'field' => 'term_id',
+						'terms' => array($the_id)
+					)
+				)
+			)
+		);
+		$class_lampada = count($lampade) >= 3 ? 3 : count($lampade);
+	    $class_lampada = 12 / $class_lampada;
+	    $index = 0;
+	    $i = 0;
+	    while($collezioni->have_posts()) : $collezioni->the_post();
+			if($post->ID == $lampda){
+			    $index = $i;
+			    break;
+			}
+			$i++;
+		endwhile;
+		wp_reset_query();
+		wp_reset_postdata();
+		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($post->ID)).'" light-collection="'.$collection[0]->term_id.'"';
+		return $data;
+	}
+
 
 	// function my_next_post_where() {
 

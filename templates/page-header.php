@@ -7,20 +7,7 @@
 	$className  = $kind == 0 ? 'header--bg header--bg-'. get_post_type() : 'header--white';
 	$data = '';
 	if(get_post_type() == 'lampade')  :
-	$collection = wp_get_post_terms( $post->ID, 'collezioni' );
-	$lampade = get_posts(array('post_type'=>'lampade','posts_per_page'=>-1, 'orderby'=>'menu_order', 'sort_order' => 'asc', 'tax_query' => array(array('taxonomy' => 'collezioni', 'field' => 'term_id', 'terms' => array($collection[0]->term_id)))));
-    $class_lampada = count($lampade) >= 3 ? 3 : count($lampade);
-    $class_lampada = 12 / $class_lampada;
-    $index = 0;
-    $i = 0;
-	foreach ($lampade as $lampada) {
-		if($lampada->ID == $post->ID){
-		    $index = $i;
-		    break;
-		}
-		$i++;
-	} 
-	$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.(count($lampade) - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($post->ID)).'" light-collection="'.$collection[0]->term_id.'"';
+	$data = get_lamps_order($post->ID);
 	endif;
 ?>
 
