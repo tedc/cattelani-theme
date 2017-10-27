@@ -103,14 +103,15 @@
 	    $class_lampada = 12 / $class_lampada;
 	    $index = 0;
 	    $i = 0;
+	    $cover = get_the_post_thumbnail_url($lampada, 'full');
 	    $count = $collezioni->found_posts - 1;
-	    while($collezioni->have_posts()) : $collezioni->the_post(); setup_postdata($post);
+	    while($collezioni->have_posts()) : $collezioni->the_post();
+	    	global $post;
 			if($post->ID == $lampada){
 			    $index = $i;
 			    break;
 			}
-			$i++;
-		endwhile;
+		$i++; endwhile;
 		wp_reset_query();
 		wp_reset_postdata();
 		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.$count.'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
