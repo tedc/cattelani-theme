@@ -50,34 +50,62 @@
 
 	function collezioni_shortcode($atts) {
 		$the_id = $atts['id'];
-		$array = array(
-			'post_type' => 'lampade',
-			'posts_per_page' => -1,
-			'orderby' => 'menu_order',
-			'order' => 'ASC',
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'collezioni',
-					'field' => 'term_id',
-					'terms' => array($the_id)
+		// $array = array(
+		// 	'post_type' => 'lampade',
+		// 	'posts_per_page' => -1,
+		// 	'orderby' => 'menu_order',
+		// 	'order' => 'ASC',
+		// 	'tax_query' => array(
+		// 		array(
+		// 			'taxonomy' => 'collezioni',
+		// 			'field' => 'term_id',
+		// 			'terms' => array($the_id)
+		// 		)
+		// 	)
+		// );
+		// $lampade = get_posts($array);
+		$collezioni = new WP_Query(
+			array(
+				'post_type' => 'lampade',
+				'posts_per_page' => -1,
+				'orderby' => 'menu_order',
+				'order' => 'ASC',
+				'sort_column' => 'menu_order',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'collezioni',
+						'field' => 'term_id',
+						'terms' => array($the_id)
+					)
 				)
 			)
 		);
-		$lampade = get_posts($array);
-		if(!$lampade) return;
-		$count = count($posts);
+		//$count = $collezioni->found_posts;
+		if(!$collezioni->have_posts()) return;
+		//$count = count($posts);
+		$count = $collezioni->found_posts;
+		
 		$loop = $count > 2 ? 'true' : 'false';
 		$show = $count > 1 ? 'true' : 'false';
 		$bp = ($count == 3) ? ", 'breakpoints' : { 849 : {'loop' : true} }" : '';
 		$c = 0;
 		$html = '<div class="collections collections--slider-h" ng-scroll-carousel current-collection="'.$the_id.'" ng-keydown="key($event)"><div class="collections__slider collections__slider--archive" scrollbar="carousel" axis-x="true">';
-		foreach ($lampade as $post) {
+		// foreach ($lampade as $post) {
+		// 	ob_start();
+		// 	include(locate_template( 'templates/content-lampade.php', false, false ));
+		// 	$item = ob_get_clean();
+		// 	$html .= $item;
+		// 	$c++;
+		// }
+		while($collezioni->have_posts()) : $collezioni->the_post();
 			ob_start();
 			include(locate_template( 'templates/content-lampade.php', false, false ));
 			$item = ob_get_clean();
 			$html .= $item;
 			$c++;
-		}
+		endwhile;
+		wp_reset_query();
+		wp_reset_postdata();
 		$html .= '</div><div class="collections__loader"><div class="collections__spinner"></div></div><i class="icon-arrow icon-arrow-prev" ng-click="move(false)" ng-class="{hide : !isVisible, inactive : !isPrev}"></i><i class="icon-arrow icon-arrow-next" ng-click="move(true)" ng-class="{hide : !isVisible, inactive : !isNext}"></i></div>';
 		return $html;
 	}
