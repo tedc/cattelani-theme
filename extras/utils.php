@@ -94,7 +94,7 @@
 					array(
 						'taxonomy' => 'collezioni',
 						'field' => 'term_id',
-						'terms' => array($the_id)
+						'terms' => $collection[0]->term_id
 					)
 				)
 			)
