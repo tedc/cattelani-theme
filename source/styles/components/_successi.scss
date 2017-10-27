@@ -94,12 +94,14 @@
 				}
 			}
 			&:hover {
-				.successes__contain {
-					visibility: hidden;
-					opacity: 0;
-					&--hover {
-						visibility: visible;
-						opacity: 1;
+				.desktop & {
+					.successes__contain {
+						visibility: hidden;
+						opacity: 0;
+						&--hover {
+							visibility: visible;
+							opacity: 1;
+						}
 					}
 				}
 			}

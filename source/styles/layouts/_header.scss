@@ -382,7 +382,7 @@
 	align-content: center;
 	&__item {
 		width: $f;
-		@include breakpoint() {
+		@include breakpoint(700px) {
 			width: $f/2;
 		}
 		@extend %menu_move;

@@ -55,6 +55,7 @@
 			'posts_per_page' => -1,
 			'orderby' => 'menu_order',
 			'order' => 'ASC',
+			'suppress_filters' => true, 
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'collezioni',
@@ -63,15 +64,15 @@
 				)
 			)
 		);
-		$posts = get_posts($array);
-		if(!$posts) return;
+		$lampade = get_posts($array);
+		if(!$lampade) return;
 		$count = count($posts);
 		$loop = $count > 2 ? 'true' : 'false';
 		$show = $count > 1 ? 'true' : 'false';
 		$bp = ($count == 3) ? ", 'breakpoints' : { 849 : {'loop' : true} }" : '';
 		$c = 0;
 		$html = '<div class="collections collections--slider-h" ng-scroll-carousel current-collection="'.$the_id.'" ng-keydown="key($event)"><div class="collections__slider collections__slider--archive" scrollbar="carousel" axis-x="true">';
-		foreach ($posts as $post) {
+		foreach ($lampade as $lamapda) {
 			ob_start();
 			include(locate_template( 'templates/content-lampade.php', false, false ));
 			$item = ob_get_clean();

@@ -1,9 +1,12 @@
 .store {
 	&__form {
 		@include grow('md');
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: none;
+		@include breakpoint(700px) {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 	&__input, &__options, &__select {
 		background-color: $w;

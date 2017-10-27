@@ -80,6 +80,10 @@
 		}
 	}
 	&-search {
+		display: none;
+		@include breakpoint() {
+			display: inherit;
+		}
 		@include grow('md');
 		&__box {
 			position: relative;

@@ -188,6 +188,14 @@
 			color: $dark-color;
 		}
 	}
+	&__nav {
+		display: flex;
+		@include breakpoint() {
+			position: sticky;
+			z-index: 9993;
+			top: 0;
+		}
+	}
 }
 .storia--visible {
 	.type-anni {
@@ -200,14 +208,6 @@
 			position: absolute;
 			visibility: hidden;
 			opacity: 0;
-		}
-	}
-	.storia__nav {
-		display: flex;
-		@include breakpoint() {
-			position: sticky;
-			z-index: 9993;
-			top: 0;
 		}
 	}
 }
