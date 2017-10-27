@@ -105,7 +105,7 @@
 	    $i = 0;
 	    $count = $collezioni->found_posts - 1;
 	    while($collezioni->have_posts()) : $collezioni->the_post();
-			if($post->ID == $lampda){
+			if($post->ID == $lampada){
 			    $index = $i;
 			    break;
 			}
