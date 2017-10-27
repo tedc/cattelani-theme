@@ -99,12 +99,12 @@
 				)
 			)
 		);
-		$class_lampada = $count >= 3 ? 3 : $count;
+		$count = $collezioni->found_posts - 1;
+	    $class_lampada = $count >= 3 ? 3 : $count;
 	    $class_lampada = 12 / $class_lampada;
 	    $index = 0;
 	    $i = 0;
 	    $cover = get_the_post_thumbnail_url($lampada, 'full');
-	    $count = $collezioni->found_posts - 1;
 	    while($collezioni->have_posts()) : $collezioni->the_post();
 	    	global $post;
 			if($post->ID == $lampada){
