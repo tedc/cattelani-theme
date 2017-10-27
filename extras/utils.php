@@ -104,6 +104,7 @@
 	    $class_lampada = 12 / $class_lampada;
 	    $index = 0;
 	    $i = 0;
+	    $count = $collezioni->found_posts - 1;
 	    while($collezioni->have_posts()) : $collezioni->the_post();
 			if($post->ID == $lampda){
 			    $index = $i;
@@ -113,7 +114,7 @@
 		endwhile;
 		wp_reset_query();
 		wp_reset_postdata();
-		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.($collezioni->found_posts - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
+		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.$count.'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
 		return $data;
 	}
 
