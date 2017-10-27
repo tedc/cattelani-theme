@@ -115,7 +115,7 @@
 		wp_reset_query();
 		wp_reset_postdata();
 		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.$count.'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
-		return $data;
+		return $lampada;
 	}
 
 
