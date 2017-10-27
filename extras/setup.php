@@ -55,7 +55,6 @@
 			'posts_per_page' => -1,
 			'orderby' => 'menu_order',
 			'order' => 'ASC',
-			'suppress_filters' => false, 
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'collezioni',
