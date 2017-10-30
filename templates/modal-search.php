@@ -1,4 +1,4 @@
-<div class="modal__container modal__container--search" collection-search lang="<?php echo ICL_LANGUAGE_CODE; ?>" id="modal-search">
+<div class="modal__container modal__container--search" collection-search id="modal-search">
 	<div class="search">
 		<div class="search__filters search__filters--grid search__filters--grow-top"> 
 			<div class="search__select" click-outside="isSelect['collezioni']=false" ng-class="{'search__select--filled' : search.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">

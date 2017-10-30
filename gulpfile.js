@@ -33,6 +33,7 @@ var buffer       = require('vinyl-buffer');
 var source       = require('vinyl-source-stream');
 var browserify   = require('browserify');
 var coffeeify    = require('coffeeify');
+var uglifyify    = require('uglifyify');
 var modernizr    = require('gulp-modernizr');
 var pug          = require('gulp-pug');
 var ngTemplates  = require('gulp-ng-templates');
@@ -156,7 +157,8 @@ var jsTasks = function(filename) {
         .pipe(uglify, {
             compress: {
                 'drop_debugger': enabled.stripJSDebug
-            }
+            },
+            mangle : true
         })
         // .pipe(function() {
         //     return gzip();
@@ -212,7 +214,8 @@ gulp.task('styles', ['wiredep'], function() {
 
 var b = watchify(browserify(path.source + 'coffee/main.coffee', {browserifyOptions : true, fast : true, noparse: 'angular', 'detect-globals' : false}));
 b.transform(coffeeify)
-  .transform(babelify, { presets : [ 'es2015' ] });
+  .transform(babelify, { presets : [ 'es2015' ] })
+  .transform(uglifyify);
 //.on('update', bundle);
   
 function bundle(bundler) {

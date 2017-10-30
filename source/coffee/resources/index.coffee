@@ -1,12 +1,11 @@
-WPAPI = require 'wpapi'
-wp = new WPAPI
-	endpoint :
-		"#{vars.main.base}/wp-json/"
+# wp = new WPAPI
+# 	endpoint :
+# 		"#{vars.main.base}/wp-json/"
 
 catellani = angular.module 'catellani'
 catellani
-	.factory 'WPAPI', ->
-		wp
+	# .factory 'WPAPI', ->
+	# 	wp
 	.factory 'wpApi', ['$http', ($http)->
 		deafults =
 			name : 'wp'

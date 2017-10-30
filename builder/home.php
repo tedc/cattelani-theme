@@ -1,4 +1,5 @@
-<?php global $sitepress;
+<?php 
+	global $sitepress;
     $default = $sitepress->get_default_language();
 ?>
 <div class="collections" ng-swiper is-home="true">
@@ -15,8 +16,7 @@
 	<?php 
 		$c = 0;
 		foreach($terms as $term) :
-
-		$term_id = id_by_lang($term->term_id, $term->taxonomy, false, $sitepress->get_default_language());
+		$term_id = id_by_lang($term->term_id, $term->taxonomy, false, $default);
 	?>
 		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>" data-collection="<?php echo $term->term_id; ?>" data-index="<?php echo $c; ?>">
 		</ks-swiper-slide>

@@ -1,13 +1,7 @@
 module.exports = ->
 	search =
 		scope : true
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "WPAPI", "$animate", "ScrollbarService", "$filter", "$location", ($rootScope, $scope, $q, $attrs, $timeout, WPAPI, $animate, ScrollbarService, $filter, $location)->
-			wp = WPAPI
-			wp.products = wp.registerRoute 'api/v1', 'lampade/', params : ['lang']
-			wp.collections = wp.registerRoute 'wp/v2', 'collezioni/', params : ['lang']
-			wp.positions = wp.registerRoute 'wp/v2', 'posizioni/', params : ['lang']
-			wp.sources = wp.registerRoute 'wp/v2', 'fonti/', params : ['lang']
-			lang = $attrs.lang
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", ($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location)->
 			$scope.isSelect = {}
 			$scope.search = {}
 			$scope.select = {
@@ -23,37 +17,36 @@ module.exports = ->
 			getSearch = ->
 				return if $scope.isSearchEnded
 				$scope.isSearchEnded = on
-				wp
-					.collections()
-					.perPage "#{vars.api.count_collections}"
-					.lang lang
-					.then (res)->
-						$scope.collections = res
+				wpApi
+					endpoint : 'collezioni'
+					params : 
+						per_page : "#{vars.api.count_collections}"
+				.then (res)->
+					$scope.collections = res.data
+					return
+				wpApi
+					endpoint : 'posizioni'
+					params : 
+						per_page : "#{vars.api.count_positions}"
+				.then (res)->
+					$scope.positions = res.data
+					return
+				wpApi
+					endpoint : 'fonti'
+					params : 
+						per_page : "#{vars.api.count_sources}"
+				.then (res)->
+					$scope.sources = res.data
+					return
+				wpApi
+					endpoint : 'prodotti'
+				.then (results)->
+					$timeout ->
+						$scope.items = results.data
+						$rootScope.$broadcast 'scrollBarUpdate'
+						$scope.isSearching = off
 						return
-				wp
-					.positions()
-					.perPage "#{vars.api.count_positions}"
-					.lang lang
-					.then (res)->
-						$scope.positions = res
-						return
-				wp
-					.sources()
-					.perPage "#{vars.api.count_sources}"
-					.lang lang
-					.then (res)->
-						$scope.sources = res
-						return
-				wp
-					.products()
-					.lang lang
-					.then (results)->
-						$timeout ->
-							$scope.items = results
-							$rootScope.$broadcast 'scrollBarUpdate'
-							$scope.isSearching = off
-							return
-						return
+					return
 				return
 			$scope.$on 'hash_change', (evt, data)->
 				getSearch() if data.hash == 'search'

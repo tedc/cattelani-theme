@@ -1,6 +1,4 @@
 <?php 
-global $sitepress;
-
 if(get_field('related')) : 
 ?>
 <div class="related related--shrink-fw related--grow-md related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
@@ -35,7 +33,7 @@ if(get_field('related')) :
 				echo get_the_post_thumbnail( $rel->ID, 'vertical-thumb', '' );
 				 ?>
 			</figure>
-			<h2 class="swiper-slide__title swiper-slide__title--alternate"><a class="swiper-slide__link" ui-sref="app.page({slug : '<?php echo basename(get_permalink($rel->ID)); ?>', lang : '<?php echo  $sitepress->get_current_language(); ?>'})"><?php echo get_the_title($rel->ID); ?></a></h2>
+			<h2 class="swiper-slide__title swiper-slide__title--alternate"><a class="swiper-slide__link" ui-sref="app.page({slug : '<?php echo basename(get_permalink($rel->ID)); ?>', lang : '<?php echo  ICL_LANGUAGE_CODE; ?>'})"><?php echo get_the_title($rel->ID); ?></a></h2>
 			</a>
 		</ks-swiper-slide>
 		<?php endforeach; ?>

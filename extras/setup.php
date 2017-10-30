@@ -18,7 +18,6 @@
 	function breadcrumb_shortcode($atts) {
 		$term_obj = ($atts['type'] == 'taxonomy') ? get_term($atts['id']) : false;
 		$post_obj = ($atts['type'] == 'post') ? get_post($atts['id']) : false;
-		$lang = $atts['lang'];
 		ob_start();
 		include(locate_template('templates/breadcrumb.php', false, true));
 		return ob_get_clean();

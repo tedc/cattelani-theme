@@ -138,17 +138,9 @@
 
 
         function my_breadcrumbs($object, $field_name, $request) {
-            global $sitepress;
-            $default = $sitepress->get_default_language();
             $id = $object['id'];
             $type = (isset($object['taxonomy'])) ? 'taxonomy' : 'post';
-            if($_GET) {
-              $lang = (isset($_GET['lang'])) ? $_GET['lang'] : $default;
-            } else {
-              $lang = $default;
-            }
-            
-            return do_shortcode( '[breadcrumb id="'.$id.'" type="'.$type.'" lang="'.$lang.'"]', false );
+            return do_shortcode( '[breadcrumb id="'.$id.'" type="'.$type.'"]', false );
         }
 
 

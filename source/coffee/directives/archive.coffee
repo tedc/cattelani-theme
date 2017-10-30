@@ -1,16 +1,15 @@
-WPAPI = require 'wpapi'
-wp = new WPAPI
-	endpoint :
-		"#{vars.main.base}/wp-json/"
-wp.types = wp.registerRoute 'wp/v2', 'multiple-post-type/',
-	params : ['collezioni', 'tipologie', 'type', 'lang', 'before', 'after']
-wp.collections = wp.registerRoute 'wp/v2', 'collezioni/',
-	params : ['lang']
-wp.tipologie = wp.registerRoute 'wp/v2', 'tipologie/',
-	params : ['lang']
+# wp = new WPAPI
+# 	endpoint :
+# 		"#{vars.main.base}/wp-json/"
+# wp.types = wp.registerRoute 'wp/v2', 'multiple-post-type/',
+# 	params : ['collezioni', 'tipologie', 'type', 'lang', 'before', 'after']
+# wp.collections = wp.registerRoute 'wp/v2', 'collezioni/',
+# 	params : ['lang']
+# wp.tipologie = wp.registerRoute 'wp/v2', 'tipologie/',
+# 	params : ['lang']
 module.exports = ->
 	search =
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "$stateParams", ($rootScope, $scope, $q, $attrs, $timeout, $stateParams)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "$stateParams", "wpApi", ($rootScope, $scope, $q, $attrs, $timeout, $stateParams, wpApi)->
 			$rootScope.collection = off
 			per_page = if vars.api.count_posts > 100 then 100 else vars.api.count_posts
 			lang = $attrs.lang
@@ -54,15 +53,23 @@ module.exports = ->
 				collectionValue = if $scope.projects.collezioni then $scope.projects.collezioni else 0
 				collectionPar = if collectionValue is 0 then 'collezioni_exclude' else 'collezioni'
 				kindPar = if kindValue is 0 then 'tipologie_exclude' else 'tipologie'
-				wp
-					.types()
-					.type [type]
-					#.embed()
-					.param(collectionPar, collectionValue)
-					.param(kindPar, kindValue)
-					.before(before)
-					.after(after)
-					.page($scope.page)
+				wpApi
+					endpoint : type
+					params
+						"#{collectionPar}" : "#{collectionValue}"
+						"#{kindPar}" : "#{kindValue}"
+						before : before
+						after : after
+						page : $scope.page
+				# wp
+				# 	.types()
+				# 	.type [type]
+				# 	#.embed()
+				# 	.param(collectionPar, collectionValue)
+				# 	.param(kindPar, kindValue)
+				# 	.before(before)
+				# 	.after(after)
+				# 	.page($scope.page)
 			
 			$scope.$on 'projects_changed', ->
 				$scope.isNotLoading = on
@@ -72,12 +79,14 @@ module.exports = ->
 				$scope.page = 1
 				query()
 					.then (results)->
+						headers = results.headers()
+						results = results.data			
 						$timeout ->
 							if not angular.equals results, $scope.items
 								$scope.items = results
 								$scope.page += 1
 							if results.length > 0
-								$scope.isNotLoading = if $scope.page > parseInt results._paging.totalPages then on else off
+								$scope.isNotLoading = if $scope.page > parseInt headers['x-wp-totalpages'] then on else off
 							else
 								$scope.isNotLoading = on
 							$scope.isLoading = off
@@ -91,12 +100,14 @@ module.exports = ->
 				$scope.isLoading = on
 				query()
 					.then (results)->
+						headers = results.headers()
+						results = results.data
 						$timeout ->
 							if not angular.equals results, $scope.items
 								$scope.items = $scope.items.concat results
 								$scope.page += 1
 							if results.length > 0
-								$scope.isNotLoading = if $scope.page > parseInt results._paging.totalPages then on else off
+								$scope.isNotLoading = if $scope.page > parseInt headers['x-wp-totalpages'] then on else off
 							else
 								$scope.isNotLoading = on
 							$scope.isLoading = off
@@ -104,20 +115,34 @@ module.exports = ->
 							return
 						return
 			$scope.$emit 'loadProjects'
-			wp
-				.collections()
-				.lang lang
-				.then (res)->
-					$scope.collections = res
+			wpApi
+				endpoint : 'collezioni'
+			.then (res)->
+					$scope.collections = res.data
 					if $stateParams.term?
 						$scope.change('collezioni', $stateParams.term)
 					return
-
-			wp
-				.tipologie()
-				.lang lang
-				.then (res)->
-					$scope.tipologie = res
+			wpApi
+				endpoint : 'tipologie'
+			.then (res)->
+					$scope.collections = res.data
+					if $stateParams.term?
+						$scope.change('collezioni', $stateParams.term)
 					return
+			# wp
+			# 	.collections()
+			# 	.lang lang
+			# 	.then (res)->
+			# 		$scope.collections = res
+			# 		if $stateParams.term?
+			# 			$scope.change('collezioni', $stateParams.term)
+			# 		return
+
+			# wp
+			# 	.tipologie()
+			# 	.lang lang
+			# 	.then (res)->
+			# 		$scope.tipologie = res
+			# 		return
 			return
 		]

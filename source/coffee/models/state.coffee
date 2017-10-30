@@ -25,16 +25,15 @@ module.exports = ($stateProvider, $locationProvider)->
 			url: '/'
 			templateUrl : "#{vars.main.assets}tpl/post.tpl.html"
 			resolve: 
-				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
+				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
-					wp = WPAPI
-					wp
-						.pages()
-						.slug "#{vars.main.home}"
-						.param 'lang', $stateParams.lang
-						.then (res)->
-							deferred.resolve res[0]
-							return
+					wpApi({
+						endpoint : 'pages'
+						params :
+							slug : "#{vars.main.home}"
+					}).then (res)->
+						deferred.resolve res.data[0]
+						return
 					deferred.promise
 				]
 				PreviousState: ["$state", "$rootScope", ($state, $rootScope)->
@@ -55,27 +54,16 @@ module.exports = ($stateProvider, $locationProvider)->
 			resolve : 
 				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
 				ScrollBefore : ["$q", "$timeout", "$rootScope", "PreviousState", require './resolveScroll.coffee']
-				data : ["$stateParams", "$q", "WPAPI", 'wpApi', ($stateParams, $q, WPAPI, wpApi)->
+				data : ["$stateParams", "$q", 'wpApi', ($stateParams, $q, wpApi)->
+					deferred = $q.defer()
 					wpApi({
 						endpoint : 'multiple-post-type'
 						params :
 							"type[]" : ['post', 'page', 'lampade', 'progetti', 'installazioni']
 							slug : $stateParams.slug
-							lang : $stateParams.lang
 					}).then (res)->
-						console.log res
+						deferred.resolve res.data[0]	
 						return
-					wp = WPAPI
-					wp.multiple = wp.registerRoute 'wp/v2', 'multiple-post-type/',
-						params : ['type', 'lang', 'collezioni']
-					deferred = $q.defer()
-					wp.multiple()
-						.type(['post', 'page', 'lampade', 'progetti', 'installazioni'])
-						.slug($stateParams.slug)
-						.lang($stateParams.lang)
-						.then (res)->
-							deferred.resolve res[0]
-							return
 					deferred.promise
 				]	
 				PreviousState: ["$state", "$rootScope", "$stateParams", ($state, $rootScope, $stateParams)->
@@ -92,18 +80,15 @@ module.exports = ($stateProvider, $locationProvider)->
 			url : '/c/:name'
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
-				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
-					wp = WPAPI
-					wp.collections = wp.registerRoute 'wp/v2', 'collezioni/',
-						params : ['lang']
+				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
-					wp
-						.collections()
-						.slug $stateParams.name
-						.lang $stateParams.lang
-						.then (res)->
-							deferred.resolve res[0]
-							return
+					wpApi({
+						endpoint : 'collezioni'
+						params :
+							slug : $stateParams.name
+					}).then (res)->
+						deferred.resolve res.data[0]
+						return
 					deferred.promise
 				]					
 				PreviousState: ["$state", "$rootScope", ($state, $rootScope)->
@@ -120,18 +105,15 @@ module.exports = ($stateProvider, $locationProvider)->
 			url : "/#{vars.main.glossary}/:name"
 			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
 			resolve : 
-				data : ["$stateParams", "$q", "WPAPI", ($stateParams, $q, WPAPI)->
-					wp = WPAPI
-					wp.glossary =  wp.registerRoute 'wp/v2', "#{vars.main.glossary}/",
-						params : ['lang']
+				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
-					wp
-						.glossary()
-						.slug $stateParams.name
-						.lang $stateParams.lang
-						.then (res)->
-							deferred.resolve res[0]
-							return
+					wpApi({
+						endpoint : "#{vars.main.glossary}"
+						params :
+							slug : $stateParams.name
+					}).then (res)->
+						deferred.resolve res.data[0]
+						return
 					deferred.promise
 				]	
 				PreviousState: ["$state", "$rootScope", ($state, $rootScope)->

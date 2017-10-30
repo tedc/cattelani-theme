@@ -1,4 +1,3 @@
-html = document.getElementsByTagName('html')[0]
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
@@ -21,7 +20,6 @@ catellani
 					$rootScope.modal hash
 					$rootScope.$broadcast 'hash_change', {hash : hash}
 					return
-			console.log hash
 			body = document.body
 			docEl = document.documentElement
 			scrollTop = window.pageYOffset or docEl.scrollTop or body.scrollTop

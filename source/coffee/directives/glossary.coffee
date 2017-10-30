@@ -1,14 +1,13 @@
 module.exports = ($rootScope)->
-	controller : ["$rootScope", "$state", "WPAPI", "$q", "$timeout", ($rootScope, $state, WPAPI, $q, $timeout)->
-		wp = WPAPI
-		wp.glossaryTerms = wp.registerRoute 'wp/v2', "#{vars.main.glossary_slug}/"
+	controller : ["$rootScope", "$state", "wpApi", "$q", "$timeout", ($rootScope, $state, wpApi, $q, $timeout)->
+		glossaryTerms = wpApi {endpoint : "#{vars.main.glossary_slug}"}
 		glossary = @
 		glossary.isSearch = off
 		glossary.items = []
 		$rootScope.$on 'search_terms', ->
 			getTerms().then (res)->
 				$timeout ->
-					glossary.items = res
+					glossary.items = res.data
 					return
 				return
 			return
