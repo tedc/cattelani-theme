@@ -99,7 +99,7 @@
 				)
 			)
 		);
-		$count = $collezioni->found_posts - 1;
+		$count = $collezioni->found_posts;
 	    $class_lampada = $count >= 3 ? 3 : $count;
 	    $class_lampada = 12 / $class_lampada;
 	    $index = 0;
@@ -114,7 +114,7 @@
 		$i++; endwhile;
 		wp_reset_query();
 		wp_reset_postdata();
-		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.$count.'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
+		$data = ' data-item-background="'.$cover.'" data-item-size="'.$class_lampada.'" data-item-total="'.($count - 1).'" data-carousel-item="'.$index.'" data-item-slug="'. basename(get_permalink($lampada)).'" light-collection="'.$collection[0]->term_id.'"';
 		return $data;
 	}
 
