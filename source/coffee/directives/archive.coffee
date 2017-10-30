@@ -55,7 +55,7 @@ module.exports = ->
 				kindPar = if kindValue is 0 then 'tipologie_exclude' else 'tipologie'
 				wpApi
 					endpoint : type
-					params
+					params :
 						"#{collectionPar}" : "#{collectionValue}"
 						"#{kindPar}" : "#{kindValue}"
 						before : before
