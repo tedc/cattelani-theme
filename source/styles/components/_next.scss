@@ -67,6 +67,7 @@
 		transition: transform $speed*1.5;
 	}
 	&:hover {
+		color: $w;
 		.next__cover {
 			transform: scale(1.15) translateZ(0);
 		}
