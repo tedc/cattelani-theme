@@ -663,3 +663,21 @@
 		global $post, $wpdb;
 		return $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND p.post_status = 'publish'", $post->post_title, $post->post_type);
 	}
+
+	function change_attachment_post_name() {
+		$post_s=get_posts('posts_per_page=-1&post_type=any');
+        foreach($post_s as $p){
+            $atts = get_posts('post_type=attachment&name='.$p->post_name.'&posts_per_page=-1&post_status=inherit');
+            foreach($atts as $att){
+                //echo 'found!! '.$p->post_name;
+                // Update post 37
+                $my_post = array(
+                      'ID' => $atts->ID,
+                      'post_name' => $att->post_name.'-image'
+                );
+                // Update the post into the database
+                wp_update_post( $my_post );
+            }
+        }
+	}
+	add_action('save_post', 'change_attachment_post_name');
