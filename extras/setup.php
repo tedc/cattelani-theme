@@ -202,21 +202,11 @@
 
 	// }
 
-	function cleanup_default_rewrite_rules( $rules ) {
-	    foreach ( $rules as $regex => $query ) {
-	        if ( strpos( $regex, 'attachment' ) || strpos( $query, 'attachment' ) ) {
-	            unset( $rules[ $regex ] );
-	        }
-	    }
+	add_filter( 'mfrh_new_filename', 'my_filter_filename', 10, 3 );
 
-	    return $rules;
+	function my_filter_filename( $new, $old, $post ) {
+	  return $new . "-media";
 	}
-	add_filter( 'rewrite_rules_array', 'cleanup_default_rewrite_rules' );
-
-	function cleanup_attachment_link( $link ) {
-	    return;
-	}
-	add_filter( 'attachment_link', 'cleanup_attachment_link' );
 
 	add_action( 'init', function() {
 
