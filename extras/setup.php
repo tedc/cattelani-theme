@@ -667,7 +667,7 @@
 	function change_attachment_post_name() {
 		$post_s=get_posts('posts_per_page=-1&post_type=any');
         foreach($post_s as $p){
-            $atts = get_posts('post_type=attachment&name='.$p->post_name.'&posts_per_page=-1&post_status=inherit');
+            $atts = get_posts('post_type=attachment&post_parent='.$p->ID.'&posts_per_page=-1&post_status=inherit');
             foreach($atts as $att){
                 //echo 'found!! '.$p->post_name;
                 // Update post 37
