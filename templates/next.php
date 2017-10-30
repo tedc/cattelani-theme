@@ -10,7 +10,7 @@
 	<span class="next__container next__container--shrink-fw next__container--grow-md">
 	<span class="next__label next__label--grow-md-bottom"><?php 
 	$prossimo = ($post_type == 'post' || $post_type == 'progetti') ? __('Prossimo', 'catellani') : __('Prossima', 'catellani');
-	echo $prossimo . ' ' .strtolower(my_wpml_string($post_type_object->labels->singular_name)); ?></span>
+	echo $prossimo . ' ' .strtolower($post_type_object->labels->singular_name); ?></span>
 	<span class="next__title next__title--medium-alternate"><?php echo get_the_title($next->ID); ?>
 	<?php echo ($post_type == 'progetti' || $post_type == 'installazioni') ? '<br/><span class="next__city">'.get_field('city', $next_id).'</span>' : '' ; ?>
 	</span>
