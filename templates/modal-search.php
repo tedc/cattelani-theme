@@ -3,7 +3,7 @@
 		<div class="search__loader" ng-hide="isSearchEnded">
 			<div class="search__spinner"></div>
 		</div>
-		<div class="search__filters search__filters--grid search__filters--grow-top" ng-class="{'search__filters--visible':isSearchEnded}"> 
+		<div class="search__filters search__filters--grow-top" ng-class="{'search__filters--visible':isSearchEnded}"> 
 			<div class="search__select" click-outside="isSelect['collezioni']=false" ng-class="{'search__select--filled' : search.collezioni}" ng-click="$event.stopPropagation();isSelect['collezioni']=!isSelect['collezioni']">
 				<!-- <span class="search__value" ng-bind-html="(search.collezioni ? select['collezioni'] : '<?php _e('Collezione', 'catellani'); ?>')"></span> -->
 				<span class="search__value"><?php _e('Collezione', 'catellani'); ?></span>

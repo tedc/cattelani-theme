@@ -220,6 +220,7 @@
 		position: relative;
 		@include grow('md', 'top');
 		&--search {
+			display: none;
 			i {
 				transition: transform $speed;
 				transform: scale(1) translateZ(0);
@@ -228,6 +229,9 @@
 				i {
 					transform: scale(0.9) translateZ(0);
 				}
+			}
+			@include breakpoint() {
+				display: flex;
 			}
 		}
 		&--toggle {
