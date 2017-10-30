@@ -194,7 +194,7 @@
 	    	$parent_link = get_permalink( $attachment->post_parent );
 	        // make the link compatible with permalink settings with or without "/" at the end
 	        $parent_link = rtrim( $parent_link, "/" );
-	        $link =  $parent_link . '-gallery/' . $attachment->post_name;
+	        $link =  $parent_link . '-gallery/' . $attachment_id;
 
 	    }
 
@@ -206,7 +206,7 @@
 	add_action( 'init', function() {
 
 	    // Tell WordPress how to handle the new structure
-	    add_rewrite_rule( '(.+)/gallery/([0-9]{1,})/?$', 'index.php?attachment_id=$matches[2]', 'top' );
+	    add_rewrite_rule( '(.+)-gallery/([0-9]{1,})/?$', 'index.php?attachment_id=$matches[2]', 'top' );
 
 	} );
 
