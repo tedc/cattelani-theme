@@ -110,7 +110,7 @@
 		@extend %menu_move;
 		p {
 			font-size: 11px;
-			line-height: 1;
+			line-height: 1.2;
 		}
 		@include grow('md');
 		.banner__cell:nth-child(2) {
@@ -363,6 +363,9 @@
 		}
 		&:hover {
 			opacity: .5;
+		}
+		.ios & {
+			margin-bottom: 40px;
 		}
 	}
 	&__menu {		

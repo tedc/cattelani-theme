@@ -193,6 +193,9 @@
 			transition: transform $speed*0.75;
 			transform-origin: center bottom;
 			transform: scaleY(0) translateZ(0);
+			.ios & {
+				height: calc(#{em($p*3.1 - 5px, 34px)} + 50px);
+			}
 		}
 		.collections__cell:hover & {
 			opacity: 1;
@@ -203,6 +206,9 @@
 		.is-anim & {
 			opacity: 0;
 			transform: translate3d(0, $p*2, 0);
+		}
+		.ios & {
+			padding: 0 em($p, 34px) calc(#{em($p/2, 34px)} + 50px);
 		}
 		//@extend %line_before;
 		span {
@@ -254,6 +260,9 @@
 					flex: 0 0 auto;
 					@extend %blurry_fix;
 				}
+			}
+			a {
+				@include full;
 			}
 		}
 		&--archive {
@@ -361,6 +370,9 @@
 	&__nav {
 		position: absolute;
 		bottom: 0;
+		.ios & {
+			bottom: 50px;
+		}
 		width: $f;
 		left: 0;
 		display: flex;

@@ -184,23 +184,23 @@
 	}
 	add_action( 'pre_get_posts', 'gp_parse_request_trick' );
 
-	add_filter( 'attachment_link', 'wpd_attachment_link', 20, 2 );
-	function wpd_attachment_link( $link, $attachment_id ){
+	// add_filter( 'attachment_link', 'wpd_attachment_link', 20, 2 );
+	// function wpd_attachment_link( $link, $attachment_id ){
 
-	    $attachment = get_post( $attachment_id );
+	//     $attachment = get_post( $attachment_id );
 
-	    // Only for attachments actually attached to a parent post
-	    if( ! empty( $attachment->post_parent ) ) {
-	    	$parent_link = get_permalink( $attachment->post_parent );
-	        // make the link compatible with permalink settings with or without "/" at the end
-	        $parent_link = rtrim( $parent_link, "/" );
-	        $link =  $parent_link . '-gallery-' . $attachment_id;
+	//     // Only for attachments actually attached to a parent post
+	//     if( ! empty( $attachment->post_parent ) ) {
+	//     	$parent_link = get_permalink( $attachment->post_parent );
+	//         // make the link compatible with permalink settings with or without "/" at the end
+	//         $parent_link = rtrim( $parent_link, "/" );
+	//         $link =  $parent_link . '-gallery-' . $attachment_id;
 
-	    }
+	//     }
 
-	    return $link;
+	//     return $link;
 
-	}
+	// }
 
 
 	add_action( 'init', function() {
