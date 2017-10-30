@@ -191,11 +191,10 @@
 
 	    // Only for attachments actually attached to a parent post
 	    if( ! empty( $attachment->post_parent ) ) {
-
-	        $parent_link = get_permalink( $attachment->post_parent );
+	    	$parent_link = get_permalink( $attachment->post_parent );
 	        // make the link compatible with permalink settings with or without "/" at the end
 	        $parent_link = rtrim( $parent_link, "/" );
-	        $link =  $parent_link . '-gallery/' . $attachment_id;
+	        $link =  $parent_link . '-gallery/' . $attachment->post_name;
 
 	    }
 
