@@ -1,4 +1,5 @@
 <?php
+	global $post;
 	$bp = '';
 	if($count == 1) {
 		$size = '12';
