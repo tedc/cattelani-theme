@@ -1,4 +1,4 @@
-<div  class="posts__cell posts__cell--grow-md posts__cell--s6" ng-repeat="post in posts | limitTo: 2">
+<div  class="posts__cell posts__cell--grow-md posts__cell--s6" ng-repeat="post in posts | limitTo: 2" ng-class="{'posts__cell--odd' : $odd, 'posts__cell--even': $even}">
 	<article ng-class="post.post_class">
 		<img ng-src="{{image(post).url}}" ng-attr-alt="{{image(post).alt}}" />
 		<header class="type-post__header type-post__header--shrink">
@@ -17,7 +17,7 @@
 <?php get_template_part( 'builder/facebook', null );
  ?>
 </div>
-<div  class="posts__cell posts__cell--s6" ng-repeat="post in posts | limitTo: 2:2">
+<div  class="posts__cell posts__cell--s6" ng-repeat="post in posts | limitTo: 2:2" ng-class="{'posts__cell--odd' : $odd, 'posts__cell--even': $even}">
 	<article ng-class="post.post_class">
 		<img ng-src="{{image(post).url}}" ng-attr-alt="{{image(post).alt}}" />
 		<header class="type-post__header type-post__header--shrink">
@@ -36,7 +36,7 @@
 	<?php get_template_part( 'builder/instagram', null );
 	 ?>
 </div>
-<div  class="posts__cell posts__cell--s6" ng-repeat="post in posts | limitTo: (posts.length - 4):4">
+<div  class="posts__cell posts__cell--s6" ng-repeat="post in posts | limitTo: (posts.length - 4):4" ng-class="{'posts__cell--odd' : $odd, 'posts__cell--even': $even}">
 	<article ng-class="post.post_class">
 		<img ng-src="{{image(post).url}}" ng-attr-alt="{{image(post).alt}}" />
 		<header class="type-post__header type-post__header--shrink">
