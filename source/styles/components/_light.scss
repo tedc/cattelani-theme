@@ -50,6 +50,10 @@
 	}
 	&__text {
 		@include grow('md');
+		p {
+			font-size: em(18px);
+			text-align: left!important;
+		}
 	}
 	&__image {
 		visibility: hidden;

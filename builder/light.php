@@ -25,7 +25,9 @@
 	</figure>
 	<div class="light__cell light__cell--content light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 7 : 5; ?> light__cell--shrink-left-only">
 		<div class="light__text light__text--grow-md">
-			<?php the_sub_field('light_text'); ?>
+			<?php 
+			echo $testi[0];
+			//the_sub_field('light_text'); ?>
 		</div>
 	</div>
 </div>

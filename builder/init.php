@@ -1,6 +1,7 @@
 <?php
 	$post_type = get_post_type();
 	$aforisma = [];
+	$testi = [];
 	$row = 0;
 	while(have_rows('layout')) :
 		the_row();
