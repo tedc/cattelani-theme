@@ -60,24 +60,26 @@
 }
 
 .cat {
-	// display: none;
-	// position: fixed;
-	// width: $f;
-	// bottom: 0;
-	// background-color: $dark-color;
-	// background-color: transparent;
-	// color: $w;
-	// z-index: 9993;
-	// padding: {
-	// 	top: em($p);
-	// 	bottom: em($p);
-	// }
-	// transition: $speed transform;
-	// transform: translate3d(0, $f, 0);
-	// @include normalize_padding;
-	// &--active {
-	// 	transform: translate3d(0,0,0);
-	// }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	width: $f;
+	bottom: 0;
+	background-color: $dark-color;
+	background-color: transparent;
+	color: $w;
+	z-index: 9993;
+	padding: {
+		top: em($p);
+		bottom: em($p);
+	}
+	transition: $speed transform;
+	transform: translate3d(0, $f, 0);
+	@include normalize_padding;
+	&--active {
+		transform: translate3d(0,0,0);
+	}
 	// &__title {
 	// 	font-size: em(24px);
 	// 	margin: 0 em($p/2, 24px);
@@ -86,13 +88,13 @@
 	// 		display: none;
 	// 	};
 	// }
-	// &__button {
-	// 	margin: 0 em($p/2);
-	// 	box-shadow: 0 3px 6px transparentize($main-color, .9);
-	// }
-	// .home &, .tax-collezioni & {
-	// 	display: none;
-	// }
+	&__button {
+		margin: 0 em($p/2);
+		box-shadow: 0 3px 6px transparentize($main-color, .9);
+	}
+	.home &, .tax-collezioni & {
+		display: none;
+	}
 	// &__container {
 	// 	display: flex;
 	// 	justify-content: center;
@@ -109,152 +111,152 @@
 	// 		}
 	// 	}
 	// }
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity $speed, visibility $speed;
-	&--active {
-		opacity: 1;
-		visibility: visible;
-	}
-	&--inactive {
-		opacity: 0;
-		visibility: hidden;
-	}
-	.home &, .tax-collezioni & {
-		display: none;
-	}
-	position: fixed;
-	bottom: 0;
-	right: 10px;
-	z-index: 9993;
-	@include breakpoint(640px) {
-		right: em($p);
-	}
-	@include breakpoint() {
-		right: em($p*2);
-	}
-	@include grow('md', 'bottom');
-	display: flex;
-	align-items: flex-end;
-	width: $p*2;
-	flex-wrap: wrap;
-	&__dot {
-		display: block;
-		position: relative;
-		margin: 0 $p/2;
-		width: $p;
-		height: $p;
-		opacity: 0;
-		visibility: hidden;
-		transition: transform $speed, opacity $speed, visibility $speed, margin $speed;
-		&:before {
-			@include full;
-			content: '';
-			border-radius: $p;
-			border: 1px solid $main-color;
-			transform: translateZ(0) scale(0);
-			transition: transform $speed*1.5;
-		}
-		&:after {
-			position: absolute;
-			content: '';
-			width: ($p/2) - 2px;
-			height: ($p/2) - 2px;
-			left: 50%;
-			top: 50%;
-			transform: translate3d(-50%, -50%, 0);
-			border-radius: $p;
-			background-color: $main-color;
-		}
-		&:hover {
-			&:before {
-				transform: translateZ(0) scale(1);
-			}
-		}
-		&--phone {
-			transform: translate3d(0, $f*2, 0);
-		}
-		&--store {
-			transform: translate3d(0, $f, 0);
-		}
-		.cat--visible & {
-			transform: translate3d(0, 0, 0);
-			opacity: 1;
-			visibility: visible;
-			margin: $p/2;
-		}
-	}
-	&__label {
-		position: absolute;
-		z-index: -1;
-		right: $f;
-		top: 50%;
-		transform: translate3d($p, -50%, 0);
-		opacity: 0;
-		transition: transform $speed, opacity $speed;
-		color: $dark-color;
-		padding: 0 $p/2;
-		border-radius: $p/2;
-		line-height: 1.5;
-		font-weight: 400;
-		text-shadow: 0 1px 0 $w;
-		//background-color: $lighter-color;
-		font-size: 12px;
-		text-transform: uppercase;
-		white-space: nowrap;
-		.cat--visible & {
-			opacity: 1;
-			transform: translate3d($p*-1, -50%, 0);
-		}
-		.cat--visible .cat__main & {
-			opacity: 1;
-			transform: translate3d(($p/2)*-1, -50%, 0);
-		}
-	}
-	&__main {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		width: $p*2;
-		height: $p*2;
-		border-radius: $p*2;	
-		background-color: $main-color;
-		box-shadow: 0 0 $p transparentize($main-color, .8);
-		&:before, &:after {
-			width: $p;
-			height: 1px;
-			background-color: $lighter-color;
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-left: ($p/2) * -1;	
-			transition: transform $speed;	
-		}
-		&:before {	
-			transform: translate3d(0, -50%, 0);
-		}
-		&:after {
-			transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(1);
-			.cat--visible & {
-				transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(0);
-			}
-		}
-	}
-	&__sym {
-		color: $lighter-color;
-		font-family: $alternate-font;
-		font-size: $p;
-		font-weight: bold;
-		opacity: 0;
-		visibility: hidden;
-		transform: translate3d(0, -2px, 0);
-		transition: opacity $speed, visibility $speed;
-		.cat--visible & {
-			opacity: 1;
-			visibility: visible;
-		}
-	}
+	// opacity: 0;
+	// visibility: hidden;
+	// transition: opacity $speed, visibility $speed;
+	// &--active {
+	// 	opacity: 1;
+	// 	visibility: visible;
+	// }
+	// &--inactive {
+	// 	opacity: 0;
+	// 	visibility: hidden;
+	// }
+	// .home &, .tax-collezioni & {
+	// 	display: none;
+	// }
+	// position: fixed;
+	// bottom: 0;
+	// right: 10px;
+	// z-index: 9993;
+	// @include breakpoint(640px) {
+	// 	right: em($p);
+	// }
+	// @include breakpoint() {
+	// 	right: em($p*2);
+	// }
+	// @include grow('md', 'bottom');
+	// display: flex;
+	// align-items: flex-end;
+	// width: $p*2;
+	// flex-wrap: wrap;
+	// &__dot {
+	// 	display: block;
+	// 	position: relative;
+	// 	margin: 0 $p/2;
+	// 	width: $p;
+	// 	height: $p;
+	// 	opacity: 0;
+	// 	visibility: hidden;
+	// 	transition: transform $speed, opacity $speed, visibility $speed, margin $speed;
+	// 	&:before {
+	// 		@include full;
+	// 		content: '';
+	// 		border-radius: $p;
+	// 		border: 1px solid $main-color;
+	// 		transform: translateZ(0) scale(0);
+	// 		transition: transform $speed*1.5;
+	// 	}
+	// 	&:after {
+	// 		position: absolute;
+	// 		content: '';
+	// 		width: ($p/2) - 2px;
+	// 		height: ($p/2) - 2px;
+	// 		left: 50%;
+	// 		top: 50%;
+	// 		transform: translate3d(-50%, -50%, 0);
+	// 		border-radius: $p;
+	// 		background-color: $main-color;
+	// 	}
+	// 	&:hover {
+	// 		&:before {
+	// 			transform: translateZ(0) scale(1);
+	// 		}
+	// 	}
+	// 	&--phone {
+	// 		transform: translate3d(0, $f*2, 0);
+	// 	}
+	// 	&--store {
+	// 		transform: translate3d(0, $f, 0);
+	// 	}
+	// 	.cat--visible & {
+	// 		transform: translate3d(0, 0, 0);
+	// 		opacity: 1;
+	// 		visibility: visible;
+	// 		margin: $p/2;
+	// 	}
+	// }
+	// &__label {
+	// 	position: absolute;
+	// 	z-index: -1;
+	// 	right: $f;
+	// 	top: 50%;
+	// 	transform: translate3d($p, -50%, 0);
+	// 	opacity: 0;
+	// 	transition: transform $speed, opacity $speed;
+	// 	color: $dark-color;
+	// 	padding: 0 $p/2;
+	// 	border-radius: $p/2;
+	// 	line-height: 1.5;
+	// 	font-weight: 400;
+	// 	text-shadow: 0 1px 0 $w;
+	// 	//background-color: $lighter-color;
+	// 	font-size: 12px;
+	// 	text-transform: uppercase;
+	// 	white-space: nowrap;
+	// 	.cat--visible & {
+	// 		opacity: 1;
+	// 		transform: translate3d($p*-1, -50%, 0);
+	// 	}
+	// 	.cat--visible .cat__main & {
+	// 		opacity: 1;
+	// 		transform: translate3d(($p/2)*-1, -50%, 0);
+	// 	}
+	// }
+	// &__main {
+	// 	position: relative;
+	// 	display: flex;
+	// 	align-items: center;
+	// 	justify-content: center;
+	// 	text-align: center;
+	// 	width: $p*2;
+	// 	height: $p*2;
+	// 	border-radius: $p*2;	
+	// 	background-color: $main-color;
+	// 	box-shadow: 0 0 $p transparentize($main-color, .8);
+	// 	&:before, &:after {
+	// 		width: $p;
+	// 		height: 1px;
+	// 		background-color: $lighter-color;
+	// 		content: '';
+	// 		position: absolute;
+	// 		top: 50%;
+	// 		left: 50%;
+	// 		margin-left: ($p/2) * -1;	
+	// 		transition: transform $speed;	
+	// 	}
+	// 	&:before {	
+	// 		transform: translate3d(0, -50%, 0);
+	// 	}
+	// 	&:after {
+	// 		transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(1);
+	// 		.cat--visible & {
+	// 			transform: translate3d(0, -50%, 0) rotate(90deg) scaleX(0);
+	// 		}
+	// 	}
+	// }
+	// &__sym {
+	// 	color: $lighter-color;
+	// 	font-family: $alternate-font;
+	// 	font-size: $p;
+	// 	font-weight: bold;
+	// 	opacity: 0;
+	// 	visibility: hidden;
+	// 	transform: translate3d(0, -2px, 0);
+	// 	transition: opacity $speed, visibility $speed;
+	// 	.cat--visible & {
+	// 		opacity: 1;
+	// 		visibility: visible;
+	// 	}
+	// }
 }

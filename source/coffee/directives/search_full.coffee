@@ -39,7 +39,7 @@ module.exports = ->
 					$scope.sources = res.data
 					return
 				wpApi
-					endpoint : 'prodotti'
+					endpoint : 'lampade'
 				.then (results)->
 					$timeout ->
 						$scope.items = results.data

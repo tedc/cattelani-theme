@@ -13,7 +13,7 @@ catellani
 	.directive 'ngMagazine', [ require './magazine.coffee'] 
 	#.directive 'storia', [ 'ScrollbarService', require './storia.coffee']
 	.directive 'ngLoader', [ '$timeout', require './loader.coffee'] 
-	.directive 'ngFooter', ["$window", require './footer.coffee']
+	.directive 'ngFooter', ["$window", "$document", require './footer.coffee']
 	.directive 'glossaryAutocomplete', [ require './glossary.coffee']
 	.directive 'ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require './carousel.coffee' ]
 	.directive 'clickedElement', ['$rootScope', ($rootScope)->

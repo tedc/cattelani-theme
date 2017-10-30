@@ -1,4 +1,4 @@
-module.exports = ($window)->
+module.exports = ($window, $document)->
 	footer =
 		link : (scope, element)->
 			w = angular.element $window
@@ -9,9 +9,9 @@ module.exports = ($window)->
 			resize()
 			w.on 'resize', resize
 			new ScrollMagic.Scene
-					triggerElement: '.main'
-					triggerHook : 0
-					offset: 120
-			.setClassToggle element[0], 'cat--inview'
+					triggerElement: 'body'
+					triggerHook : "onLeave"
+					offset: $document.find('body')[0].offsetHeight / 2
+			.setClassToggle element[0], 'cat--active'
 			.addTo controller
 			return
