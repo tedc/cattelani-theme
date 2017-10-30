@@ -5,7 +5,8 @@ module.exports = ($rootScope, $timeout)->
 	end = ->
 		TweenMax.to '.modal', .5, { clearProps : 'visibility' } 
 		return
-	start = TweenMax.to '.modal', .5, { autoAlpha : on }
+	start = TweenMax.to '.modal', .5, 
+		autoAlpha : on
 	mTL
 		.addLabel 'start'
 		.add start, 'start' 
@@ -22,6 +23,7 @@ module.exports = ($rootScope, $timeout)->
 			contact = TweenMax.to ".contact__cell", .5,
 				x : 0
 				opacity : 1
+			
 			TweenMax.to id, .5, 
 				autoAlpha : on
 			mTL.add elements, 'elements'

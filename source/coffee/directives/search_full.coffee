@@ -2,7 +2,9 @@ module.exports = ->
 	search =
 		scope : true
 		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", ($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location)->
+			$scope.isSearchEnded = off
 			$scope.isSelect = {}
+			lang = $attrs.lang
 			$scope.search = {}
 			$scope.select = {
 				collezioni : []
@@ -16,7 +18,6 @@ module.exports = ->
 				filtered = if filter.length > 0 then on else off
 			getSearch = ->
 				return if $scope.isSearchEnded
-				$scope.isSearchEnded = on
 				wpApi
 					endpoint : 'collezioni'
 					params : 
@@ -40,11 +41,15 @@ module.exports = ->
 					return
 				wpApi
 					endpoint : 'lampade'
+					ver : 'v1'
+					name : 'api'
+					params :
+						lang : lang
 				.then (results)->
 					$timeout ->
 						$scope.items = results.data
 						$rootScope.$broadcast 'scrollBarUpdate'
-						$scope.isSearching = off
+						$scope.isSearchEnded = on
 						return
 					return
 				return
@@ -52,7 +57,6 @@ module.exports = ->
 				getSearch() if data.hash == 'search'
 				return
 			$scope.isLoading = off
-			$scope.isSearchEnded = off
 			$scope.isChanging = off	
 			$rootScope.closingModal = off
 			closeAnim = (callback)->
@@ -135,11 +139,6 @@ module.exports = ->
 				array =
 					url : url
 					alt : alt
-			$rootScope.isSearch = off
-			$rootScope.startSearch = ->
-				return if $rootScope.isSearch
-				$rootScope.isSearch = on
-				return
 			
 			$scope.filtered = ->
 				return $filter('taxSearch')($scope.items, $scope.search, true).length <= 0

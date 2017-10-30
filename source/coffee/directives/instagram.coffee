@@ -12,10 +12,11 @@ module.exports = ->
                 name : 'api'
                 ver : 'v1'
             .then (res)->
-                return if res.data.length < 1
+                res = res.data.data
+                return if res.length < 1
                 $timeout ->
-                    $scope.items = res.data
-                    $scope.username = res.data[0].user.username
+                    $scope.items = res
+                    $scope.username = res[0].user.username
                     return
                 return
             # wp.instagram()

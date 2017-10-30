@@ -1,9 +1,13 @@
 .modal {
 	@include full($pos: fixed);
+	display: none;
 	z-index: 9994;
 	background-color: $w;
 	visibility: hidden;
 	opacity: 0;
+	&--visible, &.ng-animate {
+		display: block;
+	}
 	.logged-in.admin-bar & {
 		top: 32px;
 	}

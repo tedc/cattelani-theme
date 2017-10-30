@@ -19,6 +19,7 @@
 		$term_id = id_by_lang($term->term_id, $term->taxonomy, false, $default);
 	?>
 		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>" data-collection="<?php echo $term->term_id; ?>" data-index="<?php echo $c; ?>">
+			<?php if(is_handheld()) : ?><a ui-sref="app.collection({name : '<?php echo $term->slug; ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})"></a><?php endif; ?>
 		</ks-swiper-slide>
 	<?php $c++; endforeach; ?>
 	</ks-swiper-container>
@@ -30,7 +31,7 @@
 			<span class="swiper-slide__item">
 				<span class="swiper-slide__name"><?php echo $term->name; ?></span>
 			</span>
-			<a ui-sref="app.collection({name : '<?php echo $term->slug; ?>'})" class="swiper-slide__link"><span><?php echo $term->name; ?></span></a>
+			<a ui-sref="app.collection({name : '<?php echo $term->slug; ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" class="swiper-slide__link"><span><?php echo $term->name; ?></span></a>
 		</ks-swiper-slide>
 		<?php $index++; endforeach; ?>
 	</ks-swiper-container>

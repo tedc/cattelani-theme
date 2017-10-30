@@ -139,12 +139,12 @@
 	@include grow('lg');
 	&__cell {
 		@include grow('md');
-		&--even {
+		&--odd {
 			@include breakpoint() {
 				padding-left: em($p);
 			}
 		}
-		&--odd {
+		&--even {
 			@include breakpoint() {
 				padding-right: em($p);
 			}

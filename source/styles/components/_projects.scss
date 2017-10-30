@@ -2,7 +2,12 @@
 	@include grow('lg');
 	&__filters {
 		justify-content: center;
+		display: none;
 		@include grow('md');
+		@include breakpoint() {
+			display: flex;
+			flex-wrap: wrap;
+		}
 	}
 	&__select {
 		width: em(260px);

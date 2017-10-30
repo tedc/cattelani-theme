@@ -4,6 +4,7 @@
 	margin: 0 !important;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 	&__header {
 		@include grow('md', 'top');
 		@include grow('small', 'bottom');
@@ -14,8 +15,22 @@
 		justify-content: center;
 		flex: 0 0 auto;
 		padding-top: em($p*1.5);
+		transform: translate3d(0, $p, 0);
+		visibility: hidden;
+		transition: visibility $speed, opacity $speed;
+		opacity: 0;
+		z-index: 1;
 		@include breakpoint() {
 			margin: 0 em($p*6);
+		}
+		&--visible {
+			opacity: 1;
+			visibility: visible;
+			transform: translate3d(0, 0, 0);
+		}
+		@include breakpoint() {
+			display: flex;
+			flex-wrap: wrap;
 		}
 	}
 	&__select {
@@ -85,16 +100,48 @@
 		position: relative;
 		display: block;
 		line-height: 0;
-		&:after {
+		padding-top: percentage(560px/440px);
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: $f;
+		}
+		&:before {
 			@include full;
 			content: '';
 			background-color: transparentize($dark-color, .25);
 			transition: opacity $speed;
-			opacity: 0;
+			opacity: 1;
+			z-index: 2;
+		}
+		&:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: em($p*-1) 0 0 em($p*-1);
+			width: em($p*2);
+			height: em($p*2);
+			visibility: visible;
+			opacity: .5;
+			display: block;
+			background-color: $light-color;
+			border-radius: $f;
+			animation: pulse 2s infinite ease-in-out;
+			content: '';
+			transition: $speed visibility, opacity $speed;
+			z-index: 3;
+		}
+		&.lazy-loaded {
+			&:before, &:after {
+				visibility: hidden;
+				opacity: 0;
+				transition: $speed visibility, opacity $speed;
+			}
 		}
 		.search__cell:hover & {
-			&:after {
-				opacity: 1;
+			&.lazy-loaded:after {
+				opacity: 1 !important;
 			}
 		}
 	}
@@ -166,7 +213,8 @@
 	&__loader {
 		position: absolute;
 		top: 50%;
-		left: 50%;
+		left: 0;
+		z-index: 50;
 		margin-top: em($p*-1);
 		max-height: em($p*2);
 		opacity: 1;
