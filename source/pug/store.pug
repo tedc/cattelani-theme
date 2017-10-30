@@ -22,7 +22,7 @@
 						div(ng-bind-html="store.content(item.content.rendered)")
 						p(ng-bind-html="item.email" ng-if="item.email")
 						p(ng-if="item.url")
-							a(ng-href="{{item.url}}") {{item.url.replace('http://', '')}}
+							a(ng-href="{{item.url}}" target="_blank") {{item.url.replace('http://', '')}}
 			.map__empty(ng-bind-html="store.empty" ng-if="store.items.length < 1" ng-class="{'map__empty--hidden':store.isStoreLoading}")
 		.map__cell.map__cell--s6
 			ng-map(default-style="false" zoom="17" center="{{store.start}}" styles="{{store.styles}}" disable-default-u-i="true" scrollwheel="false")

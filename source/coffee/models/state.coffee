@@ -23,7 +23,7 @@ module.exports = ($stateProvider, $locationProvider)->
 			]
 		.state 'app.root',
 			url: '/'
-			templateUrl : "#{vars.main.assets}tpl/post.tpl.html"
+			template : '<div class="main__content" bind-html-compile="content"></div>'
 			resolve: 
 				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
@@ -50,7 +50,7 @@ module.exports = ($stateProvider, $locationProvider)->
 			params :
 				term : 
 					value : null
-			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
+			template : '<div class="main__content" bind-html-compile="content"></div>'
 			resolve : 
 				PrevBefore : ["$rootScope", "$timeout", "$q", require('./blocks.coffee').prev]	
 				ScrollBefore : ["$q", "$timeout", "$rootScope", "PreviousState", require './resolveScroll.coffee']
@@ -78,7 +78,7 @@ module.exports = ($stateProvider, $locationProvider)->
 			controller: ["$rootScope", "$scope", "data", require './single.coffee' ]
 		.state 'app.collection',
 			url : '/c/:name'
-			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
+			template : '<div class="main__content" bind-html-compile="content"></div>'
 			resolve : 
 				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
@@ -103,7 +103,7 @@ module.exports = ($stateProvider, $locationProvider)->
 			controller: ["$rootScope", "data", "$scope", require './term.coffee' ]
 		.state 'app.glossary',
 			url : "/#{vars.main.glossary}/:name"
-			templateUrl: "#{vars.main.assets}tpl/post.tpl.html"
+			template : '<div class="main__content" bind-html-compile="content"></div>'
 			resolve : 
 				data : ["$stateParams", "$q", "wpApi", ($stateParams, $q, wpApi)->
 					deferred = $q.defer()
