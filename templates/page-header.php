@@ -2,10 +2,10 @@
 	use Roots\Sage\Titles;
 	global $sitepress;
 	$obj = (isset($current)) ? $current : false;
+	$type = ($obj) ? $obj->taxonomy : get_post_type();
 	$the_id = ($obj) ? $obj->term_id : $post->ID;
-	$the_id = id_by_lang($the_id, $kind, $sitepress->get_default_language());
+	$the_id = id_by_lang($the_id, $type, $sitepress->get_default_language());
 	$the_id = ($obj) ? $obj->taxonomy.'_'.$the_id : $the_id;
-	$kind = ($obj) ? $obj->taxonomy : get_post_type();
 	$kind = get_field('header_kind');
 	$cover = get_field('featured_image', $the_id) ? get_the_post_thumbnail_url($the_id, 'full') : get_field('cover_image', $the_id)['url'];
 	$className  = $kind == 0 ? 'header--bg header--bg-'. get_post_type() : 'header--white';
