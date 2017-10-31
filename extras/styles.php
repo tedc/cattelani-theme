@@ -9,3 +9,11 @@
 		
 	}	
 	add_action( 'wp_print_styles', 'deregister_styles', 100 );
+
+	function media_styles($html, $handle, $href, $media) {
+		if($media != 'none') {
+			return $html;
+		}
+		$html = str_replace('media', 'onload="if(media!=\'all\')media=\'all\'" media', $html);
+		return $html;
+	}
