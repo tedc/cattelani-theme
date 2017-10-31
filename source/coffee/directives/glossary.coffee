@@ -1,11 +1,11 @@
 module.exports = ($rootScope)->
-	controller : ["$rootScope", "$state", "wpApi", "$q", "$timeout", ($rootScope, $state, wpApi, $q, $timeout)->
+	controller : ["$rootScope", "$state", "wpApi", "$q", "$timeout", "$scope", ($rootScope, $state, wpApi, $q, $timeout, $scope)->
 		glossaryTerms = wpApi {endpoint : "#{vars.main.glossary_slug}"}
 		glossary = @
 		glossary.isLoading = on
 		glossary.isSearch = off
 		glossary.items = []
-		$rootScope.$on 'search_terms', ->
+		$scope.$on 'search_terms', ->
 			glossary.isLoading = on
 			getTerms().then (res)->
 				$timeout ->
@@ -15,7 +15,7 @@ module.exports = ($rootScope)->
 				return
 			return
 		glossary.searchTerms = ->
-			$rootScope.$broadcast 'search_terms'
+			$scope.$emit 'search_terms'
 			return
 		glossary.goToTerm = (term)->
 			glossary.isSearch = on
@@ -28,11 +28,13 @@ module.exports = ($rootScope)->
 			
 		getTerms = ->
 			deferred = $q.defer()
-			glossaryTerms()
-				.search glossary.search
-				.then (res)->
-					deferred.resolve res.data
-					return
+			wpApi 
+				endpoint : "#{vars.main.glossary_slug}"
+				params :
+					search : glossary.search
+			.then (res)->
+				deferred.resolve res.data
+				return
 			deferred.promise
 		return
 	]

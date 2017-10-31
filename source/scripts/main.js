@@ -54418,7 +54418,7 @@ module.exports = function() {
 module.exports = function($rootScope) {
   return {
     controller: [
-      "$rootScope", "$state", "wpApi", "$q", "$timeout", function($rootScope, $state, wpApi, $q, $timeout) {
+      "$rootScope", "$state", "wpApi", "$q", "$timeout", "$scope", function($rootScope, $state, wpApi, $q, $timeout, $scope) {
         var getTerms, glossary, glossaryTerms;
         glossaryTerms = wpApi({
           endpoint: "" + vars.main.glossary_slug
@@ -54427,7 +54427,7 @@ module.exports = function($rootScope) {
         glossary.isLoading = true;
         glossary.isSearch = false;
         glossary.items = [];
-        $rootScope.$on('search_terms', function() {
+        $scope.$on('search_terms', function() {
           glossary.isLoading = true;
           getTerms().then(function(res) {
             $timeout(function() {
@@ -54437,7 +54437,7 @@ module.exports = function($rootScope) {
           });
         });
         glossary.searchTerms = function() {
-          $rootScope.$broadcast('search_terms');
+          $scope.$emit('search_terms');
         };
         glossary.goToTerm = function(term) {
           glossary.isSearch = true;
@@ -54452,7 +54452,12 @@ module.exports = function($rootScope) {
         getTerms = function() {
           var deferred;
           deferred = $q.defer();
-          glossaryTerms().search(glossary.search).then(function(res) {
+          wpApi({
+            endpoint: "" + vars.main.glossary_slug,
+            params: {
+              search: glossary.search
+            }
+          }).then(function(res) {
             deferred.resolve(res.data);
           });
           return deferred.promise;
