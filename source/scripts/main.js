@@ -55999,6 +55999,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
+      if ($rootScope.isPopup && hash.trim() === '') {
+        $rootScope.closePopup();
+      }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
         return false;
       }
