@@ -364,9 +364,6 @@
 		&:hover {
 			opacity: .5;
 		}
-		.ios & {
-			margin-bottom: 40px;
-		}
 	}
 	&__menu {		
 		transform: translate3d(100%, 0, 0);
@@ -375,6 +372,10 @@
 		background: $w;
 		align-items: center;
 		max-height: 100vh;
+		padding: {
+			top: em($p*4);
+			bottom: em($p*4);
+		}
 		.admin-bar.logged-in & {
 			max-height: calc(100vh - 32px);
 		}
@@ -541,7 +542,13 @@
 					background-color: $lighter-color;
 					content: '';
 					animation: scroll $speed*3 $speed infinite;
+					.ios & {
+						height: calc(#{em(100px, 34px)} + 50px);
+					}
 				}
+			}
+			.ios & {
+				margin-bottom: 50px;
 			}
 			transition: $speed transform, $speed opacity;
 			transform: translate3d(0, 0, 0);
