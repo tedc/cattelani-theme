@@ -9,9 +9,8 @@ module.exports = ($rootScope)->
 			glossary.isLoading = on
 			getTerms().then (res)->
 				$timeout ->
-					glossary.items = res.data
-					glossary.isLoading = off
-			
+					glossary.items = res
+					glossary.isLoading = off	
 					return
 				return
 			return
@@ -32,7 +31,7 @@ module.exports = ($rootScope)->
 			glossaryTerms()
 				.search glossary.search
 				.then (res)->
-					deferred.resolve res
+					deferred.resolve res.data
 					return
 			deferred.promise
 		return
