@@ -22,7 +22,7 @@
 		$log = (is_user_logged_in() && is_admin_bar_showing()) ? ' logged-in admin-bar' : ''; 
 		$body_classes = join( ' ', get_body_class( array($contactBar, $white ) ) );
 		wp_deregister_script( 'sage/js' );
-		wp_enqueue_script('lib', Assets\asset_path('scripts/lib.js'), null, null, true);
+		//wp_enqueue_script('lib', Assets\asset_path('scripts/lib.js'), null, null, true);
 		wp_enqueue_script('catellanijs', Assets\asset_path('scripts/main.js#asyncload'), ['lib'], null, true);
 		$languages = icl_get_languages('skip_missing=0&orderby=code');
 		ob_start();
