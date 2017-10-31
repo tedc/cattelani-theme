@@ -102,6 +102,12 @@
 		@include breakpoint() {
 			display: flex;
 		}
+		a {
+			color: $lighter-color!important;
+			&:hover {
+				color: $w!important;
+			}
+		}
 	}
 	&__footer {
 		display: flex;
