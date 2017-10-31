@@ -207,6 +207,7 @@
 	function my_filter_filename( $new, $old, $post ) {
 		$file_name = preg_replace('/\.[^.]+$/', '', $new);
 		$ext = preg_replace('/(.*)(\.[^.]+$)/', '$2', $new);
+		$ext = str_replace('-media', '', $ext);
 	  	return $file_name . "-media".$ext;
 	}
 
