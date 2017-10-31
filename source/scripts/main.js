@@ -55117,6 +55117,15 @@ module.exports = function() {
             $location.hash('');
           }
         };
+        $rootScope.closePopup = function() {
+          $rootScope.isPopup = false;
+          $scope.search = {};
+          $scope.select = {
+            collezioni: [],
+            fonti: [],
+            posizioni: []
+          };
+        };
         $scope.clear = function(name) {
           var item;
           if ($scope.isChanging) {
@@ -56002,7 +56011,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       var hash;
       hash = $location.hash();
       if ($rootScope.isPopup && hash.trim() === '') {
-        $rootScope.isPopup = false;
+        $rootScope.closePopup();
       }
     });
   }

@@ -44,7 +44,7 @@ catellani
 			return
 		angular.element(window).on 'hashchange', ->
 			hash = $location.hash()
-			$rootScope.isPopup = off if $rootScope.isPopup and hash.trim() is ''
+			$rootScope.closePopup() if $rootScope.isPopup and hash.trim() is ''
 			return
 		return
 		# closeBar = ->

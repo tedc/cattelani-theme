@@ -123,6 +123,15 @@ module.exports = ->
 				# 	url = $location.url().split('#')[0]
 				# 	$location.path(url).replace()
 				return
+			$rootScope.closePopup = ->
+				$rootScope.isPopup = off
+				$scope.search = {}
+				$scope.select = {
+					collezioni : []
+					fonti : []
+					posizioni : []
+				}
+				return
 			$scope.clear = (name)->
 				return if $scope.isChanging
 				item = angular.element document.querySelector "[data-select='#{name}']"
