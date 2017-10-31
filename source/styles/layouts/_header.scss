@@ -207,7 +207,7 @@
 			top: 32px;
 		}
 		transition: opacity $speed/2 $speed, visibility $speed/2 $speed; 
-		.menu-opened &, .opened & {
+		.menu-opened &, .opened &, .is-anim & {
 			visibility: hidden;
 			opacity: 0;
 			transition-delay: 0;

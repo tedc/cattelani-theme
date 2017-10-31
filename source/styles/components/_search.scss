@@ -138,10 +138,11 @@
 				opacity: 0;
 				transition: $speed visibility, opacity $speed;
 			}
-		}
-		.search__cell:hover & {
-			&.lazy-loaded:after {
-				opacity: 1 !important;
+			&:before {
+				.search__cell:hover & {
+					opacity: 1 !important;
+					visibility: visible !important;
+				}
 			}
 		}
 	}
