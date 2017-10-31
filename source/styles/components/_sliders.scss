@@ -734,7 +734,7 @@
 					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
 				}
 				&:before {
-					background-image: linear-gradient(to top, transparentize($w, 1) 0, transparentize($w, 1) calc(85vh - #{em(50px)} - #{em($p*8)}), $lighter-color calc(85vh - #{em(50px)} - #{em($p*8)}), $lighter-color 100%);
+					background-image: linear-gradient(to top, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*8)}), $lighter-color calc(100vh - #{em($p*8)}), $lighter-color 100%);
 				}
 			}
 		}
