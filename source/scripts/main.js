@@ -55990,9 +55990,6 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
-      if (newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '') {
-        $rootScope.isPopup = false;
-      }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
         return false;
       }
@@ -56004,7 +56001,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
     angular.element(window).on('hashchange', function() {
       var hash;
       hash = $location.hash();
-      console.log(hash);
+      if ($rootScope.isPopup && hash.trim() === '') {
+        $rootScope.isPopup = false;
+      }
     });
   }
 ]);
