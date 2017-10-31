@@ -4,7 +4,7 @@ module.exports = ($window, $document)->
 			w = angular.element $window
 			resize = ->
 				TweenMax.set 'body',
-					paddingBottom : "#{(element[0].offsetHeight / 16)}em"
+					paddingBottom : element[0].offsetHeight
 				return
 			resize()
 			w.on 'resize', resize

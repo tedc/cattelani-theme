@@ -75,6 +75,9 @@
 			&:before, &:after {
 				background-color: $lighter-color;
 			}
+			&:hover {
+				color: $w;
+			}
 		}
 		margin-right: em(30px)*-1;
 	}

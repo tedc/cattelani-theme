@@ -43,7 +43,7 @@ body {
 
 a {
     text-decoration: none;
-    &:not([class*="send"]) {
+    &:not([class*="send"]):not(.banner__btn) {
         transition: color $speed;
         color: $dark-color;
         &:hover {

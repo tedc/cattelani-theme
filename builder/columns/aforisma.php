@@ -1,8 +1,8 @@
 <?php
 	if(!empty($aforisma)) :
-		$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1, 'exclude' => $aforisma));
+		$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1, 'exclude' => $aforisma, 'suppress_filters' => 0));
 	else :
-		$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1));
+		$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1, 'suppress_filters' => 0));
 	endif;
 	$total = count($aforismi) - 1;
 	$afo = $aforismi[rand(0, $total)];

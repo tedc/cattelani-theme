@@ -21,8 +21,11 @@
 		p {
 			line-height: 1.2;
 			display: flex;
-			justify-content: space-between;
+			flex-wrap: wrap;
 			align-items: center;
+			justify-content: center;
+			padding-bottom: em($p*2);
+			text-align: center;
 			img {
 				width: auto !important;
 				max-width: em(180px) !important;
@@ -31,11 +34,18 @@
 				font-size: 1em !important;
 			}
 			span {
-				width: calc(100% - #{em(200px)});
+				width: $f;
 				flex: 0 0 auto;
+				text-align: center;
+			}	
+			@include breakpoint() {
+				text-align: left;
+				justify-content: space-between;
+				span {
+					width: calc(100% - #{em(200px)});
+					text-align: left;
+				}
 			}
-			padding-bottom: em($p*2);
-			
 		}
 		.sheet__cell {
 			p {

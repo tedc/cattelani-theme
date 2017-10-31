@@ -1,7 +1,7 @@
 <aside class="banner__aside banner__aside--shrink">
 	<div class="banner__quote">
 		<?php
-			$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1));
+			$aforismi = get_posts(array('post_type' => 'aforismi', 'posts_per_page' => -1, 'suppress_filters' => 0));
 			$total = count($aforismi) - 1;
 			$aforisma = $aforismi[rand(0, $total)];
 			$text = get_field('testo_aforisma', $aforisma->ID);
