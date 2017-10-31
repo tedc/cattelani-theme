@@ -54216,6 +54216,13 @@ module.exports = function() {
             $scope.change('collezioni', $stateParams.term);
           }
         });
+        $scope.$on('filters_reset', function() {
+          $scope.isSelect = {};
+          $scope.projects = {};
+          $scope.select = {
+            periodi: false
+          };
+        });
       }
     ]
   };
@@ -55700,6 +55707,9 @@ module.exports = function($rootScope) {
   return video = {
     link: function(scope, element) {
       var enterVideoScene, tween;
+      if (vars.main.mobile) {
+        return;
+      }
       tween = TweenMax.to({
         index: 0
       }, 5, {
@@ -55974,6 +55984,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
         absolute: true
       });
       $rootScope.isAnim = newUrl.split('#')[0] === oldUrl.split('#')[0] ? '' : 'is-anim';
+      $rootScope.$broadcast('filters_reset');
     });
     $transitions.onStart({}, function(trans) {
       var body, docEl, hash, newUrl, scrollTop;

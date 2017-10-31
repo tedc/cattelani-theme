@@ -1,6 +1,7 @@
 module.exports = ($rootScope)->
     video =
         link : (scope, element)->
+            return if vars.main.mobile
             tween = TweenMax.to { index : 0}, 5,
                         index : 10
                         onUpdateParams : ['{self}']

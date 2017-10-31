@@ -7,8 +7,8 @@
 	<?php 
 		$file = preg_replace('/\\.[^.\\s]{3,4}$/', '', get_sub_field('video')['url']);
 	?>
-	<div class="video__container">
-		<video loop class="video__item" ng-video muted>
+	<div class="video__container" ng-style="{backgroundImage : 'url(<?php echo $file; ?>.jpg)'}">
+		<video loop class="video__item" ng-video muted poster="<?php echo $file; ?>.jpg">
 			<source src="<?php echo $file; ?>.mp4" type="video/mp4"/>
 			<source src="<?php echo $file; ?>.webm" type="video/webm"/>
 		</video>

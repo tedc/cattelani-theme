@@ -23,6 +23,11 @@
 		z-index: 1;
 		height: calc(85vh - #{em($p*6)});
 		overflow: hidden;
+		background: {
+			size: cover;
+			repeat: no-repeat;
+			position: center;
+		}
 		.admin-bar.logged-in & {
 			height: calc(85vh - 32px - #{em($p*6)});
 		}
