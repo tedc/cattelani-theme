@@ -125,10 +125,17 @@ module.exports = ->
 			wpApi
 				endpoint : 'tipologie'
 			.then (res)->
-					$scope.collections = res.data
-					if $stateParams.term?
-						$scope.change('collezioni', $stateParams.term)
-					return
+				$scope.collections = res.data
+				if $stateParams.term?
+					$scope.change('collezioni', $stateParams.term)
+				return
+			$scope.$on 'filters_reset', ->
+				$scope.isSelect = {}
+				$scope.projects = {}
+				$scope.select = {
+					periodi : false
+				}
+				return
 			# wp
 			# 	.collections()
 			# 	.lang lang

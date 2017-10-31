@@ -11,6 +11,7 @@ catellani
 		$transitions.onBefore {}, (trans)->
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
 			$rootScope.isAnim = if newUrl.split('#')[0] is oldUrl.split('#')[0] then '' else 'is-anim'
+			$rootScope.$broadcast 'filters_reset'
 			return
 		$transitions.onStart {}, (trans)->
 			hash = $location.hash()

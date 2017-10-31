@@ -730,10 +730,6 @@
 	[class*="-gray"] + & {
 		.swiper-wrapper {
 			.desktop & {
-				&:before, &:after {		
-					height: calc(100vh - #{em($p*8)});
-					max-height: em(600px - ($p*2));
-				}
 				&:after {
 					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
 				}
