@@ -9,9 +9,7 @@ catellani
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
 		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onBefore {}, (trans)->
-			hash = $location.hash()
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
-			console.log newUrl.split('#')[0] is oldUrl.split('#')[0] and hash.trim() is '',  hash.trim() is '', newUrl.split('#')[0] is oldUrl.split('#')[0]
 			$rootScope.isAnim = if newUrl.split('#')[0] is oldUrl.split('#')[0] then '' else 'is-anim'
 			return
 		$transitions.onStart {}, (trans)->
@@ -48,7 +46,10 @@ catellani
 		# closeBar = ->
 		# 	cfpLoadingBar.complete()
 		# 	return
-		# $transitions.onSuccess {}, closeBar
+		$transitions.onSuccess {}, ->
+			hash = $location.hash()
+			console.log hash
+			return
 		# $transitions.onError {}, closeBar
 					
 	]

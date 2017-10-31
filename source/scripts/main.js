@@ -55959,15 +55959,13 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     $transitions.onBefore({}, function(trans) {
-      var hash, newUrl;
-      hash = $location.hash();
+      var newUrl;
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
         absolute: true
       });
-      console.log(newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '', hash.trim() === '', newUrl.split('#')[0] === oldUrl.split('#')[0]);
       $rootScope.isAnim = newUrl.split('#')[0] === oldUrl.split('#')[0] ? '' : 'is-anim';
     });
-    return $transitions.onStart({}, function(trans) {
+    $transitions.onStart({}, function(trans) {
       var body, docEl, hash, newUrl, scrollTop;
       hash = $location.hash();
       if (hash) {
@@ -56002,6 +56000,11 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       $rootScope.$broadcast('sceneDestroy');
       $rootScope.$broadcast('updateScenes');
       $rootScope.$broadcast('destroySwiper');
+    });
+    return $transitions.onSuccess({}, function() {
+      var hash;
+      hash = $location.hash();
+      console.log(hash);
     });
   }
 ]);
