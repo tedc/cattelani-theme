@@ -55959,10 +55959,12 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     $transitions.onBefore({}, function(trans) {
-      var newUrl;
+      var hash, newUrl;
+      hash = $location.hash();
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
         absolute: true
       });
+      console.log(newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '', hash.trim() === '', newUrl.split('#')[0] === oldUrl.split('#')[0]);
       $rootScope.isAnim = newUrl.split('#')[0] === oldUrl.split('#')[0] ? '' : 'is-anim';
     });
     return $transitions.onStart({}, function(trans) {
@@ -55990,7 +55992,6 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
-      console.log(newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '', hash.trim() === '', newUrl.split('#')[0] === oldUrl.split('#')[0]);
       if (newUrl.split('#')[0] === oldUrl.split('#')[0] && hash.trim() === '') {
         $rootScope.isPopup = false;
       }
