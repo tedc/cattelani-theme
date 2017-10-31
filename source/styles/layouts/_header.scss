@@ -489,13 +489,13 @@
 		color: $main-color;
 	}
 	a {
-		color: $w;
+		color: $w !important;
 		transition: $speed opacity;
 		&:hover {
 			opacity: .5;
 		}
 		.white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-			color: $dark-color;
+			color: $dark-color !important;
 		}
 	}
 	@include breakpoint() {

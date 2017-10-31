@@ -3,7 +3,6 @@
 	&:after {
 		width: $f;
 		background-color: $lighter-color;
-		content: '';
 		height: em($p*8);
 		display: block;
 		z-index: 0;
@@ -13,6 +12,9 @@
 		transition: background-color $speed;
 		.main--dark & {
 			background-color: transparent;
+		}
+		@include breakpoint() {		
+			content: '';
 		}
 	}
 	&__cell {

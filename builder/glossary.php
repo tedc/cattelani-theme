@@ -12,8 +12,8 @@
 		<input type="glossary.search" ng-model="glossary.search" class="glossary-search__input" ng-change="glossary.searchTerms()" placeholder="<?php _e('Cerca termini (digita almeno due caratteri)', 'catellani'); ?>" ng-focus="glossary.isSearch = true" ng-model-options="{updateOn: 'blur', debounce:500}" ng-minlength="2" ng-blur="glossary.isSearch = off;" />
 		<i class="icon-search"></i>
 		<ul class="glossary-search__results" ng-class="{'glossary-search__results--visible':glossary.isSearch}">
-			<li class="glossary-search__item" ng-if="!glossary.items.length"><?php _e('Nessun termine trovato', 'catellani'); ?></li>
-			<li class="glossary-search__item" ng-repeat="term in glossary.items" ng-click="glossary.goToTerm(term)" ng-bind-html="term.title.rendered | highlight:glossary.search"></li>
+			<li class="glossary-search__item glossary-search__item--seaching" ng-if="!glossary.items.length || glossary.isLoading"><?php _e('Sto cercando...', 'catellani'); ?></li>
+			<li class="glossary-search__item" ng-repeat="term in glossary.items" ng-click="glossary.goToTerm(term)" ng-bind-html="term.title.rendered | highlight:glossary.search" ng-if="glossary.items.length || !glossary.isLoading"></li>
 		</ul>
 	</div>
 </form>

@@ -126,6 +126,25 @@
 		&__item {
 			font-size: em(18px);
 			padding: em($p/2, 18px) em($p, 18px);
+			&--searching {
+				padding-left: em($p*1.5, 18px);
+				position: relative;
+				&:before, &:after {
+					width: em($p, 18px);
+					background-color: $light-color;
+					height: em($p, 18px);
+					border-radius: $f;
+					top: 50%;
+					left: 0;
+					margin-top: em(($p/2)*-1, 18px);
+					content: '';
+					position: absolute;
+					animation: pulse 2s infinite ease-in-out;
+				}
+				&:before {
+					animation-delay: -1s;
+				}
+			}
 		}
 	}
 }
