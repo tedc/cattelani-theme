@@ -644,7 +644,7 @@
 		left: 0;
 		right: 0;
 		height: calc(100vh - #{em($p*8)});
-		max-height: em(600px - ($p*8));
+		max-height: em(600px - ($p*2));
 	}
 	.swiper-slide {
 		flex: 0 0 auto;
