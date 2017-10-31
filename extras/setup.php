@@ -205,15 +205,17 @@
 	add_filter( 'mfrh_new_filename', 'my_filter_filename', 10, 3 );
 
 	function my_filter_filename( $new, $old, $post ) {
-	  return $new . "-media";
+		$file_name = preg_replace('/\.[^.]+$/', '', $new);
+		$ext = preg_replace('/(.*)(\.[^.]+$)/', '$2', $new);
+	  	return $file_name . "-media".$ext;
 	}
 
-	add_action( 'init', function() {
+	// add_action( 'init', function() {
 
-	    // Tell WordPress how to handle the new structure
-	    add_rewrite_rule( '(.+)-gallery-([0-9]{1,})/?$', 'index.php?attachment_id=$matches[2]', 'top' );
+	//     // Tell WordPress how to handle the new structure
+	//     add_rewrite_rule( '(.+)-gallery-([0-9]{1,})/?$', 'index.php?attachment_id=$matches[2]', 'top' );
 
-	} );
+	// } );
 
 	// Allow SVG
 	add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mimes) {
