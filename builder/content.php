@@ -1,7 +1,7 @@
 <?php if(get_post_type() != 'post') : ?>
 <?php get_template_part( 'templates/entry-meta', 'projects' ); ?>
 <?php endif; ?>
-<article class="container container--<?php echo get_post_type(); ?> container--grow-md container--grow-lg-shrink-fw" id="container_<?php the_ID(); ?>">	
+<article class="container container--<?php echo get_post_type(); ?> container--grow-lg container--grow-lg-shrink-fw" id="container_<?php the_ID(); ?>">	
 	<?php if(get_post_type() == 'post') : ?>
 	<?php get_template_part( 'templates/entry', 'meta' ); ?>
 	<div class="container__middle">
