@@ -33,6 +33,7 @@ catellani
 			#return false if hash
 			#return false if /#/.test(oldUrl) and newUrl is oldUrl.split('#')[0]
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0] and hash.trim() is '',  hash.trim() is '', newUrl.split('#')[0] is oldUrl.split('#')[0]
+			console.log hash
 			$rootScope.isPopup = off if newUrl.split('#')[0] is oldUrl.split('#')[0] and hash.trim() is ''	
 			return false if newUrl.split('#')[0] is oldUrl.split('#')[0]
 			# from = if $rootScope.from then $rootScope.from else trans.$from().name.replace('app.', '')
@@ -42,10 +43,6 @@ catellani
 			$rootScope.$broadcast 'updateScenes'
 			$rootScope.$broadcast 'destroySwiper'
 			#fromElementAnim $rootScope.fromElement
-			return
-		window.addEventListener 'hashchange', ->
-			hash = $location.hash()
-			console.log hash
 			return
 		# closeBar = ->
 		# 	cfpLoadingBar.complete()
