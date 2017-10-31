@@ -131,7 +131,7 @@
 				color: $dark-color;
 			}
 			&--searching {
-				padding-left: em($p*1.5, 18px);
+				padding-left: em($p*2, 18px);
 				position: relative;
 				&:before, &:after {
 					width: em($p, 18px);
@@ -139,7 +139,8 @@
 					height: em($p, 18px);
 					border-radius: $f;
 					top: 50%;
-					left: 0;
+					left: em($p/2, 18px);
+					opacity: .5;
 					margin-top: em(($p/2)*-1, 18px);
 					content: '';
 					position: absolute;
