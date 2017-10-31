@@ -730,11 +730,18 @@
 	[class*="-gray"] + & {
 		.swiper-wrapper {
 			.desktop & {
+				&:before, &:after {		
+					height: calc(100vh - #{em($p*8)});
+					max-height: em(600px - ($p*2));
+				}
 				&:after {
 					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
 				}
 				&:before {
-					background-image: linear-gradient(to top, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*8)}), $lighter-color calc(100vh - #{em($p*8)}), $lighter-color 100%);
+					background-image: linear-gradient(to top, transparentize($w, 1) 0, transparentize($w, 1) em(600px - ($p*10)), $lighter-color em(600px - ($p*10)), $lighter-color 100%);
+					@media screen and (min-height: #{em(600px)}) {
+						background-image: linear-gradient(to top, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*8)}), $lighter-color calc(100vh - #{em($p*8)}), $lighter-color 100%);
+					}	
 				}
 			}
 		}
