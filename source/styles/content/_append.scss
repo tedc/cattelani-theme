@@ -43,10 +43,12 @@ body {
 
 a {
     text-decoration: none;
-    transition: color $speed;
-    color: $dark-color;
-    &:hover {
-        color: $alternate-color;
+    &:not([class*="send"]) {
+        transition: color $speed;
+        color: $dark-color;
+        &:hover {
+            color: $alternate-color;
+        }
     }
 }
 

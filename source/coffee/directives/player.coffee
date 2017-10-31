@@ -24,11 +24,14 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 			scope.isOpen = off
 			$rootScope.isVideo = off
 			$rootScope.open = (video_id)->
-				$rootScope.isVideo = video_id
-				scope.isOpen = on
-				$timeout ->
-					scope.player.play()
-				, 500
+				if vars.main.mobile
+					window.open video_id, '_blank'
+				else
+					$rootScope.isVideo = video_id
+					scope.isOpen = on
+					$timeout ->
+						scope.player.play()
+					, 500
 				return
 			onProgress = (data)->
 				return if scope.isSkipped
@@ -86,7 +89,11 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 							$rootScope.isReady = id
 							return
 						return
-
+					scope.player.getVideoUrl().then (url)->
+						$timeout ->
+							scope.vimeoUrl = url
+							return
+						return
 					return
 			scope.close = ->
 				scope.isOpen = off

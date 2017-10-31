@@ -2,7 +2,7 @@
 	&__form {
 		@include grow('md');
 		display: none;
-		@include breakpoint(700px) {
+		@include breakpoint() {
 			display: flex;
 			align-items: center;
 			justify-content: center;
