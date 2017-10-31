@@ -126,6 +126,10 @@
 		&__item {
 			font-size: em(18px);
 			padding: em($p/2, 18px) em($p, 18px);
+			transition: color $speed;
+			&:hover {
+				color: $dark-color;
+			}
 			&--searching {
 				padding-left: em($p*1.5, 18px);
 				position: relative;
