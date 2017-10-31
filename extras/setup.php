@@ -4,7 +4,7 @@
 		return $html;
 	}
 
-	add_filter( 'language_attributes', 'ng_app', 100 );
+	//add_filter( 'language_attributes', 'ng_app', 100 );
 	function theme_setup() {
 		add_theme_support( 'custom-logo' );
 		add_image_size('magazine', 1246, 700, true);

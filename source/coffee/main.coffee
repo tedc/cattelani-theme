@@ -20,3 +20,7 @@ require './directives/index.coffee'
 require './animations/index.coffee'
 require './controllers/index.coffee'
 require './resources/index.coffee'
+
+angular.element(document).ready ->
+	angular.bootstrap document, ['catellani']
+	return

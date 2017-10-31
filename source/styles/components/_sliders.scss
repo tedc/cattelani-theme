@@ -612,6 +612,7 @@
 	}
 	.swiper-button-prev {
 		order: 0;
+		margin-right: em(90px);
 		&:hover:before {
 			transform: translate3d($p/2, 0, 0);
 		}
@@ -619,6 +620,7 @@
 	.swiper-pagination {
 		order: 1;
 		margin: 0 em(90px);
+		display: none;
 		&-bullet {
 			cursor: pointer;
 			display: inline-block;
@@ -632,9 +634,13 @@
 				background-color: $main-color;
 			}
 		}
+		@include breakpoint() {
+			display: block;
+		}
 	}
 	.swiper-button-next {
 		order: 2;
+		margin-left: em(90px);
 	}
 	.swiper-wrapper {
 		overflow: hidden;

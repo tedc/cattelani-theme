@@ -55754,6 +55754,10 @@ require(108);
 
 require(131);
 
+angular.element(document).ready(function() {
+  angular.bootstrap(document, ['catellani']);
+});
+
 
 },{"1":1,"102":102,"108":108,"114":114,"126":126,"131":131,"2":2,"6":6,"90":90,"91":91,"92":92,"94":94,"95":95,"96":96,"98":98,"99":99}],125:[function(require,module,exports){
 var animationCover, animationDiv, animationInner, closeBlocks, speed;

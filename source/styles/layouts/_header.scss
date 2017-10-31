@@ -517,12 +517,12 @@
 		.admin-bar.logged-in & {
 			min-height: calc(100vh - 32px);
 		}
-		&-post {
-			min-height: 75vh;
-			.admin-bar.logged-in & {
-				min-height: 75vh;
-			}
-		}
+		// &-post {
+		// 	min-height: 75vh;
+		// 	.admin-bar.logged-in & {
+		// 		min-height: 75vh;
+		// 	}
+		// }
 		color: $w;
 		padding-top: em(90px);
 		.header__title {

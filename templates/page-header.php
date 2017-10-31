@@ -19,7 +19,7 @@
 	<?php if( $kind == 0 ): ?>
 	<div class="header__cover" ng-style="{'background-image' : 'url(<?php echo $cover; ?>)'}"></div>
 	<?php endif; ?>
-	<?php if(get_post_type() != 'post') : ?>
+	<?php //if(get_post_type() != 'post') : ?>
 	<h1 class="header__title<?php echo (get_field('is_scroller_hidden', $the_id) || (get_post_type() == 'post' || get_post_type() == 'progetti'  || get_post_type() == 'installazioni' )) ? ' header__title--noscroller' : ''; ?> <?php echo ($kind == 0) ? 'header__title--medium' : 'header__title--large-lighter'; ?>"><?php
 		if($obj) :
 			echo $obj->name;
@@ -27,7 +27,7 @@
 			echo Titles\title(); 
 		endif;
 	?></h1>
-	<?php endif;
+	<?php //endif;
 	if(get_field('header_video', $the_id)) : ?>
 		<i class="icon-play" ng-class="{ready : isReady == 'video_<?php echo get_the_ID(); ?>'}" ng-click="open(<?php if(is_handheld()) : ?>vimeoUrl<?php else : ?>'video_<?php echo get_the_ID(); ?>'<?php endif; ?>)"></i>
 	<?php endif; ?>
