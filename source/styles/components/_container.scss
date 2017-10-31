@@ -134,7 +134,7 @@
 	}
 }
 .container {
-	@include grow('lg');
+	@include grow();
 	@include grow('lg', 'bottom');
 	&__content {
 		@extend %single;
@@ -146,6 +146,9 @@
 			.desktop [ng-sm] & {
 				opacity: 0;
 				transition: $speed*1.5 opacity;
+			}
+			&:nth-of-type(1) {
+				padding-top: 0;
 			}
 		}
 		&--alternate {
