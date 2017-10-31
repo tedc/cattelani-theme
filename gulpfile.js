@@ -214,8 +214,8 @@ gulp.task('styles', ['wiredep'], function() {
 
 var b = watchify(browserify(path.source + 'coffee/main.coffee', {browserifyOptions : true, fast : true, noparse: 'angular', 'detect-globals' : false}));
 b.transform(coffeeify)
-  .transform(babelify, { presets : [ 'es2015' ] })
-  .transform(uglifyify);
+  .transform(babelify, { presets : [ 'es2015' ] });
+//.transform(uglifyify);
 //.on('update', bundle);
   
 function bundle(bundler) {
