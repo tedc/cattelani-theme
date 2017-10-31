@@ -116,6 +116,7 @@ module.exports = ->
 					history.pushState '', document.title, $location.path()
 				else
 					$location.hash ''
+				$rootScope.closePopup()
 				# $rootScope.closingModal = on
 				# hash = $location.hash()
 				# console.log $location.state()

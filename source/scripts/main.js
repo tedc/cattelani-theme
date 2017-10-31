@@ -55116,6 +55116,7 @@ module.exports = function() {
           } else {
             $location.hash('');
           }
+          $rootScope.closePopup();
         };
         $rootScope.closePopup = function() {
           $rootScope.isPopup = false;
