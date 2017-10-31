@@ -5,17 +5,22 @@ module.exports = ($rootScope)->
 		glossary.isLoading = on
 		glossary.isSearch = off
 		glossary.items = []
-		$scope.$on 'search_terms', ->
+		$scope.$on 'search_terms', (event, data)->
+			valid = data.valid
 			glossary.isLoading = on
-			getTerms().then (res)->
-				$timeout ->
-					glossary.items = res
-					glossary.isLoading = off	
+			if valid 
+				getTerms().then (res)->
+					$timeout ->
+						glossary.items = res
+						glossary.isLoading = off	
+						return
 					return
-				return
+			else
+				glossary.items = []
+				glossary.isLoading = off
 			return
-		glossary.searchTerms = ->
-			$scope.$emit 'search_terms'
+		glossary.searchTerms = (valid)->
+			$scope.$emit 'search_terms', { valid : valid }
 			return
 		glossary.goToTerm = (term)->
 			glossary.isSearch = on

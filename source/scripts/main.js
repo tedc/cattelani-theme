@@ -54427,17 +54427,26 @@ module.exports = function($rootScope) {
         glossary.isLoading = true;
         glossary.isSearch = false;
         glossary.items = [];
-        $scope.$on('search_terms', function() {
+        $scope.$on('search_terms', function(event, data) {
+          var valid;
+          valid = data.valid;
           glossary.isLoading = true;
-          getTerms().then(function(res) {
-            $timeout(function() {
-              glossary.items = res;
-              glossary.isLoading = false;
+          if (valid) {
+            getTerms().then(function(res) {
+              $timeout(function() {
+                glossary.items = res;
+                glossary.isLoading = false;
+              });
             });
-          });
+          } else {
+            glossary.items = [];
+            glossary.isLoading = false;
+          }
         });
-        glossary.searchTerms = function() {
-          $scope.$emit('search_terms');
+        glossary.searchTerms = function(valid) {
+          $scope.$emit('search_terms', {
+            valid: valid
+          });
         };
         glossary.goToTerm = function(term) {
           glossary.isSearch = true;
