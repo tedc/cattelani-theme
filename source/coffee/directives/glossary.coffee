@@ -1,11 +1,11 @@
 module.exports = ($rootScope)->
-	controller : ["$rootScope", "$state", "wpApi", "$q", "$timeout", "$scope", ($rootScope, $state, wpApi, $q, $timeout, $scope)->
+	controller : ["$rootScope", "$state", "wpApi", "$q", "$timeout", ($rootScope, $state, wpApi, $q, $timeout)->
 		glossaryTerms = wpApi {endpoint : "#{vars.main.glossary_slug}"}
 		glossary = @
 		glossary.isLoading = on
 		glossary.isSearch = off
 		glossary.items = []
-		$scope.$on 'search_terms', ->
+		$rootScope.$on 'search_terms', ->
 			glossary.isLoading = on
 			getTerms().then (res)->
 				$timeout ->
@@ -15,7 +15,7 @@ module.exports = ($rootScope)->
 				return
 			return
 		glossary.searchTerms = ->
-			$scope.$emit 'search_terms'
+			$rootScope.$emit 'search_terms'
 			return
 		glossary.goToTerm = (term)->
 			glossary.isSearch = on

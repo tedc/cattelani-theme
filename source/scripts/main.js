@@ -54418,7 +54418,7 @@ module.exports = function() {
 module.exports = function($rootScope) {
   return {
     controller: [
-      "$rootScope", "$state", "wpApi", "$q", "$timeout", "$scope", function($rootScope, $state, wpApi, $q, $timeout, $scope) {
+      "$rootScope", "$state", "wpApi", "$q", "$timeout", function($rootScope, $state, wpApi, $q, $timeout) {
         var getTerms, glossary, glossaryTerms;
         glossaryTerms = wpApi({
           endpoint: "" + vars.main.glossary_slug
@@ -54427,7 +54427,7 @@ module.exports = function($rootScope) {
         glossary.isLoading = true;
         glossary.isSearch = false;
         glossary.items = [];
-        $scope.$on('search_terms', function() {
+        $rootScope.$on('search_terms', function() {
           glossary.isLoading = true;
           getTerms().then(function(res) {
             $timeout(function() {
@@ -54437,7 +54437,7 @@ module.exports = function($rootScope) {
           });
         });
         glossary.searchTerms = function() {
-          $scope.$emit('search_terms');
+          $rootScope.$emit('search_terms');
         };
         glossary.goToTerm = function(term) {
           glossary.isSearch = true;
