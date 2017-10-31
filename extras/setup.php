@@ -671,3 +671,13 @@
 		global $post, $wpdb;
 		return $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND p.post_status = 'publish'", $post->post_title, $post->post_type);
 	}
+	function ikreativ_async_scripts($url)
+	{
+	    if ( strpos( $url, '#asyncload') === false )
+	        return $url;
+	    else if ( is_admin() )
+	        return str_replace( '#asyncload', '', $url );
+	    else
+		return str_replace( '#asyncload', '', $url )."' async='async"; 
+	    }
+	add_filter( 'clean_url', 'ikreativ_async_scripts', 11, 1 );
