@@ -56001,7 +56001,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       $rootScope.$broadcast('updateScenes');
       $rootScope.$broadcast('destroySwiper');
     });
-    return $transitions.onSuccess({}, function() {
+    return window.addEventListener('hashchange', function() {
       var hash;
       hash = $location.hash();
       console.log(hash);

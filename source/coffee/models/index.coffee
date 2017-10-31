@@ -43,13 +43,12 @@ catellani
 			$rootScope.$broadcast 'destroySwiper'
 			#fromElementAnim $rootScope.fromElement
 			return
-		# closeBar = ->
-		# 	cfpLoadingBar.complete()
-		# 	return
-		$transitions.onSuccess {}, ->
+		window.addEventListener 'hashchange', ->
 			hash = $location.hash()
 			console.log hash
 			return
-		# $transitions.onError {}, closeBar
-					
+		# closeBar = ->
+		# 	cfpLoadingBar.complete()
+		# 	return
+		# $transitions.onError {}, closeBar					
 	]
