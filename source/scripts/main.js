@@ -54437,7 +54437,7 @@ module.exports = function($rootScope) {
           });
         });
         glossary.searchTerms = function() {
-          $rootScope.$emit('search_terms');
+          $rootScope.$broadcast('search_terms');
         };
         glossary.goToTerm = function(term) {
           glossary.isSearch = true;

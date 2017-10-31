@@ -15,7 +15,7 @@ module.exports = ($rootScope)->
 				return
 			return
 		glossary.searchTerms = ->
-			$rootScope.$emit 'search_terms'
+			$rootScope.$broadcast 'search_terms'
 			return
 		glossary.goToTerm = (term)->
 			glossary.isSearch = on
