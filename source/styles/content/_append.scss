@@ -15,7 +15,8 @@ html {
 
 
 body {
-    opacity: 1;
+    opacity: 1!important;
+    transition: opacity $speed;
     font-size: $base_font_size - 2px;
     color: $main-color;
     letter-spacing: $spacing;
