@@ -37,7 +37,7 @@
 <ks-swiper-container id="storia" class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true,'simulateTouch':false}" on-ready="onReadySwiper(storia)">
 	<?php $current = 0; foreach($storia as $s): ?>
 	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
-		<figure class="swiper-slide__figure">
+		<figure class="swiper-slide__figure" ng-click="expandStory()">
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
 					
