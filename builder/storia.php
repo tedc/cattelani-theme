@@ -15,7 +15,7 @@
 	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php _e('La Storia', 'catellani'); ?></h3>
 </header>
 <nav class="storia__nav storia__nav--shrink storia__nav--grow-md">
-	<i class="icon-arrow icon-arrow--prev" ng-click="storiaMove(false)"></i>
+	<i class="icon-arrow icon-arrow--prev" ng-click="storiaMove(false)" ng-class="{'icon-arrow--visible':isPrev}"></i>
 	<div class="storia__items storia__items--shrink" scrollbar="storia" continuous-scrolling="true">
 		<?php $i = 0; foreach($storia as $s): ?>
 		<div class="storia__item" ng-class="{'storia__item--active' : current == <?php echo $i; ?>}" ng-click="slideTo(<?php echo $i; ?>)">
@@ -32,7 +32,7 @@
 		</div>
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</div>
-	<i class="icon-arrow icon-arrow--next" ng-click="storiaMove(true)"></i>
+	<i class="icon-arrow icon-arrow--next" ng-click="storiaMove(true)" ng-class="{'icon-arrow--visible':isNext}"></i>
 </nav>
 <ks-swiper-container id="storia" class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true, 'replaceState':true, 'simulateTouch':false}" on-ready="onReadySwiper(storia)">
 	<?php $current = 0; foreach($storia as $s): ?>
