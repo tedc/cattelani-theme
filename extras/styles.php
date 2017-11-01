@@ -14,7 +14,7 @@
 		$custom_css = 'body{opacity:0}';
         wp_add_inline_style( 'catellanicss', $custom_css );
 	}
-	add_action( 'wp_enqueue_scripts', 'my_styles_method' );
+	//add_action( 'wp_enqueue_scripts', 'my_styles_method' );
 
 	function media_styles($html, $handle, $href, $media) {
 		if($media != 'none') {
