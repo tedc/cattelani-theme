@@ -14,7 +14,7 @@
 <header class="storia__header storia__header--grow-lg storia__header--shrink-fw">
 	<h3 class="storia__title storia__title--big-lighter-aligncenter"><?php _e('La Storia', 'catellani'); ?></h3>
 </header>
-<nav class="storia__nav storia__nav--shrink storia__nav--grow-md"<?php scrollmagic('"triggerHook":"onLeave","class": {"element":".breadcrumbs","classes" : "breadcrumbs--hidden"}'); ?>>
+<nav class="storia__nav storia__nav--shrink storia__nav--grow-md"<?php //scrollmagic('"triggerHook":"onLeave","class": {"element":".breadcrumbs","classes" : "breadcrumbs--hidden"}'); ?>>
 	<div class="storia__items storia__items--shrink" scrollbar continuous-scrolling="true">
 		<?php $i = 0; foreach($storia as $s): ?>
 		<div class="storia__item" ng-class="{'storia__item--active' : current == <?php echo $i; ?>}" ng-click="slideTo(<?php echo $i; ?>)">
@@ -32,9 +32,9 @@
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</div>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true, 'replaceState':true, 'simulateTouch':false}" on-ready="onReadySwiper(storia)">
+<ks-swiper-container id="storia" class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true, 'replaceState':true, 'simulateTouch':false}" on-ready="onReadySwiper(storia)">
 	<?php $current = 0; foreach($storia as $s): ?>
-	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>" id="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
+	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
 		<figure class="swiper-slide__figure">
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
