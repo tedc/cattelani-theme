@@ -32,9 +32,9 @@
 		<?php $i++; endforeach; wp_reset_postdata();?>
 	</div>
 </nav>
-<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true, 'replaceState':true, 'simulateTouch':false}" on-ready="onReadySwiper(storia)" id="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
+<ks-swiper-container class="storia__slider" swiper="storia" override-parameters="{'effect':'fade', 'autoHeight' : true, 'fade':{'crossFade':true},'hashnav':true,'hashnavWatchState':true, 'replaceState':true, 'simulateTouch':false}" on-ready="onReadySwiper(storia)">
 	<?php $current = 0; foreach($storia as $s): ?>
-	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
+	<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--shrink-fw" data-current="<?php echo $current; ?>" data-hash="<?php echo sanitize_title(get_the_title($s->ID)); ?>" id="<?php echo sanitize_title(get_the_title($s->ID)); ?>">
 		<figure class="swiper-slide__figure">
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
