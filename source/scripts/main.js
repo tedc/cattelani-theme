@@ -54490,7 +54490,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -54839,7 +54839,7 @@ launchIntoFullscreen = function(element) {
   }
 };
 
-module.exports = function(angularLoad, $timeout, $rootScope) {
+module.exports = function(angularLoad, $timeout, $rootScope, $window) {
   var player;
   return player = {
     scope: true,
@@ -54855,14 +54855,9 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
       scope.isSkipped = false;
       scope.isOpen = false;
       $rootScope.isVideo = false;
-      $rootScope.open = function(video_id) {
-        if (vars.main.mobile) {
-          scope.player.getVideoUrl().then(function(url) {
-            $timeout(function() {
-              window.open(url, '_blank');
-            });
-          });
-        } else {
+      $rootScope.open = function(event, video_id) {
+        if (!vars.main.mobile) {
+          event.preventDefault();
           $rootScope.isVideo = video_id;
           scope.isOpen = true;
           $timeout(function() {
@@ -54933,8 +54928,18 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
         });
         scope.player.ready().then(function() {
           $timeout(function() {
-            $rootScope.isReady = id;
+            if (!vars.main.mobile) {
+              $rootScope.isReady = id;
+            }
           });
+          if (vars.main.mobile) {
+            scope.player.getVideoUrl().then(function(url) {
+              $timeout(function() {
+                $rootScope.vimeoUrl = url;
+                $rootScope.isReady = id;
+              });
+            });
+          }
         });
       });
       scope.close = function() {
@@ -55587,12 +55592,12 @@ module.exports = function() {
 
 
 },{}],122:[function(require,module,exports){
-module.exports = function($timeout, $rootScope, $location) {
+module.exports = function($timeout, $rootScope, $location, ScrollbarService) {
   var ngSwiper;
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
-      var i, s;
+      var i, s, scroll, storia;
       scope.main = {};
       scope.nav = {};
       if (attr.isStoria) {
@@ -55666,6 +55671,17 @@ module.exports = function($timeout, $rootScope, $location) {
         });
       });
       $rootScope.isYearsActive = false;
+      scroll = function() {
+        var offset;
+        offset = angular.element(document.body).hasClass('admin-bar') ? 112 : 80;
+        TweenMax.to(window, .5, {
+          scrollTo: {
+            y: "#storia",
+            autoKill: false,
+            offsetY: offset
+          }
+        });
+      };
       scope.$watch('storia', function(newValue, oldValue) {
         var hash, index, slide;
         if (oldValue === newValue) {
@@ -55673,16 +55689,53 @@ module.exports = function($timeout, $rootScope, $location) {
         }
         scope.storia.on('slideChangeStart', function(swiper) {
           scope.current = swiper.realIndex;
+          swiper.update();
+          scroll();
         });
         hash = $location.hash();
         if (hash && hash !== 'contact' && hash !== 'search' && hash !== 'languages' && hash !== 'downloads') {
           slide = element[0].querySelector("[data-hash='" + hash + "']");
           index = parseInt(slide.getAttribute('data-current'));
           scope.current = index;
+          scroll();
         }
       });
+      if (attr.isStoria) {
+        storia = ScrollbarService.getInstance('storia');
+        storia.then(function(scrollbar) {
+          var arrows, item, last;
+          arrows = function() {
+            $timeout(function() {
+              scope.isPrev = scrollbar.offset.x !== 0 ? true : false;
+              scope.isNext = scrollbar.offset.x !== scrollbar.limit.x ? true : false;
+            });
+          };
+          item = element[0].querySelector('.storia__items .storia__item');
+          last = element[0].querySelector('.storia__items .storia__item:nth-last-child(1)');
+          scope.storiaMove = function(cond) {
+            var x;
+            if (cond) {
+              if (scrollbar.offset.x === scrollbar.limit.x) {
+                return;
+              }
+            } else {
+              if (scrollbar.offset.x === 0) {
+                return;
+              }
+            }
+            x = cond ? scrollbar.offset.x + item.offsetWidth : scrollbar.offset.x - item.offsetWidth;
+            scrollbar.scrollTo(x, 0, 500);
+          };
+          arrows();
+          angular.element(window).on('resize', arrows);
+          scrollbar.addListener(function(status) {
+            arrows();
+          });
+        });
+      }
       scope.expandStory = function(cond) {
         $rootScope.isYearsActive = !$rootScope.isYearsActive;
+        scroll();
       };
       scope.$on('swiperChaged', function() {
         if (!angular.equals({}, scope.main)) {

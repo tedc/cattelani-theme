@@ -13,13 +13,15 @@
 		}
 		&--content {
 			transform: translate3d($p*-2, 0, 0);
+			text-align: center;
 			p {
 				font-size: em(18px);
-				padding-top: em($p*2);
+				padding-bottom: em($p*2, 18px);
 			}
 			svg {
 				width: em(168px);
 				height: em(72px);
+				margin: 0 auto em($p*2);
 			}
 			path {
 				fill: $main-color !important;
@@ -35,8 +37,9 @@
 				}
 			}
 			@include breakpoint() {
+				text-align: left;
 				.contact__header {
-					visibility: hidden;
+					display: none;
 				}
 			}
 		}
@@ -54,16 +57,6 @@
 						content: attr(data-title);
 						font-size: em(30px);
 						font-weight: 200;
-					}
-					&:after {
-						position: absolute;
-						width: 1px;
-						margin-left: -1px;
-						height: $f;
-						left: em($p*-4);
-						top: 0;
-						content: '';
-						background-color: $w;
 					}
 				}
 				border-left: 1px solid $lighter-color;

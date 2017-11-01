@@ -9,7 +9,7 @@ launchIntoFullscreen = (element)->
 		element.msRequestFullscreen()
 	return
 
-module.exports = (angularLoad, $timeout, $rootScope)->
+module.exports = (angularLoad, $timeout, $rootScope, $window)->
 	player = 
 		scope : on
 		link : (scope, element, attrs)->
@@ -23,14 +23,9 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 			scope.isSkipped = off
 			scope.isOpen = off
 			$rootScope.isVideo = off
-			$rootScope.open = (video_id)->
-				if vars.main.mobile
-					scope.player.getVideoUrl().then (url)->
-						$timeout ->
-							window.open url, '_blank'
-							return
-						return
-				else
+			$rootScope.open = (event, video_id)->
+				if not vars.main.mobile
+					event.preventDefault()
 					$rootScope.isVideo = video_id
 					scope.isOpen = on
 					$timeout ->
@@ -90,8 +85,15 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 						return
 					scope.player.ready().then ->
 						$timeout ->
-							$rootScope.isReady = id
+							$rootScope.isReady = id if not vars.main.mobile
 							return
+						if vars.main.mobile
+							scope.player.getVideoUrl().then (url)->
+								$timeout ->
+									$rootScope.vimeoUrl = url
+									$rootScope.isReady = id
+									return
+								return
 						return
 					return
 			scope.close = ->

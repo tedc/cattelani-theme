@@ -390,8 +390,10 @@
 	align-content: center;
 	&__item {
 		width: $f;
+		text-align: center;
 		@include breakpoint(700px) {
 			width: $f/2;
+			text-align: left;
 		}
 		@extend %menu_move;
 		@include normalize_padding;
@@ -463,7 +465,7 @@
 	left: 50%;
 	transform: translate3d(-50%, 0%, 0);
 	line-height: 1;
-	z-index: 9995;
+	z-index: 9993;
 	opacity: 1;
 	transition: transform $speed, opacity $speed, visibility $speed;
 	color: $light-color;
@@ -577,11 +579,13 @@
 		transition: background-color $speed, visibility $speed, opacity $speed;
 		visibility: hidden;
 		opacity: 0;
+		color: $w;
 		&:before {
 			display: inline-block;
 			transform: translate3d(10%, 0, 0);
 		}
 		&:hover {
+			color: $w;
 			background-color: transparentize($w, .4);
 		}
 		&.ready {

@@ -45,19 +45,33 @@
 	&__items {
 		margin: 0 auto;
 		display: flex;
-		justify-content: center;
+		position: relative;
+		&:before {
+			position: absolute;
+			top: 0;
+			height: em($p*4);
+			left: 0;
+			width: $f;
+			background-color: $w;
+			content: '';
+		}
 		.scroll-content {
 			margin: 0 auto;
 			display: flex;
-			padding: em($p*2) 0;
-			@include normalize_padding;
-			&:before, &:after {
-				display: block;
-				content: '';
-				margin: 0 auto;
-			}
+			padding: em($p*2);		
+			// &:before, &:after {
+			// 	display: block;
+			// 	content: '';
+			// 	margin: 0 auto;
+			// }
 			@include breakpoint() {
 				justify-content: center;
+				position: relative;
+				// &:before {
+				// 	position: absolute;
+				// 	top: 0;
+				// 	left: 0;
+				// }
 			};
 		}
 	}
@@ -190,10 +204,49 @@
 	}
 	&__nav {
 		display: flex;
+		align-items: center;
+		background-color: $w;
+		position: sticky;
+		z-index: 9993;
+		top: em(80px);
+		.icon-arrow {
+			visibility: hidden;
+			opacity: 0;
+			color: $main-color;
+			font-size: $p/2;
+			cursor: pointer;
+			transition: {
+				property: visibility, opacity;
+				duration: $speed;
+			}
+			&:before {
+				display: inline-block;
+				transition: transform $speed;
+			}
+			&:hover:before {
+				transform: translate3d($p/2, 0, 0);
+			}
+			margin-left: $p/2;
+			&--prev {
+				transform: scaleX(-1) translateZ(0);
+			}
+			@include breakpoint() {
+				display: none;
+			}
+			&--visible {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+		.admin-bar.logged-in & {
+			top: calc(#{em(80px)} + 32px);
+		}
 		@include breakpoint() {
-			position: sticky;
-			z-index: 9993;
 			top: 0;
+			background-color: transparent;
+			.admin-bar.logged-in & {
+				top: 32px;
+			}
 		}
 	}
 }

@@ -142,11 +142,19 @@
 				opacity: .8;
 				visibility: visible;
 			}
-			.projects__title {
+			.projects__title, .projects__location {
 				opacity: 1;
 				transform: translate3d(0, 0, 0);
 			}
-			.projects__location {
+		}
+		&:before, &:hover:before, &[ng-lazy-img].lazy-loaded:hover:before {
+			.handheld & {
+				opacity: .5 !important;
+				visibility: visible !important;
+			}
+		}
+		.projects__title, .projects__location {
+			.handheld & {
 				opacity: 1;
 				transform: translate3d(0, 0, 0);
 			}

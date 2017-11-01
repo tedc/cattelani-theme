@@ -130,7 +130,11 @@
 	margin: 0;
 	height: em($p*4);
 	&--double {
+		display: none;
 		height: em($p*8);
+		@include breakpoint() {
+			display: block;
+		}
 	}
 }
 .container {
@@ -162,7 +166,6 @@
 		}
 		.container--bg & {
 			&:before, &:after {
-				content: '';
 				width: em(220px);
 				display: block;
 				height: 7px;
@@ -173,6 +176,11 @@
 				border: {
 					top: 1px solid $w;
 					bottom: 1px solid $w;
+				}
+				@include breakpoint() {
+					.desktop & {
+						content: '';
+					}
 				}
 			}
 			&:before {
@@ -222,6 +230,9 @@
 		padding-top: 2em;
 		color: $alternate-color;
 		position: relative;
+		.container--bg & {
+			color: $lighter-color;
+		}
 		.desktop [ng-sm] & {
 			opacity: 0;
 			transition: $speed*1.5 opacity;
@@ -239,6 +250,12 @@
 			@include full;
 			background: $dark-color;
 			opacity: .25;
+		}
+		padding-bottom: em($p*2);
+		padding-top: em($p*2);
+		@include breakpoint(640px) {
+			padding-bottom: em($p*4);
+			padding-top: em($p*4);
 		}
 		@include breakpoint() {
 			padding-bottom: em($p*8);

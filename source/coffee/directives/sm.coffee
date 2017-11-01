@@ -54,7 +54,6 @@ module.exports = ($rootScope, $timeout)->
 		if config.class
 			config.class = {classes: config.class} if typeof config.class isnt 'object'
 			classEl = config.class.element or element[0]
-			console.log classEl
 			scene.setClassToggle classEl, config.class.classes
 		scene.addTo controller
 		return

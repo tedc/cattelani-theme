@@ -1,4 +1,4 @@
-module.exports = ($timeout, $rootScope, $location)->
+module.exports = ($timeout, $rootScope, $location, ScrollbarService)->
 	ngSwiper =
 		scope : on
 		link : (scope, element, attr)->
@@ -64,22 +64,60 @@ module.exports = ($timeout, $rootScope, $location)->
 					return
 				return
 			$rootScope.isYearsActive = off
+			scroll = ()->
+				offset = if angular.element(document.body).hasClass('admin-bar') then 112 else 80
+				TweenMax.to window, .5,
+					scrollTo :
+						y : "#storia"
+						autoKill : off
+						offsetY : offset
+				return
 			scope.$watch 'storia', (newValue, oldValue)->
 				return if oldValue is newValue
 				scope.storia.on 'slideChangeStart', (swiper)->
 					scope.current = swiper.realIndex
+					swiper.update()
+					scroll()
 					return
 				hash = $location.hash()
 				if hash and hash isnt 'contact' and hash isnt 'search' and hash isnt 'languages' and hash isnt 'downloads'
 					slide = element[0].querySelector "[data-hash='#{hash}']"
 					index = parseInt slide.getAttribute 'data-current'
 					scope.current = index
+					scroll()
 				return
 				# swiper.on 'slideChangeStart', (swiper)->
 				# 	scope.current = swiper.realIndex 
 				# 	return
+			if attr.isStoria
+				storia = ScrollbarService.getInstance 'storia'
+				storia
+					.then (scrollbar)->
+						arrows = ->
+							$timeout ->
+								scope.isPrev = if scrollbar.offset.x isnt 0 then on else off
+								scope.isNext = if scrollbar.offset.x isnt scrollbar.limit.x then on else off
+								return
+							return
+						item = element[0].querySelector('.storia__items .storia__item')
+						last = element[0].querySelector('.storia__items .storia__item:nth-last-child(1)')
+						scope.storiaMove = (cond)->
+							if cond
+								return if scrollbar.offset.x is scrollbar.limit.x
+							else
+								return if scrollbar.offset.x is 0
+							x = if cond then scrollbar.offset.x + item.offsetWidth else scrollbar.offset.x - item.offsetWidth
+							scrollbar.scrollTo x, 0, 500
+							return
+						arrows()
+						angular.element(window).on 'resize', arrows
+						scrollbar.addListener (status)->
+							arrows()
+							return
+						return
 			scope.expandStory = (cond)->
 				$rootScope.isYearsActive = !$rootScope.isYearsActive
+				scroll()
 				return
 			scope.$on 'swiperChaged', ->
 				scope.main.update() if not angular.equals {}, scope.main
