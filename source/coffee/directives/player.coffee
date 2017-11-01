@@ -25,7 +25,11 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 			$rootScope.isVideo = off
 			$rootScope.open = (video_id)->
 				if vars.main.mobile
-					window.open scope.vimeoUrl, '_blank'
+					scope.player.getVideoUrl().then (url)->
+						$timeout ->
+							window.open url, '_blank'
+							return
+						return
 				else
 					$rootScope.isVideo = video_id
 					scope.isOpen = on
@@ -87,11 +91,6 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 					scope.player.ready().then ->
 						$timeout ->
 							$rootScope.isReady = id
-							return
-						return
-					scope.player.getVideoUrl().then (url)->
-						$timeout ->
-							scope.vimeoUrl = url
 							return
 						return
 					return

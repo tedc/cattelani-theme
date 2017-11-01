@@ -54857,7 +54857,11 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
       $rootScope.isVideo = false;
       $rootScope.open = function(video_id) {
         if (vars.main.mobile) {
-          window.open(scope.vimeoUrl, '_blank');
+          scope.player.getVideoUrl().then(function(url) {
+            $timeout(function() {
+              window.open(url, '_blank');
+            });
+          });
         } else {
           $rootScope.isVideo = video_id;
           scope.isOpen = true;
@@ -54930,11 +54934,6 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
         scope.player.ready().then(function() {
           $timeout(function() {
             $rootScope.isReady = id;
-          });
-        });
-        scope.player.getVideoUrl().then(function(url) {
-          $timeout(function() {
-            scope.vimeoUrl = url;
           });
         });
       });
