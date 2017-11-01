@@ -23,4 +23,4 @@
 		$html = str_replace('media', 'onload="if(media!=\'all\')media=\'all\'" media', $html);
 		return $html;
 	}
-	add_filter('style_loader_tag', 'media_styles', 10, 4);
+	//add_filter('style_loader_tag', 'media_styles', 10, 4);

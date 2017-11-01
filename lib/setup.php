@@ -97,7 +97,7 @@ function display_sidebar() {
 function assets() {
   wp_enqueue_style('catellanicss', Assets\asset_path('styles/main.css'), false, null, 'none');
   $custom_css = 'body{opacity:0}';
-  wp_add_inline_style( 'catellanicss', $custom_css );
+  //wp_add_inline_style( 'catellanicss', $custom_css );
   if (is_single() && comments_open() && get_option('thread_comments')) {
     wp_enqueue_script('comment-reply');
   }
