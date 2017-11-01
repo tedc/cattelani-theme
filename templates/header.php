@@ -6,9 +6,9 @@
         echo print_svg(get_home_url() . $image[0]);
         ?>
     </a>
-    <p class="breadcrumbs" bind-html-compile="breadcrumbs" ng-if="breadcrumbs" ng-class="{'breadcrumbs--hidden':storyOnTop}">
+    <p class="breadcrumbs" bind-html-compile="breadcrumbs">
     </p>
-    <p class="breadcrumbs" ng-if="!breadcrumbs" ng-class="{'breadcrumbs--hidden':storyOnTop}">
+    <p class="breadcrumbs" ng-if="!breadcrumbs">
         <?php $term_obj = is_tax() ? get_queried_object() : false; $post_obj = (is_single() || is_page()) ? $post : false; include(locate_template( 'templates/breadcrumb.php', false, true )); ?>
     </p>
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
