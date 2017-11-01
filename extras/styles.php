@@ -12,7 +12,7 @@
 
 	function my_styles_method() {
 		$custom_css = 'body{opacity:0}';
-        wp_add_inline_style( 'sage/css', $custom_css );
+        wp_add_inline_style( 'catellanicss', $custom_css );
 	}
 	add_action( 'wp_enqueue_scripts', 'my_styles_method' );
 
