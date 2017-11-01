@@ -29,7 +29,7 @@
 	?></h1>
 	<?php //endif;
 	if(get_field('header_video', $the_id)) : ?>
-		<a class="icon-play" ng-href="{{vimeoUrl}}" ng-class="{ready : isReady == 'video_<?php echo get_the_ID(); ?>'}" ng-click="open($event, 'video_<?php echo get_the_ID(); ?>')"></a>
+		<a class="icon-play" ng-attr-target="_blank" ng-href="{{vimeoUrl}}" ng-class="{ready : isReady == 'video_<?php echo get_the_ID(); ?>'}" ng-click="open($event, 'video_<?php echo get_the_ID(); ?>')"></a>
 	<?php endif; ?>
 </header>
 <div ng-sm='{"triggerHook":"onLeave","class":{"element":"body","classes":"white"}}'></div>
