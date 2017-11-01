@@ -3,7 +3,7 @@
 	array_push($testi, get_sub_field('testo'));
 	if(count($testi) != 1) :
 ?>
-<div class="container container--shrink<?php echo (get_sub_field('cover_image')) ? ' container--bg' : ''; ?>"<?php if(get_sub_field('cover_image')):?> ng-style="{'background-image':'url(<?php the_sub_field('cover_image'); ?>'}"<?php endif; ?><?php $hook = get_sub_field('cover_image') ? 0.4 : 0.7; scrollmagic('"triggerHook":'.$hook.',"class":"container--active","reverse":false'); ?>>
+<div class="container container--shrink<?php echo (get_sub_field('cover_image')) ? ' container--bg' : ''; ?>"<?php if(get_sub_field('cover_image')):?> ng-style="{'background-image':'url(<?php the_sub_field('cover_image'); ?>)'}"<?php endif; ?><?php $hook = get_sub_field('cover_image') ? 0.4 : 0.7; scrollmagic('"triggerHook":'.$hook.',"class":"container--active","reverse":false'); ?>>
 	<?php if(get_sub_field('titolo')) : ?>
 	<h2 class="container__title container__title--huge"><?php the_sub_field('titolo'); ?></h2>
 	<?php endif; ?>
