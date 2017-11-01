@@ -54857,7 +54857,7 @@ module.exports = function(angularLoad, $timeout, $rootScope) {
       $rootScope.isVideo = false;
       $rootScope.open = function(video_id) {
         if (vars.main.mobile) {
-          window.open(video_id, '_blank');
+          window.open(scope.vimeoUrl, '_blank');
         } else {
           $rootScope.isVideo = video_id;
           scope.isOpen = true;

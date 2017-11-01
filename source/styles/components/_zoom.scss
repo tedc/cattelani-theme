@@ -7,8 +7,11 @@
 		&:before {
 			display: block;
 			content: '';
-			padding-top: percentage(350px/1286px);
+			padding-top: 75%;
 			width: $f;
+			@include breakpoint() {
+				padding-top: percentage(350px/1286px);
+			}
 		}
 		&:after {
 			content: '';

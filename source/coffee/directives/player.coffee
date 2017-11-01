@@ -25,7 +25,7 @@ module.exports = (angularLoad, $timeout, $rootScope)->
 			$rootScope.isVideo = off
 			$rootScope.open = (video_id)->
 				if vars.main.mobile
-					window.open video_id, '_blank'
+					window.open scope.vimeoUrl, '_blank'
 				else
 					$rootScope.isVideo = video_id
 					scope.isOpen = on
