@@ -1,11 +1,6 @@
 <div class="modal__container" id="modal-contact"  scrollbar>
 	<section class="contact contact--grid contact--grow-md-bottom">
 		<div class="contact__cell contact__cell--s6 contact__cell--content contact__cell--shrink-double">
-			<header class="contact__header contact__header--grow-md-bottom">
-				<h2 class="contact__title contact__title--small">
-					<?php _e('Contatti', 'catellani'); ?>
-				</h2>
-			</header>
 			<?php 
 	        $custom_logo_id = get_theme_mod( 'custom_logo' );
 	        $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
