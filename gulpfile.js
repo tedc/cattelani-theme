@@ -111,7 +111,6 @@ var cssTasks = function(filename) {
             return gulpif('*.scss', compass({
                 config_file : path.source + 'styles/config.rb',
                 css: path.dist + 'styles',
-                debug: true,
                 sourcemap: true,
                 sass: path.source + 'styles',
                 require : ['sass-globbing', 'ceaser-easing'],
