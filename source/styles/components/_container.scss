@@ -271,7 +271,7 @@
 			left: calc(((100vw - 100%) / 2)*-1)
 		}
 		.container--post & {
-			width: em(685px + 160px);
+			max-width: em(685px + 160px);
 			@include breakpoint(685px) {
 				padding-left: 0 !important;
 				padding-right: 0 !important;
