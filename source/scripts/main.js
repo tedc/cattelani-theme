@@ -56063,6 +56063,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       if (newUrl === oldUrl) {
         $rootScope.isAnim = '';
       }
+      console.log(trans.params());
       if ($rootScope.isPopup && hash.trim() === '') {
         $rootScope.closePopup();
       }

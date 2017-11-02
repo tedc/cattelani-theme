@@ -28,6 +28,7 @@ catellani
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
 			$rootScope.fromState = if newUrl is oldUrl then trans.$to().name.replace('app.', '') else $rootScope.fromState
 			$rootScope.isAnim = '' if newUrl is oldUrl
+			console.log trans.params()
 			#$rootScope.fromParams = trans.params()
 			#console.log newUrl is oldUrl.split('#')[0], console.log /#/.test oldUrl, oldUrl.split('#')[0]
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0]
