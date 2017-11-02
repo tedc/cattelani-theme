@@ -17,6 +17,7 @@
 		$c = 0;
 		foreach($terms as $term) :
 		$term_id = id_by_lang($term->term_id, $term->taxonomy, false, $default);
+		echo $term_id;
 	?>
 		<ks-swiper-slide class="swiper-slide" ng-style="{'background-image':'url(<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>)'}" ng-lazy-img="<?php echo get_field('cover_image', 'collezioni_'.$term_id)['url']; ?>" data-collection="<?php echo $term->term_id; ?>" data-index="<?php echo $c; ?>">
 			<?php if(is_handheld()) : ?><a ui-sref="app.collection({name : '<?php echo $term->slug; ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})"></a><?php endif; ?>
