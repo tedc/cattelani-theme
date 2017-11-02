@@ -15,7 +15,7 @@
 		</span>
 	</a>
 	<?php acf_unset_language_to_default(); ?>
-	<a class="cat__send" ui-sref="app.({'#' : 'contact'})">
+	<a class="cat__send" ui-sref=".({'#' : 'contact'})">
 		<span class="cat__label">
 		<?php
 		_e('Contattaci', 'catellani' ); ?>
