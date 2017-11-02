@@ -47,20 +47,20 @@
 			}
 			&--content {
 				padding-bottom: em($p*8);
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;	
 			}
 		}
 	}
 	&__text {
 		@include grow('md');
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
 		h2 {
 			width: $f;
 			flex: 0 0 auto;
 		}
 		p {
-			font-size: em(22px);
+			font-size: em(20px);
 			text-align: left!important;
 		}
 	}

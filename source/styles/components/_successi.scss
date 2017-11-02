@@ -112,12 +112,12 @@
 				order: 0;
 			}
 			p {
-				font-size: em(24px);
+				font-size: em(22px);
 			}
 		}
 	}
 	&__sign {
-		@include grow('lg', 'top');
+		@include grow('md', 'top');
 		span {
 			font-size: em(18px);
 		}	

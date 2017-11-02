@@ -21,7 +21,7 @@
 				endif; 
 				if(get_sub_field('firma_successi')) :
 			?>
-			<div class="successes__sign successes__sign--shrink successes__sign--grow-lg-top">
+			<div class="successes__sign successes__sign--shrink successes__sign--grow-md-top">
 				<span><?php the_sub_field('firma_successi'); ?></span>
 			</div>
 			<?php endif; ?>
