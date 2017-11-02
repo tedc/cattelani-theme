@@ -25,11 +25,11 @@
 		}
 		if(get_sub_field('link_text')) :
 	?>
-	<div class="section__link section__link--grow-md-top section__link--shrink-<?php echo ($col%2==0) ? 'right' : 'left'; ?>-only">
+	<div class="section__link<?php echo (get_sub_field('text')) ? ' section__link--grow-md-top' : ''; ?> section__link--shrink-<?php echo ($col%2==0) ? 'right' : 'left'; ?>-only">
 		<a href="<?php the_sub_field('col_link'); ?>" ui-sref="app.page({slug : '<?php echo basename(get_sub_field('col_link')); ?>'<?php echo $cat; ?>})" class="section__send"><?php the_sub_field('link_text'); ?></a>
 	</div>
 	<?php endif; if(get_sub_field('col_sign')) : ?>
-		<p class="section__sign section__sign--grow-md-top section__sign--lighter section__link--shrink-<?php echo ($col%2==0) ? 'right' : 'left'; ?>-only"><?php the_sub_field('col_sign'); ?></p>
+		<p class="section__sign<?php echo (get_sub_field('text')) ? ' section__sign--grow-md-top' : ''; ?> section__sign--lighter section__link--shrink-<?php echo ($col%2==0) ? 'right' : 'left'; ?>-only"><?php the_sub_field('col_sign'); ?></p>
 	<?php endif; endif; ?>
 <div class="section__mask"></div>
 </div>
