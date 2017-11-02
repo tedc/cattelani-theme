@@ -8,7 +8,7 @@
 			text-align: center;
 			padding-bottom: em($p*2, 30px);
 		}
-		&--lighter {
+		&--light {
 			@include breakpoint($bp, false) {
 				padding-bottom: 1em;
 			}
