@@ -15,7 +15,7 @@
 				</select>
 				<ul class="search__options" ng-class="{'search__options--visible':isSelect['collezioni']}">
 					<li class="search__option"></li>
-					<li class="search__option" ng-repeat="collection in collections" ng-bind="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':selected('collezioni', collection.name)}" ng-attr-data-select="{{collection.name}}"></li>
+					<li class="search__option" ng-repeat="collection in collections" ng-bind-html="collection.name" ng-click="$event.stopPropagation();change('collezioni', collection)" ng-class="{'search__option--selected':selected('collezioni', collection.name)}" ng-attr-data-select="{{collection.name}}"></li>
 				</ul>
 			</div>
 
@@ -30,7 +30,7 @@
 				</select>
 				<ul class="search__options" ng-class="{'search__options--visible':isSelect['posizioni']}">
 					<li class="search__option"></li>
-					<li class="search__option" ng-repeat="position in positions" ng-bind="position.name" ng-click="$event.stopPropagation();change('posizioni', position)" ng-class="{'search__option--selected':selected('posizioni', position.name)}" ng-attr-data-select="{{position.name}}"></li>
+					<li class="search__option" ng-repeat="position in positions" ng-bind-html="position.name" ng-click="$event.stopPropagation();change('posizioni', position)" ng-class="{'search__option--selected':selected('posizioni', position.name)}" ng-attr-data-select="{{position.name}}"></li>
 				</ul>
 			</div>
 
@@ -45,7 +45,7 @@
 				</select>
 				<ul class="search__options" ng-class="{'search__options--visible':isSelect['fonti']}">
 					<li class="search__option"></li>
-					<li class="search__option" ng-repeat="source in sources" ng-bind="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':selected('fonti', source.name)}" ng-attr-data-select="{{source.name}}"></li>
+					<li class="search__option" ng-repeat="source in sources" ng-bind-html="source.name" ng-click="$event.stopPropagation();change('fonti', source)" ng-class="{'search__option--selected':selected('fonti', source.name)}" ng-attr-data-select="{{source.name}}"></li>
 				</ul>
 			</div>
 			<div class="search__select" click-outside="isOrder=false" ng-click="isOrder=!isOrder">
