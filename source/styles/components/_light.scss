@@ -52,8 +52,15 @@
 	}
 	&__text {
 		@include grow('md');
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		h2 {
+			width: $f;
+			flex: 0 0 auto;
+		}
 		p {
-			font-size: em(18px);
+			font-size: em(22px);
 			text-align: left!important;
 		}
 	}

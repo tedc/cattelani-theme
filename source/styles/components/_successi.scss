@@ -111,12 +111,15 @@
 			[class*="-inverted"] & {
 				order: 0;
 			}
+			p {
+				font-size: em(24px);
+			}
 		}
 	}
 	&__sign {
 		@include grow('lg', 'top');
 		span {
-			font-size: em(14px);
+			font-size: em(18px);
 		}	
 		transition: opacity $speed $speed/2, transform $speed $speed/2;
 		.desktop & {
