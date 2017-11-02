@@ -3,9 +3,16 @@
 	&__container {
 		@include grow();
 	}
-	&__title--small-lighter {
-		text-align: center;
-		padding-bottom: em($p*2, 30px);
+	&__title{
+		&--small-lighter {
+			text-align: center;
+			padding-bottom: em($p*2, 30px);
+		}
+		&--lighter {
+			@include breakpoint($bp, false) {
+				padding-bottom: 1em;
+			}
+		}
 	}
 	&__item {
 		@include breakpoint($bp, false) {
@@ -60,6 +67,7 @@
 			display: block;
 			tr, tbody, td, th, tfoot {
 				display: block;
+				padding-right: 0;
 			}
 		}
 		td {
