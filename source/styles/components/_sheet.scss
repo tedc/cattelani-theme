@@ -56,6 +56,12 @@
 		}
 	}
 	&__table {
+		@include breakpoint($bp, false) {
+			display: block;
+			tr, tbody, td, th, tfoot {
+				display: block;
+			}
+		}
 		td {
 			vertical-align: top;
 		}
