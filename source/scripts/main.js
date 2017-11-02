@@ -56064,7 +56064,11 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
         $rootScope.isAnim = '';
       }
       if (hash.trim() === '') {
-        $rootScope.menuItem = newUrl === oldUrl && trans.params().slug ? trans.params().slug : '';
+        if (newUrl === oldUrl) {
+          $rootScope.menuItem = trans.params().slug ? trans.params().slug : '';
+        } else {
+          $rootScope.menuItem = false;
+        }
       }
       if ($rootScope.isPopup && hash.trim() === '') {
         $rootScope.closePopup();

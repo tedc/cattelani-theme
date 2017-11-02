@@ -29,7 +29,10 @@ catellani
 			$rootScope.fromState = if newUrl is oldUrl then trans.$to().name.replace('app.', '') else $rootScope.fromState
 			$rootScope.isAnim = '' if newUrl is oldUrl
 			if hash.trim() is ''
-				$rootScope.menuItem = if newUrl is oldUrl and trans.params().slug then trans.params().slug else ''
+				if newUrl is oldUrl 
+					$rootScope.menuItem = if trans.params().slug then trans.params().slug else ''
+				else
+					$rootScope.menuItem = off
 			#$rootScope.fromParams = trans.params()
 			#console.log newUrl is oldUrl.split('#')[0], console.log /#/.test oldUrl, oldUrl.split('#')[0]
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0]
