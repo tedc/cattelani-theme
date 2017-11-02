@@ -30,7 +30,6 @@ catellani
 			$rootScope.isAnim = '' if newUrl is oldUrl
 			if hash.trim() is ''
 				$rootScope.menuItem = if newUrl is oldUrl and trans.params().slug then trans.params().slug else ''
-				console.log $rootScope.menuItem
 			#$rootScope.fromParams = trans.params()
 			#console.log newUrl is oldUrl.split('#')[0], console.log /#/.test oldUrl, oldUrl.split('#')[0]
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0]
