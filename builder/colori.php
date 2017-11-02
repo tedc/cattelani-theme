@@ -10,7 +10,7 @@
 	</header>
 	<ul class="colors__list colors__list colors__list--grid colors__list--grow-bottom">
 		<?php foreach ($colors as $color) :
-			$color_id = id_by_lang($color->term_id, $color->taxonomy, false, $default);
+			$color_id = id_by_lang($color->term_id, $color->taxonomy, $default);
         ?>
 		<li class="colors__item colors__item--shrink colors__item--grow-bottom">
 			<div class="colors__color" ng-style="{<?php if(get_field('colore', 'colori_materiali_'.$color_id)):?>'background-color':'<?php the_field('colore', 'colori_materiali_'.$color_id); ?>'<?php endif; if(get_field('bg', 'colori_materiali_'.$color_id) && get_field('background', 'colori_materiali_'.$color_id)):?>,<?php endif; if(get_field('background', 'colori_materiali_'.$color_id)):?>'background-image':'url(<?php the_field('background', 'colori_materiali_'.$color_id); ?>)'<?php endif; ?>}"></div>
