@@ -1,8 +1,6 @@
 <?php
 	//global $APTO;
 	$term = wp_get_post_terms( $post->ID, 'collezioni' );
-	var_dump($term[0]->term_id);
-	
 	// $args   =   array(
  //                    '_adminsort' =>  array('yes')  
  //                    );
