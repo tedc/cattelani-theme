@@ -89,6 +89,9 @@ catellani
 		mask =
 			link : (scope, element)->
 				scope.onOff = off
+				element.find('img').one 'load', ->
+					controller.update on
+					return
 				scope.moveMask = (evt, id)->
 					body = document.body
 					docEl = document.documentElement

@@ -87,7 +87,7 @@
 		}
 		&--store {
 			@include breakpoint($bp, false) {
-				display: none;
+				display: none !important;
 			}
 		}
 	}

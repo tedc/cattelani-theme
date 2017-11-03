@@ -54589,6 +54589,9 @@ catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)
   return mask = {
     link: function(scope, element) {
       scope.onOff = false;
+      element.find('img').one('load', function() {
+        controller.update(true);
+      });
       scope.moveMask = function(evt, id) {
         var body, docEl, el, hRatio, moveX, moveY, rect, scrollLeft, scrollTop, size, startX, startY, wRatio;
         body = document.body;
