@@ -87,6 +87,8 @@
 		top: 0;
 		&-sign {
 			@extend %burger;
+			display: flex;
+			align-items: center;
 			transition: visibility $speed, opacity $speed;
 			.cat--closed & {
 				opacity: 0;
@@ -94,6 +96,8 @@
 			}
 			.cat--closed-remove & {
 				transition-delay: $speed;
+				visibility: visible;
+				opacity: 1;
 			}
 		}
 		&-label {
@@ -120,7 +124,7 @@
 		@extend %open_close;
 		@extend %open_close_center;
 		&:before, &:after {
-			background-color: $main-color;
+			background-color: $w;
 		}
 		&:before {
 			transform: rotate(45deg) translateZ(0);
@@ -147,11 +151,17 @@
 				display: none !important;
 			}
 		}
+		.cat--closed & {
+			visibility: hidden;
+			opacity: 0;
+		}
 		.cat--closed-add &, .cat-closed-remove & {
 			transition: vibility $speed, opacity $speed;
 		}
 		.cat--closed-remove & {
 			transition-delay: $speed;
+			visibility: visible;
+			opacity: 1;
 		}
 	}
 	&--active {
