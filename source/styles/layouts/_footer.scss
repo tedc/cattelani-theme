@@ -80,7 +80,7 @@
 	@include normalize_padding;
 	&--closed {
 		background-color: transparent;
-		&-remove {
+		&.cat--closed-remove {
 			transition-delay: $speed;
 			background-color: $dark-color;
 		}
@@ -119,10 +119,10 @@
 			border-bottom-left-radius: $f;
 			transform: translate3d($f, 0, 0);
 			transition: transform $speed;
-			.cat--closed &, .cat--closed-remove & {	
+			.cat--closed &, .cat--closed.cat--closed-remove & {	
 				transform: translate3d(0, 0, 0);
 			}
-			.cat--closed-add & {
+			.cat--closed.cat--closed-add & {
 				transition-delay: $speed;
 			}
 		}
@@ -162,10 +162,10 @@
 			visibility: hidden;
 			opacity: 0;
 		}
-		.cat--closed-add &, .cat-closed-remove & {
+		.cat--closed.cat--closed-add &, .cat--closed.cat-closed-remove & {
 			transition: vibility $speed, opacity $speed;
 		}
-		.cat--closed-remove & {
+		.cat--closed.cat--closed-remove & {
 			transition-delay: $speed;
 			visibility: visible;
 			opacity: 1;
