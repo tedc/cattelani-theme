@@ -20,11 +20,8 @@
 	                    
 	$sort_view_id   =   $APTO->functions->query_match_sort_id($query, $args);
 
-	if($sort_view_id    >   0)
-	    {
-	        $sort_view_post     =   get_post($sort_view_id);
-	        $sortID             =   $sort_view_post->post_parent;
-	    }
+	$sort_view_post     =   get_post($sort_view_id);
+	$sortID             =   $sort_view_post->post_parent;
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
 	
