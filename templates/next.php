@@ -1,7 +1,8 @@
 <?php
 	//global $APTO;
-	var_dump(('110'>'90'));
 	$term = wp_get_post_terms( $post->ID, 'collezioni' );
+	var_dump($term->term_id);
+	
 	// $args   =   array(
  //                    '_adminsort' =>  array('yes')  
  //                    );
