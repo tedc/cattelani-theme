@@ -87,6 +87,7 @@
 		top: 0;
 		display: flex;
 		align-items: center;
+		@include normalize_padding;
 		&-sign {
 			@extend %burger;
 			transition: visibility $speed, opacity $speed;
@@ -101,10 +102,13 @@
 			}
 		}
 		&-label {
+			@include normalize_padding;
 			position: absolute;
 			top: 0;
 			right: 0;
 			height: $f;
+			display: flex;
+			align-items: center;
 			background-color: $dark-color;
 			border-top-left-radius: $f;
 			border-bottom-left-radius: $f;
