@@ -85,6 +85,7 @@
 	}
 	&__title {
 		padding-bottom: em($p*2, 50px);
+		color: $alternate-color;
 	}
 	&__lighter {
 		position: absolute;
