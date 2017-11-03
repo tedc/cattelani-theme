@@ -85,10 +85,10 @@
 		right: 0;
 		height: $f;
 		top: 0;
+		display: flex;
+		align-items: center;
 		&-sign {
 			@extend %burger;
-			display: flex;
-			align-items: center;
 			transition: visibility $speed, opacity $speed;
 			.cat--closed & {
 				opacity: 0;
