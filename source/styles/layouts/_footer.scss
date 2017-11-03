@@ -69,6 +69,7 @@
 	bottom: 0;
 	background-color: $dark-color;
 	color: $w;
+	overflow: hidden;
 	z-index: 9993;
 	padding: {
 		top: em($p);
@@ -79,6 +80,10 @@
 	@include normalize_padding;
 	&--closed {
 		background-color: transparent;
+		&-remove {
+			transition-delay: $speed;
+			background-color: $dark-color;
+		}
 	}
 	&__close {
 		position: absolute;
@@ -112,12 +117,10 @@
 			background-color: $dark-color;
 			border-top-left-radius: $f;
 			border-bottom-left-radius: $f;
-			visibility: hidden;
-			opacity: 1;
-			transition: visibility $speed, opacity $speed;
-			.cat--closed & {
-				opacity: 1;
-				visibility: visible;
+			transform: translate3d($f, 0, 0);
+			transition: transform $speed;
+			.cat--closed &, .cat--closed-remove & {	
+				transform: translate3d(0, 0, 0);
 			}
 			.cat--closed-add & {
 				transition-delay: $speed;
