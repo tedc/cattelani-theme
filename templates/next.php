@@ -29,7 +29,7 @@
 	$post_type_object = get_post_type_object( $post_type );
 	
 	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_previous_post( true, null, 'collezioni');
-	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('sort_id' => $sort_id, 'taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
+	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('sort_id' => $sortID, 'taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
 	if($next) :
 	$next_id = id_by_lang($next->ID, get_post_type(), ICL_LANGUAGE_CODE);
 ?>
