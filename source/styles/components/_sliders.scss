@@ -79,7 +79,11 @@
 		overflow: hidden;
 		justify-content: center;
 		@include grow('md');
-
+		.collections__slider--archive & {
+			@include breakpoint($bp, false) {
+				width: $f*0.8 !important;
+			}
+		}
 	}
 	// &__mask {
 	// 	@include full;
