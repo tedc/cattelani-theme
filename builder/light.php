@@ -25,7 +25,7 @@
 	</figure>
 	<div class="light__cell light__cell--content light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 7 : 5; ?> light__cell--shrink-left-only">
 		<div class="light__text light__text--grow-md">
-			
+			<h2 class="light__title light__title--big-lighter"><?php _e('Le origini', 'catellani'); ?></h2>
 			<?php 
 			echo $testi[0];
 			//the_sub_field('light_text'); ?>
