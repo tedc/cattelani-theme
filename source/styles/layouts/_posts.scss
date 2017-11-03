@@ -37,11 +37,8 @@
 				right: em($p*3);
 			}
 		}
-		&--centered {
-			@include breakpoint() {
-				justify-content: center;
-			}
-		}
+		
+
 	}
 	.icon-arrow {
 		cursor: pointer;
@@ -73,6 +70,13 @@
 	}
 	.swiper-wrapper {
 		display: flex;
+	}
+	&--centered {
+		@include breakpoint() {
+			.swiper-wrapper {
+				justify-content: center;
+			}
+		}
 	}
 	.swiper-slide {
 		flex: 0 0 auto;
