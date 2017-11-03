@@ -20,8 +20,10 @@
 		transition: visibility $speed, opacity $speed;
 		opacity: 0;
 		z-index: 1;
+		display: none;
 		@include breakpoint() {
 			margin: 0 em($p*6);
+			display: flex;
 		}
 		&--visible {
 			opacity: 1;

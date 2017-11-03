@@ -391,7 +391,7 @@
 	&__item {
 		width: $f;
 		text-align: center;
-		@include breakpoint(700px) {
+		@include breakpoint() {
 			width: $f/2;
 			text-align: left;
 		}

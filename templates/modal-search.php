@@ -1,3 +1,7 @@
+<?php acf_set_language_to_default();
+	$phone = get_field('phone', 'options');
+	//$store_obj = get_post($store->ID);
+    acf_unset_language_to_default();  ?>
 <div class="modal__container modal__container--search" collection-search id="modal-search" lang="<?php echo ICL_LANGUAGE_CODE; ?>">
 	<div class="search">
 		<div class="search__loader" ng-hide="isSearchEnded">
@@ -67,7 +71,8 @@
 		</div>
 		<div class="search__items search__items--shrink-fw" scrollbar="search" speed="1.5">
 			<p class="search__cell search__cell--found search__cell--grow-md" ng-if="filtered() && isLoading">
-				<span><?php _e('Nessuna lampada per la ricerca effettuata', 'catellani'); ?></span>
+				<span><?php _e('Ci dispiace, ma non ci sono elementi che corrispondono alla tua ricerca perché stiamo lavorando a questa combinazione di prodotto. Chiamaci allo', 'catellani'); ?> <a href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', $phone)); ?>"><?php
+		echo $phone; ?></a> <?php _e('per scoprire di cosa si tratta.', 'catellani'); ?></a></span>
 			</p>
 			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | taxSearch:search | orderBy:order" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">
 				<span class="search__content">

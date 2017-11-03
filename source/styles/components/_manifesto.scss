@@ -317,6 +317,9 @@
 		font-weight: 300;
 		color: $dark-color;
 		font-size: em(24px);
+		@include breakpoint(1020px, false) {
+			margin-bottom: 0 !important;
+		}
 		@include breakpoint(1020px) {
 			font-weight: 200;
 			color: $w;

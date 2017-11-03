@@ -60,7 +60,7 @@
 		</div>
 	</div>
 	<div class="projects__items projects__items--grow-lg projects__items--shrink-fw projects__items--grid">
-		<span class="projects__cell projects__cell--found" ng-if="items.length <= 0 && firstLoad" ng-class="{'projects__cell--found-visible':firstLoad}"><span><?php _e('Nessun risultato trovato'); ?></span></span>
+		<span class="projects__cell projects__cell--found" ng-if="items.length <= 0 && firstLoad" ng-class="{'projects__cell--found-visible':firstLoad}"><span><?php _e('Ci dispiace, ma dai filtri che hai selezionato non risulta nessuna combinazione presente. Puoi scegliere se resettare i filtri ed esplorare le nostre realizzazioni oppure contattarci per creare assieme un nuovo fantastico progetto.', 'catellani'); ?></span></span>
 		<a class="projects__cell projects__cell--s6 projects__cell--grow" ng-repeat="item in items | filter:search:strict" ng-href="{{item.link}}" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" clicked-element>
 			<span class="projects__content" ng-style="{'background-image' : 'url({{image(item).url}})'}" ng-lazy-img="{{image(item).url}}">
 			<img ng-src="{{image(item).url}}" ng-attr-alt="{{image(item).alt}}" />

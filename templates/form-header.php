@@ -1,4 +1,5 @@
 <?php
+    global $post;
     if($_POST) :
     	$email = $_POST['email'];
     	$name = $_POST['sender'];
@@ -21,7 +22,8 @@
     $email_row = (!empty($_POST['email'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#a7a9ac;font-style:italic">Email</em><br /><a href="mailto:'.$email.'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$email.'</a></td></tr>' : "";
     $tel_row = (!empty($_POST['tel'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Telefono','catellani').'</em><br />'.$tel.'</td></tr>' : "";
     $message_row = (!empty($_POST['message'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Messaggio','catellani').'</em><br />'.stripslashes($message).'</td></tr>' : "";
-    $body = $name_row.$email_row.$tel_row.$message_row;
+    $last_row = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:14px;"><em style="color:#7d7d7d;font-style:italic">'.__('Messaggio','catellani').'</em><br />'.$sender.__(' stava visitando ', 'catellani').'<a href="'.get_permalink($post->ID).'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.get_the_title($post->ID).'</a></td></tr>';
+    $body = $name_row.$email_row.$tel_row.$message_row.$last_row;
     $resp = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;"><p style="line-height:1.35">'.$tnx.'</p></td></tr>';
     function template($body) {
         $html = '<html><head><meta charset="utf-8" /></head><body style="background-color:#f6f6f6"><div style="background-color:#fff;font-family:\'Helvetica Neue\', Helvetica, Arial, san-serif;font-size:18px;color:#808285;max-width:500px;margin:0 auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr><td style="padding: 20px;text-align:center; background-color:#fff"><a href="'.get_bloginfo('url').'" style="text-decoration:none"><img src="'.get_stylesheet_directory_uri().'/assets/images/logo.gif" style="border:0;width:100%;max-width:200px;height:auto"/></a></td></tr></thead><tfoot><tr><td style="padding:20px; text-align:center;color:#7d7d7d;font-size:11px">&copy;'.get_bloginfo('name').', '.get_field('address', 'options').'<br /><a href="'.get_bloginfo('url').'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.str_replace('http://', '', get_bloginfo('url')).'</a></td></tr></tfoot><tbody>'.$body.'</tbody></table></div></body></html>';

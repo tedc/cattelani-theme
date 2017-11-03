@@ -111,8 +111,12 @@
 			[class*="-inverted"] & {
 				order: 0;
 			}
+			text-align: center;
 			p {
 				font-size: em(22px);
+			}
+			@include breakpoint() {
+				text-align: left;
 			}
 		}
 	}

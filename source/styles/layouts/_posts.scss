@@ -37,6 +37,11 @@
 				right: em($p*3);
 			}
 		}
+		&--centered {
+			@include breakpoint() {
+				justify-content: center;
+			}
+		}
 	}
 	.icon-arrow {
 		cursor: pointer;

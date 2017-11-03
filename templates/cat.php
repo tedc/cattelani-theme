@@ -21,7 +21,7 @@
 		_e('Contattaci', 'catellani' ); ?>
 		</span>
 	</a>
-	<a class="cat__send" href="<?php echo get_permalink($store); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
+	<a class="cat__send cat__send--store" href="<?php echo get_permalink($store); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($store)); ?>'})">
 		<?php
 		echo get_the_title($store); ?>
 	</a>

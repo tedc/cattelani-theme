@@ -85,6 +85,11 @@
 		&:hover {
 			color: $w !important;
 		}
+		&--store {
+			@include breakpoint($bp, false) {
+				display: none;
+			}
+		}
 	}
 	&--active {
 		transform: translate3d(0,0,0);

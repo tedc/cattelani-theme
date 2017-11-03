@@ -1,23 +1,24 @@
 <?php 
 if(get_field('related')) : 
+	$rels = get_posts(
+		array(
+			'post_type' => 'lampade',
+			'post__in' => get_field('related'),
+			'posts_per_page' => count(get_field('realted')),
+			'orderby' => 'post__in',
+			'suppress_filters' => 0
+		)
+	);
+	$count = $rels;
+	
 ?>
 <div class="related related--shrink-fw related--grow-md related--gray" id="related_<?php the_ID(); ?>" ng-swiper>
 	<header class="related__header related__header--grow-md">
 		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php _e('Le lampade utilizzate', 'catellani'); ?></h4>
 	</header>
 	<div class="related__items related__items--grow-md-bottom related__items--grow-top">
-		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
+		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}"<?php echo ($count<=2) ? ' class="swiper-container--centered"' : ''; ?>>
 		<?php
-			$rels = get_posts(
-				array(
-					'post_type' => 'lampade',
-					'post__in' => get_field('related'),
-					'posts_per_page' => count(get_field('realted')),
-					'orderby' => 'post__in',
-					'suppress_filters' => 0
-				)
-			);
-			$count = $rels;
 			foreach($rels as $rel) :
 			if($count == 1) {
 				$size = 'swiper-slide--s12';
