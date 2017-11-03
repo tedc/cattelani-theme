@@ -74,9 +74,66 @@
 		top: em($p);
 		bottom: em($p);
 	}
-	transition: $speed transform;
+	transition: $speed transform, background-color $speed;
 	transform: translate3d(0, $f, 0);
 	@include normalize_padding;
+	&--closed {
+		background-color: transparent;
+	}
+	&__close {
+		position: absolute;
+		right: 0;
+		height: $f;
+		top: 0;
+		&-sign {
+			@extend %burger;
+			transition: visibility $speed, opacity $speed;
+			.cat--closed & {
+				opacity: 0;
+				visibility: hidden;
+			}
+			.cat--closed-remove & {
+				transition-delay: $speed;
+			}
+		}
+		&-label {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: $f;
+			background-color: $dark-color;
+			border-top-left-radius: $f;
+			border-bottom-left-radius: $f;
+			visibility: hidden;
+			opacity: 1;
+			transition: visibility $speed, opacity $speed;
+			.cat--closed & {
+				opacity: 1;
+				visibility: visible;
+			}
+			.cat--closed-add & {
+				transition-delay: $speed;
+			}
+		}
+	}
+	&__line {
+		@extend %open_close;
+		@extend %open_close_center;
+		&:before, &:after {
+			background-color: $main-color;
+		}
+		&:before {
+			transform: rotate(45deg) translateZ(0);
+		}
+		&:after {
+			transform: rotate(-45deg) translateZ(0);
+		}
+		.cat__close:hover & {
+			&:after, &:before {
+				transform: rotate(0deg) translateZ(0) scaleX(0.75);
+			}
+		}
+	}
 	&__send {
 		color: $lighter-color !important;
 		&:before, &:after {
@@ -89,6 +146,12 @@
 			@include breakpoint($bp, false) {
 				display: none !important;
 			}
+		}
+		.cat--closed-add &, .cat-closed-remove & {
+			transition: vibility $speed, opacity $speed;
+		}
+		.cat--closed-remove & {
+			transition-delay: $speed;
 		}
 	}
 	&--active {

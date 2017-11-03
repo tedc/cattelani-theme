@@ -6,7 +6,7 @@
     acf_unset_language_to_default(); 
     $store = apply_filters('wpml_object_id', $store, 'page', ICL_LANGUAGE_CODE );
 ?>
-<aside class="cat cat--grow-md-bottom" ng-footer>
+<aside class="cat cat--grow-md-bottom" ng-footer ng-class="{'cat--closed': isCatClosed}">
 	<?php acf_set_language_to_default(); ?>
 	<a class="cat__send" href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', get_field('phone', 'options'))); ?>">
 		<?php
@@ -21,4 +21,8 @@
 		<?php
 		echo get_the_title($store); ?>
 	</a>
+	<span class="cat__close" ng-click="isCatClosed=!isCatClosed">
+		<span class="cat__close-label"><?php _e('Contatti', 'catellani'); ?></span>
+		<span class="cat__close-sign"><span class="modal__line"></span></span>
+	</span>
 </aside>
