@@ -1,7 +1,8 @@
 <?php
+	global $wp_query;
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
-	var_dump(get_queried_object());
+	var_dump($wp_query);
 	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_previous_post( true, null, 'collezioni');
 	$term = wp_get_post_terms( $post->ID, 'collezioni' );
 	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
