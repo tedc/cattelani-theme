@@ -1,9 +1,9 @@
 <?php
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
-	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_next_post( true, null, 'collezioni');
-	$term = wp_get_post_terms( $post->ID, 'collezioni' );
-	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
+	$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_next_post( true, null, 'collezioni');
+	//$term = wp_get_post_terms( $post->ID, 'collezioni' );
+	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
 	if($next) :
 	$next_id = id_by_lang($next->ID, get_post_type(), ICL_LANGUAGE_CODE);
 ?>

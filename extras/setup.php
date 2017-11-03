@@ -578,90 +578,90 @@
 	}
 
 
-	add_filter( 'get_next_post_where', function( $where, $in_same_term, $excluded_terms, $taxonomy, $post ) {
-	    global $wpdb;
+	// add_filter( 'get_next_post_where', function( $where, $in_same_term, $excluded_terms, $taxonomy, $post ) {
+	//     global $wpdb;
 
-	    // Edit this custom post type to your needs
-	    $cpt = 'lampade';
+	//     // Edit this custom post type to your needs
+	//     $cpt = 'lampade';
 
-	    // Current post type
-	    $post_type = get_post_type( $post );
+	//     // Current post type
+	//     $post_type = get_post_type( $post );
 
-	    // Nothing to do    
-	    if( $cpt !== $post_type )
-	        return $where;
+	//     // Nothing to do    
+	//     if( $cpt !== $post_type )
+	//         return $where;
 
-	    $join = '';
-		$where = '';
+	//     $join = '';
+	// 	$where = '';
 		
-		if ( $in_same_term || ! empty( $excluded_terms ) ) {
-			if ( ! empty( $excluded_terms ) && ! is_array( $excluded_terms ) ) {
-				// back-compat, $excluded_terms used to be $excluded_terms with IDs separated by " and "
-				if ( false !== strpos( $excluded_terms, ' and ' ) ) {
-					_deprecated_argument( __FUNCTION__, '3.3.0', sprintf( __( 'Use commas instead of %s to separate excluded terms.' ), "'and'" ) );
-					$excluded_terms = explode( ' and ', $excluded_terms );
-				} else {
-					$excluded_terms = explode( ',', $excluded_terms );
-				}
+	// 	if ( $in_same_term || ! empty( $excluded_terms ) ) {
+	// 		if ( ! empty( $excluded_terms ) && ! is_array( $excluded_terms ) ) {
+	// 			// back-compat, $excluded_terms used to be $excluded_terms with IDs separated by " and "
+	// 			if ( false !== strpos( $excluded_terms, ' and ' ) ) {
+	// 				_deprecated_argument( __FUNCTION__, '3.3.0', sprintf( __( 'Use commas instead of %s to separate excluded terms.' ), "'and'" ) );
+	// 				$excluded_terms = explode( ' and ', $excluded_terms );
+	// 			} else {
+	// 				$excluded_terms = explode( ',', $excluded_terms );
+	// 			}
 
-				$excluded_terms = array_map( 'intval', $excluded_terms );
-			}
+	// 			$excluded_terms = array_map( 'intval', $excluded_terms );
+	// 		}
 
-			if ( $in_same_term ) {
-				$join .= " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
-				$where .= $wpdb->prepare( "AND tt.taxonomy = %s", $taxonomy );
+	// 		if ( $in_same_term ) {
+	// 			$join .= " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id INNER JOIN $wpdb->term_taxonomy tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+	// 			$where .= $wpdb->prepare( "AND tt.taxonomy = %s", $taxonomy );
 
-				if ( ! is_object_in_taxonomy( $post->post_type, $taxonomy ) )
-					return '';
-				$term_array = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
+	// 			if ( ! is_object_in_taxonomy( $post->post_type, $taxonomy ) )
+	// 				return '';
+	// 			$term_array = wp_get_object_terms( $post->ID, $taxonomy, array( 'fields' => 'ids' ) );
 
-				// Remove any exclusions from the term array to include.
-				$term_array = array_diff( $term_array, (array) $excluded_terms );
-				$term_array = array_map( 'intval', $term_array );
+	// 			// Remove any exclusions from the term array to include.
+	// 			$term_array = array_diff( $term_array, (array) $excluded_terms );
+	// 			$term_array = array_map( 'intval', $term_array );
 
-				if ( ! $term_array || is_wp_error( $term_array ) )
-					return '';
+	// 			if ( ! $term_array || is_wp_error( $term_array ) )
+	// 				return '';
 
-				$where .= " AND tt.term_id IN (" . implode( ',', $term_array ) . ")";
-			}
+	// 			$where .= " AND tt.term_id IN (" . implode( ',', $term_array ) . ")";
+	// 		}
 
-			/**
-			 * Filters the IDs of terms excluded from adjacent post queries.
-			 *
-			 * The dynamic portion of the hook name, `$adjacent`, refers to the type
-			 * of adjacency, 'next' or 'previous'.
-			 *
-			 * @since 4.4.0
-			 *
-			 * @param string $excluded_terms Array of excluded term IDs.
-			 */
-			//$excluded_terms = add_filter( "get_next_post_excluded_terms", function($excluded_terms){ return $excluded_terms;} );
+	// 		/**
+	// 		 * Filters the IDs of terms excluded from adjacent post queries.
+	// 		 *
+	// 		 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+	// 		 * of adjacency, 'next' or 'previous'.
+	// 		 *
+	// 		 * @since 4.4.0
+	// 		 *
+	// 		 * @param string $excluded_terms Array of excluded term IDs.
+	// 		 */
+	// 		//$excluded_terms = add_filter( "get_next_post_excluded_terms", function($excluded_terms){ return $excluded_terms;} );
 
-			if ( ! empty( $excluded_terms ) ) {
-				$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
-			}
-		}
+	// 		if ( ! empty( $excluded_terms ) ) {
+	// 			$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
+	// 		}
+	// 	}
 
-	    // // Next CPT order by last word in title
-	    // add_filter( 'get_next_post_sort', function( $orderby ) 
-	    // {
-	    //     return "ORDER BY p.post_title ASC LIMIT 1";
-	    // } );
+	//     // // Next CPT order by last word in title
+	//     // add_filter( 'get_next_post_sort', function( $orderby ) 
+	//     // {
+	//     //     return "ORDER BY p.post_title ASC LIMIT 1";
+	//     // } );
 
-	    // Next CPT order by last word in title
-	    add_filter( 'get_next_post_sort', function( $orderby ) 
-	    {
-	        return "ORDER BY p.menu_order ASC LIMIT 1";
-	    } );
+	//     // Next CPT order by last word in title
+	//     add_filter( 'get_next_post_sort', function( $orderby ) 
+	//     {
+	//         return "ORDER BY p.menu_order ASC LIMIT 1";
+	//     } );
 
-	    //$where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
+	//     //$where .= $wpdb->prepare( "WHERE p.post_title > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->post_title, $post->post_type );
 
-	    $where .= $wpdb->prepare( "WHERE p.menu_order > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->menu_order, $post->post_type );
+	//     $where .= $wpdb->prepare( "WHERE p.menu_order > %s AND p.post_type = %s AND ( p.post_status = 'publish' OR p.post_status = 'private' )", $post->menu_order, $post->post_type );
 
-	    // Modify Next WHERE part
-	    return $where;    
+	//     // Modify Next WHERE part
+	//     return $where;    
 
-	}, 10, 5 );
+	// }, 10, 5 );
 
 	function my_next_post_sort() {
 	    return "ORDER BY p.post_title ASC LIMIT 1";
@@ -681,3 +681,16 @@
 		return str_replace( '#asyncload', '', $url )."' async='async"; 
 	    }
 	add_filter( 'clean_url', 'ikreativ_async_scripts', 11, 1 );
+
+	add_filter('apto/navigation_sort_apply', 'theme_apto_navigation_sort_apply');
+	function theme_apto_navigation_sort_apply($current)
+	    {
+	        global $post;
+	        
+	        if($post->post_type == 'lampade')
+	            $current    =   TRUE;
+	            else
+	            $current    =   FALSE;
+	        
+	        return $current;   
+	    }
