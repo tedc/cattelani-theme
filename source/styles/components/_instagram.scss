@@ -19,19 +19,21 @@
 		&:hover {
 			opacity: .65;
 		}
-		&:nth-child(1) {
-			padding-right: em(15px);
-		}
-		&:nth-child(2) {
-			padding-right: em(10px);
-			padding-left: em(5px);
-		}
-		&:nth-child(3) {
-			padding-left: em(10px);
-			padding-right: em(5px);
-		}
-		&:nth-child(4) {
-			padding-left: em(15px);
+		@include breakpoint() {
+			&:nth-child(1) {
+				padding-right: em(15px);
+			}
+			&:nth-child(2) {
+				padding-right: em(10px);
+				padding-left: em(5px);
+			}
+			&:nth-child(3) {
+				padding-left: em(10px);
+				padding-right: em(5px);
+			}
+			&:nth-child(4) {
+				padding-left: em(15px);
+			}
 		}
 	}
 	&__link {

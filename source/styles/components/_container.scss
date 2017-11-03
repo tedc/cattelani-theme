@@ -264,10 +264,10 @@
 	}
 	&__gallery {
 		position: relative;
-		width: 100vw;
 		@include grow('md', 'bottom');
 		@include grow('lg', 'top');
 		@include breakpoint(685px) {
+			width: 100vw;
 			left: calc(((100vw - 100%) / 2)*-1)
 		}
 		.container--post & {
@@ -286,32 +286,40 @@
 		flex-wrap: wrap;
 	}
 	&__updated {
-		position: sticky;
 		display: block;
-		top: em(100px);
-		.admin-bar.logged-in & {
-			top: em(132px);
+		text-align: center;
+		padding-bottom: em($p);
+		@include breakpoint() {
+			position: sticky;
+			text-align: left;
+			top: em(100px);
+			.admin-bar.logged-in & {
+				top: em(132px);
+			}
 		}
 	}
 	&__share {
 		text-align: center;
 		position: sticky;
 		top: em(100px);
+		text-align: center;
+		width: 100%;
 		.admin-bar.logged-in & {
 			top: em(132px);
 		}
 		a {
 			color: $alternate-color;
-			margin-bottom: $p;
 			font-size: 24px;
 			&:hover {
 				color: $dark-color;
 			}
 			@include breakpoint() {
 				display: block;
+				margin-bottom: $p;
 			}
 		}
 		@include breakpoint() {
+			width: auto;
 			left: auto !important;
             right: em($p*2) !important;
         }

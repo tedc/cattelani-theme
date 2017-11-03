@@ -55997,7 +55997,8 @@ exports.prev = function($rootScope, $timeout, $q) {
   });
   scroll = TweenMax.to(window, .75, {
     scrollTo: {
-      y: "#next-divider"
+      y: "#next-divider",
+      autoKill: false
     }
   });
   tl.set('body', {

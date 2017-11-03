@@ -194,6 +194,7 @@ exports.prev = ($rootScope, $timeout, $q)->
 	scroll = TweenMax.to window, .75,
 				scrollTo :
 					y : "#next-divider"
+					autoKill : off
 	tl
 		.set 'body',
 	 		className : '-=white'

@@ -83,6 +83,9 @@
 			transition-delay: $speed;
 		}
 	}
+	&__title {
+		padding-bottom: em($p*2, 50px);
+	}
 	&__lighter {
 		position: absolute;
 		bottom: 0;

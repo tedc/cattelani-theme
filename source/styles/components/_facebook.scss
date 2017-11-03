@@ -9,6 +9,7 @@
 	&__header {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		> * {
 			flex: 0 0 auto;
 		}
@@ -20,6 +21,9 @@
 		@include breakpoint(640px) {
 			padding: em($p*2) em($p) em($p);
 		}
+	}
+	&__title--small {
+		padding: em($p/2, 34px) 0;
 	}
 	&__cell {
 		@include grow('small');
