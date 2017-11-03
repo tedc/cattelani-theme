@@ -22,6 +22,7 @@
 
 	$sort_view_post     =   get_post($sort_view_id);
 	$sortID             =   $sort_view_post->post_parent;
+	var_dump($sortID);
 	$post_type = get_post_type();
 	$post_type_object = get_post_type_object( $post_type );
 	
