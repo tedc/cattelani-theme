@@ -61,6 +61,11 @@
 				transform: scaleX(0) translateZ(0);
 			}
 		}
+		.icon-play {
+			.handheld & {
+				@extend %play;
+			}
+		}
 	}
 	&__item {
 		position: absolute;

@@ -54363,7 +54363,7 @@ module.exports = function($window, $document) {
       new ScrollMagic.Scene({
         triggerElement: 'body',
         triggerHook: "onLeave",
-        offset: $document.find('body')[0].offsetHeight / 2
+        offset: $document.find('body')[0].offsetHeight / 2.5
       }).setClassToggle(element[0], 'cat--active').addTo(controller);
     }
   };
@@ -55762,6 +55762,9 @@ module.exports = function($rootScope) {
   return video = {
     link: function(scope, element) {
       var enterVideoScene, tween;
+      scope.play = function() {
+        element[0].play();
+      };
       if (vars.main.mobile) {
         return;
       }

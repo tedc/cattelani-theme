@@ -1,6 +1,9 @@
 module.exports = ($rootScope)->
     video =
         link : (scope, element)->
+            scope.play = ->
+                element[0].play()
+                return
             return if vars.main.mobile
             tween = TweenMax.to { index : 0}, 5,
                         index : 10

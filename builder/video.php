@@ -12,6 +12,9 @@
 			<source src="<?php echo $file; ?>.mp4" type="video/mp4"/>
 			<source src="<?php echo $file; ?>.webm" type="video/webm"/>
 		</video>
+		<?php if(is_handheld()) { ?>
+		<a class="icon-play" ng-click="play()"></a>
+		<?php } ?>
 	</div>
 	<?php if(get_sub_field('video_text')) : ?>
 	<footer class="video__footer video__footer--grow-top">

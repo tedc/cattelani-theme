@@ -52,6 +52,36 @@
 	transform: translate3d(0, 50px, 0);
 }
 
+%play {
+	position: absolute;
+	top: 50%;
+	border-radius: $f;
+	left: 50%;
+	font-size: 32px;
+	margin: em($p*-2, 32px) 0 0 em($p*-2, 32px);
+	width: em($p*4, 32px);
+	height: em($p*4, 32px);
+	line-height: em($p*4, 32px);
+	text-align: center;
+	background-color: transparentize($w, .6);
+	transition: background-color $speed, visibility $speed, opacity $speed;
+	visibility: hidden;
+	opacity: 0;
+	color: $w;
+	&:before {
+		display: inline-block;
+		transform: translate3d(10%, 0, 0);
+	}
+	&:hover {
+		color: $w;
+		background-color: transparentize($w, .4);
+	}
+	&.ready {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
 .banner {
 	transition: visibility $speed, opacity $speed;
 	&.video-opened {
@@ -563,33 +593,7 @@
 		padding-top: em(120px);
 	}
 	.icon-play {
-		position: absolute;
-		top: 50%;
-		border-radius: $f;
-		left: 50%;
-		font-size: 32px;
-		margin: em($p*-2, 32px) 0 0 em($p*-2, 32px);
-		width: em($p*4, 32px);
-		height: em($p*4, 32px);
-		line-height: em($p*4, 32px);
-		text-align: center;
-		background-color: transparentize($w, .6);
-		transition: background-color $speed, visibility $speed, opacity $speed;
-		visibility: hidden;
-		opacity: 0;
-		color: $w;
-		&:before {
-			display: inline-block;
-			transform: translate3d(10%, 0, 0);
-		}
-		&:hover {
-			color: $w;
-			background-color: transparentize($w, .4);
-		}
-		&.ready {
-			visibility: visible;
-			opacity: 1;
-		}
+		@extend %play;
 	}
 }
 
