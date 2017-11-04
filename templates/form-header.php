@@ -11,7 +11,7 @@
         $pTo = get_field('email_address', 'options');
         acf_unset_language_to_default(); 
         $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
-        $rSubject = __('Risposta automatica da') . ' '.html_entity_decode(get_bloginfo('name'));
+        $rSubject = __('Risposta automatica da') . ' '. utf8_encode(htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8"));
         $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
         $errorMessage = __('Verifica di aver compilato bene i campi o scrivi a','catellani');
         $sent = __('Messaggio inviato correttamente','catellani');

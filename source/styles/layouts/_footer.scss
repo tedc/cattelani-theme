@@ -67,7 +67,7 @@
 	flex-wrap: wrap;
 	width: $f;
 	bottom: 0;
-	background-color: $dark-color;
+	background-color: transparentize($dark-color, 0);
 	color: $w;
 	overflow: hidden;
 	z-index: 9993;
@@ -79,10 +79,10 @@
 	transform: translate3d(0, $f, 0);
 	@include normalize_padding;
 	&--closed {
-		background-color: transparent;
+		background-color: transparentize($dark-color, 1);
 		&.cat--closed-remove {
 			transition-delay: $speed;
-			background-color: $dark-color;
+			background-color: transparentize($dark-color, 0);
 		}
 	}
 	&__close {
