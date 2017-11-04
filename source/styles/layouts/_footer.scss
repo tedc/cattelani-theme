@@ -81,6 +81,7 @@
 	&--closed {
 		background-color: transparentize($dark-color, 1);
 		&.cat--closed-remove {
+			transition: $speed transform, background-color $speed;
 			transition-delay: $speed;
 			background-color: transparentize($dark-color, 0);
 		}
@@ -127,13 +128,13 @@
 			}
 			.icon-arrow {
 				transform: translate3d(0, 0, 0) scaleX(-1);
-				margin-right: $p/4;
+				margin-right: $p/2;
 				font-size: 6px;
-				transition: margin-right $speed;
+				transition: transform $speed;
 			}
 			&:hover {
 				.icon-arrow {
-					margin-right: $p/2;
+					transform: translate3d($p/2, 0, 0) scaleX(-1);
 				}
 			}
 		}
@@ -173,7 +174,7 @@
 			visibility: hidden;
 			opacity: 0;
 		}
-		.cat--closed.cat--closed-add &, .cat--closed.cat-closed-remove & {
+		.cat--closed.cat--closed-add &, .cat--closed.cat--closed-remove & {
 			transition: vibility $speed, opacity $speed;
 		}
 		.cat--closed.cat--closed-remove & {
