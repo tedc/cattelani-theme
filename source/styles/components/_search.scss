@@ -47,7 +47,7 @@
 		position: relative;
 		display: block;
 		overflow: hidden;
-		@include breakpoint(640px) {
+		@include breakpoint(280px*2) {
 			width: $f/2;
 		}
 		@include breakpoint(700px) {
@@ -110,7 +110,10 @@
 		margin: 0 auto;
 		max-width: 280px;
 		line-height: 0;
-		padding-top: percentage(560px/440px);
+		padding-top: percentage(356px/280px);
+		@include breakpoint(280px*2) {
+			padding-top: percentage(560px/440px);
+		}
 		img {
 			position: absolute;
 			top: 0;
