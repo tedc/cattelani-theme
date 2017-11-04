@@ -55046,6 +55046,7 @@ module.exports = function() {
           }).then(function(results) {
             $timeout(function() {
               $scope.items = results.data;
+              console.log($scope.items);
               $rootScope.$broadcast('scrollBarUpdate');
               $scope.isSearchEnded = true;
             });
@@ -56088,13 +56089,6 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       $rootScope.$broadcast('sceneDestroy');
       $rootScope.$broadcast('updateScenes');
       $rootScope.$broadcast('destroySwiper');
-    });
-    angular.element(window).on('hashchange', function() {
-      var hash;
-      hash = $location.hash();
-      if ($rootScope.isPopup && hash.trim() === '') {
-        $rootScope.closePopup();
-      }
     });
   }
 ]);
