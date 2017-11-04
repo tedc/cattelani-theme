@@ -127,13 +127,13 @@
 			}
 			.icon-arrow {
 				transform: translate3d(0, 0, 0) scaleX(-1);
-				margin-left: $p/4;
-				font-size: $p/2;
-				transition: margin-left $speed;
+				margin-right: $p/4;
+				font-size: 6px;
+				transition: margin-right $speed;
 			}
 			&:hover {
 				.icon-arrow {
-					margin-left: $p/2;
+					margin-right: $p/2;
 				}
 			}
 		}
