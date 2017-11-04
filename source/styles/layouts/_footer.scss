@@ -129,7 +129,7 @@
 			}
 			&:hover {
 				.icon-arrow {
-					transform: translate3d($p/2, 0, 0) scaleX(-1);
+					transform: translate3d(($p/4)*-1, 0, 0) scaleX(-1);
 				}
 			}
 		}
@@ -165,12 +165,10 @@
 				display: none !important;
 			}
 		}
+		transition: vibility $speed, opacity $speed;
 		.cat--closed & {
 			visibility: hidden;
 			opacity: 0;
-		}
-		.cat--closed.cat--closed-add &, .cat--closed.cat--closed-remove & {
-			transition: vibility $speed, opacity $speed;
 		}
 	}
 	&--active {
