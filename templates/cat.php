@@ -22,7 +22,7 @@
 		echo get_the_title($store); ?>
 	</a>
 	<span class="cat__close" ng-click="isCatClosed=!isCatClosed">
-		<span class="cat__close-label"><?php _e('Contatti', 'catellani'); ?></span>
+		<span class="cat__close-label"><i class="icon-arrow"></i><?php _e('Contatti', 'catellani'); ?></span>
 		<span class="cat__close-sign"><span class="cat__line"></span></span>
 	</span>
 </aside>

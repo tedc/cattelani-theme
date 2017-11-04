@@ -125,6 +125,17 @@
 			.cat--closed.cat--closed-add & {
 				transition-delay: $speed;
 			}
+			.icon-arrow {
+				transform: translate3d(0, 0, 0) scaleX(-1);
+				margin-left: $p/4;
+				font-size: $p/2;
+				transition: margin-left $speed;
+			}
+			&:hover {
+				.icon-arrow {
+					margin-left: $p/2;
+				}
+			}
 		}
 	}
 	&__line {
