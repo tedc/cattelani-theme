@@ -110,7 +110,7 @@
 		margin: 0 auto;
 		max-width: 280px;
 		line-height: 0;
-		padding-top: percentage(356px/280px);
+		padding-top: 356px;
 		@include breakpoint(280px*2) {
 			padding-top: percentage(560px/440px);
 		}
