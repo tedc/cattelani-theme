@@ -50,10 +50,10 @@ catellani
 			$rootScope.$broadcast 'destroySwiper'
 			#fromElementAnim $rootScope.fromElement
 			return
-		angular.element(window).on 'hashchange', ->
-			hash = $location.hash()
-			$rootScope.closePopup() if $rootScope.isPopup and hash.trim() is ''
-			return
+		# angular.element(window).on 'hashchange', ->
+		# 	hash = $location.hash()
+		# 	$rootScope.closePopup() if $rootScope.isPopup and hash.trim() is ''
+		# 	return
 		return
 		# closeBar = ->
 		# 	cfpLoadingBar.complete()
