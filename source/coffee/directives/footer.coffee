@@ -11,7 +11,7 @@ module.exports = ($window, $document)->
 			new ScrollMagic.Scene
 					triggerElement: 'body'
 					triggerHook : "onLeave"
-					offset: $document.find('body')[0].offsetHeight / 2
+					offset: $document.find('body')[0].offsetHeight / 2.5
 			.setClassToggle element[0], 'cat--active'
 			.addTo controller
 			return

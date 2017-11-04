@@ -459,52 +459,48 @@
 }
 
 .breadcrumbs {
-	position: fixed;
 	display: none;
 	//position: absolute;
-	font-weight: 200;
-	top: 0;
-	left: 50%;
-	transform: translate3d(-50%, 0%, 0);
-	line-height: 1;
-	z-index: 9993;
-	opacity: 1;
-	transition: transform $speed, opacity $speed, visibility $speed;
-	color: $light-color;
-	&--hidden {
-		visibility: hidden;
-		opacity: 0;
-	}
-	.is-anim & {
-		transform: translate3d(-50%, $p*-2, 0);
-		opacity: 0;
-	}
 	@extend .banner__tools--grow-md-top;
-	.admin-bar.logged-in & {
-		top: 32px;
-	}
-	.menu-opened &, .opened & {
-		visibility: hidden;
-		opacity: 0;
-	}
-	.home & {
-		display: none;
-	}
-	.white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-		color: $main-color;
-	}
-	a {
-		color: $w !important;
-		transition: $speed opacity;
-		&:hover {
-			opacity: .5;
+	@include breakpoint() {
+		position: fixed;
+		display: block;
+		font-weight: 200;
+		top: 0;
+		left: 50%;
+		transform: translate3d(-50%, 0%, 0);
+		line-height: 1;
+		z-index: 9993;
+		opacity: 1;
+		transition: transform $speed, opacity $speed, visibility $speed;
+		color: $light-color;
+		.is-anim & {
+			transform: translate3d(-50%, $p*-2, 0);
+			opacity: 0;
+		}
+		.admin-bar.logged-in & {
+			top: 32px;
+		}
+		.menu-opened &, .opened & {
+			visibility: hidden;
+			opacity: 0;
+		}
+		.home & {
+			display: none;
 		}
 		.white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-			color: $dark-color !important;
+			color: $main-color;
 		}
-	}
-	@include breakpoint() {
-		display: inherit;
+		a {
+			color: $w !important;
+			transition: $speed opacity;
+			&:hover {
+				opacity: .5;
+			}
+			.white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+				color: $dark-color !important;
+			}
+		}
 	}
 }
 
