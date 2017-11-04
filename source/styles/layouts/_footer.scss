@@ -80,11 +80,6 @@
 	@include normalize_padding;
 	&--closed {
 		background-color: transparentize($dark-color, 1);
-		&.cat--closed-remove {
-			transition: $speed transform, background-color $speed;
-			transition-delay: $speed;
-			background-color: transparentize($dark-color, 0);
-		}
 	}
 	&__close {
 		position: absolute;
@@ -176,11 +171,6 @@
 		}
 		.cat--closed.cat--closed-add &, .cat--closed.cat--closed-remove & {
 			transition: vibility $speed, opacity $speed;
-		}
-		.cat--closed.cat--closed-remove & {
-			transition-delay: $speed;
-			visibility: visible;
-			opacity: 1;
 		}
 	}
 	&--active {
