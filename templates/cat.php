@@ -23,6 +23,6 @@
 	</a>
 	<span class="cat__close" ng-click="isCatClosed=!isCatClosed">
 		<span class="cat__close-label"><?php _e('Contatti', 'catellani'); ?></span>
-		<span class="cat__close-sign"><span class="modal__line"></span></span>
+		<span class="cat__close-sign"><span class="cat__line"></span></span>
 	</span>
 </aside>

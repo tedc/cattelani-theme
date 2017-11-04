@@ -3,26 +3,17 @@
 	background-color: $light-color;
 	transition: opacity $speed, transform $speed, background-color $speed;
 	display: inline-block;
-	.white &, body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-		background-color: $main-color;
-	}
 }
 
 %open_close_center {
 	margin: em(5px) 0;
 	position: relative;
 	background-color: transparent;
-	.white &, body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-		background-color: transparent;
-	}
 	&:before, &:after {
 		@include full;
 		content: '';
 		background-color: $light-color;
 		transition: transform $speed, background-color $speed;
-		.menu-opened &, .white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
-			background-color: $main-color;
-		}
 	}
 }
 
@@ -257,7 +248,10 @@
 		}
 	}
 	&__line {
-		@extend %open_close;
+		@extend %open_close;	
+		.white &, body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+			background-color: $main-color;
+		}
 		&--top {
 			.banner__btn:hover & {
 				transform: scaleX(0.75) translateZ(0);
@@ -277,7 +271,15 @@
 			}
 		}
 		&--center {
-			@extend %open_close_center;
+			@extend %open_close_center;			
+			.white &, body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+				background-color: transparent;
+			}
+			&:before, &:after {		
+				.menu-opened &, .white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+					background-color: $main-color;
+				}
+			}
 			&:before {
 				.banner__btn--close & {
 					transform: rotate(45deg) translateZ(0);

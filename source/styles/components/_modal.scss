@@ -73,8 +73,14 @@
 	&__line {
 		@extend %open_close;
 		@extend %open_close_center;
+		.white &, body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+			background-color: transparent;
+		}
 		&:before, &:after {
 			background-color: $main-color;
+			.menu-opened &, .white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
+				background-color: $main-color;
+			}
 		}
 		&:before {
 			transform: rotate(45deg) translateZ(0);
