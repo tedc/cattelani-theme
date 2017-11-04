@@ -115,8 +115,8 @@
 			display: flex;
 			align-items: center;
 			background-color: $dark-color;
-			border-top-left-radius: $f;
-			border-bottom-left-radius: $f;
+			border-top-left-radius: em($p*2);
+			border-bottom-left-radius: em($p*2);
 			transform: translate3d($f, 0, 0);
 			transition: transform $speed;
 			.cat--closed &, .cat--closed.cat--closed-remove & {	
