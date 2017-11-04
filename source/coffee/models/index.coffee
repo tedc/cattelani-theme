@@ -30,6 +30,7 @@ catellani
 			$rootScope.isAnim = '' if newUrl is oldUrl
 			if hash.trim() is ''
 				if newUrl is oldUrl 
+					console.log trans, trans.to(), trans.params()
 					$rootScope.menuItem = if trans.params().slug then trans.params().slug else ''
 				else
 					$rootScope.menuItem = off

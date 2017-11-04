@@ -56072,6 +56072,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
       }
       if (hash.trim() === '') {
         if (newUrl === oldUrl) {
+          console.log(trans, trans.to(), trans.params());
           $rootScope.menuItem = trans.params().slug ? trans.params().slug : '';
         } else {
           $rootScope.menuItem = false;
