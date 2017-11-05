@@ -55762,9 +55762,29 @@ module.exports = function($rootScope) {
   var video;
   return video = {
     link: function(scope, element) {
-      var enterVideoScene, tween;
+      var canvas, enterVideoScene, paintVideo, tween;
+      if (vars.main.mobile) {
+        canvas = null;
+        paintVideo = function() {
+          if (canvas === null) {
+            canvas = document.createElement(canvas);
+            canvas.width = element[0].videoWidth;
+            canvas.height = element[0].videoHeight;
+            element.after(canvas);
+          }
+          canvas.getContext('2d').draw(element[0], 0, 0, canvas.width, canvas.height);
+          if (!element[0].paused) {
+            requestAnimationFrame(paintVideo);
+          }
+        };
+        element.on('playing', paintVideo);
+      }
       scope.play = function() {
-        console.log(element[0].paused);
+        if (element[0].paused) {
+          element[0].play();
+        } else {
+          element[0].pause();
+        }
       };
       if (vars.main.mobile) {
         return;
