@@ -13,7 +13,7 @@
 			<source src="<?php echo $file; ?>.webm" type="video/webm"/>
 		</video>
 		<?php if(is_handheld()) { ?>
-		<a class="icon-play" ng-click="play()" ng-class="{playing : !isPaused}"></a>
+		<a class="icon-play" ng-click="play()" ng-class="{playing : !isPaused, loading : isLoading}"></a>
 		<?php } ?>
 	</div>
 	<?php if(get_sub_field('video_text')) : ?>
