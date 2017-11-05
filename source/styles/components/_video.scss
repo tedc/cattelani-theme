@@ -110,6 +110,9 @@
 	}
 	&__item {
 		@extend %videoSize;
+		.handheld & {
+			visibility: hidden;
+		}
 	}
 	&__footer {
 		text-align: right;

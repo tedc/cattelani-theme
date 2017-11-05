@@ -9,7 +9,7 @@ module.exports = ($rootScope)->
                         canvas.width = element[0].videoWidth
                         canvas.height = element[0].videoHeight
                         element.after canvas
-                    canvas.getContext('2d').draw element[0], 0, 0, canvas.width, canvas.height
+                    canvas.getContext('2d').drawImage element[0], 0, 0, canvas.width, canvas.height
                     if not element[0].paused
                         requestAnimationFrame paintVideo
                     return

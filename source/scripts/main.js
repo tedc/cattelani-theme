@@ -55772,7 +55772,7 @@ module.exports = function($rootScope) {
             canvas.height = element[0].videoHeight;
             element.after(canvas);
           }
-          canvas.getContext('2d').draw(element[0], 0, 0, canvas.width, canvas.height);
+          canvas.getContext('2d').drawImage(element[0], 0, 0, canvas.width, canvas.height);
           if (!element[0].paused) {
             requestAnimationFrame(paintVideo);
           }
