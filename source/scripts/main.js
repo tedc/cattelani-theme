@@ -55764,6 +55764,7 @@ module.exports = function($rootScope) {
     link: function(scope, element) {
       var canvas, enterVideoScene, paintVideo, tween;
       if (vars.main.mobile) {
+        scope.isLoading = false;
         scope.isPaused = true;
         canvas = null;
         paintVideo = function() {
@@ -55774,6 +55775,9 @@ module.exports = function($rootScope) {
             element.after(canvas);
           }
           canvas.getContext('2d').drawImage(element[0], 0, 0, canvas.width, canvas.height);
+          if (scope.isLoading) {
+            scope.isLoading = false;
+          }
           if (!element[0].paused) {
             requestAnimationFrame(paintVideo);
           }
@@ -55781,6 +55785,7 @@ module.exports = function($rootScope) {
         element.on('playing', paintVideo);
       }
       scope.play = function() {
+        scope.isLoading = true;
         if (element[0].paused) {
           element[0].play();
         } else {

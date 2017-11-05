@@ -2,6 +2,7 @@ module.exports = ($rootScope)->
     video =
         link : (scope, element)->
             if vars.main.mobile
+                scope.isLoading = off
                 scope.isPaused = on
                 canvas = null
                 paintVideo = ->
@@ -11,11 +12,12 @@ module.exports = ($rootScope)->
                         canvas.height = element[0].videoHeight
                         element.after canvas
                     canvas.getContext('2d').drawImage element[0], 0, 0, canvas.width, canvas.height
-                    if not element[0].paused
-                        requestAnimationFrame paintVideo
+                    scope.isLoading = off if scope.isLoading
+                    requestAnimationFrame paintVideo if not element[0].paused
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
+                scope.isLoading = on
                 if element[0].paused then element[0].play() else element[0].pause()             
                 scope.isPaused = element[0].paused
                 return
