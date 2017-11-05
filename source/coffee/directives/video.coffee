@@ -5,7 +5,7 @@ module.exports = ($rootScope)->
                 canvas = null
                 paintVideo = ->
                     if canvas is null
-                        canvas = document.createElement canvas
+                        canvas = document.createElement "canvas"
                         canvas.width = element[0].videoWidth
                         canvas.height = element[0].videoHeight
                         element.after canvas
@@ -15,7 +15,6 @@ module.exports = ($rootScope)->
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
-                console.log element[0].paused
                 if element[0].paused then element[0].play() else element[0].pause()
                 return
             return if vars.main.mobile

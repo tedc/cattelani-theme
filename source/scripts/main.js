@@ -55767,7 +55767,7 @@ module.exports = function($rootScope) {
         canvas = null;
         paintVideo = function() {
           if (canvas === null) {
-            canvas = document.createElement(canvas);
+            canvas = document.createElement("canvas");
             canvas.width = element[0].videoWidth;
             canvas.height = element[0].videoHeight;
             element.after(canvas);
@@ -55780,7 +55780,6 @@ module.exports = function($rootScope) {
         element.on('playing', paintVideo);
       }
       scope.play = function() {
-        console.log(element[0].paused);
         if (element[0].paused) {
           element[0].play();
         } else {
