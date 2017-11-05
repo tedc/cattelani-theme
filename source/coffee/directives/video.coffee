@@ -2,7 +2,8 @@ module.exports = ($rootScope)->
     video =
         link : (scope, element)->
             scope.play = ->
-                if element[0].paused then element[0].play() else element[0].pause()
+                console.log element[0].paused
+                #if element[0].paused then element[0].play() else element[0].pause()
                 return
             return if vars.main.mobile
             tween = TweenMax.to { index : 0}, 5,

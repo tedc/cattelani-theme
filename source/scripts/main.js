@@ -55764,11 +55764,7 @@ module.exports = function($rootScope) {
     link: function(scope, element) {
       var enterVideoScene, tween;
       scope.play = function() {
-        if (element[0].paused) {
-          element[0].play();
-        } else {
-          element[0].pause();
-        }
+        console.log(element[0].paused);
       };
       if (vars.main.mobile) {
         return;
