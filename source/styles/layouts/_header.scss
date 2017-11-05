@@ -65,8 +65,6 @@
 	text-align: center;
 	background-color: transparentize($w, .6);
 	transition: background-color $speed, visibility $speed, opacity $speed;
-	visibility: hidden;
-	opacity: 0;
 	color: $w;
 	&:before {
 		display: inline-block;
@@ -75,10 +73,6 @@
 	&:hover {
 		color: $w;
 		background-color: transparentize($w, .4);
-	}
-	&.ready {
-		visibility: visible;
-		opacity: 1;
 	}
 }
 
@@ -593,7 +587,13 @@
 		padding-top: em(120px);
 	}
 	.icon-play {
-		@extend %play;
+		@extend %play;	
+		visibility: hidden;
+		opacity: 0;	
+		&.ready {
+			visibility: visible;
+			opacity: 1;
+		}
 	}
 }
 

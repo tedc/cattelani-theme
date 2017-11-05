@@ -64,6 +64,36 @@
 		.icon-play {
 			.handheld & {
 				@extend %play;
+				&:after {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transition: opacity $speed;
+					width: em($p, 32px);
+					height: em($p*2, 32px);
+					margin: {
+						left: em($p/2, 32px)*-1;
+						top: em($p, 32px)*-1;
+					}
+					border: {
+						left: 1px solid $w;
+						right: 1px solid $w;
+					}
+					opacity: 0;
+				}
+				&:before {
+					display: inline-block;
+					transition: opacity $speed;
+				}
+				&.playing {
+					&:after {
+						opacity: 1;
+					}
+					&:before {
+						opacity: 0;
+					}
+				}
 			}
 		}
 	}
