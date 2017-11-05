@@ -54490,7 +54490,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", "$timeout", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -55758,7 +55758,7 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService) {
 
 
 },{}],123:[function(require,module,exports){
-module.exports = function($rootScope) {
+module.exports = function($rootScope, $timeout) {
   var video;
   return video = {
     link: function(scope, element) {
@@ -55775,9 +55775,11 @@ module.exports = function($rootScope) {
             element.after(canvas);
           }
           canvas.getContext('2d').drawImage(element[0], 0, 0, canvas.width, canvas.height);
-          if (scope.isLoading) {
-            scope.isLoading = false;
-          }
+          $timeout(function() {
+            if (scope.isLoading) {
+              scope.isLoading = false;
+            }
+          });
           if (!element[0].paused) {
             requestAnimationFrame(paintVideo);
           }

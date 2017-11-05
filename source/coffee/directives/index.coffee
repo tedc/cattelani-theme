@@ -8,7 +8,7 @@ catellani
 	.directive 'ngSm', ["$rootScope", "$timeout", require './sm.coffee'] 
 	.directive 'ngSwiper', [ "$timeout", "$rootScope", '$location', "ScrollbarService", require './swiper.coffee'] 
 	.directive 'ngInstagram', [ require './instagram.coffee']
-	.directive 'ngVideo', [ "$rootScope", require './video.coffee'] 
+	.directive 'ngVideo', [ "$rootScope", "$timeout", require './video.coffee'] 
 	.directive 'ngPlayer', [ "angularLoad", "$timeout", "$rootScope", "$window", require './player.coffee'] 
 	.directive 'ngMagazine', [ require './magazine.coffee'] 
 	#.directive 'storia', [ 'ScrollbarService', require './storia.coffee']
