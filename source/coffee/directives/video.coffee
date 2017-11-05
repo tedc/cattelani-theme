@@ -15,6 +15,7 @@ module.exports = ($rootScope)->
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
+                console.log element[0].paused
                 if element[0].paused then element[0].play() else element[0].pause()
                 return
             return if vars.main.mobile

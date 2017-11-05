@@ -55780,6 +55780,7 @@ module.exports = function($rootScope) {
         element.on('playing', paintVideo);
       }
       scope.play = function() {
+        console.log(element[0].paused);
         if (element[0].paused) {
           element[0].play();
         } else {
