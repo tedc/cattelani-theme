@@ -2,6 +2,7 @@ module.exports = ($rootScope)->
     video =
         link : (scope, element)->
             if vars.main.mobile
+                scope.isPaused = on
                 canvas = null
                 paintVideo = ->
                     if canvas is null
@@ -15,7 +16,8 @@ module.exports = ($rootScope)->
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
-                if element[0].paused then element[0].play() else element[0].pause()
+                if element[0].paused then element[0].play() else element[0].pause()             
+                scope.isPaused = element[0].paused
                 return
             return if vars.main.mobile
             tween = TweenMax.to { index : 0}, 5,

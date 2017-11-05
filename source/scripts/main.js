@@ -55764,6 +55764,7 @@ module.exports = function($rootScope) {
     link: function(scope, element) {
       var canvas, enterVideoScene, paintVideo, tween;
       if (vars.main.mobile) {
+        scope.isPaused = true;
         canvas = null;
         paintVideo = function() {
           if (canvas === null) {
@@ -55785,6 +55786,7 @@ module.exports = function($rootScope) {
         } else {
           element[0].pause();
         }
+        scope.isPaused = element[0].paused;
       };
       if (vars.main.mobile) {
         return;
