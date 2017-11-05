@@ -81,15 +81,15 @@
 					top: 50%;
 					left: 50%;
 					transition: opacity $speed;
-					width: em($p, 32px);
-					height: em($p*2, 32px);
+					width: em($p/2, 32px);
+					height: em($p, 32px);
 					margin: {
-						left: em($p/2, 32px)*-1;
-						top: em($p, 32px)*-1;
+						left: em($p/4, 32px)*-1;
+						top: em($p/2, 32px)*-1;
 					}
 					border: {
-						left: 1px solid $w;
-						right: 1px solid $w;
+						left: 3px solid $w;
+						right: 3px solid $w;
 					}
 					opacity: 0;
 				}
@@ -111,7 +111,7 @@
 	&__item {
 		@extend %videoSize;
 		.handheld & {
-			visibility: hidden;
+			display: none;
 		}
 	}
 	&__footer {
