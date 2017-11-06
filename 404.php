@@ -12,7 +12,7 @@
 		</figure>
 	</div>
 	<div class="error__cell error__cell--content">
-		<h1 class="error__title error__title--huge-lighter">
+		<h1 class="error__title error__title--big-lighter">
 			<?php _e('Oops, pagina non trovata', 'catellani'); ?>
 		</h1>
 		<h2 class="error__title error__title--medium-lighter">
