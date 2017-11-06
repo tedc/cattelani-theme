@@ -109,7 +109,7 @@ class walker_texas_ranger extends Walker_Nav_Menu {
                 $page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ).'\'' : '';
                 $menuItem = (get_field('state', $item->ID) == 'page') ? str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ) : 'home';
                 $sref =  ' ui-sref="app.'.$state.'({lang : \''.ICL_LANGUAGE_CODE.'\''.$page.'})" ng-class="{\''.$prefix . $suffix['link'].'--active\':menuItem == \''.$menuItem.'\'}"';
-                $sref .= $state == 'root' ? ' home-element' : '';
+                //$sref .= $state == 'root' ? ' home-element' : '';
             }
         } else {
             $sref =  '';

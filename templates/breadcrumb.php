@@ -35,10 +35,10 @@
 		if($post_obj && !$term_obj) :
 			$post_id = id_by_lang($post_obj->ID, $post_type, $lang);
 			if($home != $post_id) :
-				echo '<a href="'.get_permalink($home).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$ancestor.$current;
+				echo '<a href="'.get_permalink($home).'" ui-sref="app.root({lang : \''.$lang.'\'})">Home</a>'.$sep.$ancestor.$current;
 			endif;
 		else :
-			echo '<a href="'.get_permalink($home).'" ui-sref="app.root({lang : \''.$lang.'\'})" home-element>Home</a>'.$sep.$current;
+			echo '<a href="'.get_permalink($home).'" ui-sref="app.root({lang : \''.$lang.'\'})">Home</a>'.$sep.$current;
 		endif;
 	endif;
 ?>
