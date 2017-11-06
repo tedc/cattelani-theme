@@ -55,6 +55,7 @@
 	}
 	&__text {
 		@include grow('md');
+		text-align: center;
 		h2 {
 			width: $f;
 			flex: 0 0 auto;
@@ -62,6 +63,9 @@
 		p {
 			font-size: em(20px);
 			text-align: left!important;
+		}
+		@include breakpoint() {
+			text-align: left;
 		}
 	}
 	&__image {

@@ -212,9 +212,12 @@
 				transform: scaleY(1) translateZ(0);
 			}
 		}
-		.is-anim & {
+		.desktop.is-anim & {
 			opacity: 0;
 			transform: translate3d(0, $p*2, 0);
+		}
+		.handheld.is-anim & {
+			opacity: 0;
 		}
 		.ios & {
 			padding: 0 em($p, 34px) calc(#{em($p/2, 34px)} + 50px);

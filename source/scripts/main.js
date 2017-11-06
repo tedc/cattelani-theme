@@ -55794,7 +55794,9 @@ module.exports = function($rootScope, $timeout) {
         element.on('playing', paintVideo);
       }
       scope.play = function() {
-        scope.isLoading = true;
+        if (!scope.isLoaded) {
+          scope.isLoading = true;
+        }
         if (element[0].paused) {
           element[0].play();
         } else {

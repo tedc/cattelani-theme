@@ -26,7 +26,7 @@ module.exports = ($rootScope, $timeout)->
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
-                scope.isLoading = on
+                scope.isLoading = on if not scope.isLoaded
                 if element[0].paused then element[0].play() else element[0].pause()             
                 scope.isPaused = element[0].paused
                 return

@@ -67,10 +67,14 @@
 			position: relative;
 			@include cover(left bottom, contain);
 			img {
-				display: none;
+				width: $f !important;
+				height: auto !important;
 			}
 			@include breakpoint() {
 				min-height: 0;
+				img {
+					display: none;
+				}
 			}
 			[class*="-inverted"] & {
 				order: 1;
@@ -86,12 +90,16 @@
 				transform: translate3d(0, 0, 0);
 			}
 			.successes__contain {
+				display: none;
 				@include cover($pos: left bottom, $size: contain);
 				@include full;
 				transition: $speed visibility, opacity $speed;
 				&--hover {
 					visibility: hidden;
 					opacity: 0;
+				}
+				@include breakpoint() {
+					display: inherit;
 				}
 			}
 			&:hover {
