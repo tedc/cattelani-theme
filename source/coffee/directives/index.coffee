@@ -6,7 +6,7 @@ catellani
 	.directive 'collectionSearch', [require './search_full.coffee']
 	.directive 'postTypeArchive', [require './archive.coffee']
 	.directive 'ngSm', ["$rootScope", "$timeout", require './sm.coffee'] 
-	.directive 'ngSwiper', [ "$timeout", "$rootScope", '$location', "ScrollbarService", require './swiper.coffee'] 
+	.directive 'ngSwiper', [ "$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require './swiper.coffee'] 
 	.directive 'ngInstagram', [ require './instagram.coffee']
 	.directive 'ngVideo', [ "$rootScope", "$timeout", require './video.coffee'] 
 	.directive 'ngPlayer', [ "angularLoad", "$timeout", "$rootScope", "$window", require './player.coffee'] 

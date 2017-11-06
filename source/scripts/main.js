@@ -54490,7 +54490,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", "$timeout", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", "$timeout", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -55596,12 +55596,15 @@ module.exports = function() {
 
 
 },{}],122:[function(require,module,exports){
-module.exports = function($timeout, $rootScope, $location, ScrollbarService) {
+module.exports = function($timeout, $rootScope, $location, ScrollbarService, screenSize) {
   var ngSwiper;
   return ngSwiper = {
     scope: true,
     link: function(scope, element, attr) {
       var i, s, scroll, storia;
+      screenSize.rules = {
+        min: "screen and (max-width: " + (850 / 16) + "em)"
+      };
       scope.main = {};
       scope.nav = {};
       if (attr.isStoria) {
@@ -55677,7 +55680,11 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService) {
       $rootScope.isYearsActive = false;
       scroll = function() {
         var offset;
-        offset = angular.element(document.body).hasClass('admin-bar') ? 112 : 80;
+        if (screenSize.is('min')) {
+          offset = angular.element(document.body).hasClass('admin-bar') ? 112 : 80;
+        } else {
+          offset = 120;
+        }
         TweenMax.to(window, .5, {
           scrollTo: {
             y: "#storia",

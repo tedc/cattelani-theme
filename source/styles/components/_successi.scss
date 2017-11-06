@@ -69,6 +69,7 @@
 			img {
 				width: $f !important;
 				height: auto !important;
+				margin-top: em($p*2);
 			}
 			@include breakpoint() {
 				min-height: 0;

@@ -1,7 +1,10 @@
-module.exports = ($timeout, $rootScope, $location, ScrollbarService)->
+module.exports = ($timeout, $rootScope, $location, ScrollbarService, screenSize)->
 	ngSwiper =
 		scope : on
 		link : (scope, element, attr)->
+			screenSize.rules = {
+				min : "screen and (max-width: #{(850/16)}em)"
+			}	
 			scope.main = {}
 			scope.nav = {}
 			scope.storia = {} if attr.isStoria
@@ -65,7 +68,10 @@ module.exports = ($timeout, $rootScope, $location, ScrollbarService)->
 				return
 			$rootScope.isYearsActive = off
 			scroll = ()->
-				offset = if angular.element(document.body).hasClass('admin-bar') then 112 else 80
+				if screenSize.is 'min'
+					offset = if angular.element(document.body).hasClass('admin-bar') then 112 else 80
+				else
+					offset = 120
 				TweenMax.to window, .5,
 					scrollTo :
 						y : "#storia"
