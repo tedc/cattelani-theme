@@ -55766,6 +55766,7 @@ module.exports = function($rootScope, $timeout) {
       if (vars.main.mobile) {
         scope.isLoading = false;
         scope.isPaused = true;
+        scope.isLoaded = false;
         canvas = null;
         paintVideo = function() {
           if (canvas === null) {
@@ -55784,6 +55785,16 @@ module.exports = function($rootScope, $timeout) {
             requestAnimationFrame(paintVideo);
           }
         };
+        element.once('playing', function() {
+          $timeout(function() {
+            scope.isLoaded = true;
+          });
+        });
+        element.on('pause', function() {
+          $timeout(function() {
+            scope.isPaused = true;
+          });
+        });
         element.on('playing', paintVideo);
       }
       scope.play = function() {

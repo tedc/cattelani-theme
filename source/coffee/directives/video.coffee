@@ -4,6 +4,7 @@ module.exports = ($rootScope, $timeout)->
             if vars.main.mobile
                 scope.isLoading = off
                 scope.isPaused = on
+                scope.isLoaded = off
                 canvas = null
                 paintVideo = ->
                     if canvas is null
@@ -16,6 +17,16 @@ module.exports = ($rootScope, $timeout)->
                         scope.isLoading = off if scope.isLoading
                         return
                     requestAnimationFrame paintVideo if not element[0].paused
+                    return
+                element.once 'playing', ->
+                    $timeout -> 
+                        scope.isLoaded = on 
+                        return
+                    return
+                element.on 'pause', ->
+                    $timeout -> 
+                        scope.isPaused = on 
+                        return
                     return
                 element.on 'playing', paintVideo
             scope.play = ->
