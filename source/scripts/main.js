@@ -55777,19 +55777,15 @@ module.exports = function($rootScope, $timeout) {
           }
           canvas.getContext('2d').drawImage(element[0], 0, 0, canvas.width, canvas.height);
           $timeout(function() {
-            if (scope.isLoading) {
+            if (scope.isLoading && !scope.isLoaded) {
               scope.isLoading = false;
             }
+            scope.isLoaded = true;
           });
           if (!element[0].paused) {
             requestAnimationFrame(paintVideo);
           }
         };
-        element.once('playing', function() {
-          $timeout(function() {
-            scope.isLoaded = true;
-          });
-        });
         element.on('pause', function() {
           $timeout(function() {
             scope.isPaused = true;

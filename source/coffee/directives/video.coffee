@@ -14,14 +14,10 @@ module.exports = ($rootScope, $timeout)->
                         element.after canvas
                     canvas.getContext('2d').drawImage element[0], 0, 0, canvas.width, canvas.height
                     $timeout ->
-                        scope.isLoading = off if scope.isLoading
+                        scope.isLoading = off if scope.isLoading and not scope.isLoaded
+                        scope.isLoaded = on
                         return
                     requestAnimationFrame paintVideo if not element[0].paused
-                    return
-                element.once 'playing', ->
-                    $timeout -> 
-                        scope.isLoaded = on 
-                        return
                     return
                 element.on 'pause', ->
                     $timeout -> 
