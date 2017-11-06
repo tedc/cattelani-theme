@@ -40,9 +40,7 @@
                 <?php _e('Chiudi', 'catellani'); ?>
             </span>
             <span class="banner__burger">
-                <span class="banner__line banner__line--top"></span>
                 <span class="banner__line banner__line--center"></span>
-                <span class="banner__line banner__line--bottom"></span>
             </span>
         </span>
         <?php get_template_part( 'templates/aside', null ); ?>  
