@@ -9,7 +9,7 @@
 <aside class="cat cat--grow-md-bottom" ng-footer ng-class="{'cat--closed': isCatClosed}">
 	<?php acf_set_language_to_default(); ?>
 	<a class="cat__send" href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', get_field('phone', 'options'))); ?>">
-		<?php
+		T. <?php
 		the_field('phone', 'options'); ?>
 	</a>
 	<?php acf_unset_language_to_default(); ?>

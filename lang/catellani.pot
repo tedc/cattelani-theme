@@ -320,3 +320,7 @@ msgstr "Insert icon class and link"
 # wpml-name: ef7f3f95021f926d4894e146cf9c6997
 msgid "Icona linkabile"
 msgstr "Linkable icon"
+
+# wpml-name: ef7f3f95021f926d4894e146cf9c6997
+msgid "Guarda i dettagli"
+msgstr "More details"
