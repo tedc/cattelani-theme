@@ -485,6 +485,7 @@
 	add_filter( 'pre_get_posts', 'collezioni_posts_per_page' );
 
 	function my_gallery_shortcode( $output = '', $attrs ) {
+		global $post;
 		$row = str_replace(',', '', $attrs['ids']);
 		$ids = explode(',', $attrs['ids']);
 		$images = array();
@@ -493,8 +494,10 @@
 			array_push($images, array('ID' => $id, 'url' => wp_get_attachment_image_src( $id, 'full')[0], 'alt' => get_post_meta( $id, '_wp_attachment_image_alt', true)));
 		}
 		ob_start();
+		$prepend = ($post->post_type == 'post') ? '</div>' : '';
+		$append = ($post->post_type == 'post') ? '<div class="container__content container__content--mw">' : '';
 		include(locate_template('builder/commons/gallery.php', false, false));
-		$output = '<div class="container__gallery container__gallery--shrink-fw container__gallery--grow-lg-top container__gallery--grow-md-bottom" id="slider_'.$row.'">'.ob_get_clean().'</div>';
+		$output = $prepend.'<div class="container__gallery container__gallery--shrink-fw container__gallery--grow-lg-top container__gallery--grow-md-bottom" id="slider_'.$row.'">'.ob_get_clean().'</div>'.$append;
 		return $output;
 	}
 
