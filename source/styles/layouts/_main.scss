@@ -23,7 +23,7 @@
 	&__container {
 		position: relative;
 	}
-	body:not(.single-post) & {
-		overflow: hidden;
-	}
+	// body:not(.single-post) & {
+	// 	overflow: hidden;
+	// }
 }

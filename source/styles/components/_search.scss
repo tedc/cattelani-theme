@@ -209,7 +209,7 @@
 	&__items {
 		flex: 10;
 		position: relative;
-		margin-top: em($p*2);
+		margin-top: em($p*10);
 		transition: opacity $speed*1.5, visibility $speed*1.5, transform $speed*1.5;
 		timing-function: ceaser($easeOutBack);
 		.scroll-content {
@@ -222,6 +222,9 @@
 			opacity: 0;
 			visibility: hidden;
 			transform: translate3d(0, $p*4, 0) skewY(0.5deg);
+		}
+		@include breakpoint() {
+			margin-top: em($p*2);
 		}
 	}
 	&__loader {

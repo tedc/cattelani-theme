@@ -64,6 +64,7 @@
 			position: relative;
 			min-height: 75vw;
 			z-index: 2;
+			line-height: 0;
 			position: relative;
 			@include cover(left bottom, contain);
 			img {
@@ -126,6 +127,9 @@
 			}
 			@include breakpoint() {
 				text-align: left;
+			}
+			@include breakpoint($bp, false) {
+				padding-top: 0 !important;
 			}
 		}
 	}

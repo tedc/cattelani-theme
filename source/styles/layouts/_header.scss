@@ -76,6 +76,21 @@
 	}
 }
 
+%active {
+	color: $dark-color;
+	// &:before {
+	// 	transform: scaleX(1) translateZ(0);
+	// }
+	&:before {
+		transform: translate3d(0, -50%, 0) scaleX(1);
+		transform-origin: left center;
+	}
+	&:after {
+		transform: translate3d(0, -50%, 0) scaleX(1);
+		transform-origin: right center;
+	}
+}
+
 .banner {
 	transition: visibility $speed, opacity $speed;
 	&.video-opened {
@@ -423,6 +438,34 @@
 		}
 		@extend %menu_move;
 		@include normalize_padding;
+		&--projects {
+			a {
+				.single-progetti & {
+					@extend %active;
+				}
+			}
+		}
+		&--installations {
+			a {
+				.single-installazioni & {
+					@extend %active;
+				}
+			}
+		}
+		&--glossary {
+			a {
+				.tax-glossary-cat & {
+					@extend %active;
+				}
+			}
+		}
+		&--magazine {
+			a {
+				.single-post & {
+					@extend %active;
+				}
+			}
+		}
 	}
 	&__link {
 		font-size: em(30px);
@@ -466,18 +509,7 @@
 			transform-origin: right center;
 		}
 		&:hover, .menu__item--active &, &--active {
-			color: $dark-color;
-			// &:before {
-			// 	transform: scaleX(1) translateZ(0);
-			// }
-			&:before {
-				transform: translate3d(0, -50%, 0) scaleX(1);
-				transform-origin: left center;
-			}
-			&:after {
-				transform: translate3d(0, -50%, 0) scaleX(1);
-				transform-origin: right center;
-			}
+			@extend %active;
 		}
 	}
 }
