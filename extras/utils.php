@@ -76,7 +76,13 @@
 			if(get_sub_field($field)) {
 				$slider = get_sub_field($field);
 			} else {
-				$slider = get_field('layout', $id)[$row][$field];
+				//$slider = get_field('layout', $id)[$row][$field];
+				while(have_rows('layoyt', $id)) : the_row();
+					if(get_row_layout() == 'full-slider') :
+						$slider = get_sub_field($field);
+						break;
+					endif;
+				endwhile;
 			}
 		}
 		return $slider;
