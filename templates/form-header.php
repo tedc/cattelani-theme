@@ -40,7 +40,7 @@
             $mEmail->setFrom(array($email => $name));
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
-            $rEmail->setSubject(base64_encode($rSubject));
+            $rEmail->setSubject(str_replace('&amp;', '&', $rSubject));
             $rEmail->setFrom(array($pTo => get_bloginfo('name')));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
