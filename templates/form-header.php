@@ -41,7 +41,7 @@
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
             $rEmail->setSubject(str_replace('&amp;', '&', $rSubject));
-            $rEmail->setFrom(array($pTo => get_bloginfo('name')));
+            $rEmail->setFrom(array($pTo => str_replace('&amp;', '&', get_bloginfo('name'))));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
             if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
