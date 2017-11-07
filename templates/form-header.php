@@ -11,7 +11,7 @@
         $pTo = get_field('email_address', 'options');
         acf_unset_language_to_default(); 
         $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
-        $rSubject = __('Risposta automatica da') . ' '. utf8_encode(htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8"));
+        $rSubject = __('Risposta automatica da') . ' '. htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8");
         $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
         $errorMessage = __('Verifica di aver compilato bene i campi o scrivi a','catellani');
         $sent = __('Messaggio inviato correttamente','catellani');
@@ -22,7 +22,7 @@
     $email_row = (!empty($_POST['email'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#a7a9ac;font-style:italic">Email</em><br /><a href="mailto:'.$email.'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$email.'</a></td></tr>' : "";
     $tel_row = (!empty($_POST['tel'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Telefono','catellani').'</em><br />'.$tel.'</td></tr>' : "";
     $message_row = (!empty($_POST['message'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Messaggio','catellani').'</em><br />'.stripslashes($message).'</td></tr>' : "";
-    $last_row = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:14px;"><em style="color:#7d7d7d;font-style:italic">'.$sender.__(' stava visitando ', 'catellani').'<a href="'.get_permalink($post->ID).'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.get_the_title($post->ID).'</a></td></tr>';
+    $last_row = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:14px;"><em style="color:#7d7d7d;font-style:italic">'.$sender.__(' stava visitando ', 'catellani').'<a href="'.$_POST['location'].'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$_POST['location'].'</a></td></tr>';
     $body = $name_row.$email_row.$tel_row.$message_row.$last_row;
     $resp = '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;"><p style="line-height:1.35">'.$tnx.'</p></td></tr>';
     function template($body) {
@@ -41,7 +41,7 @@
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
             $rEmail->setSubject($rSubject);
-            $rEmail->setFrom(array($pTo => utf8_encode(htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8"))));
+            $rEmail->setFrom(array($pTo => htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8")));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
             if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
