@@ -1,7 +1,11 @@
-<?php if(get_sub_field('immagine_accesa') && get_sub_field('immagine_spenta')) : ?>
+<?php if(get_sub_field('immagine_accesa') && get_sub_field('immagine_spenta')) : 
+	$accesa = get_sub_field('immagine_accesa')['ID'];
+	$spenta = get_sub_field('immagine_spenta')['ID'];
+?>
 <div class="light light--shrink-fw light--grid" ng-class="{'light--on':isOn}">
-	<figure class="light__cell light__cell--figure light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 5 : 7; ?>" ng-light-mask ng-mousemove="moveMask($event, '#light_svg_<?php echo $row; ?>')">
+	<figure class="light__cell light__cell--figure light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 5 : 7; ?>"<?php if($accesa != $spenta) : ?> ng-light-mask ng-mousemove="moveMask($event, '#light_svg_<?php echo $row; ?>')"<?php endif; ?>>
 		<?php echo wp_get_attachment_image( get_sub_field('immagine_spenta')['ID'], 'full' ); ?>
+		<?php if($accesa != $spenta) : ?>
 		<svg class="light__svg" viewBox="0 0 <?php echo get_sub_field('immagine_accesa')['width']; ?> <?php echo get_sub_field('immagine_accesa')['height']; ?>" id="light_svg_<?php echo $row; ?>">
 			<defs>
 				<radialGradient id="gradient_<?php echo $row; ?>">
@@ -24,6 +28,7 @@
 			<span class="light__label light__label--upper-light"><span data-off-text="<?php _e('Spegni', 'catellani'); ?>" data-on-text="<?php _e('Accendi', 'catellani'); ?>"></span> <?php _e('La luce', 'catellani'); ?></span>
 			</span>
 		</figcaption>
+		<?php endif; ?>
 	</figure>
 	<div class="light__cell light__cell--content light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 7 : 5; ?> light__cell--shrink-left-only">
 		<div class="light__text light__text--grow-md">
