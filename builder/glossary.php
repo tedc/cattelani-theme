@@ -21,7 +21,7 @@
 <ul class="glossary__terms glossary__terms--shrink-fw">
 	<?php foreach ($terms as $term) : ?>
 	<li class="glossary__term glossary__term--mw" id="<?php echo $term->term_id; ?>">
-		<a href="<?php echo get_term_link($term->term_id); ?>" ui-sref="app.glossary({name : '<?php echo $term->slug; ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})">[<?php echo $term->term_order; ?>] / <?php echo strtolower($term->name); ?></a>
+		<a href="<?php echo get_term_link($term->term_id); ?>" class="glossary__link" ui-sref="app.glossary({name : '<?php echo $term->slug; ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})"><span>[<?php echo $term->term_order; ?>] / <?php echo strtolower($term->name); ?></span></a>
 	</li>
 	<?php endforeach; ?>
 </ul>

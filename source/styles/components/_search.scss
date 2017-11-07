@@ -209,7 +209,7 @@
 	&__items {
 		flex: 10;
 		position: relative;
-		margin-top: em($p*10);
+		margin-top: em($p*5);
 		transition: opacity $speed*1.5, visibility $speed*1.5, transform $speed*1.5;
 		timing-function: ceaser($easeOutBack);
 		.scroll-content {

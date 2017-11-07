@@ -70,13 +70,15 @@
 		}
 		line-height: percentage(40px/22px);
 		@include grow('small');
-		> a, > span {
-			display: block;
+	}
+	&__link {
+		display: block;
+		> span {
 			font-size: em(22px);
-			color: $dark-color;
-			&:hover {
-				color: $dark-gray;
-			}
+		}
+		color: $dark-color;
+		&:hover {
+			color: $dark-gray;
 		}
 	}
 	&-search {

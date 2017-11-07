@@ -23,7 +23,7 @@
 <div class="glossary glossary--grow-lg-top">
 	<div class="glossary__terms glossary__terms--grow-md-bottom">
 		<div class="glossary__term glossary__term--grow-md-bottom" id="<?php echo $current->term_id; ?>">
-			<span class="glossary__link glossary__link--shrink glossary__link--mw">[<?php echo $current->term_order; ?>] / <?php echo $current->name; ?></span>
+			<span class="glossary__link glossary__link--shrink glossary__link--mw"><span>[<?php echo $current->term_order; ?>] / <?php echo $current->name; ?></span></span>
 			<ul class="glossary__list">
 				<?php while($glossary->have_posts()) : $glossary->the_post(); ?>
 				<li class="glossary__item accordion" id="glossary_<?php the_ID(); ?>" ng-class="{'accordion--active':isGlossary[<?php the_ID(); ?>]}">
@@ -43,8 +43,8 @@
 	</div>
 	<ul class="glossary__terms glossary__terms--grow-lg glossary__terms--gray">
 		<?php foreach ($terms as $term) : ?>
-		<li class="glossary__term glossary__term--shrink" id="<?php echo $term->term_id; ?>">
-			<a class="glossary__link glossary__link--mw" href="<?php echo get_term_link($term->term_id); ?>" ui-sref="app.glossary({name : '<?php echo $term->slug; ?>'})">[<?php echo $term->term_order; ?>] / <?php echo $term->name; ?></a>
+		<li class="glossary__term" id="<?php echo $term->term_id; ?>">
+			<a class="glossary__link lossary__link--shrink glossary__link--mw" href="<?php echo get_term_link($term->term_id); ?>" ui-sref="app.glossary({name : '<?php echo $term->slug; ?>'})"><span>[<?php echo $term->term_order; ?>] / <?php echo $term->name; ?></span></a>
 		</li>
 		<?php endforeach; ?>
 	</ul>
