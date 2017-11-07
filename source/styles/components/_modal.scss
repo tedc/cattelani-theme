@@ -38,6 +38,12 @@
 				}
 			}
 		}
+		&[scrollbar="form"] {
+			.handheld & {
+				overflow-y: scroll;
+				-webkit-overflow-scrolling: touch;
+			}
+		}
 	}
 	&__nav {
 		display: flex;
