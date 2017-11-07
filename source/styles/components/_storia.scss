@@ -41,6 +41,9 @@
 	}
 	&__header {
 		@include grow('lg');
+		@include breakpoint($bp, false) {
+			padding-bottom: 0;
+		}
 	}
 	&__items {
 		margin: 0 auto;
@@ -200,6 +203,11 @@
 		transition: color $speed;
 		.storia__item--active & {
 			color: $dark-color;
+		}
+	}
+	&__slider {	
+		@include breakpoint() {
+			padding-top: em($p*4);
 		}
 	}
 	&__nav {
