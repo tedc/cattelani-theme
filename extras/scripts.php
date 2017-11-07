@@ -70,3 +70,23 @@
 
 	add_action('wp_enqueue_scripts', 'catellani_script', 200);
 
+	function third_party_scripts() {
+		?>
+	<script type="text/javascript">
+		var _iub = _iub || [];
+		_iub.csConfiguration = {
+			cookiePolicyId: 8257206,
+			siteId: 942881,
+			lang: "<?php echo ICL_LANGUAGE_CODE; ?>"
+		};
+	</script>
+	<script type="text/javascript" src="//cdn.iubenda.com/cookie_solution/safemode/iubenda_cs.js" charset="UTF-8" async></script>
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-K7JJCPB');</script>
+	<!-- End Google Tag Manager -->
+	<?php }
+
