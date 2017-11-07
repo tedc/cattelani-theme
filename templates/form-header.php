@@ -41,7 +41,7 @@
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
             $rEmail->setSubject($rSubject);
-            $rEmail->setFrom(array($pTo => get_bloginfo(get_bloginfo('name'))));
+            $rEmail->setFrom(array($pTo => utf8_encode(htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8"))));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
             if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
