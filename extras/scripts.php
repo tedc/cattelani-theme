@@ -70,7 +70,7 @@
 
 	add_action('wp_enqueue_scripts', 'catellani_script', 200);
 
-	function third_party_scripts() {
+	function third_parties_scripts() {
 		?>
 	<script type="text/javascript">
 		var _iub = _iub || [];
@@ -90,3 +90,4 @@
 	<!-- End Google Tag Manager -->
 	<?php }
 
+	add_action('wp_head', 'third_parties_scripts');
