@@ -1,10 +1,16 @@
 module.exports = ->
     form =
-        scope: on
-        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost)->
+        #scope: on
+        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "ScrollbarService", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, ScrollbarService)->
+            form = ScrollbarService.getInstance 'form'
+            form
+                .then (scrollbar)->
+                    scrollbar.destroy() if vars.main.mobile
+                    return
             $scope.formData = {}
             $scope.submit = (isValid, url)->
                 frmdata = $scope.formData
+                frmdata.location = $location.absUrl().split('#')[0]
                 $rootScope.isSubmitted = on
                 $scope.formData = {}
                 $scope.any = off
@@ -26,7 +32,6 @@ module.exports = ->
                             tmp.innerHTML = data.data
                             tmp = tmp.querySelector '#form-alert-message'
                             html = tmp.innerHTML
-                            window.ga 'send', 'event', 'contatti', 'submit form' if window.ga
                             $rootScope.isContactSent = on
                             $scope.alert = html
                             $timeout ->

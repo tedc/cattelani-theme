@@ -275,7 +275,7 @@
 			@include breakpoint(685px) {
 				padding-left: 0 !important;
 				padding-right: 0 !important;
-				left: em($p*-2);
+				left: 0;
 			}
 		}
 	}
@@ -289,7 +289,7 @@
 		display: block;
 		text-align: center;
 		padding-bottom: em($p);
-		@include breakpoint() {
+		@include breakpoint(685px + 160px) {
 			position: sticky;
 			text-align: left;
 			top: em(100px);
@@ -318,7 +318,7 @@
 				margin-bottom: $p;
 			}
 		}
-		@include breakpoint() {
+		@include breakpoint(685px + 160px) {
 			width: auto;
 			left: auto !important;
             right: em($p*2) !important;

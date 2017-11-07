@@ -274,7 +274,11 @@
 				}
 			}
 			a {
-				@include full;
+				position: absolute;
+				top: em($p*4);
+				left: 0;
+				right: 0;
+				bottom: 0;
 			}
 		}
 		&--archive {
@@ -758,11 +762,13 @@
 					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
 				}
 				&:before {
-					background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) em(400px), $lighter-color em(400px), $lighter-color 100%);
-					@media screen and (min-height: #{em(600px)}) {
-						background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*16)}), $lighter-color calc(100vh - #{em($p*16)}), $lighter-color 100%);
-					}	
+					background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*16)}), $lighter-color calc(100vh - #{em($p*16)}), $lighter-color 100%);
 				}
+				@media screen and (min-height: #{em(600px)}) {
+					&:before {
+						background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) em(400px), $lighter-color em(400px), $lighter-color 100%);
+					}
+				}	
 			}
 		}
 	}

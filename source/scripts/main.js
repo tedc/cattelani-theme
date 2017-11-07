@@ -54230,7 +54230,7 @@ module.exports = function() {
 
 
 },{}],110:[function(require,module,exports){
-module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScope) {
+module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScope, screenSize) {
   return {
     link: function(scope, element, attrs) {
       var carousel, w;
@@ -54239,9 +54239,14 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
       scope.isPrev = false;
       scope.isNext = false;
       w = angular.element($window);
+      screenSize.rules = {
+        min: "screen and (min-width: " + (850 / 16) + "em)"
+      };
       carousel.then(function(scrollbar) {
         var items;
+        scope.x = 0;
         scope.isState = false;
+        scope.isNext = true;
         $rootScope.currentCollection = attrs.currentCollection;
         $timeout(function() {
           scope.isVisible = true;
@@ -54251,42 +54256,36 @@ module.exports = function(ScrollbarService, $window, $timeout, $state, $rootScop
         items = scrollbar.targets.content.querySelectorAll('[data-carousel-item]');
         scrollbar.addListener(function(status) {
           $timeout(function() {
-            var i, idx, j, len;
-            scope.inView = [];
-            for (j = 0, len = items.length; j < len; j++) {
-              i = items[j];
-              if (scrollbar.isVisible(i)) {
-                scope.inView.push(parseInt(i.getAttribute('data-carousel-item')));
-              } else {
-                idx = parseInt(i.getAttribute('data-carousel-item'));
-                idx = scope.inView.indexOf(idx);
-                if (idx > -1) {
-                  scope.inView.splice(idx, 1);
-                }
-              }
-            }
+            scope.x = status.offset.x;
             scope.isPrev = status.offset.x > 0 ? true : false;
             scope.isNext = status.offset.x < scrollbar.limit.x ? true : false;
           }, 0);
         });
         scope.move = function(cond) {
-          var item;
-          if (cond) {
-            if (!scope.isNext) {
-              return;
+          $timeout(function() {
+            var i, j, len, move;
+            if (cond) {
+              if (!scope.isNext) {
+                return;
+              }
+            } else {
+              if (!scope.isPrev) {
+                return;
+              }
             }
-          } else {
-            if (!scope.isPrev) {
-              return;
+            for (j = 0, len = items.length; j < len; j++) {
+              i = items[j];
+              if (i.offsetLeft > scope.x) {
+                if (cond) {
+                  move = i.offsetLeft;
+                } else {
+                  move = i.previousElementSibling.previousElementSibling ? i.previousElementSibling.previousElementSibling.offsetLeft : 0;
+                }
+                break;
+              }
             }
-          }
-          if (scope.inView) {
-            item = cond ? scope.inView[0] + 1 : scope.inView[0] - 1;
-          } else {
-            item = cond ? 1 : 0;
-          }
-          item = item < 0 ? 0 : item;
-          scrollbar.scrollIntoView(items[item]);
+            scrollbar.scrollTo(move, 0, 750);
+          }, 20);
         };
         scope.goto = function(index, params) {
           var left, width;
@@ -54360,6 +54359,7 @@ module.exports = function($window, $document) {
       };
       resize();
       w.on('resize', resize);
+      scope.$on('resize_footer', resize);
       new ScrollMagic.Scene({
         triggerElement: 'body',
         triggerHook: "onLeave",
@@ -54374,13 +54374,19 @@ module.exports = function($window, $document) {
 module.exports = function() {
   var form;
   return form = {
-    scope: true,
     controller: [
-      "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", function($scope, $rootScope, $http, $timeout, transformRequestAsFormPost) {
+      "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "ScrollbarService", function($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, ScrollbarService) {
+        form = ScrollbarService.getInstance('form');
+        form.then(function(scrollbar) {
+          if (vars.main.mobile) {
+            scrollbar.destroy();
+          }
+        });
         $scope.formData = {};
         return $scope.submit = function(isValid, url) {
           var frmdata;
           frmdata = $scope.formData;
+          frmdata.location = $location.absUrl().split('#')[0];
           $rootScope.isSubmitted = true;
           $scope.formData = {};
           $scope.any = false;
@@ -54403,9 +54409,6 @@ module.exports = function() {
               tmp.innerHTML = data.data;
               tmp = tmp.querySelector('#form-alert-message');
               html = tmp.innerHTML;
-              if (window.ga) {
-                window.ga('send', 'event', 'contatti', 'submit form');
-              }
               $rootScope.isContactSent = true;
               $scope.alert = html;
               $timeout(function() {
@@ -54490,7 +54493,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", "$timeout", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require(110)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)]).directive('collectionSearch', [require(119)]).directive('postTypeArchive', [require(109)]).directive('ngSm', ["$rootScope", "$timeout", require(120)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require(122)]).directive('ngInstagram', [require(115)]).directive('ngVideo', ["$rootScope", "$timeout", require(123)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(118)]).directive('ngMagazine', [require(117)]).directive('ngLoader', ['$timeout', require(116)]).directive('ngFooter', ["$window", "$document", require(111)]).directive('glossaryAutocomplete', [require(113)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", "screenSize", require(110)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -54525,6 +54528,10 @@ catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)
           top = rect.top;
           height = rect.height;
           bottom = window.innerHeight - rect.bottom;
+          if (vars.main.mobile) {
+            height = height + 2;
+            bottom = bottom - 2;
+          }
           divider = angular.element('<div id="next-divider"></div>');
           TweenMax.set(divider, {
             height: height
@@ -54536,17 +54543,6 @@ catellani.directive('ngStore', [require(121)]).directive('ngForm', [require(112)
             bottom: bottom
           });
           $rootScope.prevElement = element;
-        });
-      }
-    };
-  }
-]).directive('homeElement', [
-  '$rootScope', function($rootScope) {
-    return {
-      restrict: 'A',
-      link: function(scope, element) {
-        element.on('click', function() {
-          $rootScope.homeClicked = true;
         });
       }
     };
@@ -55046,7 +55042,6 @@ module.exports = function() {
           }).then(function(results) {
             $timeout(function() {
               $scope.items = results.data;
-              console.log($scope.items);
               $rootScope.$broadcast('scrollBarUpdate');
               $scope.isSearchEnded = true;
             });
@@ -55106,6 +55101,13 @@ module.exports = function() {
               delete $scope.search[s];
             }
             $rootScope.$broadcast('scrollBarUpdate');
+            window.dataLayer.push({
+              'event': 'GAEvent',
+              'eventCategory': 'Cerca lampada',
+              'evetAction': 'search',
+              'eventLabel': 'cerca lampada',
+              'eventValue': $scope.select
+            });
           };
           closeAnim(callback);
         };
@@ -55131,7 +55133,6 @@ module.exports = function() {
           } else {
             $location.hash('');
           }
-          $rootScope.closePopup();
         };
         $rootScope.closePopup = function() {
           $rootScope.isPopup = false;
@@ -55535,6 +55536,13 @@ module.exports = function() {
                 }, 10);
               });
             });
+            window.dataLayer.push({
+              'event': 'GAEvent',
+              'eventCategory': 'Cerca rivenditori',
+              'evetAction': 'storeSubmit',
+              'eventLabel': 'Cerca rivenditore',
+              'eventValue': store.address
+            });
           } else {
             getLocations().then(function(res) {
               $timeout(function() {
@@ -55603,7 +55611,7 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService, scr
     link: function(scope, element, attr) {
       var i, s, scroll, storia;
       screenSize.rules = {
-        min: "screen and (max-width: " + (850 / 16) + "em)"
+        min: "screen and (min-width: " + (850 / 16) + "em)"
       };
       scope.main = {};
       scope.nav = {};
@@ -55619,12 +55627,7 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService, scr
         if (attr.isHome) {
           s = element[0].querySelector("[data-collection='" + $rootScope.currentCollection + "']");
           i = parseInt(s.getAttribute('data-index'));
-          if ($rootScope.homeClicked) {
-            scope.start = i;
-          } else {
-            i = i - 1 === 0 ? 0 : i - 1;
-            scope.start = i;
-          }
+          scope.start = i;
           $rootScope.currentCollection = false;
           $rootScope.homeClicked = false;
         }
@@ -55680,10 +55683,10 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService, scr
       $rootScope.isYearsActive = false;
       scroll = function() {
         var offset;
-        if (screenSize.is('min')) {
+        if (!vars.main.mobile) {
           offset = angular.element(document.body).hasClass('admin-bar') ? 112 : 80;
         } else {
-          offset = 120;
+          offset = screenSize.is('min') ? 180 : 140;
         }
         TweenMax.to(window, .5, {
           scrollTo: {
@@ -56093,6 +56096,40 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
     });
     $transitions.onStart({}, function(trans) {
       var body, docEl, hash, newUrl, scrollTop;
+      body = document.body;
+      docEl = document.documentElement;
+      scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+      $rootScope.scrollFrom = scrollTop;
+      newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
+        absolute: true
+      });
+      $rootScope.fromState = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : $rootScope.fromState;
+      if (newUrl === oldUrl) {
+        $rootScope.isAnim = '';
+      }
+      hash = $location.hash();
+      if (hash.trim() === '') {
+        if (newUrl === oldUrl) {
+          if (trans.params().slug) {
+            $rootScope.menuItem = trans.params().slug;
+          } else if (oldUrl.replace(/\/$/g, '') === vars.main.base.replace(/\/$/g, '')) {
+            $rootScope.menuItem = 'home';
+          }
+        } else {
+          delete $rootScope.menuItem;
+        }
+        console.log($rootScope.menuItem);
+      }
+      if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
+        return false;
+      }
+      oldUrl = newUrl;
+      $rootScope.$broadcast('sceneDestroy');
+      $rootScope.$broadcast('updateScenes');
+      $rootScope.$broadcast('destroySwiper');
+    });
+    $rootScope.$on('$locationChangeSuccess', function() {
+      var hash;
       hash = $location.hash();
       if (hash) {
         $timeout(function() {
@@ -56105,35 +56142,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(129)]).run([
           });
         });
       }
-      body = document.body;
-      docEl = document.documentElement;
-      scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-      $rootScope.scrollFrom = scrollTop;
-      newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
-        absolute: true
-      });
-      $rootScope.fromState = newUrl === oldUrl ? trans.$to().name.replace('app.', '') : $rootScope.fromState;
-      if (newUrl === oldUrl) {
-        $rootScope.isAnim = '';
-      }
-      if (hash.trim() === '') {
-        if (newUrl === oldUrl) {
-          console.log(trans, trans.to(), trans.params());
-          $rootScope.menuItem = trans.params().slug ? trans.params().slug : '';
-        } else {
-          $rootScope.menuItem = false;
-        }
-      }
       if ($rootScope.isPopup && hash.trim() === '') {
-        $rootScope.closePopup();
+        return $rootScope.closePopup();
       }
-      if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
-        return false;
-      }
-      oldUrl = newUrl;
-      $rootScope.$broadcast('sceneDestroy');
-      $rootScope.$broadcast('updateScenes');
-      $rootScope.$broadcast('destroySwiper');
     });
   }
 ]);
@@ -56176,6 +56187,9 @@ module.exports = function($rootScope, $scope, data) {
   $scope.content = data ? $scope.post.content.rendered : vars.main.error;
   document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
   if (!data) {
+    $rootScope.isAnim = 'error';
+  }
+  if (!data) {
     return;
   }
   $scope.type = $scope.post.type;
@@ -56185,6 +56199,7 @@ module.exports = function($rootScope, $scope, data) {
   if ($scope.post.type !== 'lampade') {
     $rootScope.fromElement = false;
   }
+  $rootScope.$broadcast('resize_footer');
 };
 
 
@@ -56363,7 +56378,7 @@ module.exports = function($rootScope, data, $scope) {
   $scope.content = data ? data.content : vars.main.error;
   document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
   if (typeof data === 'undefined') {
-    $rootScope.isAnim = '';
+    $rootScope.isAnim = 'error';
   }
   if (!data) {
     return;
@@ -56371,6 +56386,7 @@ module.exports = function($rootScope, data, $scope) {
   $rootScope.lang_menu = data.wpml_menu[0];
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;
+  $rootScope.$broadcast('resize_footer');
 };
 
 

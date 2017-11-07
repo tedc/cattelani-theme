@@ -48,7 +48,6 @@ module.exports = ->
 				.then (results)->
 					$timeout ->
 						$scope.items = results.data
-						console.log $scope.items
 						$rootScope.$broadcast 'scrollBarUpdate'
 						$scope.isSearchEnded = on
 						return
@@ -96,6 +95,12 @@ module.exports = ->
 					else
 						delete $scope.search[s]
 					$rootScope.$broadcast 'scrollBarUpdate'
+					window.dataLayer.push 
+						'event' : 'GAEvent'
+						'eventCategory' : 'Cerca lampada'
+						'evetAction' : 'search'
+						'eventLabel' : 'cerca lampada'
+						'eventValue' : $scope.select
 					return
 				closeAnim callback
 				return
@@ -117,7 +122,8 @@ module.exports = ->
 					history.pushState '', document.title, $location.path()
 				else
 					$location.hash ''
-				$rootScope.closePopup()
+				#$state.go $state.current, {'#': null}
+				#$rootScope.closePopup()
 				# $rootScope.closingModal = on
 				# hash = $location.hash()
 				# console.log $location.state()

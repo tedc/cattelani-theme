@@ -1,13 +1,18 @@
-module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
+module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope, screenSize)->
 	link : (scope, element, attrs)->
 		carousel = ScrollbarService.getInstance 'carousel'
 		scope.isVisible = off
 		scope.isPrev = off
 		scope.isNext = off
 		w = angular.element $window
+		screenSize.rules = {
+			min : "screen and (min-width: #{(850/16)}em)"
+		}
 		carousel
 			.then (scrollbar)->
+				scope.x = 0
 				scope.isState = off
+				scope.isNext = on
 				$rootScope.currentCollection = attrs.currentCollection 
 				$timeout ->
 					scope.isVisible = on
@@ -44,30 +49,54 @@ module.exports = (ScrollbarService, $window, $timeout, $state, $rootScope)->
 					# scenes = on
 					# customController.update()
 					$timeout ->
-						scope.inView = []
-						for i in items
-							if scrollbar.isVisible i
-								scope.inView.push parseInt i.getAttribute 'data-carousel-item'
-							else
-								idx = parseInt i.getAttribute 'data-carousel-item'
-								idx = scope.inView.indexOf idx
-								scope.inView.splice idx, 1 if idx > -1 
+						scope.x = status.offset.x
+						# scope.inView = []
+						# for i in items
+						# 	if scrollbar.isVisible i
+						# 		scope.inView.push parseInt i.getAttribute 'data-carousel-item'
+						# 	else
+						# 		idx = parseInt i.getAttribute 'data-carousel-item'
+						# 		idx = scope.inView.indexOf idx
+						# 		scope.inView.splice idx, 1 if idx > -1 
 						scope.isPrev = if status.offset.x > 0 then on else off
 						scope.isNext = if status.offset.x < scrollbar.limit.x then on else off
 						return
 					, 0
 					return
 				scope.move = (cond)->
-					if cond
-						return if not scope.isNext
-					else
-						return if not scope.isPrev
-					if scope.inView
-						item = if cond then scope.inView[0] + 1 else scope.inView[0] - 1
-					else
-						item = if cond then 1 else 0
-					item = if item < 0 then 0 else item
-					scrollbar.scrollIntoView(items[item])
+					$timeout ->
+						if cond
+							return if not scope.isNext
+						else
+							return if not scope.isPrev
+						# if scope.inView
+						# 	item = if cond then scope.inView[0] + 1 else scope.inView[0] - 1
+						# else
+						# 	item = if cond then 1 else 0
+						# item = if item < 0 then 0 else item
+						for i in items
+							if i.offsetLeft > scope.x
+								if cond 
+									move = i.offsetLeft 
+								else 
+									move = if i.previousElementSibling.previousElementSibling then i.previousElementSibling.previousElementSibling.offsetLeft else 0
+								break
+
+						# console.log first
+						# sibling = if cond then first.nextElementSibling else first.previousElementSibling
+						# move = sibling.offsetLeft
+						#scrollbar.scrollIntoView(items[item])
+						scrollbar.scrollTo move, 0, 750
+						# width = scrollbar.getSize().container.width
+						# divider = if screenSize.is 'min' then 3 else 1.2
+						# cell = width / divider
+						# resto = scope.x % divider
+						# mv = if cond then scope.x + cell else scope.x - cell
+						# mv = mv + resto
+						# console.log scope.x, resto, cell, mv
+						# scrollbar.scrollTo mv, 0, 750
+						return
+					, 20
 					return
 				scope.goto = (index, params)->
 					scrollbar.removeListener()

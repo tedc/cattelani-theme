@@ -15,7 +15,7 @@ catellani
 	.directive 'ngLoader', [ '$timeout', require './loader.coffee'] 
 	.directive 'ngFooter', ["$window", "$document", require './footer.coffee']
 	.directive 'glossaryAutocomplete', [ require './glossary.coffee']
-	.directive 'ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", require './carousel.coffee' ]
+	.directive 'ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", "screenSize", require './carousel.coffee' ]
 	.directive 'clickedElement', ['$rootScope', ($rootScope)->
 		clicked =
 			restrict : 'A'
@@ -42,6 +42,9 @@ catellani
 					top = rect.top
 					height = rect.height
 					bottom = window.innerHeight - rect.bottom
+					if vars.main.mobile
+						height = height + 2
+						bottom = bottom - 2
 					divider = angular.element '<div id="next-divider"></div>'
 					TweenMax.set divider,
 						height : height
@@ -54,14 +57,14 @@ catellani
 					return
 				return
 	]
-	.directive 'homeElement', ['$rootScope', ($rootScope)->
-		restrict : 'A'
-		link : (scope, element)->
-			element.on 'click', ->
-				$rootScope.homeClicked = on
-				return
-			return
-	]
+	# .directive 'homeElement', ['$rootScope', ($rootScope)->
+	# 	restrict : 'A'
+	# 	link : (scope, element)->
+	# 		element.on 'click', ->
+	# 			$rootScope.homeClicked = on
+	# 			return
+	# 		return
+	# ]
 	.directive 'menu', ['$rootScope', ($rootScope)->
 		restrict : 'A'
 		scope : 

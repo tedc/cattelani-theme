@@ -94,6 +94,12 @@ module.exports = ->
 									, 10
 									return
 							return
+					window.dataLayer.push 
+						'event' : 'GAEvent'
+						'eventCategory' : 'Cerca rivenditori'
+						'evetAction' : 'storeSubmit'
+						'eventLabel' : 'Cerca rivenditore'
+						'eventValue' : store.address
 				else
 					getLocations()
 						.then (res)->

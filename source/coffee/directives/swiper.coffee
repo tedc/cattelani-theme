@@ -3,7 +3,7 @@ module.exports = ($timeout, $rootScope, $location, ScrollbarService, screenSize)
 		scope : on
 		link : (scope, element, attr)->
 			screenSize.rules = {
-				min : "screen and (max-width: #{(850/16)}em)"
+				min : "screen and (min-width: #{(850/16)}em)"
 			}	
 			scope.main = {}
 			scope.nav = {}
@@ -15,11 +15,12 @@ module.exports = ($timeout, $rootScope, $location, ScrollbarService, screenSize)
 				if attr.isHome
 					s = element[0].querySelector "[data-collection='#{$rootScope.currentCollection}']"
 					i = parseInt s.getAttribute 'data-index'
-					if $rootScope.homeClicked
-						scope.start = i
-					else	
-						i = if i - 1 is 0 then 0 else i - 1
-						scope.start = i
+					# if $rootScope.homeClicked
+					# 	scope.start = i
+					# else	
+					# 	i = if i - 1 is 0 then 0 else i - 1
+					# 	scope.start = i
+					scope.start = i
 					$rootScope.currentCollection = off
 					$rootScope.homeClicked = off
 			else		
@@ -68,10 +69,10 @@ module.exports = ($timeout, $rootScope, $location, ScrollbarService, screenSize)
 				return
 			$rootScope.isYearsActive = off
 			scroll = ()->
-				if screenSize.is 'min'
+				if not vars.main.mobile
 					offset = if angular.element(document.body).hasClass('admin-bar') then 112 else 80
 				else
-					offset = 120
+					offset = if screenSize.is 'min' then 180 else 140
 				TweenMax.to window, .5,
 					scrollTo :
 						y : "#storia"

@@ -8,6 +8,7 @@ module.exports = ($window, $document)->
 				return
 			resize()
 			w.on 'resize', resize
+			scope.$on 'resize_footer', resize
 			new ScrollMagic.Scene
 					triggerElement: 'body'
 					triggerHook : "onLeave"

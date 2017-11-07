@@ -171,7 +171,7 @@
 			opacity: 0;
 		}
 	}
-	&--active {
+	&--active, .error & {
 		transform: translate3d(0,0,0);
 	}
 	// &__title {
@@ -187,7 +187,7 @@
 		box-shadow: 0 3px 6px transparentize($main-color, .9);
 	}
 	.home &, .tax-collezioni & {
-		display: none;
+		transform: translate3d(0, $f, 0) !important;
 	}
 	// &__container {
 	// 	display: flex;
@@ -353,4 +353,19 @@
 	// 		visibility: visible;
 	// 	}
 	// }
+}
+
+.iubenda {
+	&-cs{
+		&-content {
+			background-color: $dark-color!important;
+		}
+		&-rationale {
+			max-width: 685px!important;
+		}
+		&-banner-content > p {
+			font-size: em(12px, 14px)!important;
+			line-height: 1.2!important;
+		}
+	}
 }
