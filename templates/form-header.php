@@ -11,7 +11,7 @@
         $pTo = get_field('email_address', 'options');
         acf_unset_language_to_default(); 
         $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
-        $rSubject = __('Risposta automatica da') . ' '. htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8");
+        $rSubject = __('Risposta automatica da') . ' '. utf8_encode(get_bloginfo('name'));
         $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
         $errorMessage = __('Verifica di aver compilato bene i campi o scrivi a','catellani');
         $sent = __('Messaggio inviato correttamente','catellani');
@@ -41,7 +41,7 @@
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
             $rEmail->setSubject($rSubject);
-            $rEmail->setFrom(array($pTo => htmlentities(get_bloginfo('name'), ENT_QUOTES, "UTF-8")));
+            $rEmail->setFrom(array($pTo => utf8_encode(get_bloginfo('name'))));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
             if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
