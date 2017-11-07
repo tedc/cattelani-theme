@@ -34,16 +34,13 @@
             $mMailer = Swift_Mailer::newInstance($transport);
             $rEmail = Swift_Message::newInstance();
             $mEmail = Swift_Message::newInstance();
-            $type = $rEmail->getHeaders()->get('Content-Type');
-            $type->setValue('text/html');
-            $type->setParameter('charset', 'utf-8');
             $mEmail->setSubject($pSubject);
             $mEmail->setTo($pTo);
             $mEmail->setBcc(array('e.grandinetti@bspkn.it','hello@bspkn.it'));
             $mEmail->setFrom(array($email => $name));
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
-            $rEmail->setSubject($rSubject);
+            $rEmail->setSubject(base64_encode($rSubject));
             $rEmail->setFrom(array($pTo => get_bloginfo('name')));
             $rEmail->setTo(array($email));
             $rEmail->setBody(template($resp), 'text/html');
