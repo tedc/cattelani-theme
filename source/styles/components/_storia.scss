@@ -206,7 +206,7 @@
 		}
 	}
 	&__slider {	
-		@include breakpoint() {
+		@include breakpoint($bp, false) {
 			padding-top: em($p*4);
 		}
 	}
