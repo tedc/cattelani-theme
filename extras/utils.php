@@ -77,9 +77,9 @@
 				$slider = get_sub_field($field);
 			} else {
 				$slider = get_field('layout', $id)[$row][$field];
+				var_dump($slider);
 			}
 		}
-		var_dump($slider);
 		return $slider;
 	}
 
