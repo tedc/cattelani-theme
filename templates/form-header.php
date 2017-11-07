@@ -34,6 +34,9 @@
             $mMailer = Swift_Mailer::newInstance($transport);
             $rEmail = Swift_Message::newInstance();
             $mEmail = Swift_Message::newInstance();
+            $type = $rEmail->getHeaders()->get('Content-Type');
+            $type->setValue('text/html');
+            $type->setParameter('charset', 'utf-8');
             $mEmail->setSubject($pSubject);
             $mEmail->setTo($pTo);
             $mEmail->setBcc(array('e.grandinetti@bspkn.it','hello@bspkn.it'));
