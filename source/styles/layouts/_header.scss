@@ -508,7 +508,7 @@
 			left: 0;
 			transform-origin: right center;
 		}
-		&:hover, .menu__item--active &, &--active {
+		&:hover, .menu__item--active &, &.menu__link--active {
 			@extend %active;
 		}
 	}
