@@ -1,12 +1,7 @@
 module.exports = ->
     form =
-        #scope: on
-        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "ScrollbarService", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, ScrollbarService)->
-            form = ScrollbarService.getInstance 'form'
-            form
-                .then (scrollbar)->
-                    scrollbar.destroy() if vars.main.mobile
-                    return
+        scope: on
+        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location)->
             $scope.formData = {}
             $scope.submit = (isValid, url)->
                 frmdata = $scope.formData

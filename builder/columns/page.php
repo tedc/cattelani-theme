@@ -12,7 +12,7 @@
 	<?php echo '<p>'.$page->post_excerpt.'</p>'; ?>
 	<div class="section__button section__button--grow-md-top">
 		<a href="<?php echo get_permalink($page->ID); ?>" class="<?php the_sub_field('button'); ?>">
-			<?php echo (get_sub_field('button') == 'more') ? __('Leggi tutto', 'sprfc') : '<span class="button__label">'.get_the_title($page->ID).'</span>'; ?>
+			<?php echo (get_sub_field('button') == 'more') ? __('Leggi tutto', 'catellani') : '<span class="button__label">'.get_the_title($page->ID).'</span>'; ?>
 		</a>
 	</div>
 </div>

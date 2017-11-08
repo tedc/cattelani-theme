@@ -23,7 +23,7 @@ if(get_field('related', $the_id)) :
 			foreach($rels as $rel) :
 			
 		?>
-		<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--s4">
+		<ks-swiper-slide class="swiper-slide swiper-slide--grow-md">
 			<figure class="swiper-slide__image">
 				<?php 
 				echo get_the_post_thumbnail( $rel->ID, 'vertical-thumb', '' );

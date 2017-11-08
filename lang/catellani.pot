@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 # wpml-name: 4a4f14274bc82a225328250a24e94362
-msgid "Ci dispiace, ma dai filtri che hai selezionato non risulta nessuna combinazione presente. Puoi scegliere se resettare i filtri ed esplorare le nostre realizzazioni oppure contattarci per creare assieme un nuovo fantastico progetto."
+msgid "Ci dispiace, ma dai filtri che hai selezionato non risulta nessuna combinazione presente.<br/>Puoi scegliere se resettare i filtri ed esplorare le nostre realizzazioni oppure contattarci per creare assieme un nuovo fantastico progetto."
 msgstr ""
 
 # wpml-name: 0c82838b66f4fc32cbb7011d2d5e6747
@@ -324,3 +324,7 @@ msgstr "Linkable icon"
 # wpml-name: ef7f3f95021f926d4894e146cf9c6997
 msgid "Guarda i dettagli"
 msgstr "More details"
+
+# wpml-name: ef7f3f95021f926d4894e146cf9c6997
+msgid "Leggi tutto"
+msgstr ""

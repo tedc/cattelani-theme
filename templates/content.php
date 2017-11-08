@@ -9,7 +9,7 @@
 		</div>
 		<footer class="type-post__more type-post__more--shrink">
 			
-			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto'); ?></a>
+			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto', 'catellani'); ?></a>
 		</footer>
 	</article>
 </div>
@@ -28,7 +28,7 @@
 		</div>
 		<footer class="type-post__more type-post__more--shrink">
 			
-			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto'); ?></a>
+			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto', 'catellani'); ?></a>
 		</footer>
 	</article>
 </div>
@@ -47,7 +47,7 @@
 		</div>
 		<footer class="type-post__more type-post__more--shrink">
 			
-			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto'); ?></a>
+			<a ng-href="{{post.link}}" ui-sref="app.page({slug : post.slug})" class="type-post__send"><?php _e('Leggi tutto', 'catellani'); ?></a>
 		</footer>
 	</article>
 </div>
