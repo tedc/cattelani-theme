@@ -33,7 +33,7 @@ figure {
 			content: '';
 			transition: $speed visibility, opacity $speed;
 		}
-		img {
+		img.lazy-img {
 			display: none !important;
 		}
 		&.lazy-loaded {
