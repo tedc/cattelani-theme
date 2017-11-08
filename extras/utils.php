@@ -66,6 +66,7 @@
 
 	
 	function get_slider($field, $id, $row, $main = false) {
+		global $sitepress;
 		if($main) {
 			if(get_field($field)) {
 				$slider = get_field($field);
@@ -84,6 +85,9 @@
 					endif;
 				endwhile;
 			}
+		}
+		if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()){
+			$slider = array_reverse($slider);
 		}
 		return $slider;
 	}
