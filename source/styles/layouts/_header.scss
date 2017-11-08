@@ -413,10 +413,13 @@
 		background: $w;
 		align-items: center;
 		max-height: 100vh;
+		.handheld & {
+			display: block !important;
+		}
 		.admin-bar.logged-in & {
 			max-height: calc(100vh - 32px);
 		}
-		.scroll-content {
+		.scroll-content, .handheld & {
 			margin: auto;
 			padding: {
 				top: em($p*4);
