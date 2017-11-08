@@ -732,4 +732,4 @@ function lang_redirect() {
 	$lang = $translations[$lang];
 	var_dump($lang);
 }
-//add_action('init', 'lang_redirect');
+add_action('pre_get_posts', 'lang_redirect');
