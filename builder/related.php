@@ -1,9 +1,11 @@
 <?php 
-if(get_field('related')) : 
+global $sitepress;
+$the_id = id_by_lang($post->ID, 'lampade', $sitepress->get_default_language());
+if(get_field('related', $the_id)) : 
 	$rels = get_posts(
 		array(
 			'post_type' => 'lampade',
-			'post__in' => get_field('related'),
+			'post__in' => get_field('related', $the_id),
 			'posts_per_page' => -1,
 			'orderby' => 'post__in',
 			'suppress_filters' => 0
