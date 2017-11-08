@@ -4,7 +4,7 @@ if(get_field('related')) :
 		array(
 			'post_type' => 'lampade',
 			'post__in' => get_field('related'),
-			'posts_per_page' => count(get_field('realted')),
+			'posts_per_page' => -1,
 			'orderby' => 'post__in',
 			'suppress_filters' => 0
 		)
