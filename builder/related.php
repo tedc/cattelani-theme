@@ -21,15 +21,9 @@ if(get_field('related', $the_id)) :
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php
 			foreach($rels as $rel) :
-			if($count == 1) {
-				$size = 'swiper-slide--s12';
-			} elseif($count == 2) {
-				$size = 'swiper-slide--s6';
-			} else {
-				$size = 'swiper-slide--s4';
-			}
+			
 		?>
-		<ks-swiper-slide class="swiper-slide swiper-slide--grow-md <?php echo $size; ?>">
+		<ks-swiper-slide class="swiper-slide swiper-slide--grow-md swiper-slide--s4">
 			<figure class="swiper-slide__image">
 				<?php 
 				echo get_the_post_thumbnail( $rel->ID, 'vertical-thumb', '' );
