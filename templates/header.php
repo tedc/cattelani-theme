@@ -46,7 +46,8 @@
         <?php get_template_part( 'templates/aside', null ); ?>  
         <?php
         if (has_nav_menu('primary_navigation')) :
-            echo '<div class="banner__menu banner__menu--grid banner__menu--shrink" scrollbar>';
+            $scrollbar = (!is_handheld()) ? ' scrollbar' : '';
+            echo '<div class="banner__menu banner__menu--grid banner__menu--shrink"'.$scrollbar.'>';
             bem_menu('primary_navigation', 'menu', 'menu--grid menu--grow-lg');
             echo '</div>';
         endif;
