@@ -715,6 +715,7 @@ add_filter( 'post_mime_types', 'modify_post_mime_types' );
 
 function lang_redirect() {
 	global $sitepress;
+	global $post;
 	$languages = apply_filters('wpml_active_languages', null);
     $translations = [];
     $type = (is_tax()) ? get_queried_object()->taxonomy : get_post_type();
