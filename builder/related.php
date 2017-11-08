@@ -11,10 +11,9 @@ if(get_field('related', $the_id)) :
 			'suppress_filters' => 0
 		)
 	);
-	$count = count($rels);
 	
 ?>
-<div class="related related--shrink-fw related--grow-md related--gray<?php echo ($count<=2) ? ' related--centered' : ''; ?>" id="related_<?php the_ID(); ?>" ng-swiper>
+<div class="related related--shrink-fw related--grow-md related--gray<?php echo (count($rels)<=2) ? ' related--centered' : ''; ?>" id="related_<?php the_ID(); ?>" ng-swiper>
 	<header class="related__header related__header--grow-md">
 		<h4 class="related__title related__title--aligncenter-medium-lighter"><?php _e('Le lampade utilizzate', 'catellani'); ?></h4>
 	</header>
