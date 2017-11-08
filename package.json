@@ -30,6 +30,7 @@
     "@uirouter/angularjs": "^1.0.5",
     "angular": "^1.6.3",
     "angular-animate": "^1.6.3",
+    "angular-cookies": "^1.6.6",
     "angular-google-analytics": "^1.1.8",
     "angular-google-maps": "^2.4.1",
     "angular-lazy-image": "^0.3.4",

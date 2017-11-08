@@ -212,11 +212,15 @@
 		margin-top: em($p*5);
 		transition: opacity $speed*1.5, visibility $speed*1.5, transform $speed*1.5;
 		timing-function: ceaser($easeOutBack);
-		.scroll-content {
+		.scroll-content, .handheld & {
 			display: flex;
 			position: relative;
 			flex-wrap: wrap;
 			padding-bottom: em($p*2);
+		}
+		.handheld & {
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
 		}
 		&--changing {
 			opacity: 0;

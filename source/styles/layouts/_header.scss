@@ -629,6 +629,20 @@
 	}
 }
 
+.ie-alert {
+	position: fixed;
+	width: $f;
+	text-align: center;
+	color: $w;
+	background: red;
+	padding: 20px;
+	line-height: 1.25;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999999999;
+}
+
 @keyframes scroll {
 	0% {
 		transform: translate3d(-50%, 0, 0) scaleY(1);

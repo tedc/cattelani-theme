@@ -712,24 +712,3 @@
  
 // Add Filter Hook
 add_filter( 'post_mime_types', 'modify_post_mime_types' );
-
-function lang_redirect() {
-	global $sitepress;
-	global $post;
-	$languages = apply_filters('wpml_active_languages', null);
-    $translations = [];
-    $type = (is_tax()) ? get_queried_object()->taxonomy : get_post_type();
-    $the_id = (is_tax()) ? get_queried_object()->term_id : $post->ID;    
-    foreach ($languages as $language) {
-        $post_id = apply_filters('wpml_object_id', $the_id, $type, false, $language['language_code']);
-        $href = (is_tax()) ? get_term_link($post_id, $object['taxonomy']) : get_permalink($post_id);
-        if(!empty($post_id)) {
-           $translations[$language['language_code']] = $href;
-        } 
-    }
-	$lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-	$lang = explode('-', $lang)[0];
-	$lang = $translations[$lang];
-	var_dump($lang);
-}
-add_action('pre_get_posts', 'lang_redirect');

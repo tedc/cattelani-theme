@@ -69,9 +69,9 @@
 			<div class="search__result" ng-if="select.fonti.length > 0"><span class="search__sep" ng-if="select.collezioni.length > 0 || select.posizioni.length > 0">&mdash;</span><span><?php _e('Fonti'); ?>:</span> <strong ng-repeat="f in select.fonti">{{($index > 0) ? ', ' : ' '}}{{f}} <i class="icon-close" ng-click="clear(f)"></i></strong></div>
 
 		</div>
-		<div class="search__items search__items--shrink-fw" scrollbar="search" speed="1.5">
+		<div class="search__items search__items--shrink-fw"<?php if(!is_handheld()) : ?> scrollbar="search" speed="1.5"<?php endif; ?>>
 			<p class="search__cell search__cell--found search__cell--grow-md" ng-if="filtered() && isLoading">
-				<span><?php _e('Ci dispiace, ma non ci sono elementi che corrispondono alla tua ricerca perché stiamo lavorando a questa combinazione di prodotto. Chiamaci allo', 'catellani'); ?> <a href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', $phone)); ?>"><?php
+				<span><?php _e('Ci dispiace, ma non ci sono elementi che corrispondono alla tua ricerca. Se vuoi creare insieme a noi questo nuovo prodotto chiamaci allo', 'catellani'); ?> <a href="tel:<?php echo preg_replace('/[^0-9,.]/','',str_replace('+', '00', $phone)); ?>"><?php
 		echo $phone; ?></a> <?php _e('per scoprire di cosa si tratta.', 'catellani'); ?></a></span>
 			</p>
 			<a class="search__cell search__cell--grow-md" ng-repeat="item in items | taxSearch:search | orderBy:order" ui-sref="app.page({slug : item.slug, lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})" on-finish-render="search_ended">

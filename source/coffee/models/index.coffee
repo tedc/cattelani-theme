@@ -1,12 +1,17 @@
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
-	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", ($transitions, $state, $location, $rootScope, $timeout, $stateParams)->
+	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams","$cookies","$window", ($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window)->
 		FastClick.attach document.body
 		$rootScope.isAnim = 'is-anim'
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
+		langCookie = $cookies.get('lang')
+		if not langCookie
+			currentDate = new Date()
+			tomorrow = currentDate.setDate(currentDate.getDate() + 1);
+			$cookies.put('lang', 1, {expires : tomorrow})
 		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onBefore {}, (trans)->
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})

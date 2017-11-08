@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 
 # wpml-name: 4a4f14274bc82a225328250a24e94362
-msgid "Ci dispiace, ma dai filtri che hai selezionato non risulta nessuna combinazione presente.<br/>Puoi scegliere se resettare i filtri ed esplorare le nostre realizzazioni oppure contattarci per creare assieme un nuovo fantastico progetto."
+msgid "Ci dispiace, ma nessuna combinazione soddisfa i filtri selezionati.<br/>Puoi scegliere se resettare i filtri e riprovare oppure contattarci per creare insieme un nuovo fantastico progetto."
 msgstr ""
 
 # wpml-name: 0c82838b66f4fc32cbb7011d2d5e6747
@@ -30,7 +30,7 @@ msgid "per scoprire di cosa si tratta."
 msgstr ""
 
 # wpml-name: 8df352788a2777e342cb3985450f7ad2
-msgid "Ci dispiace, ma non ci sono elementi che corrispondono alla tua ricerca perché stiamo lavorando a questa combinazione di prodotto. Chiamaci allo"
+msgid "Ci dispiace, ma non ci sono elementi che corrispondono alla tua ricerca. Se vuoi creare insieme a noi questo nuovo prodotto chiamaci allo"
 msgstr ""
 
 # wpml-name: 0fa3c82b1dcd0b2c9efa017a7bedc7fc
@@ -327,4 +327,8 @@ msgstr "More details"
 
 # wpml-name: ef7f3f95021f926d4894e146cf9c6997
 msgid "Leggi tutto"
+msgstr ""
+
+# browsers
+msgid "You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience."
 msgstr ""
