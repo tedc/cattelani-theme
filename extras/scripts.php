@@ -2,6 +2,7 @@
 	use Roots\Sage\Assets;
 	function catellani_script() {
 		global $sitepress;
+		global $post;
 		// $terms = get_terms('collezioni');
 		// $max_posts = [];
 		// foreach ($terms as $term) {
