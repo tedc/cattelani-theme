@@ -83,6 +83,7 @@
 		wp_localize_script( 'catellanijs', 'vars', $vars );
 		wp_deregister_script( 'cffscripts' );
 		wp_deregister_script( 'sb_instagram_scripts' );
+		wp_deregister_script( 'wp-embed' );
 	}
 
 	add_action('wp_enqueue_scripts', 'catellani_script', 200);
