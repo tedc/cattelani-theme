@@ -547,7 +547,8 @@ add_filter( 'posts_where', 'my_geo_where', 10, 2 );
 
 // filter functions for our query
 function my_geo_fields( $fields, $query ) {
-    $radius = ( wpsl_get_distance_unit() == 'km' ) ? 6371 : 3959;
+    //$radius = ( wpsl_get_distance_unit() == 'km' ) ? 6371 : 3959;
+    $radius = 6371;
     if (isset($query->query_vars['order_location'])) {
         $coords = explode(',', $query->query_vars['order_location']);
         $lat = $coords[0];
