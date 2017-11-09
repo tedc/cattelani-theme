@@ -173,27 +173,23 @@ module.exports = ->
 					.getMap()
 					.then (map)-> 
 						store.map = map
-						if navigator.gelocation
+						if navigator.geolocation
+								console.log on
 								NavigatorGeolocation
 									.getCurrentPosition()
 										.then (position)->
 											store.coords = "#{position.coords.latitude},#{position.coords.longitude}"
+											GeoCoder.geocode { location : {lat : parseInt(store.coords.split(',')[0]), lng : parseInt(store.coords.split(',')[1])}}
+												.then (res)->
+													store.address = res[0].formatted_address
+													store.onSubmit()
+													return
 											return
 										.catch (err)->
 											store.coords = "#{store.map.getCenter().lat()},#{store.map.getCenter().lng()}" if not angular.equals {}, store.map		
 											return
-								GeoCoder.geocode { location : {lat : parseInt(store.coords.split(',')[0]), lng : parseInt(store.coords.split(',')[1])}}
-									.then (res)->
-										store.address = res[0].formatted_address
-										return
-						# else
-						# 	GeoCoder.geocode { address : {lat : parseInt(store.coords.split(',')[0]), lng : parseInt(store.coords.split(',')[1])}}
-						# 		.then (res)->
-						# 			store.address = res[0].formatted_address
-						# 			return
-						# 	store.coords = "#{store.map.getCenter().lat()},#{store.map.getCenter().lng()}" if not angular.equals {}, store.map 			
-						
-						store.onSubmit()
+						else
+							store.onSubmit()
 						return
 				return
 			store.zoom = (cond)->

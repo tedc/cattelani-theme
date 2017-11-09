@@ -55913,24 +55913,27 @@ module.exports = function() {
         getMap = function() {
           NgMap.getMap().then(function(map) {
             store.map = map;
-            if (navigator.gelocation) {
+            if (navigator.geolocation) {
+              console.log(true);
               NavigatorGeolocation.getCurrentPosition().then(function(position) {
                 store.coords = position.coords.latitude + "," + position.coords.longitude;
+                GeoCoder.geocode({
+                  location: {
+                    lat: parseInt(store.coords.split(',')[0]),
+                    lng: parseInt(store.coords.split(',')[1])
+                  }
+                }).then(function(res) {
+                  store.address = res[0].formatted_address;
+                  store.onSubmit();
+                });
               })["catch"](function(err) {
                 if (!angular.equals({}, store.map)) {
                   store.coords = (store.map.getCenter().lat()) + "," + (store.map.getCenter().lng());
                 }
               });
-              GeoCoder.geocode({
-                location: {
-                  lat: parseInt(store.coords.split(',')[0]),
-                  lng: parseInt(store.coords.split(',')[1])
-                }
-              }).then(function(res) {
-                store.address = res[0].formatted_address;
-              });
+            } else {
+              store.onSubmit();
             }
-            store.onSubmit();
           });
         };
         store.zoom = function(cond) {
@@ -56423,12 +56426,26 @@ catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", "$cookies", "$window", function($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window) {
-    var oldUrl;
+    var currentDate, langCookie, oldUrl, redirect, url;
     FastClick.attach(document.body);
     $rootScope.isAnim = 'is-anim';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
+    langCookie = $cookies.get('lang');
+    console.log(langCookie);
+    if (!langCookie) {
+      currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 1);
+      $cookies.put('lang', 1, {
+        'expires': currentDate
+      });
+      redirect = vars.main.redirect;
+      if (redirect.current !== redirect.lang) {
+        url = redirect.url;
+        $window.location.href = url;
+      }
+    }
     $transitions.onBefore({}, function(trans) {
       var newUrl;
       newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {
@@ -56461,7 +56478,6 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
         } else {
           delete $rootScope.menuItem;
         }
-        console.log($rootScope.menuItem);
       }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
         return false;

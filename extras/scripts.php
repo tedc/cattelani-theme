@@ -1,5 +1,8 @@
 <?php
 	use Roots\Sage\Assets;
+	function in_array_r($item , $array){
+    	return preg_match('/"'.json_encode($item).'"/i' , json_encode($array));
+	}
 	function catellani_script() {
 		global $sitepress;
 		global $post;
@@ -37,17 +40,24 @@
         $languages = apply_filters('wpml_active_languages', null);
 	    $translations = [];
 	    $type = (is_tax()) ? get_queried_object()->taxonomy : get_post_type();
-	    $the_id = (is_tax()) ? get_queried_object()->term_id : $post->ID;    
+	    $the_id = (is_tax()) ? get_queried_object()->term_id : $post->ID;
+	    $front_page = []; 
 	    foreach ($languages as $language) {
-	        $post_id = apply_filters('wpml_object_id', $the_id, $type, false, $language['language_code']);
+	    	$current_lang = $language['language_code'];
+        	$post_id = apply_filters('wpml_object_id', $the_id, $type, false, $current_lang);
 	        $href = (is_tax()) ? get_term_link($post_id, $object['taxonomy']) : get_permalink($post_id);
-	        if(!empty($post_id)) {
-	           $translations[$language['language_code']] = $href;
-	        } 
+	        $front_page[$current_lang] = get_permalink(apply_filters('wpml_object_id', get_option('page_on_front'), $type, false, $current_lang));
+	        $href = (is_front_page()) ? $front_page : $href;
+	        $translations[$current_lang] = $href;
 	    }
 		$lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		$lang = explode('-', $lang)[0];
-		$url = $translations[$lang];
+		if($lang != $sitepress->get_default_language()) {
+			$lang = in_array_r(array('language_code'=>$lang), $languages) ? $lang : 'en';
+		} else {
+			$lang = $lang;
+		}
+		$url = isset($translations[$lang]) ? $translations[$lang] : $front_page[$lang];
 		$redirect = array('current' => ICL_LANGUAGE_CODE, 'url' => $url, 'lang' => $lang);
 		
 		$vars = array(
