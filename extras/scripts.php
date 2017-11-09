@@ -46,7 +46,7 @@
 	    	$current_lang = $language['language_code'];
         	$post_id = apply_filters('wpml_object_id', $the_id, $type, false, $current_lang);
 	        $href = (is_tax()) ? get_term_link($post_id, $object['taxonomy']) : get_permalink($post_id);
-	        $front_page[$current_lang] = get_permalink(apply_filters('wpml_object_id', get_option('page_on_front'), $type, false, $current_lang));
+	        $front_page[$current_lang] = $sitepress->convert_url(get_home_url(), $current_lang);
 	        $href = (is_front_page()) ? $front_page : $href;
 	        $translations[$current_lang] = $href;
 	    }
