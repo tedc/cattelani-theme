@@ -8,6 +8,7 @@ catellani
 	# 	wp
 	.factory 'wpApi', ['$http', ($http)->
 		deafults =
+			base : "#{vars.main.base}"
 			name : 'wp'
 			ver : 'v2'
 			endpoint : ''
@@ -15,7 +16,7 @@ catellani
 		(options)->
 			options = angular.extend {}, deafults, options
 			$http
-				.get "#{vars.main.base}/wp-json/#{options.name}/#{options.ver}/#{options.endpoint}",
+				.get "#{options.base}/wp-json/#{options.name}/#{options.ver}/#{options.endpoint}",
 					params : options.params
 	]
 	.factory 'transformRequestAsFormPost', ->

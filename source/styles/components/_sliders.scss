@@ -608,18 +608,18 @@
 		width: $f;
 		margin: 0 auto;
 		position: relative;
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		&:before {
-			flex: 0 0 auto;
-			content: '';
-			display: block;
-			width: $f;
-			//padding-top: calc(100vh - #{em($p*7)});
-			height: calc(100vh - #{em($p*7)});
-			max-height: em(600px);
-		}
+		// display: flex;
+		// justify-content: center;
+		// flex-wrap: wrap;
+		// &:before {
+		// 	flex: 0 0 auto;
+		// 	content: '';
+		// 	display: block;
+		// 	width: $f;
+		// 	//padding-top: calc(100vh - #{em($p*7)});
+		// 	height: calc(100vh - #{em($p*7)});
+		// 	max-height: em(600px);
+		// }
 	}
 	&--lampade {
 		.swiper-container {
@@ -635,15 +635,40 @@
 	}
 	.swiper-button-prev, .swiper-button-next {
 		@extend %arrows;
+		position: absolute;
+		top: 50%;
+		display: flex;
+		align-items: center;
+		margin-top: ($p/4) * -1;
+		&:before {
+			font-size: 8px;
+			color: $dark-color !important;
+		}
+		z-index: 200;
+		background-color: $w;
+		width: $p*2;
+		height: $p*2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: $p*2;
+		// transform: translate3d(0, -50%, 0);
 	}
 	.swiper-button-prev {
-		order: 0;
-		margin-right: em(90px);
-		&:hover:before {
-			.desktop & {
-				transform: translate3d($p/2, 0, 0);
-			}
+		// order: 0;
+		// margin-right: em(90px);
+		left: 10px;
+		@include breakpoint(640px) {
+			left: em($p);	
 		}
+		@include breakpoint() {
+			left: em($p*2);	
+		}
+		// &:hover:before {
+		// 	.desktop & {
+		// 		transform: translate3d($p/2, 0, 0);
+		// 	}
+		// }
 	}
 	.swiper-pagination {
 		order: 1;
@@ -667,24 +692,52 @@
 		}
 	}
 	.swiper-button-next {
-		order: 2;
-		margin-left: em(90px);
+		// order: 2;
+		// margin-left: em(90px);
+		right: 10px;
+		@include breakpoint(640px) {
+			right: em($p);	
+		}
+		@include breakpoint() {
+			right: em($p*2);	
+		}
 	}
 	.swiper-wrapper {
 		overflow: hidden;
 		display: flex;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: calc(100vh - #{em($p*8)});
-		max-height: em(600px - ($p*2));
+		// position: absolute;
+		// top: 0;
+		// left: 0;
+		// right: 0;
+		// height: calc(100vh - #{em($p*8)});
+		// max-height: em(600px - ($p*2));
 	}
 	.swiper-slide {
-		flex: 0 0 auto;
-		@include cover;
+		flex: 0 0 auto;	
+		line-height: 0;
+		width: $f;
+		display: flex;
+		text-align: center;
 		img {
-			display: none;
+			visibility: hidden;
+			width: $f;
+			display: block;
+		}
+		&__figure {
+			// display: inline-block;
+			// max-width: $f;
+			width: $f;
+			@include cover($size : contain);
+			height: 75vw;
+			//max-height: em(600px - ($p*2));
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			@include breakpoint() {
+				height: calc(100vh - #{em($p*8)});
+			}
 		}
 	}
 	&__pagination {
@@ -762,13 +815,13 @@
 					background-image: linear-gradient(to bottom, $lighter-color 0, $lighter-color em($p*8), transparentize($w, 1) em($p*8), transparentize($w, 1) 100%);
 				}
 				&:before {
-					background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*16)}), $lighter-color calc(100vh - #{em($p*16)}), $lighter-color 100%);
+					background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) calc(75vw - #{em($p*8)}), $lighter-color calc(75vw - #{em($p*8)}), $lighter-color 100%);
 				}
-				@media screen and (min-height: #{em(600px)}) {
+				@include breakpoint() {
 					&:before {
-						background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) em(400px), $lighter-color em(400px), $lighter-color 100%);
+						background-image: linear-gradient(0deg, transparentize($w, 1) 0, transparentize($w, 1) calc(100vh - #{em($p*16)}), $lighter-color calc(100vh - #{em($p*16)}), $lighter-color 100%);
 					}
-				}	
+				}
 			}
 		}
 	}

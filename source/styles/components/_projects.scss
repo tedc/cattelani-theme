@@ -31,7 +31,8 @@
 		}
 	}
 	&__cell {
-		display: flex;
+		//display: flex;
+		position: relative;
 		@include grow();
 		&:before {
 			display: block;
@@ -109,11 +110,15 @@
 		align-items: center;
 		align-content: center;
 		flex-wrap: wrap;
-		width: $f;
+		//width: $f;
 		color: $w;
-		position: relative;
 		@include cover;
 		padding: em($p*2);
+		position: absolute;
+		top: em($p);
+		bottom: em($p);
+		left: 0;
+		right: 0;
 		&:before, &[ng-lazy-img]:before {
 			@include full;
 			content: '';
@@ -167,10 +172,16 @@
 		.projects__cell {
 			@include breakpoint() {
 				&:nth-child(odd) {
-					padding-right: em($p);
+					//padding-right: em($p);
+					.projects__content {
+						right: em($p);
+					}
 				}
 				&:nth-child(even) {
-					padding-left: em($p);
+					//padding-left: em($p);
+					.projects__content {
+						left: em($p);
+					}
 				}
 			}
 		}

@@ -79,10 +79,14 @@
 		}
 	}
 	.swiper-slide {
+		width: $f;
 		flex: 0 0 auto;
 		padding: {
 			left: em($p);
 			right: em($p);
+		}
+		@include breakpoint() {
+			width: $f/3;
 		}
 		&__title {
 			font-size: em(18px);

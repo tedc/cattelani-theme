@@ -43,7 +43,6 @@ catellani
 					height = rect.height
 					bottom = window.innerHeight - rect.bottom
 					if vars.main.mobile
-						height = height + 2
 						bottom = bottom - 2
 					divider = angular.element '<div id="next-divider"></div>'
 					TweenMax.set divider,
@@ -168,7 +167,7 @@ catellani
 			_appendImg = ->
 				if not img
 					element.addClass 'lazy-loading'
-					img = angular.element "<img src='#{src}' />"
+					img = angular.element "<img src='#{src}' class='lazy-img' />"
 					img.one 'load', _loaded
 					img.one 'error', _error
 					element.append img
@@ -179,7 +178,9 @@ catellani
 				img.remove()
 				return
 			_error = ->
-				element.addClass 'lazy-loading-error'
+				element.removeClass 'lazy-loading'
+				element.addClass 'lazy-loaded'
+				img.remove()
 				return
 			_appendImg()
 			return

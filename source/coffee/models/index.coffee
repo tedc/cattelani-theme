@@ -7,12 +7,12 @@ catellani
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
-		langCookie = $cookies.get('lang')
-		console.log langCookie
-		if not langCookie
-			currentDate = new Date()
-			tomorrow = currentDate.setDate(currentDate.getDate() + 1);
-			$cookies.put('lang', 1, {expires : tomorrow})
+		# langCookie = $cookies.get('lang')
+		# console.log langCookie
+		# if not langCookie
+		# 	currentDate = new Date()
+		# 	tomorrow = currentDate.setDate(currentDate.getDate() + 1);
+		# 	$cookies.put('lang', 1, {'expires' : tomorrow})
 		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onBefore {}, (trans)->
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})

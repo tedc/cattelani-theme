@@ -7,7 +7,10 @@ module.exports = ->
         controller : [ '$scope', "$attrs", "$timeout", "wpApi", ($scope, $attrs, $timeout, wpApi)->
             $scope.resize = (url)->
                 return url.replace('150x150/', '640x640/')
+            regex = new RegExp("(#{vars.main.langs})$", "g");
+            new_base = vars.main.base.replace(/\/$/g, '').replace(regex, '')
             wpApi
+                base : new_base
                 endpoint : 'instagram'
                 name : 'api'
                 ver : 'v1'
