@@ -33,7 +33,22 @@
         	$translations[] = $language['language_code'];
         }
         $codes = join('|', $translations);
-            
+        $languages = apply_filters('wpml_active_languages', null);
+	    $translations = [];
+	    $type = (is_tax()) ? get_queried_object()->taxonomy : get_post_type();
+	    $the_id = (is_tax()) ? get_queried_object()->term_id : $post->ID;    
+	    foreach ($languages as $language) {
+	        $post_id = apply_filters('wpml_object_id', $the_id, $type, false, $language['language_code']);
+	        $href = (is_tax()) ? get_term_link($post_id, $object['taxonomy']) : get_permalink($post_id);
+	        if(!empty($post_id)) {
+	           $translations[$language['language_code']] = $href;
+	        } 
+	    }
+		$lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		$lang = explode('-', $lang)[0];
+		$url = $translations[$lang];
+		$redirect = array('current' => ICL_LANGUAGE_CODE, 'url' => $url, 'lang' => $lang);
+		
 		$vars = array(
 			"main" => array(
 				'mobile' => (bool)is_handheld(),
@@ -46,11 +61,12 @@
 				'body_classes' => $body_classes,
 				'langs' => $codes,
 				'error' => $error,
-				'errorTitle' => __('Pagina non trovata', 'catellani')
+				'errorTitle' => __('Pagina non trovata', 'catellani'),
+				'redirect' => $redirect
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
-				'start_latlng' => get_option('wpsl_settings')['start_latlng'],
+				'start_latlng' => get_option('wpsl_settings')['start_name'],
 				'store_limit' => get_option('wpsl_settings')['autoload_limit'],
 				'count_posts' => $posts,
 				'count_collections' => count(get_terms(array('taxonomy' => 'collezioni'))),
@@ -81,9 +97,7 @@
 		};
 	</script>
 	<script type="text/javascript" src="//cdn.iubenda.com/cookie_solution/safemode/iubenda_cs.js" charset="UTF-8" async></script>
-	<!-- Google Tag Manager -->
 	<script>
-	var dataLayer = [];
 	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
