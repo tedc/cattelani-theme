@@ -57,7 +57,7 @@
 		} else {
 			$lang = $lang;
 		}
-		$url = isset($translations[$lang]) ? $translations[$lang] : $front_page[$lang];
+		$url = (isset($translations[$lang])) ? $translations[$lang] : $front_page[$lang];
 		$redirect = array('current' => ICL_LANGUAGE_CODE, 'url' => $url, 'lang' => $lang);
 		
 		$vars = array(
