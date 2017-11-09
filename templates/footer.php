@@ -3,7 +3,7 @@
     <?php 
         $custom_logo_id = get_theme_mod( 'custom_logo' );
         $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-        echo print_svg(get_home_url() . $image[0]);
+        echo print_svg($image[0]);
         ?>
     </a>
     <div class="footer__container footer__container--grow-md-bottom footer__container--grid">
