@@ -6,14 +6,14 @@
 		wp_deregister_style( 'wpsl-styles' );
 		wp_deregister_style( 'sb_instagram_icons' );
 		wp_deregister_style( 'glossary-hint' );
-		wp_deregister_style( 'catellanicss' );
+		//wp_deregister_style( 'catellanicss' );
 	}	
 	add_action( 'wp_print_styles', 'deregister_styles', 100 );
 
 	function my_styles_method() {
 		get_template_part('templates/above-the-fold');
 	}
-	add_action( 'wp_head', 'my_styles_method' );
+//	add_action( 'wp_head', 'my_styles_method' );
 
 	function media_styles($html, $handle, $href, $media) {
 		if($media != 'none') {
