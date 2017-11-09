@@ -174,3 +174,21 @@ strong {
 @include grid();
 @include flex-align();
 @include shrink();
+
+%pos_Abs {
+    width: $f;
+    z-index: 1;
+    position: absolute;
+    height: 100vh;
+    overflow: hidden !important;
+    display: none;
+    .logged-in.admin-bar & {
+        height: calc(100vh - 32px);
+    }
+}
+%blurry_fix {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    filter: blur(0);
+}

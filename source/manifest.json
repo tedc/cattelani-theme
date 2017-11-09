@@ -20,6 +20,11 @@
         "styles/main.scss"
       ],
       "bower" : ["normalize-css"]
+    },
+    "above-the-fold.css": {
+      "files": [
+        "styles/above-the-fold.scss"
+      ]
     }
   },
   "config": {

@@ -264,14 +264,6 @@
 				display: flex;
 			}
 		}
-		&--toggle {
-			&:before {
-				content: attr(data-label);
-				padding-right: em($p);
-				display: inline-block;
-				visibility: hidden;
-			}
-		}
 		&--close {
 			opacity: 0;
 			&:hover {
