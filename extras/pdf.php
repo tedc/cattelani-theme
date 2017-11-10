@@ -46,19 +46,20 @@
 							<td class="sheet__top-right"><?php _e('Scheda tecnica', 'catellani'); ?></td>
 							</tr>
 						</table>
+						<div class="sheet__figure">
+							<div class="sheet__image">
+								<?php the_post_thumbnail('full'); ?>
+							</div>
+						</div>
 						<table class="sheet__items">
-						<?php $count = count(get_field('sheet_items')) - 1; $c = 0; while(have_rows('sheet_items')) : the_row(); ?>		
+						<?php $count = count(get_field('sheet_items')) - 1; $c = 0; while(have_rows('sheet_items')) : the_row(); if(!get_sub_field('sheet_links')) :?>		
 							<tr>
 							<td class="sheet__cell">
 								<strong><?php the_sub_field('sheet_title'); ?></strong>
 							</td>
 							<td class="sheet__cell">
 								<?php 
-								if(get_sub_field('sheet_links')) :
-									foreach (get_sub_field('sheet_links') as $link) : ?>
-									<p><a href="<?php echo $link['sheet_link']; ?>" class="sheet__send" target="_blank"><span><?php echo $link['sheet_link_name']; ?></span></a></p>
-								<?php endforeach;
-								else :
+								
 									if(get_sub_field('cod')):
 										$table = trim( get_sub_field('sheet_content'));
 										$table = explode('<br />', $table);
@@ -88,11 +89,11 @@
 										$content = str_replace("<table></table>", "", $content);
 										echo $content; 
 									endif;
-								endif;
+								
 							?>
 							</td>
 							</tr>
-						<?php $c++; endwhile; ?>			
+						<?php $c++; endif; endwhile; ?>			
 						</table>
 						<table class="sheet__bottom">
 							<tr>
