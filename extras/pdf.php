@@ -101,6 +101,9 @@
 			wp_reset_query();
 			wp_reset_postdata();
 		endif;
-		//die( generatePdf($html, $title) );
-		die( $html );
+		if($html != '') :
+			die( generatePdf($html, $title) );
+		else :
+			die( '<div class="pdf-error">'.__('Il PDF cercato non è disponibile').'</div>' );
+		endif;
 	}
