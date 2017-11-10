@@ -17,6 +17,7 @@ $sage_includes = [
   'extras/utils.php',
   'extras/wpml.php',
   'extras/api.php',
+  // 'extras/pdf.php',
 ];
 
 foreach ($sage_includes as $file) {

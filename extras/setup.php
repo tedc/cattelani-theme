@@ -704,7 +704,7 @@
     // then we define an array with the label values
  
     $post_mime_types['application/pdf'] = array( __( 'PDFs' ), __( 'Manage PDFs' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'PDFs <span class="count">(%s)</span>' ) );
- 
+ 	
     // then we return the $post_mime_types variable
     return $post_mime_types;
  
@@ -712,3 +712,9 @@
  
 // Add Filter Hook
 add_filter( 'post_mime_types', 'modify_post_mime_types' );
+
+function add_query_vars_filter( $vars ){
+	  $vars[] = "post_pdf";
+	  return $vars;
+}
+add_filter( 'query_vars', 'add_query_vars_filter' );

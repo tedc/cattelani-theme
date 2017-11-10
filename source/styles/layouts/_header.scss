@@ -171,7 +171,7 @@
 				.opened &, .white &,  body:not(.home):not(.single-lampade):not(.tax-collezioni) & {
 					fill: $dark-color !important;
 				}
-				.menu-opened & {
+				.menu-opened &, body:not(.home):not(.single-lampade):not(.tax-collezioni) .menu-opened & {
 					fill: $dark-color !important;
 					@include breakpoint() {
 						fill: $w !important;

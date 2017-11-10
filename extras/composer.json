@@ -1,5 +1,6 @@
 {
     "require": {
-        "instaphp/instaphp": "^2.0"
+        "instaphp/instaphp": "^2.0",
+        "dompdf/dompdf": "^0.8.1"
     }
 }
