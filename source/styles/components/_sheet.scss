@@ -14,6 +14,10 @@
 			}
 		}
 	}
+	&__pdf {
+		@include grow('md', 'top');
+		text-align: center;
+	}
 	&__item {
 		@include breakpoint($bp, false) {
 			text-align: center;
