@@ -30,6 +30,7 @@
 				top: em(90px);
 			}
 		}
+
 		&--search {
 			align-items: stretch;
 			> * {
@@ -38,7 +39,7 @@
 				}
 			}
 		}
-		&[scrollbar="form"] {
+		&--contact {
 			.handheld & {
 				overflow-y: scroll;
 				-webkit-overflow-scrolling: touch;

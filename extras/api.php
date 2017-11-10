@@ -561,9 +561,20 @@ function my_geo_fields( $fields, $query ) {
 function my_geo_join( $join, $query ) {
     if (isset($query->query_vars['order_location'])) {
         global $wpdb;
+        if(isset($_GET['categorie'])) {
+          $filter_ids = array_map( 'absint', explode( ',', $_GET['categorie'] ) );
+          $cat_filter = "INNER JOIN $wpdb->term_relationships AS term_rel ON posts.ID = term_rel.object_id
+                               INNER JOIN $wpdb->term_taxonomy AS term_tax ON term_rel.term_taxonomy_id = term_tax.term_taxonomy_id
+                                      AND term_tax.taxonomy = 'wpsl_store_category'
+                                      AND term_tax.term_id IN (" . implode( ',', $filter_ids ) . ")";
+        } else {
+          $cat_filter = '';
+        }
         $join .=    " INNER JOIN $wpdb->postmeta pm1 ON $wpdb->posts.id = pm1.post_id AND pm1.meta_key = 'wpsl_lat'
-            INNER JOIN $wpdb->postmeta pm2 ON $wpdb->posts.id = pm2.post_id AND pm2.meta_key = 'wpsl_lng' ";
+            INNER JOIN $wpdb->postmeta pm2 ON $wpdb->posts.id = pm2.post_id AND pm2.meta_key = 'wpsl_lng' $cat_filter";   
     }
+    
+
     return $join;
 }
 

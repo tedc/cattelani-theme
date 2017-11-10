@@ -1,4 +1,4 @@
-<div class="modal__container" id="modal-contact"<?php if(is_handheld()) : ?> scrollbar<?php endif; ?>>
+<div class="modal__container modal__container--contact" id="modal-contact"<?php if(is_handheld()) : ?> scrollbar<?php endif; ?>>
 	<section class="contact contact--grid contact--grow-md-bottom">
 		<div class="contact__cell contact__cell--s6 contact__cell--content contact__cell--shrink-double">
 			<header class="contact__header contact__header--grow-md-bottom">
