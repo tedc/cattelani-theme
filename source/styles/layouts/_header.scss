@@ -380,10 +380,6 @@
 			z-index: 1;
 			opacity: 0;
 		}
-		.handheld & {
-			overflow-y: scroll;
-			-webkit-overflow-scrolling: touch;
-		}
 	}
 	&__lang {
 		position: absolute;
@@ -411,6 +407,8 @@
 		max-height: 100vh;
 		.handheld & {
 			display: block !important;
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
 		}
 		.admin-bar.logged-in & {
 			max-height: calc(100vh - 32px);
