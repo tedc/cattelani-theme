@@ -542,9 +542,16 @@ add_filter( 'posts_fields', 'my_geo_fields', 10, 2 );
 add_filter( 'posts_join', 'my_geo_join', 10, 2 );
 add_filter( 'posts_orderby', 'my_geo_orderby', 10, 2 );
 add_filter( 'posts_where', 'my_geo_where', 10, 2 );
+add_filter( 'posts_groupby', 'my_geo_groupby', 10, 2 );
 //add_filter( 'posts_clauses', 'my_geo_clauses', 10, 5 );
 
-
+function my_geo_groupby($groupby, $query){
+  //global $
+  if (isset($query->query_vars['order_location'])) {
+    $groupby = '';
+  }
+  return $groupby;
+}
 // filter functions for our query
 function my_geo_fields( $fields, $query ) {
     $radius = ( wpsl_get_distance_unit() == 'km' ) ? 6371 : 3959;
@@ -561,17 +568,17 @@ function my_geo_fields( $fields, $query ) {
 function my_geo_join( $join, $query ) {
     if (isset($query->query_vars['order_location'])) {
         global $wpdb;
-        if(isset($_GET['categorie'])) {
-          $filter_ids = array_map( 'absint', explode( ',', $_GET['categorie'] ) );
-          $cat_filter = "INNER JOIN $wpdb->term_relationships AS term_rel ON posts.ID = term_rel.object_id
-                               INNER JOIN $wpdb->term_taxonomy AS term_tax ON term_rel.term_taxonomy_id = term_tax.term_taxonomy_id
-                                      AND term_tax.taxonomy = 'wpsl_store_category'
-                                      AND term_tax.term_id IN (" . implode( ',', $filter_ids ) . ")";
-        } else {
-          $cat_filter = '';
-        }
+        // if(isset($_GET['categorie'])) {
+        //   $filter_ids = array_map( 'absint', explode( ',', $_GET['categorie'] ) );
+        //   $cat_filter = "INNER JOIN $wpdb->term_relationships AS term_rel ON posts.ID = term_rel.object_id
+        //                        INNER JOIN $wpdb->term_taxonomy AS term_tax ON term_rel.term_taxonomy_id = term_tax.term_taxonomy_id
+        //                               AND term_tax.taxonomy = 'wpsl_store_category'
+        //                               AND term_tax.term_id IN (" . implode( ',', $filter_ids ) . ")";
+        // } else {
+        //   $cat_filter = '';
+        // }
         $join .=    " INNER JOIN $wpdb->postmeta pm1 ON $wpdb->posts.id = pm1.post_id AND pm1.meta_key = 'wpsl_lat'
-            INNER JOIN $wpdb->postmeta pm2 ON $wpdb->posts.id = pm2.post_id AND pm2.meta_key = 'wpsl_lng' $cat_filter";   
+            INNER JOIN $wpdb->postmeta pm2 ON $wpdb->posts.id = pm2.post_id AND pm2.meta_key = 'wpsl_lng'";   
     }
     
 
