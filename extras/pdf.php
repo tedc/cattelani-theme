@@ -100,6 +100,6 @@
 			wp_reset_query();
 			wp_reset_postdata();
 		endif;
-		die( generatePdf($html, $title) );
+		//die( generatePdf($html, $title) );
 		die( $html );
 	}
