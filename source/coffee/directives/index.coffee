@@ -206,7 +206,7 @@ catellani
 					action : ajax.action
 					post_pdf : id
 				$http
-					.post(ajax.url, data)
+					.get(ajax.url, data)
 					.then (res)->
 						console.log res
 						return

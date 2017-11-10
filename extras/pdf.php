@@ -13,7 +13,7 @@
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($title);
+		$dompdf->output($title);
 	}
 	add_action( 'wp_ajax_catellanipdf', 'lamp_pdf', 10, 1 );
 
