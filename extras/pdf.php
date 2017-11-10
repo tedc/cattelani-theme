@@ -4,6 +4,7 @@
 	function generatePdf($html, $title) {
 		
 		$dompdf = new Dompdf();
+		$dompdf->set_option('isRemoteEnabled', true);
 		$dompdf->set_option('isHtml5ParserEnabled', true);
 
 		$dompdf->loadHtml($html);
