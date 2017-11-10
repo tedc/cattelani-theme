@@ -99,12 +99,7 @@
 								<td ><?php acf_set_language_to_default(); 
             the_field('info', 'options'); 
             acf_unset_language_to_default(); ?> ?></td>
-							<td class="sheet__bottom-right"><?php 
-        $custom_logo_id = get_theme_mod( 'custom_logo' );
-        $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-        echo print_svg($image[0]);
-        ?></td>
-							
+							<td class="sheet__bottom-right"><img src="<?php echo get_stylesheet_directory_uri().'/assets/images/logo.gif'; ?>" class="pdf-logo"></td>	
 							</tr>
 						</table>
 					</div>
