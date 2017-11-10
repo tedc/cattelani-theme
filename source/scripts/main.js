@@ -55869,33 +55869,24 @@ module.exports = function() {
             return;
           }
           store.isStoreLoading = true;
-          if (store.address.trim() !== '') {
-            GeoCoder.geocode({
-              address: store.address
-            }).then(function(res) {
-              store.coords = (res[0].geometry.location.lat()) + "," + (res[0].geometry.location.lng());
-              getLocations().then(function(res) {
-                $timeout(function() {
-                  store.items = res.data;
-                  $rootScope.$broadcast('markers_changed');
-                }, 10);
-              });
-            });
-            window.dataLayer.push({
-              'event': 'GAEvent',
-              'eventCategory': 'Cerca rivenditori',
-              'evetAction': 'storeSubmit',
-              'eventLabel': 'Cerca rivenditore',
-              'eventValue': store.address
-            });
-          } else {
+          GeoCoder.geocode({
+            address: store.address
+          }).then(function(res) {
+            store.coords = (res[0].geometry.location.lat()) + "," + (res[0].geometry.location.lng());
             getLocations().then(function(res) {
               $timeout(function() {
                 store.items = res.data;
                 $rootScope.$broadcast('markers_changed');
               }, 10);
             });
-          }
+          });
+          window.dataLayer.push({
+            'event': 'GAEvent',
+            'eventCategory': 'Cerca rivenditori',
+            'evetAction': 'storeSubmit',
+            'eventLabel': 'Cerca rivenditore',
+            'eventValue': store.address
+          });
         };
         wpApi({
           endpoint: 'stores'
@@ -55914,7 +55905,6 @@ module.exports = function() {
           NgMap.getMap().then(function(map) {
             store.map = map;
             if (navigator.geolocation) {
-              console.log(true);
               NavigatorGeolocation.getCurrentPosition().then(function(position) {
                 store.coords = position.coords.latitude + "," + position.coords.longitude;
                 GeoCoder.geocode({

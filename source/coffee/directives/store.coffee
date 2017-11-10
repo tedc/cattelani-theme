@@ -82,34 +82,24 @@ module.exports = ->
 			store.onSubmit = ->
 				return if store.isStoreLoading
 				store.isStoreLoading = on
-				if store.address.trim() isnt ''
-					GeoCoder.geocode { address : store.address}
-						.then (res)->
-							store.coords = "#{res[0].geometry.location.lat()},#{res[0].geometry.location.lng()}"
-							getLocations()
-								.then (res)->
-									$timeout ->
-										store.items = res.data
-										$rootScope.$broadcast 'markers_changed'
-										return
-									, 10
+				GeoCoder.geocode { address : store.address}
+					.then (res)->
+						store.coords = "#{res[0].geometry.location.lat()},#{res[0].geometry.location.lng()}"
+						getLocations()
+							.then (res)->
+								$timeout ->
+									store.items = res.data
+									$rootScope.$broadcast 'markers_changed'
 									return
-							return
-					window.dataLayer.push 
-						'event' : 'GAEvent'
-						'eventCategory' : 'Cerca rivenditori'
-						'evetAction' : 'storeSubmit'
-						'eventLabel' : 'Cerca rivenditore'
-						'eventValue' : store.address
-				else
-					getLocations()
-						.then (res)->
-							$timeout ->
-								store.items = res.data
-								$rootScope.$broadcast 'markers_changed'
+								, 10
 								return
-							, 10
-							return
+						return
+				window.dataLayer.push 
+					'event' : 'GAEvent'
+					'eventCategory' : 'Cerca rivenditori'
+					'evetAction' : 'storeSubmit'
+					'eventLabel' : 'Cerca rivenditore'
+					'eventValue' : store.address
 				# if store.coords
 				# 	if store.store
 				# 		wp.locations()
@@ -174,7 +164,6 @@ module.exports = ->
 					.then (map)-> 
 						store.map = map
 						if navigator.geolocation
-								console.log on
 								NavigatorGeolocation
 									.getCurrentPosition()
 										.then (position)->
