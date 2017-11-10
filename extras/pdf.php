@@ -79,8 +79,9 @@
 										$content_str = (!get_sub_field('is_size')) ? 'sheet_content' : 'sheet_content_size';
 										$content = get_sub_field($content_str);
 										$content = strip_tags($content, '<img><p><br><strong>');
-										$content = preg_replace("/(<img[^>]+\>)/i", "$1<span>", $content);
-										$content = str_replace("</p>", "</span></p>", $content);
+										$content = str_replace("<p>", "<table>", $content);
+										$content = preg_replace("/(<img[^>]+\>)/i", "<table><tr><td>$1</td><td>", $content);
+										$content = str_replace("</p>", "</td></table>", $content);
 										echo $content; 
 									endif;
 								endif;
