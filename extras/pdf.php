@@ -18,6 +18,9 @@
 	add_action( 'wp_ajax_catellanipdf', 'lamp_pdf', 10, 1 );
 
 	function lamp_pdf() {
+		if(!isset($_REQUEST['post_pdf'])) {
+			die('error');
+		}
 		$id = intval($_REQUEST['post_pdf']);
 		$html = '';
 		$title = '';
@@ -90,6 +93,19 @@
 							</td>
 							</tr>
 						<?php $c++; endwhile; ?>			
+						</table>
+						<table class="sheet__bottom">
+							<tr>
+								<td ><?php acf_set_language_to_default(); 
+            the_field('info', 'options'); 
+            acf_unset_language_to_default(); ?> ?></td>
+							<td class="sheet__bottom-right"><?php 
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+        echo print_svg($image[0]);
+        ?></td>
+							
+							</tr>
 						</table>
 					</div>
 				</section>
