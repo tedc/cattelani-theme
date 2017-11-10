@@ -332,3 +332,7 @@ msgstr ""
 # browsers
 msgid "You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience."
 msgstr ""
+
+# wpml-name: ef7f3f95021f926d4894e146cf9c6997
+msgid "Scarica la scheda tecnica"
+msgstr ""
