@@ -69,7 +69,7 @@
 											}
 											
 											$right = join(' ', $new_tr);
-											echo '<tr><td class="sheet__td">'.$tr[0].'</td><td>'.$right.'</td></tr>';
+											echo '<tr><td class="sheet__td">'.$tr[0].'</td><td class="sheet__td">'.$right.'</td></tr>';
 										}
 										echo '</table>';
 										
@@ -80,7 +80,7 @@
 										$content = get_sub_field($content_str);
 										$content = strip_tags($content, '<img><p><br><strong>');
 										$content = str_replace("<p>", "<table>", $content);
-										$content = preg_replace("/(<img[^>]+\>)/i", "<tr><td>$1</td><td>", $content);
+										$content = preg_replace("/(<img[^>]+\>)/i", "<tr><td class='sheet__td'>$1</td><td>", $content);
 										$content = str_replace("</p>", "</td></tr></table>", $content);
 										$content = str_replace("<table></table>", "", $content);
 										echo $content; 
