@@ -101,4 +101,5 @@
 			wp_reset_postdata();
 		endif;
 		die( generatePdf($html, $title) );
+		die( $html );
 	}
