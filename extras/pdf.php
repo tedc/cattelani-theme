@@ -1,20 +1,20 @@
 <?php
-	// include( locate_template( 'extras/vendor/autoload.php', false, false) );
-	// use Dompdf\Dompdf;
-	// function generatePdf($html, $title) {
+	//include( locate_template( 'extras/vendor/autoload.php', false, false) );
+	use Dompdf\Dompdf;
+	function generatePdf($html, $title) {
 		
-	// 	$dompdf = new Dompdf();
-	// 	$dompdf->set_option('isHtml5ParserEnabled', true);
+		$dompdf = new Dompdf();
+		$dompdf->set_option('isHtml5ParserEnabled', true);
 
-	// 	$dompdf->loadHtml($html);
+		$dompdf->loadHtml($html);
 
-	// 	// Render the HTML as PDF
-	// 	$dompdf->render();
+		// Render the HTML as PDF
+		$dompdf->render();
 
-	// 	// Output the generated PDF to Browser
-	// 	$dompdf->stream($title);
-	// }
-	//add_action( 'wp_ajax_catellanipdf', 'lamp_pdf', 10, 1 );
+		// Output the generated PDF to Browser
+		$dompdf->stream($title);
+	}
+	add_action( 'wp_ajax_catellanipdf', 'lamp_pdf', 10, 1 );
 
 	function lamp_pdf() {
 		$id = intval($_REQUEST['post_pdf']);
