@@ -81,7 +81,8 @@
 										$content = strip_tags($content, '<img><p><br><strong>');
 										$content = str_replace("<p>", "<table>", $content);
 										$content = preg_replace("/(<img[^>]+\>)/i", "<table><tr><td>$1</td><td>", $content);
-										$content = str_replace("</p>", "</td></table>", $content);
+										$content = str_replace("</p>", "</td></tr></table>", $content);
+										$content = str_replace("<table></table>", "", $content);
 										echo $content; 
 									endif;
 								endif;
@@ -100,6 +101,6 @@
 			wp_reset_query();
 			wp_reset_postdata();
 		endif;
-		//die( generatePdf($html, $title) );
-		die( $html );
+		die( generatePdf($html, $title) );
+		//die( $html );
 	}
