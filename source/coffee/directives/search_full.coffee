@@ -47,7 +47,6 @@ module.exports = ->
 						lang : lang
 				.then (results)->
 					$timeout ->
-						console.log results
 						$scope.items = results.data
 						$rootScope.$broadcast 'scrollBarUpdate'
 						$scope.isSearchEnded = on
