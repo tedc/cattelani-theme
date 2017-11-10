@@ -3,7 +3,7 @@ module.exports = ->
 		templateUrl : "#{vars.main.assets}/tpl/store.tpl.html"
 		bindToController : on
 		controllerAs : "store"
-		controller : ['NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", (NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation)->
+		controller : ['NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", (NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http)->
 			# wp = WPAPI
 			# wp.locations = wp.registerRoute 'wp/v2', 'locations/',
 			# 	params : ['order_location', 'stores']
@@ -54,6 +54,35 @@ module.exports = ->
 				store.isStoreLoading = off
 				zoomChange()
 				return
+			$rootScope.$on 'location_changed', (event, data)->
+				store.coords = data.join()
+				params = { order_location : store.coords, per_page : vars.api.store_limit } 
+				params = angular.extend {}, params, {stores : store.store} if store.store
+				# $http.get("https://www.catellanismith.com/wp-json/wp/v2/locations", {order_location : store.coords})
+				# 	.then (res)->
+				# 		console.log res
+				# 		return
+				wpApi
+					endpoint : 'locations'
+					params : params
+				.then (res)->
+					$timeout ->
+						console.log data
+						store.items = res.data
+						$rootScope.$broadcast 'markers_changed'
+						return
+					, 10
+					return
+				# getLocations()
+				# 	.then (response)->
+				# 		console.log response
+				# 		$timeout ->
+				# 			store.items = response.data
+				# 			$rootScope.$broadcast 'markers_changed'
+				# 			return
+				# 		, 10
+				# 		return
+				return
 			zoomChange = ()->
 				bounds = new google.maps.LatLngBounds()
 				if store.items and store.items.length > 0
@@ -74,25 +103,17 @@ module.exports = ->
 				options = 
 					endpoint : 'locations'
 					params :
-						order_location : store.coords
+						order_location : "43.7418083,11.291265599999974"
 						"#{storeParam}" : storeValue
 						per_page : vars.api.store_limit
 				wpApi options
-				
 			store.onSubmit = ->
-				return if store.isStoreLoading
 				store.isStoreLoading = on
 				GeoCoder.geocode { address : store.address}
 					.then (res)->
-						store.coords = "#{res[0].geometry.location.lat()},#{res[0].geometry.location.lng()}"
-						getLocations()
-							.then (res)->
-								$timeout ->
-									store.items = res.data
-									$rootScope.$broadcast 'markers_changed'
-									return
-								, 10
-								return
+						$timeout ->
+							$rootScope.$broadcast 'location_changed', [res[0].geometry.location.lat(), res[0].geometry.location.lng() ]
+							return
 						return
 				window.dataLayer.push 
 					'event' : 'GAEvent'
@@ -148,6 +169,7 @@ module.exports = ->
 				# 				, 10
 				# 				return
 				return
+
 			wpApi { endpoint : 'stores' }
 				.then (res)->
 					store.stores = res.data
@@ -161,21 +183,19 @@ module.exports = ->
 			getMap = ->
 				NgMap
 					.getMap()
-					.then (map)-> 
+					.then (map)->
+						store.isStoreLoading = on	
 						store.map = map
 						if navigator.geolocation
 								NavigatorGeolocation
 									.getCurrentPosition()
 										.then (position)->
-											store.coords = "#{position.coords.latitude},#{position.coords.longitude}"
-											GeoCoder.geocode { location : {lat : parseInt(store.coords.split(',')[0]), lng : parseInt(store.coords.split(',')[1])}}
+											latLng = new google.maps.LatLng( position.coords.latitude, position.coords.longitude )
+											GeoCoder.geocode { 'latLng': latLng }
 												.then (res)->
 													store.address = res[0].formatted_address
 													store.onSubmit()
 													return
-											return
-										.catch (err)->
-											store.coords = "#{store.map.getCenter().lat()},#{store.map.getCenter().lng()}" if not angular.equals {}, store.map		
 											return
 						else
 							store.onSubmit()

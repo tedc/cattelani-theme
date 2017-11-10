@@ -55043,6 +55043,20 @@ catellani.directive('ngStore', [require(123)]).directive('ngForm', [require(114)
       }
     };
   }
+]).directive('downloadForm', [
+  "$window", function($window) {
+    return {
+      restrict: 'A',
+      link: function(scope) {
+        scope.download = function(id) {
+          var ajax, post_pdf;
+          ajax = vars.api.ajax;
+          post_pdf = id;
+          $window.location.href = ajax.url + "?action=" + ajax.action + "&post_pdf=" + post_pdf;
+        };
+      }
+    };
+  }
 ]);
 
 
@@ -55639,7 +55653,7 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation) {
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http) {
         var getLocations, getMap, store, zoomChange;
         store = this;
         store.isSelected = false;
@@ -55829,6 +55843,29 @@ module.exports = function() {
           store.isStoreLoading = false;
           zoomChange();
         });
+        $rootScope.$on('location_changed', function(event, data) {
+          var params;
+          store.coords = data.join();
+          params = {
+            order_location: store.coords,
+            per_page: vars.api.store_limit
+          };
+          if (store.store) {
+            params = angular.extend({}, params, {
+              stores: store.store
+            });
+          }
+          wpApi({
+            endpoint: 'locations',
+            params: params
+          }).then(function(res) {
+            $timeout(function() {
+              console.log(data);
+              store.items = res.data;
+              $rootScope.$broadcast('markers_changed');
+            }, 10);
+          });
+        });
         zoomChange = function() {
           var bounds, coords, i, item, latLng, len, ref;
           bounds = new google.maps.LatLngBounds();
@@ -55855,7 +55892,7 @@ module.exports = function() {
             endpoint: 'locations',
             params: (
               obj = {
-                order_location: store.coords
+                order_location: "43.7418083,11.291265599999974"
               },
               obj["" + storeParam] = storeValue,
               obj.per_page = vars.api.store_limit,
@@ -55865,19 +55902,12 @@ module.exports = function() {
           return wpApi(options);
         };
         store.onSubmit = function() {
-          if (store.isStoreLoading) {
-            return;
-          }
           store.isStoreLoading = true;
           GeoCoder.geocode({
             address: store.address
           }).then(function(res) {
-            store.coords = (res[0].geometry.location.lat()) + "," + (res[0].geometry.location.lng());
-            getLocations().then(function(res) {
-              $timeout(function() {
-                store.items = res.data;
-                $rootScope.$broadcast('markers_changed');
-              }, 10);
+            $timeout(function() {
+              $rootScope.$broadcast('location_changed', [res[0].geometry.location.lat(), res[0].geometry.location.lng()]);
             });
           });
           window.dataLayer.push({
@@ -55903,23 +55933,18 @@ module.exports = function() {
         };
         getMap = function() {
           NgMap.getMap().then(function(map) {
+            store.isStoreLoading = true;
             store.map = map;
             if (navigator.geolocation) {
               NavigatorGeolocation.getCurrentPosition().then(function(position) {
-                store.coords = position.coords.latitude + "," + position.coords.longitude;
+                var latLng;
+                latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 GeoCoder.geocode({
-                  location: {
-                    lat: parseInt(store.coords.split(',')[0]),
-                    lng: parseInt(store.coords.split(',')[1])
-                  }
+                  'latLng': latLng
                 }).then(function(res) {
                   store.address = res[0].formatted_address;
                   store.onSubmit();
                 });
-              })["catch"](function(err) {
-                if (!angular.equals({}, store.map)) {
-                  store.coords = (store.map.getCenter().lat()) + "," + (store.map.getCenter().lng());
-                }
               });
             } else {
               store.onSubmit();
@@ -56423,7 +56448,6 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     langCookie = $cookies.get('lang');
-    console.log(langCookie);
     if (!langCookie) {
       currentDate = new Date();
       currentDate.setDate(currentDate.getDate() + 1);

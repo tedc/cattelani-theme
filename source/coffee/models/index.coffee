@@ -8,7 +8,6 @@ catellani
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
 		langCookie = $cookies.get('lang')
-		console.log langCookie
 		if not langCookie
 			currentDate = new Date()
 			currentDate.setDate(currentDate.getDate() + 1);

@@ -15,8 +15,11 @@
 		}
 	}
 	&__pdf {
+		margin-top: em($p*2);
 		@include grow('md', 'top');
 		text-align: center;
+		text-transform: uppercase;
+		border-top: 1px solid $w; 
 	}
 	&__item {
 		@include breakpoint($bp, false) {
