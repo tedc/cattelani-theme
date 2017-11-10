@@ -59,7 +59,7 @@
 		}
 		$url = (isset($translations[$lang])) ? $translations[$lang] : $front_page[$lang];
 		$redirect = array('current' => ICL_LANGUAGE_CODE, 'url' => $url, 'lang' => $lang);
-		
+		$ajax = array('url' => admin_url('admin-ajax.php'), 'action' => 'catellanipdf');
 		$vars = array(
 			"main" => array(
 				'mobile' => (bool)is_handheld(),
@@ -82,7 +82,8 @@
 				'count_posts' => $posts,
 				'count_collections' => count(get_terms(array('taxonomy' => 'collezioni'))),
 				'count_positions' => count(get_terms(array('taxonomy' => 'posizioni'))),
-				'count_sources' => count(get_terms(array('taxonomy' => 'fonti')))
+				'count_sources' => count(get_terms(array('taxonomy' => 'fonti'))),
+				'ajax' => $ajax
 			),
 			"strings" => array(
 				'btn_stores' => __('Cerca rivenditori', 'catellani'),

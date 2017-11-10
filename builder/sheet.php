@@ -46,6 +46,7 @@
 			</div>
 		</div>
 		<?php $c++; endwhile; ?>
+		<div class="sheet__pdf sheet__pdf--grow-md-top" download-form><form ng-submit="download(<?php the_ID(); ?>)"><button class="sheet__send"><?php __e('Scarica la', 'catellani'); ?> <?php _e('Scheda tecnica', 'catellani'); ?></button></form></div>
 	</div>
 </section>
 <?php endif; ?>

@@ -197,4 +197,19 @@ catellani
 				return
 			return
 	]
-			
+	.directive 'downloadForm', ["$http", ($http)->
+		restrict : 'A'
+		link : (scope)->
+			scope.download = (id)->
+				ajax = vars.api.ajax
+				data = 
+					action : ajax.action
+					post_pdf : id
+				$http
+					.post(ajax.url, data)
+					.then (res)->
+						console.log res
+						return
+				return
+
+	]
