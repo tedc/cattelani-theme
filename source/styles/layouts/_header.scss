@@ -410,6 +410,9 @@
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
 		}
+		.ios & {
+			padding-bottom: calc(#{em($p*2)} + 50px);
+		}
 		.admin-bar.logged-in & {
 			max-height: calc(100vh - 32px);
 		}
