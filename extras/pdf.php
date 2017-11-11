@@ -27,6 +27,9 @@
 		$id = intval($_REQUEST['post_pdf']);
 		$html = '';
 		$title = '';
+		$header = ($_GET['wpml_lang']) ? _e('Datasheet') : __('Scheda tecnica', 'catellani');
+		$append = ($_GET['wpml_lang']) ? _e('sheet') : __('scheda', 'catellani');
+		
 		$q = new WP_Query(
 			array(
 				'post_type' => 'lampade',
@@ -47,7 +50,7 @@
 						<table class="sheet__top">
 							<tr>
 							<td><?php the_title(); ?></td>
-							<td class="sheet__top-right"><?php _e('Scheda tecnica', 'catellani'); ?></td>
+							<td class="sheet__top-right"><?php echo $header; ?></td>
 							</tr>
 						</table>
 						<div class="sheet__figure">
