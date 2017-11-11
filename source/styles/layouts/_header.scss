@@ -433,8 +433,8 @@
 	.handheld & {
 		margin: auto;
 		padding: {
-			top: em($p*2);
-			bottom: em($p*2);
+			top: em($p*4);
+			bottom: em($p*4);
 		}
 	}
 	&__item {
