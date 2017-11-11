@@ -406,7 +406,7 @@
 		align-items: center;
 		max-height: 100vh;
 		.handheld & {
-			display: block !important;
+			//display: block !important;
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
 		}
@@ -429,6 +429,9 @@
 .menu {
 	align-items: center;
 	align-content: center;
+	.handheld & {
+		margin: auto;
+	}
 	&__item {
 		width: $f;
 		text-align: center;
