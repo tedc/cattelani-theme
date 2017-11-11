@@ -28,7 +28,8 @@
 			array(
 				'post_type' => 'lampade',
 				'post__in' => array($id),
-				'posts_per_page' => 1
+				'posts_per_page' => 1,
+				'suppress_filters' => false
 			)
 		);
 		if($q->have_posts()):
