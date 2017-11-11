@@ -112,7 +112,9 @@
 					duration: $speed;
 				}
 				.ios & {
-					margin-bottom: 50px;
+					@include breakpoint(1050px, false) {
+						margin-bottom: 50px;
+					}
 				}
 				&-prev {
 					transform: scaleX(-1) translate3d(0, 0, 0);
@@ -203,7 +205,9 @@
 			transform-origin: center bottom;
 			transform: scaleY(0) translateZ(0);
 			.ios & {
-				height: calc(#{em($p*3.1 - 5px, 34px)} + 50px);
+				@include breakpoint(1050px, false) {
+					height: calc(#{em($p*3.1 - 5px, 34px)} + 50px);
+				}
 			}
 		}
 		.collections__cell:hover &, .handheld & {
@@ -220,7 +224,9 @@
 			opacity: 0;
 		}
 		.ios & {
-			padding: 0 em($p, 34px) calc(#{em($p/2, 34px)} + 50px);
+			@include breakpoint(1050px, false) {
+				padding: 0 em($p, 34px) calc(#{em($p/2, 34px)} + 50px);
+			}
 		}
 		//@extend %line_before;
 		span {
@@ -389,7 +395,9 @@
 		position: absolute;
 		bottom: 0;
 		.ios & {
-			bottom: 50px;
+			@include breakpoint(1050px, false) {
+				bottom: 50px;
+			}
 		}
 		width: $f;
 		left: 0;
