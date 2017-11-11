@@ -409,6 +409,7 @@
 			//display: block !important;
 			overflow-y: scroll;
 			-webkit-overflow-scrolling: touch;
+			height: 100vh;
 		}
 		.ios & {
 			padding-bottom: calc(#{em($p*2)} + 50px);
@@ -431,6 +432,10 @@
 	align-content: center;
 	.handheld & {
 		margin: auto;
+		padding: {
+			top: em($p*2);
+			bottom: em($p*2);
+		}
 	}
 	&__item {
 		width: $f;
