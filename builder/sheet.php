@@ -1,4 +1,6 @@
-<?php if(have_rows('sheet_items')) : ?>
+<?php 
+global $sitepress;
+if(have_rows('sheet_items')) : ?>
 <section class="sheet sheet--shrink-fw sheet--grow-md sheet--gray">
 	<div class="sheet__container sheet__container--grow-md">
 		<h3 class="sheet__title sheet__title--small-lighter"><?php _e('Scheda tecnica', 'catellani'); ?></h3>
@@ -45,8 +47,10 @@
 			?>
 			</div>
 		</div>
-		<?php $c++; endwhile; if(!is_handheld()) : ?>
-		<div class="sheet__pdf sheet__pdf--mw sheet__pdf--grow-md-top" download-form><form ng-submit="download(<?php the_ID(); ?>, '<?php echo wp_create_nonce( 'catellanipdf' ); ?>')"><button class="sheet__send"><?php _e('Scarica la scheda tecnica', 'catellani'); ?></button></form></div><?php endif; ?>
+		<?php $c++; endwhile; if(!is_handheld()) :
+			$lang = ($sitepress->get_default_language() != ICL_LANGUAGE_CODE) ? ", '".ICL_LANGUAGE_CODE : '';
+		 ?>
+		<div class="sheet__pdf sheet__pdf--mw sheet__pdf--grow-md-top" download-form><form ng-submit="download(<?php the_ID(); ?>, '<?php echo wp_create_nonce( 'catellanipdf' ); ?>'<?php echo $lang; ?>)"><button class="sheet__send"><?php _e('Scarica la scheda tecnica', 'catellani'); ?></button></form></div><?php endif; ?>
 	</div>
 </section>
 <?php endif; ?>

@@ -200,10 +200,11 @@ catellani
 	.directive 'downloadForm', ["$window", ($window)->
 		restrict : 'A'
 		link : (scope)->
-			scope.download = (id, nonce)->
+			scope.download = (id, nonce, lang)->
+				lang = if lang then "&wpml_lang=#{lang}" else ""
 				ajax = vars.api.ajax
 				post_pdf = id
-				$window.location.href = "#{ajax.url}?action=#{ajax.action}&post_pdf=#{post_pdf}&_wpnonce=#{nonce}"
+				$window.location.href = "#{ajax.url}?action=#{ajax.action}&post_pdf=#{post_pdf}&_wpnonce=#{nonce}#{lang}"
 					# .get(ajax.url, data)
 					# .then (res)->
 					# 	console.log res

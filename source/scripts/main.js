@@ -55048,11 +55048,12 @@ catellani.directive('ngStore', [require(123)]).directive('ngForm', [require(114)
     return {
       restrict: 'A',
       link: function(scope) {
-        scope.download = function(id, nonce) {
+        scope.download = function(id, nonce, lang) {
           var ajax, post_pdf;
+          lang = lang ? "&wpml_lang=" + lang : "";
           ajax = vars.api.ajax;
           post_pdf = id;
-          $window.location.href = ajax.url + "?action=" + ajax.action + "&post_pdf=" + post_pdf + "&_wpnonce=" + nonce;
+          $window.location.href = ajax.url + "?action=" + ajax.action + "&post_pdf=" + post_pdf + "&_wpnonce=" + nonce + lang;
         };
       }
     };
