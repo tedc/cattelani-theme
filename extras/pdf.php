@@ -42,7 +42,7 @@
 			while($q->have_posts()) : $q->the_post();
 				ob_start();
 				if(have_rows('sheet_items')) :
-					$title = sanitize_title(get_the_title()) . '-' .__('scheda', 'catellani');
+					$title = sanitize_title(get_the_title()) . '-' .$append;
 					echo '<html><head><link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/assets/styles/pdf.css" /></head><body>';
 				?>
 				<section class="sheet">
