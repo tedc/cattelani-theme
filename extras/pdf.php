@@ -15,7 +15,7 @@
 		// Output the generated PDF to Browser
 		$dompdf->stream($title);
 	}
-	add_action( 'wp_ajax_catellanipdf', 'lamp_pdf', 10, 1 );
+	add_action( 'wp_ajax_nopriv_catellanipdf', 'lamp_pdf', 10, 1 );
 
 	function lamp_pdf() {
 		if(!isset($_REQUEST['post_pdf'])) {

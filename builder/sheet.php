@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<?php $c++; endwhile; if(!is_handheld()) : ?>
-		<div class="sheet__pdf sheet__pdf--mw sheet__pdf--grow-md-top" download-form><form ng-submit="download(<?php the_ID(); ?>)"><button class="sheet__send"><?php _e('Scarica la scheda tecnica', 'catellani'); ?></button></form></div><?php endif; ?>
+		<div class="sheet__pdf sheet__pdf--mw sheet__pdf--grow-md-top" download-form><form ng-submit="download(<?php the_ID(); ?>, '<?php echo wp_create_nonce( 'catellanipdf' ); ?>')"><button class="sheet__send"><?php _e('Scarica la scheda tecnica', 'catellani'); ?></button></form></div><?php endif; ?>
 	</div>
 </section>
 <?php endif; ?>

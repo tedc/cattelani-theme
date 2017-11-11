@@ -200,10 +200,10 @@ catellani
 	.directive 'downloadForm', ["$window", ($window)->
 		restrict : 'A'
 		link : (scope)->
-			scope.download = (id)->
+			scope.download = (id, nonce)->
 				ajax = vars.api.ajax
 				post_pdf = id
-				$window.location.href = "#{ajax.url}?action=#{ajax.action}&post_pdf=#{post_pdf}"
+				$window.location.href = "#{ajax.url}?action=#{ajax.action}&post_pdf=#{post_pdf}&_wpnonce=#{nonce}"
 					# .get(ajax.url, data)
 					# .then (res)->
 					# 	console.log res
