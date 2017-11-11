@@ -21,6 +21,9 @@
 		if(!isset($_REQUEST['post_pdf'])) {
 			die('error');
 		}
+		if ( isset( $_GET[ 'wpml_lang' ] ) ) {
+   			do_action( 'wpml_switch_language',  $_GET[ 'wpml_lang' ] ); // switch the content language
+		}
 		$id = intval($_REQUEST['post_pdf']);
 		$html = '';
 		$title = '';
