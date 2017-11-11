@@ -27,8 +27,8 @@
 		$id = intval($_REQUEST['post_pdf']);
 		$html = '';
 		$title = '';
-		$header = ($_GET['wpml_lang']) ? _e('Datasheet') : __('Scheda tecnica', 'catellani');
-		$append = ($_GET['wpml_lang']) ? _e('sheet') : __('scheda', 'catellani');
+		$header = ($_GET['wpml_lang']) ? __('Datasheet') : __('Scheda tecnica', 'catellani');
+		$append = ($_GET['wpml_lang']) ? __('sheet') : __('scheda', 'catellani');
 		
 		$q = new WP_Query(
 			array(
