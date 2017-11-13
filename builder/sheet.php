@@ -18,7 +18,7 @@ if(have_rows('sheet_items')) : ?>
 				<?php endforeach;if(!is_handheld()) :
 			$lang = ($sitepress->get_default_language() != ICL_LANGUAGE_CODE) ? ", '".ICL_LANGUAGE_CODE ."'": '';
 		 ?>
-		<div download-form><form ng-submit="download(<?php the_ID(); ?>, '<?php echo wp_create_nonce( 'catellanipdf' ); ?>'<?php echo $lang; ?>)"><button class="sheet__send"><?php _e('Scarica la scheda tecnica', 'catellani'); ?></button></form></div><?php endif; 
+		<p download-form><a class="sheet__send" href="#" ng-click="$event.preventDefault();download(<?php the_ID(); ?>, '<?php echo wp_create_nonce( 'catellanipdf' ); ?>'<?php echo $lang; ?>)"><?php _e('scheda tecnica', 'catellani'); ?></a></p><?php endif; 
 				else :
 					if(get_sub_field('cod')):
 						$table = trim( get_sub_field('sheet_content'));

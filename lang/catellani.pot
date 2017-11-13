@@ -336,3 +336,9 @@ msgstr ""
 # wpml-name: ef7f3f95021f926d4894e146cf9c6997
 msgid "Scarica la scheda tecnica"
 msgstr ""
+
+
+# wpml-name: ef7f3f95021f926d4894e146cf9c6997
+msgid "scheda tecnica"
+msgstr ""
+

@@ -653,7 +653,7 @@
 			color: $dark-color !important;
 		}
 		z-index: 200;
-		background-color: $w;
+		background-color: transparentize($w, .25);
 		width: $p*2;
 		height: $p*2;
 		display: flex;
