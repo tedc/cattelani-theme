@@ -3,12 +3,15 @@ module.exports = ->
 		templateUrl : "#{vars.main.assets}/tpl/store.tpl.html"
 		bindToController : on
 		controllerAs : "store"
-		controller : ['NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", (NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http)->
+		controller : ['NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", (NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs)->
 			# wp = WPAPI
 			# wp.locations = wp.registerRoute 'wp/v2', 'locations/',
 			# 	params : ['order_location', 'stores']
 			# wp.stores = wp.registerRoute 'wp/v2', 'stores/'	
 			store = @
+			store.lang = 
+				current : $attrs.currentLang
+				defualt : $attrs.defaultLang
 			store.isSelected = false
 			store.buttonString = vars.strings.btn_stores
 			store.any = vars.strings.select_any

@@ -1,23 +1,32 @@
 catellani = angular.module 'catellani'
 catellani
 	.config ["$stateProvider", "$locationProvider", require './state.coffee' ]
-	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams","$cookies","$window", ($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window)->
+	.run ["$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams","$cookies","$window", 'langRedirect', ($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window, langRedirect)->
 		FastClick.attach document.body
 		$rootScope.isAnim = 'is-anim'
 		oldUrl = $location.absUrl()
 		$rootScope.isGlossary = []
 		$rootScope.body_class = "#{vars.main.body_classes}#{vars.main.logged_classes}"
 		langCookie = $cookies.get('lang')
+		redirect = vars.main.redirect
+		currentDate = new Date()
+		currentTime = currentDate.getTime()
+		currentDate.setTime(currentTime + (8 * 60 * 60 * 1000));
 		if not langCookie
-			currentDate = new Date()
-			currentDate.setDate(currentDate.getDate() + 1);
-			$cookies.put('lang', 1, {'expires' : currentDate})
-			redirect = vars.main.redirect
-			if redirect.current != redirect.lang
-				url = redirect.url
-				$window.location.href = url
-
-		#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
+			langRedirect.getBrowserLanguage()
+				.then (val)->
+					languages = val
+					for lang in languages
+						pageLang = if redirect.current isnt redirect.default_lang then 'en' else 
+						url = langRedirect.getRedirectUrl(lang, redirect)
+						if lang isnt pageLang
+							$cookies.put('lang', lang, {'expires' : currentDate})
+						else
+							$cookies.put('lang', lang, {'expires' : currentDate})
+							$window.location = url
+							break
+					return
+			#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onBefore {}, (trans)->
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
 			$rootScope.isAnim = if newUrl.split('#')[0] is oldUrl.split('#')[0] then '' else 'is-anim'

@@ -38,27 +38,30 @@
         }
         $codes = join('|', $translations);
         $languages = apply_filters('wpml_active_languages', null);
-	    $translations = [];
+	    $translations = array();
 	    $type = (is_tax()) ? get_queried_object()->taxonomy : get_post_type();
 	    $the_id = (is_tax()) ? get_queried_object()->term_id : $post->ID;
-	    $front_page = []; 
+	    $front_page = [];
 	    foreach ($languages as $language) {
+	    	$default_locale = $language['default_locale'];
 	    	$current_lang = $language['language_code'];
         	$post_id = apply_filters('wpml_object_id', $the_id, $type, false, $current_lang);
 	        $href = (is_tax()) ? get_term_link($post_id, $type) : get_permalink($post_id);
 	        $front_page[$current_lang] = $sitepress->convert_url(get_home_url(), $current_lang);
 	        $href = (is_front_page()) ? $front_page[$current_lang] : $href;
 	        $translations[$current_lang] = $href;
+	        $translations[substr($default_locale, 3, 2)] = $href;
+	        $translations[$default_locale] = $href;
 	    }
-		$lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		$lang = explode('-', $lang)[0];
-		if($lang != $sitepress->get_default_language()) {
-			$lang = in_array_r(array('language_code'=>$lang), $languages) ? $lang : 'en';
-		} else {
-			$lang = $lang;
-		}
-		$url = (isset($translations[$lang])) ? $translations[$lang] : $front_page[$lang];
-		$redirect = array('current' => ICL_LANGUAGE_CODE, 'url' => $url, 'lang' => $lang);
+		// $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		// $lang = explode('-', $lang)[0];
+		// if($lang != $sitepress->get_default_language()) {
+		// 	$lang = in_array_r(array('language_code'=>$lang), $languages) ? $lang : 'en';
+		// } else {
+		// 	$lang = $lang;
+		// }
+		// $url = (isset($translations[$lang])) ? $translations[$lang] : $front_page[$lang];
+		$redirect = array('default_lang' => $sitepress->get_default_language(),'current' => ICL_LANGUAGE_CODE, 'langs' => $translations);
 		$ajax = array('url' => admin_url('admin-ajax.php'), 'action' => 'catellanipdf');
 		$vars = array(
 			"main" => array(

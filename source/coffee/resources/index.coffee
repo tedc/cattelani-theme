@@ -6,6 +6,47 @@ catellani = angular.module 'catellani'
 catellani
 	# .factory 'WPAPI', ->
 	# 	wp
+	.service 'langRedirect', ['$http', '$q', '$window', ($http, $q, $window)->
+		getBrowserLanguage : ()->
+			deferred = $q.defer()
+			browserLanguages = []
+			browserLanguages = navigator.languages if navigator.languages
+			browserLanguages.push(navigator.language or navigator.userLanguage) if 0 is browserLanguages.length and (navigator.language or navigator.userLanguage)
+			browserLanguages.push(navigator.browserLanguage or navigator.systemLanguage) if (0 is browserLanguages.length and (navigator.browserLanguage or navigator.systemLanguage))
+			if 0 is browserLanguages.length
+				$http
+					method : 'GET'
+					data:
+						icl_ajx_action: 'get_browser_language'
+				.then (response)->
+					if (response.success)
+						browserLanguages = response.data
+						browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
+						deferred.resolve browserLanguages
+					return
+			else
+				browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
+				deferred.resolve browserLanguages
+			return deferred.promise
+		getRedirectUrl : (language, vars)->
+			redirectUrl = off;
+			languageUrls = vars.langs
+			languageFirstPart = browserLanguage.substr(0, 2)
+			languageLastPart = browserLanguage.substr(3, 2)
+			if typeof languageUrls[browserLanguage] is 'undefined'
+				if typeof languageUrls[languageLastPart] isnt 'undefined'
+					redirectUrl = languageUrls[languageLastPart]
+				else if typeof languageUrls[languageFirstPart] isnt 'undefined'
+					redirectUrl = languageUrls[languageFirstPart]
+				else if typeof languageUrls[languageFirstPart] is 'undefined' and typeof languageUrls[languageFirstPart] is 'undefined' and typeof languageUrls['en'] isnt 'undefined'
+					redirectUrl = languageUrls['en']
+			else
+				redirectUrl = languageUrls[browserLanguage]
+			if $window.location.href is redirectUrl
+				return false
+			else
+				return redirectUrl
+	]
 	.factory 'wpApi', ['$http', ($http)->
 		deafults =
 			base : "#{vars.main.base}"

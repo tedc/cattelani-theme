@@ -506,15 +506,22 @@ function slug_get_url( $object, $field_name, $request ) {
     return get_post_meta( $object['id'], 'wpsl_url', true );
 }
 function slug_get_category($object) {
+    global $sitepress;
+    $languages = apply_filters('wpml_active_languages', null);
     $terms = wp_get_post_terms( $object['id'], 'wpsl_store_category' );
-    $value = '';
     $i = 0;
     if($terms):
-    foreach ($terms as $term) {
-        $comma = ($i>0) ? ', ' : '';
-        $value .= $comma.$term->name;
-        $i++;
-    }
+      foreach ($terms as $term) {
+          $translations = [];
+          foreach ($languages as $language) {
+              $id = apply_filters('wpml_object_id', $term->term_id, 'wpsl_store_category', false, $language['language_code']);
+              if(!empty($id)) {
+                  $new_term = get_term($id, 'wpsl_store_category');
+                  $translations[$language['language_code']] = $new_term->name;
+              } 
+          }
+      }
+      $value = $translations;
     endif;
     return $value;
 }

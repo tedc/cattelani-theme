@@ -55654,9 +55654,13 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http) {
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs) {
         var getLocations, getMap, store, zoomChange;
         store = this;
+        store.lang = {
+          current: $attrs.currentLang,
+          defualt: $attrs.defaultLang
+        };
         store.isSelected = false;
         store.buttonString = vars.strings.btn_stores;
         store.any = vars.strings.select_any;
@@ -56441,25 +56445,39 @@ var catellani;
 catellani = angular.module('catellani');
 
 catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
-  "$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", "$cookies", "$window", function($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window) {
-    var currentDate, langCookie, oldUrl, redirect, url;
+  "$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", "$cookies", "$window", 'langRedirect', function($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window, langRedirect) {
+    var currentDate, currentTime, langCookie, oldUrl, redirect;
     FastClick.attach(document.body);
     $rootScope.isAnim = 'is-anim';
     oldUrl = $location.absUrl();
     $rootScope.isGlossary = [];
     $rootScope.body_class = "" + vars.main.body_classes + vars.main.logged_classes;
     langCookie = $cookies.get('lang');
+    redirect = vars.main.redirect;
+    currentDate = new Date();
+    currentTime = currentDate.getTime();
+    currentDate.setTime(currentTime + (8 * 60 * 60 * 1000));
     if (!langCookie) {
-      currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() + 1);
-      $cookies.put('lang', 1, {
-        'expires': currentDate
+      langRedirect.getBrowserLanguage().then(function(val) {
+        var i, lang, languages, len, pageLang, url;
+        languages = val;
+        for (i = 0, len = languages.length; i < len; i++) {
+          lang = languages[i];
+          pageLang = redirect.current !== redirect.default_lang ? 'en' : void 0;
+          url = langRedirect.getRedirectUrl(lang, redirect);
+          if (lang !== pageLang) {
+            $cookies.put('lang', lang, {
+              'expires': currentDate
+            });
+          } else {
+            $cookies.put('lang', lang, {
+              'expires': currentDate
+            });
+            $window.location = url;
+            break;
+          }
+        }
       });
-      redirect = vars.main.redirect;
-      if (redirect.current !== redirect.lang) {
-        url = redirect.url;
-        $window.location.href = url;
-      }
     }
     $transitions.onBefore({}, function(trans) {
       var newUrl;
@@ -56770,7 +56788,67 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.factory('wpApi', [
+catellani.service('langRedirect', [
+  '$http', '$q', '$window', function($http, $q, $window) {
+    return {
+      getBrowserLanguage: function() {
+        var browserLanguages, deferred;
+        deferred = $q.defer();
+        browserLanguages = [];
+        if (navigator.languages) {
+          browserLanguages = navigator.languages;
+        }
+        if (0 === browserLanguages.length && (navigator.language || navigator.userLanguage)) {
+          browserLanguages.push(navigator.language || navigator.userLanguage);
+        }
+        if (0 === browserLanguages.length && (navigator.browserLanguage || navigator.systemLanguage)) {
+          browserLanguages.push(navigator.browserLanguage || navigator.systemLanguage);
+        }
+        if (0 === browserLanguages.length) {
+          $http({
+            method: 'GET',
+            data: {
+              icl_ajx_action: 'get_browser_language'
+            }
+          }).then(function(response) {
+            if (response.success) {
+              browserLanguages = response.data;
+              browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
+              deferred.resolve(browserLanguages);
+            }
+          });
+        } else {
+          browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
+          deferred.resolve(browserLanguages);
+        }
+        return deferred.promise;
+      },
+      getRedirectUrl: function(language, vars) {
+        var languageFirstPart, languageLastPart, languageUrls, redirectUrl;
+        redirectUrl = false;
+        languageUrls = vars.langs;
+        languageFirstPart = browserLanguage.substr(0, 2);
+        languageLastPart = browserLanguage.substr(3, 2);
+        if (typeof languageUrls[browserLanguage] === 'undefined') {
+          if (typeof languageUrls[languageLastPart] !== 'undefined') {
+            redirectUrl = languageUrls[languageLastPart];
+          } else if (typeof languageUrls[languageFirstPart] !== 'undefined') {
+            redirectUrl = languageUrls[languageFirstPart];
+          } else if (typeof languageUrls[languageFirstPart] === 'undefined' && typeof languageUrls[languageFirstPart] === 'undefined' && typeof languageUrls['en'] !== 'undefined') {
+            redirectUrl = languageUrls['en'];
+          }
+        } else {
+          redirectUrl = languageUrls[browserLanguage];
+        }
+        if ($window.location.href === redirectUrl) {
+          return false;
+        } else {
+          return redirectUrl;
+        }
+      }
+    };
+  }
+]).factory('wpApi', [
   '$http', function($http) {
     var deafults;
     deafults = {
