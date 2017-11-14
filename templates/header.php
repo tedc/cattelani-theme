@@ -12,6 +12,10 @@
         <?php $term_obj = is_tax() ? get_queried_object() : false; $post_obj = (is_single() || is_page()) ? $post : false; include(locate_template( 'templates/breadcrumb.php', false, true )); ?>
     </p>
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
+        <a class="banner__btn" href="#languages">
+            <?php echo ICL_LANGUAGE_CODE; ?>
+            <i class="icon-lang"></i>
+        </a>
         <a class="banner__btn banner__btn--search" href="#search" ng-click="startSearch();">
             <span class="banner__label">
                 <?php _e('Cerca', 'catellani'); ?>
@@ -52,9 +56,9 @@
             echo '</div>';
         endif;
         ?>
-        <span class="banner__lang banner__lang--upper banner__lang--grow-md banner__lang--shrink" ng-click="modal('languages');">
+        <!-- <span class="banner__lang banner__lang--upper banner__lang--grow-md banner__lang--shrink" ng-click="modal('languages');">
             <?php echo ICL_LANGUAGE_CODE; ?>
-        </span>
+        </span> -->
     </nav>
 </header>
 <?php get_template_part('templates/modal'); ?>

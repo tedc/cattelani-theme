@@ -56823,7 +56823,7 @@ catellani.service('langRedirect', [
         }
         return deferred.promise;
       },
-      getRedirectUrl: function(language, vars) {
+      getRedirectUrl: function(browserLanguage, vars) {
         var languageFirstPart, languageLastPart, languageUrls, redirectUrl;
         redirectUrl = false;
         languageUrls = vars.langs;

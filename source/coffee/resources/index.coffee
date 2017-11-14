@@ -28,7 +28,7 @@ catellani
 				browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
 				deferred.resolve browserLanguages
 			return deferred.promise
-		getRedirectUrl : (language, vars)->
+		getRedirectUrl : (browserLanguage, vars)->
 			redirectUrl = off;
 			languageUrls = vars.langs
 			languageFirstPart = browserLanguage.substr(0, 2)
