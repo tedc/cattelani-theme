@@ -510,6 +510,7 @@ function slug_get_category($object) {
     $languages = apply_filters('wpml_active_languages', null);
     $terms = wp_get_post_terms( $object['id'], 'wpsl_store_category' );
     $i = 0;
+    $value = '';
     if($terms):
       foreach ($terms as $term) {
           $translations = [];
