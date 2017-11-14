@@ -52,12 +52,12 @@
 			height: em($p*4);
 			left: 0;
 			width: $f;
-			background-color: linear-gradient(to right, transparentize($w, 1), $w 10px, $w calc(100% - 10px), transparentize($w, 1) 100%);
+			background-image: linear-gradient(to right, transparentize($w, 1) 0, $w 10px, $w calc(100% - 10px), transparentize($w, 1) 100%);
 			@include breakpoint(640px) {
-				background-color: linear-gradient(to right, transparentize($w, 1), $w em($p), $w calc(100% - #{em($p)}), transparentize($w, 1) 100%);	
+				background-image: linear-gradient(to right, transparentize($w, 1) 0, $w em($p), $w calc(100% - #{em($p)}), transparentize($w, 1) 100%);	
 			}
 			@include breakpoint($bp) {
-				background-color: linear-gradient(to right, transparentize($w, 1), $w em($p*2), $w calc(100% - #{em($p*2)}), transparentize($w, 1) 100%);	
+				background-image: linear-gradient(to right, transparentize($w, 1) 0, $w em($p*2), $w calc(100% - #{em($p*2)}), transparentize($w, 1) 100%);	
 			}
 			content: '';
 		}
