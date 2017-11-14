@@ -527,13 +527,18 @@ function reigel_rest_query_vars( $vars ) {
 add_filter( 'rest_query_vars', 'reigel_rest_query_vars' );
 
 function reigel_rest_post_query( $args, $request ) {
-
+    global $sitepress;
     $parameters = $request->get_query_params();
     
     if (isset($parameters['order_location'])) {
         $args['order_location'] = $parameters['order_location'];
     }
-    
+    if(isset($parameters['stores'])) {
+        if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
+          $translated_id = id_by_lang($parameters['stores'], 'wpsl_category', ICL_LANGUAGE_CODE);
+          $args['stores'] = $translated_id;
+        }
+    }
     return $args;
 }
 add_filter('rest_wpsl_stores_query', 'reigel_rest_post_query', 10, 2 );
