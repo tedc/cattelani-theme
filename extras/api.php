@@ -536,8 +536,8 @@ function reigel_rest_post_query( $args, $request ) {
     if(isset($parameters['stores'])) {
         if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
           $translated_id = id_by_lang(intval($parameters['stores']), 'wpsl_store_category', $sitepress->get_default_language());
-          $args['stores'] = $translated_id;
-          var_dump($args['stores']);
+          //$args['stores'] = $translated_id;
+          var_dump($translated_id);
         }
     }
     return $args;
