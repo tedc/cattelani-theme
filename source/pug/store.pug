@@ -16,7 +16,7 @@
 				.map__spinner
 			ul.map__list.map__list--shrink-right-only(ng-if="store.items" ng-class="{'map__loader--hidden':store.isStoreLoading}")
 				li.map__item.map__item--shrink(ng-repeat="item in store.items" ng-class="$index == $first ? 'map__item--grow-md-bottom' : 'map__item--grow-md'")
-					.map__category(ng-bind-html="item.category[store.lang.current]" ng-if="item.category.length > 0")
+					.map__category(ng-bind-html="item.category[store.lang.current]" ng-if="item.category")
 					h3.map__title.map__title--small.map__title--lighter(ng-bind-html="item.title" ng-click="store.infoWindow(item.id, item.lat, item.lng)")
 					.map__content
 						div(ng-bind-html="store.content(item.content.rendered)")
