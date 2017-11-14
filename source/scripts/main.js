@@ -55659,7 +55659,7 @@ module.exports = function() {
         store = this;
         store.lang = {
           current: $attrs.currentLang,
-          defualt: $attrs.defaultLang
+          "default": $attrs.defaultLang
         };
         store.isSelected = false;
         store.buttonString = vars.strings.btn_stores;

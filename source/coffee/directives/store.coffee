@@ -11,7 +11,7 @@ module.exports = ->
 			store = @
 			store.lang = 
 				current : $attrs.currentLang
-				defualt : $attrs.defaultLang
+				default : $attrs.defaultLang
 			store.isSelected = false
 			store.buttonString = vars.strings.btn_stores
 			store.any = vars.strings.select_any
