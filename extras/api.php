@@ -535,9 +535,10 @@ function reigel_rest_post_query( $args, $request ) {
     }
     if(isset($parameters['stores'])) {
         if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
-          $translated_id = id_by_lang(269, 'wpsl_store_category', $sitepress->get_default_language());
+          $term_id = (int) $parameters['stores'];
+          $translated_id = id_by_lang($term_id, 'wpsl_store_category', $sitepress->get_default_language());
           //$args['stores'] = $translated_id;
-          var_dump($translated_id);
+          var_dump($term_id, $translated_id);
         }
     }
     return $args;
