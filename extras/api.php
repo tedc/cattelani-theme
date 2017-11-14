@@ -533,19 +533,29 @@ function reigel_rest_post_query( $args, $request ) {
     if (isset($parameters['order_location'])) {
         $args['order_location'] = $parameters['order_location'];
     }
-    if(isset($parameters['stores'])) {
-        if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
-          foreach ($parameters['stores'] as $store) {
-            $term_id = $store;
-            $translated_id = id_by_lang($term_id, 'wpsl_store_category', $sitepress->get_default_language());
-            $new_args[] = $translated_id;
-          }
-          $args['stores'] = $new_args;
-        }
-    }
     return $args;
 }
 add_filter('rest_wpsl_stores_query', 'reigel_rest_post_query', 10, 2 );
+
+function add_language_ids($object) {
+  global $sitepress;
+  $languages = apply_filters('wpml_active_languages', null);
+  $translations = [];
+  foreach ($languages as $language) {
+      $id = apply_filters('wpml_object_id', $object['id'], $object['taxonomy'], false, $language['language_code']);
+      if(!empty($id)) {
+         $translations[$language['language_code']] = $id;
+      } 
+  }
+  return $translations;
+}
+
+register_rest_field( 'wpsl_store_category',
+    'language_ids',
+    array(
+        'get_callback'    => 'add_language_ids'
+    )
+);
 
 add_filter( 'posts_fields', 'my_geo_fields', 10, 2 );
 add_filter( 'posts_join', 'my_geo_join', 10, 2 );
@@ -646,7 +656,7 @@ add_filter( 'rest_prepare_post', 'my_rest_prepare_post', 10, 3 );
 add_filter( 'rest_prepare_progetti', 'my_rest_prepare_post', 10, 3 );
 add_filter( 'rest_prepare_installazioni', 'my_rest_prepare_post', 10, 3 );
 
-function search_by_title_only( $search, &$wp_query )
+function search_by_title_only( $search, $wp_query )
 {
     global $wpdb;
     if ( empty( $search ) )
