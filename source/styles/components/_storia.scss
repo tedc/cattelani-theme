@@ -52,7 +52,13 @@
 			height: em($p*4);
 			left: 0;
 			width: $f;
-			background-color: $w;
+			background-color: linear-gradient(to right, transparentize($w, 1), $w 10px, $w calc(100% - 10px), transparentize($w, 1) 100%);
+			@include breakpoint(640px) {
+				background-color: linear-gradient(to right, transparentize($w, 1), $w em($p), $w calc(100% - #{em($p)}), transparentize($w, 1) 100%);	
+			}
+			@include breakpoint($bp) {
+				background-color: linear-gradient(to right, transparentize($w, 1), $w em($p*2), $w calc(100% - #{em($p*2)}), transparentize($w, 1) 100%);	
+			}
 			content: '';
 		}
 		.scroll-content {
@@ -207,7 +213,7 @@
 		align-items: center;
 		background-color: $w;
 		position: sticky;
-		z-index: 9993;
+		z-index: 9994;
 		top: em(80px);
 		.icon-arrow {
 			visibility: hidden;
