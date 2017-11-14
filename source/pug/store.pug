@@ -7,7 +7,7 @@
 			i.icon-select
 			ul.store__options(ng-class="{'store__options--visible':store.isSelected}")
 				li.store__option(ng-bind-html="store.any" ng-click="$event.stopPropagation();store.store = false;store.isSelected=false" ng-class="{'store__option--selected':!sstore.store}")
-				li.store__option(ng-bind-html="s.name" ng-click="$event.stopPropagation();store.store = s.language_ids[store.lang.default]; store.selected = s.name;store.isSelected=false" ng-class="{'store__option--selected':store.store==s.id}" ng-repeat="s in store.stores")
+				li.store__option(ng-bind-html="s.name" ng-click="$event.stopPropagation();store.store = s.language_ids[store.lang.default]; store.selected = s.name;store.isSelected=false" ng-class="{'store__option--selected':store.store==s.language_ids[store.lang.default]}" ng-repeat="s in store.stores")
 		button.store__send
 			span(ng-bind-html="store.buttonString")
 	.map.map--grid.map--grow-lg.map--shrink-fw
