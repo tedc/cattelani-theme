@@ -1,11 +1,15 @@
 .storia {
 	@include grow('lg');
 	transition: background-color $speed;
+	display: flex;
+	flex-wrap: wrap;
 	&--visible {
 		background: $w;
 	}
 	.swiper-container {
 		margin: 0 auto;
+		width: $f;
+		flex: 0 0 auto;
 	}
 	.swiper-wrapper {
 		display: flex;
@@ -41,6 +45,8 @@
 	}
 	&__header {
 		@include grow('lg');
+		width: $f;
+		flex: 0 0 auto;
 	}
 	&__items {
 		margin: 0 auto;
@@ -215,6 +221,7 @@
 		position: sticky;
 		z-index: 9994;
 		top: em(80px);
+		margin: 0 auto; 
 		.icon-arrow {
 			visibility: hidden;
 			opacity: 0;
