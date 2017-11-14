@@ -30,7 +30,8 @@
         return $html;
     }
     if(empty($fields_not_set)) {
-            $transport = Swift_MailTransport::newInstance();
+            //$transport = Swift_MailTransport::newInstance();
+            $transport = Swift_SmtpTransport::newInstance('asms3.assolo.net', 465, 'ssl')->setUsername('contact@catellanismith.com')->setPassword('gyg725bdl');
             $mMailer = Swift_Mailer::newInstance($transport);
             $rEmail = Swift_Message::newInstance();
             $mEmail = Swift_Message::newInstance();
