@@ -13,7 +13,7 @@
     </p>
     <nav class="banner__tools banner__tools--shrink banner__tools--grow-md-top">
         <a class="banner__btn" href="#languages">
-            <?php echo ICL_LANGUAGE_CODE; ?>
+            <?php echo ucfirst(ICL_LANGUAGE_CODE); ?>
             <i class="icon-lang"></i>
         </a>
         <a class="banner__btn banner__btn--search" href="#search" ng-click="startSearch();">
