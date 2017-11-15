@@ -70,7 +70,6 @@ module.exports = ->
 					params : params
 				.then (res)->
 					$timeout ->
-						console.log data
 						store.items = res.data
 						$rootScope.$broadcast 'markers_changed'
 						return

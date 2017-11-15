@@ -518,8 +518,13 @@
 			left: 0;
 			transform-origin: right center;
 		}
-		&:hover, .menu__item--active &, &.menu__link--active {
+		.menu__item--active &, &.menu__link--active {
 			@extend %active;
+		}
+		&:hover {
+			.desktop & {
+				@extend %active;
+			}
 		}
 	}
 }

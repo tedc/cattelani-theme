@@ -1,6 +1,5 @@
 module.exports = ($rootScope, $scope, data)->
 	$scope.post = data
-	console.log data
 	$scope.content = if data then $scope.post.content.rendered else vars.main.error
 	document.querySelector('title').innerHTML = if data then data.yoats_title else vars.main.errorTitle
 	$rootScope.isAnim = 'error' if not data

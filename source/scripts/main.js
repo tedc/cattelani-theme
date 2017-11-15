@@ -54121,17 +54121,18 @@ module.exports = function($timeout, $rootScope) {
 
 },{}],107:[function(require,module,exports){
 module.exports = function($rootScope, $timeout) {
-  var end, mTL, modal, start;
+  var end, mTL, modal, speed, start;
+  speed = vars.main.mobile ? .25 : .5;
   mTL = new TimelineMax({
     paused: true,
     ease: Linear.easeNone
   });
   end = function() {
-    TweenMax.to('.modal', .5, {
+    TweenMax.to('.modal', speed, {
       clearProps: 'visibility'
     });
   };
-  start = TweenMax.to('.modal', .5, {
+  start = TweenMax.to('.modal', speed, {
     autoAlpha: true
   });
   mTL.addLabel('start').add(start, 'start').addLabel('elements').addLabel('contacts');
@@ -54142,18 +54143,18 @@ module.exports = function($rootScope, $timeout) {
         return;
       }
       id = "#modal-" + $rootScope.modalId;
-      first = TweenMax.to(id, .5, {
+      first = TweenMax.to(id, speed, {
         autoAlpha: true
       });
-      elements = TweenMax.to(id + " > *", .5, {
+      elements = TweenMax.to(id + " > *", speed, {
         y: 0,
         opacity: 1
       });
-      contact = TweenMax.to(".contact__cell", .5, {
+      contact = TweenMax.to(".contact__cell", speed, {
         x: 0,
         opacity: 1
       });
-      TweenMax.to(id, .5, {
+      TweenMax.to(id, speed, {
         autoAlpha: true
       });
       mTL.add(elements, 'elements');
@@ -55862,7 +55863,6 @@ module.exports = function() {
             params: params
           }).then(function(res) {
             $timeout(function() {
-              console.log(data);
               store.items = res.data;
               $rootScope.$broadcast('markers_changed');
             }, 10);
@@ -56461,18 +56461,19 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
         for (i = 0, len = languages.length; i < len; i++) {
           lang = languages[i];
           pageLang = redirect.current !== redirect.default_lang ? 'en' : void 0;
-          url = langRedirect.getRedirectUrl(lang, redirect);
           if (lang === pageLang) {
             $cookies.put('lang', lang, {
               'expires': currentDate
             });
           } else {
-            console.log(url);
-            $cookies.put('lang', lang, {
-              'expires': currentDate
-            });
-            $window.location = url;
-            break;
+            url = langRedirect.getRedirectUrl(lang, redirect);
+            if (url !== false && typeof url !== 'undefined') {
+              $cookies.put('lang', lang, {
+                'expires': currentDate
+              });
+              $window.location = url;
+              break;
+            }
           }
         }
       });
@@ -56580,7 +56581,6 @@ module.exports = function($q, $timeout, $rootScope) {
 },{}],130:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
-  console.log(data);
   $scope.content = data ? $scope.post.content.rendered : vars.main.error;
   document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
   if (!data) {
