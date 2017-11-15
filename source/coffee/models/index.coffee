@@ -77,6 +77,10 @@ catellani
 					$rootScope.$broadcast 'hash_change', {hash : hash}
 					return
 			$rootScope.closePopup() if $rootScope.isPopup and hash.trim() is ''
+			$window.dataLayer.push
+				event : 'routeChangeSuccess'
+				attributes :
+					route : $location.url()
 		return
 		# closeBar = ->
 		# 	cfpLoadingBar.complete()

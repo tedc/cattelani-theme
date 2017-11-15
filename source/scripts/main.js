@@ -56532,8 +56532,14 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
         });
       }
       if ($rootScope.isPopup && hash.trim() === '') {
-        return $rootScope.closePopup();
+        $rootScope.closePopup();
       }
+      return $window.dataLayer.push({
+        event: 'routeChangeSuccess',
+        attributes: {
+          route: $location.url()
+        }
+      });
     });
   }
 ]);
