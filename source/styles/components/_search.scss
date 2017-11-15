@@ -84,7 +84,7 @@
 				}
 			}
 		}
-		.modal--visible .search__items--changing &, .handheld & {
+		.modal--visible .search__items--changing & {
 			transition: none !important;
 		}
 	}
