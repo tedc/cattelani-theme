@@ -121,7 +121,7 @@ module.exports = ->
 				window.dataLayer.push 
 					'event' : 'GAEvent'
 					'eventCategory' : 'Cerca rivenditori'
-					'evetAction' : 'storeSubmit'
+					'eventAction' : 'storeSubmit'
 					'eventLabel' : 'Cerca rivenditore'
 					'eventValue' : store.address
 				# if store.coords

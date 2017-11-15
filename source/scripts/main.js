@@ -54738,11 +54738,8 @@ module.exports = function() {
             }).then(function(data) {
               var html, tmp;
               window.dataLayer.push({
-                'event': 'GAEvent',
-                'eventCategory': 'Form Contattaci',
-                'evetAction': 'form__send',
-                'eventLabel': 'Form Contatti',
-                'eventValue': 'Inviato'
+                event: 'formSubmissionSuccess',
+                formId: 'contactForm'
               });
               tmp = document.createElement('div');
               tmp.innerHTML = data.data;
@@ -55463,7 +55460,7 @@ module.exports = function() {
             window.dataLayer.push({
               'event': 'GAEvent',
               'eventCategory': 'Cerca lampada',
-              'evetAction': 'search',
+              'eventAction': 'search',
               'eventLabel': 'cerca lampada',
               'eventValue': $scope.select
             });
@@ -55918,7 +55915,7 @@ module.exports = function() {
           window.dataLayer.push({
             'event': 'GAEvent',
             'eventCategory': 'Cerca rivenditori',
-            'evetAction': 'storeSubmit',
+            'eventAction': 'storeSubmit',
             'eventLabel': 'Cerca rivenditore',
             'eventValue': store.address
           });

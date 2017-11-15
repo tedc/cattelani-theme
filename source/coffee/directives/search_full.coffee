@@ -98,7 +98,7 @@ module.exports = ->
 					window.dataLayer.push 
 						'event' : 'GAEvent'
 						'eventCategory' : 'Cerca lampada'
-						'evetAction' : 'search'
+						'eventAction' : 'search'
 						'eventLabel' : 'cerca lampada'
 						'eventValue' : $scope.select
 					return

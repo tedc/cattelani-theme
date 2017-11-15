@@ -24,11 +24,8 @@ module.exports = ->
                             transformRequest: transformRequestAsFormPost
                         }).then (data)->
                             window.dataLayer.push 
-                                'event' : 'GAEvent'
-                                'eventCategory' : 'Form Contattaci'
-                                'evetAction' : 'form__send'
-                                'eventLabel' : 'Form Contatti'
-                                'eventValue' : 'Inviato'
+                                event: 'formSubmissionSuccess'
+                                formId: 'contactForm'
                             tmp = document.createElement 'div'
                             tmp.innerHTML = data.data
                             tmp = tmp.querySelector '#form-alert-message'
