@@ -1,11 +1,12 @@
 module.exports = ($rootScope, $timeout)->
+	speed = if vars.main.mobile then .25 else .5
 	mTL = new TimelineMax
 		paused : on
 		ease: Linear.easeNone
 	end = ->
-		TweenMax.to '.modal', .5, { clearProps : 'visibility' } 
+		TweenMax.to '.modal', speed, { clearProps : 'visibility' } 
 		return
-	start = TweenMax.to '.modal', .5, 
+	start = TweenMax.to '.modal', speed, 
 		autoAlpha : on
 	mTL
 		.addLabel 'start'
@@ -16,15 +17,15 @@ module.exports = ($rootScope, $timeout)->
 		addClass : (element, className, done)->
 			return if className isnt 'modal--visible'
 			id = "#modal-#{$rootScope.modalId}"
-			first = TweenMax.to id, .5, { autoAlpha : on }
-			elements = TweenMax.to "#{id} > *", .5,  
+			first = TweenMax.to id, speed, { autoAlpha : on }
+			elements = TweenMax.to "#{id} > *", speed,  
 				y : 0
 				opacity : 1
-			contact = TweenMax.to ".contact__cell", .5,
+			contact = TweenMax.to ".contact__cell", speed,
 				x : 0
 				opacity : 1
 			
-			TweenMax.to id, .5, 
+			TweenMax.to id, speed, 
 				autoAlpha : on
 			mTL.add elements, 'elements'
 			mTL.add contact, 'contacts' if $rootScope.modalId is 'contact'
