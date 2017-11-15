@@ -56462,11 +56462,12 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
           lang = languages[i];
           pageLang = redirect.current !== redirect.default_lang ? 'en' : void 0;
           url = langRedirect.getRedirectUrl(lang, redirect);
-          if (lang !== pageLang) {
+          if (lang === pageLang) {
             $cookies.put('lang', lang, {
               'expires': currentDate
             });
           } else {
+            console.log(url);
             $cookies.put('lang', lang, {
               'expires': currentDate
             });

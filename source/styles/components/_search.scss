@@ -5,6 +5,11 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	* {
+		.handheld & {
+			transition: none !important;
+		}
+	}
 	&__header {
 		@include grow('md', 'top');
 		@include grow('small', 'bottom');

@@ -19,9 +19,10 @@ catellani
 					for lang in languages
 						pageLang = if redirect.current isnt redirect.default_lang then 'en' else 
 						url = langRedirect.getRedirectUrl(lang, redirect)
-						if lang isnt pageLang
+						if lang is pageLang
 							$cookies.put('lang', lang, {'expires' : currentDate})
 						else
+							console.log url
 							$cookies.put('lang', lang, {'expires' : currentDate})
 							$window.location = url
 							break
