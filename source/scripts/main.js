@@ -54713,7 +54713,7 @@ module.exports = function() {
   return form = {
     scope: true,
     controller: [
-      "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", function($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location) {
+      "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "$window", function($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, $window) {
         $scope.formData = {};
         return $scope.submit = function(isValid, url) {
           var frmdata;
@@ -54737,7 +54737,7 @@ module.exports = function() {
               transformRequest: transformRequestAsFormPost
             }).then(function(data) {
               var html, tmp;
-              window.dataLayer.push({
+              $window.dataLayer.push({
                 event: 'formSubmissionSuccess',
                 formId: 'contactForm'
               });
@@ -56535,7 +56535,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
         $rootScope.closePopup();
       }
       return $window.dataLayer.push({
-        event: 'routeChangeSuccess',
+        event: 'locationChangeSuccess',
         attributes: {
           route: $location.url()
         }

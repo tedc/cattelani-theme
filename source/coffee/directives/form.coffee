@@ -1,7 +1,7 @@
 module.exports = ->
     form =
         scope: on
-        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location)->
+        controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "$window", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, $window)->
             $scope.formData = {}
             $scope.submit = (isValid, url)->
                 frmdata = $scope.formData
@@ -23,7 +23,7 @@ module.exports = ->
                                 "Content-type" : "application/x-www-form-urlencoded; charset=utf-8"
                             transformRequest: transformRequestAsFormPost
                         }).then (data)->
-                            window.dataLayer.push 
+                            $window.dataLayer.push 
                                 event: 'formSubmissionSuccess'
                                 formId: 'contactForm'
                             tmp = document.createElement 'div'

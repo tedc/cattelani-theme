@@ -78,7 +78,7 @@ catellani
 					return
 			$rootScope.closePopup() if $rootScope.isPopup and hash.trim() is ''
 			$window.dataLayer.push
-				event : 'routeChangeSuccess'
+				event : 'locationChangeSuccess'
 				attributes :
 					route : $location.url()
 		return
