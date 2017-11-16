@@ -8,8 +8,6 @@
 	}
 	.swiper-container {
 		margin: 0 auto;
-		width: $f;
-		flex: 0 0 auto;
 	}
 	.swiper-wrapper {
 		display: flex;
@@ -213,6 +211,10 @@
 		.storia__item--active & {
 			color: $dark-color;
 		}
+	}
+	&__slider {	
+		width: $f;
+		flex: 0 0 auto;
 	}
 	&__nav {
 		display: flex;
