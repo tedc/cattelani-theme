@@ -727,7 +727,7 @@
 	.swiper-slide {
 		flex: 0 0 auto;	
 		line-height: 0;
-		width: $f;
+		width: $f !important;
 		display: flex;
 		text-align: center;
 		img {
