@@ -54739,8 +54739,7 @@ module.exports = function() {
             }).then(function(data) {
               var html, tmp;
               $window.dataLayer.push({
-                event: 'formSubmissionSuccess',
-                formId: 'contactForm'
+                event: 'formSubmissionSuccess'
               });
               tmp = document.createElement('div');
               tmp.innerHTML = data.data;

@@ -25,7 +25,6 @@ module.exports = ->
                         }).then (data)->
                             $window.dataLayer.push 
                                 event: 'formSubmissionSuccess'
-                                formId: 'contactForm'
                             tmp = document.createElement 'div'
                             tmp.innerHTML = data.data
                             tmp = tmp.querySelector '#form-alert-message'
