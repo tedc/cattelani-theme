@@ -8,7 +8,7 @@
     </a>
     <div class="footer__container footer__container--grow-md-bottom footer__container--grid">
         <div class="footer__cell footer__cell--s4">
-            <?php get_template_part( 'templates/social'); ?>
+            <?php acf_set_language_to_default();get_template_part( 'templates/social' );acf_unset_language_to_default(); ?>
         </div>
         <div class="footer__cell footer__cell--s4">
             <?php acf_set_language_to_default(); 
