@@ -80,6 +80,7 @@
 				//$slider = get_field('layout', $id)[$row][$field];
 				while(have_rows('layoyt', $id)) : the_row();
 					if(get_row_layout() == 'full-slider') :
+						var_dump($id);
 						$slider = get_sub_field($field);
 						break;
 					endif;
