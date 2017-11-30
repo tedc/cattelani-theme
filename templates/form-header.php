@@ -48,9 +48,9 @@
                 $rEmail->setTo(array($email));
                 $rEmail->setBody(template($resp), 'text/html');
                 if( $mMailer->send($mEmail) && $mMailer->send($rEmail)){
-                    echo "<div id='form-alert-message'><h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
+                    echo "<alert-container><h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></alter-container>";
                 } else {
-                    echo "<div id='form-alert-message'><h3 class='form__title'>".$error."</h3><p>".$errorMessage.' '.$pTo."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
+                    echo "<alert-container><h3 class='form__title'>".$error."</h3><p>".$errorMessage.' '.$pTo."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></alert-container>";
                 }
             }
         endif;
