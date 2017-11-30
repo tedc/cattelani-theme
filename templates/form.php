@@ -1,7 +1,9 @@
-<?php get_template_part( 'templates/form', 'header' ); 
+<?php 
+$check = generateRandomString();
+incluce(locate_template( 'templates/form-header.php' )); 
 $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 <form id="contactForm" class="form" name="contactForm" ng-submit="submit(contactForm.$valid, '<?php echo $current_url; ?>')" novalidate>
-	<input type="hidden" ng-init="formData.security_check='catellani-security-form'" ng-model="formData.security_check" />
+	<input type="hidden" ng-init="formData.security_check='<?php echo $check; ?>'" ng-model="formData.security_check" />
 	<p><input class="form__input" type="text" required ng-model="formData.sender" placeholder="<?php _e('Nome e cognome (richiesto)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="email" required ng-model="formData.email" placeholder="<?php _e('Indirizzo e-mail (richiesto)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="tel" required ng-model="formData.tel" placeholder="<?php _e('Telefono (richiesto)', 'catellani'); ?>"></p>
