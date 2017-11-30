@@ -23,12 +23,17 @@ module.exports = ->
                                 "Content-type" : "application/x-www-form-urlencoded; charset=utf-8"
                             transformRequest: transformRequestAsFormPost
                         }).then (data)->
+                            #console.log data
                             $window.dataLayer.push 
                                 event: 'formSubmissionSuccess'
-                            tmp = document.createElement 'div'
-                            tmp.innerHTML = data.data
-                            tmp = tmp.querySelector '#form-alert-message'
-                            html = tmp.innerHTML
+                            # tmp = document.createElement 'div'
+                            # console.log tmp
+                            # tmp.innerHTML = data.data
+                            # tmp = tmp.querySelector '#form-alert-message'
+                            # html = tmp.innerHTML
+                            #console.log data.data
+                            html = vars.main.formMsg
+                            #console.log html
                             $rootScope.isContactSent = on
                             $scope.alert = html
                             $timeout ->

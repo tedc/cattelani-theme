@@ -54737,14 +54737,11 @@ module.exports = function() {
               },
               transformRequest: transformRequestAsFormPost
             }).then(function(data) {
-              var html, tmp;
+              var html;
               $window.dataLayer.push({
                 event: 'formSubmissionSuccess'
               });
-              tmp = document.createElement('div');
-              tmp.innerHTML = data.data;
-              tmp = tmp.querySelector('#form-alert-message');
-              html = tmp.innerHTML;
+              html = vars.main.formMsg;
               $rootScope.isContactSent = true;
               $scope.alert = html;
               $timeout(function() {
