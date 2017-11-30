@@ -1,7 +1,4 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit; // Exit if accessed directly
-    }
     global $post;
     if($_POST) :
         if(wp_verify_nonce( $_POST['security_check'], 'catellani-security-form' )) :
