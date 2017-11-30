@@ -1,6 +1,10 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     global $post;
     if($_POST) :
+        if(wp_verify_nonce( $_POST['security_check'], 'catellani-security-form' )) :
     	$email = $_POST['email'];
     	$name = $_POST['sender'];
         $tel = $_POST['tel'];
@@ -51,5 +55,6 @@
                 echo "<div id='form-alert-message'><h3 class='form__title'>".$error."</h3><p>".$errorMessage.' '.$pTo."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a></div>";
             }
         }
+        endif;
     endif; 
 ?>
