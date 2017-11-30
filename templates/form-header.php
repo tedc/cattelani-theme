@@ -6,6 +6,7 @@
         $tel = $_POST['tel'];
     	$sender = $name;
         $message = $_POST['message'];
+        var_dump($_POST['security_check']);
         //$pTo = array('hello@bspkn.it');
         acf_set_language_to_default(); 
         //$pTo = get_field('email_address', 'options');
