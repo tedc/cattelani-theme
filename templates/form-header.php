@@ -12,8 +12,9 @@
         $message = $_POST['message'];
         //$pTo = array('hello@bspkn.it');
         acf_set_language_to_default(); 
-        $pTo = get_field('email_address', 'options');
+        //$pTo = get_field('email_address', 'options');
         acf_unset_language_to_default(); 
+        $pTo = array('e.grandinetti@bspkn.it');
         $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
         $rSubject = __('Risposta automatica da') . ' '. get_bloginfo('name');
         $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
@@ -41,7 +42,7 @@
             $mEmail = Swift_Message::newInstance();
             $mEmail->setSubject($pSubject);
             $mEmail->setTo($pTo);
-            $mEmail->setBcc(array('e.grandinetti@bspkn.it','hello@bspkn.it', 'direzione.commerciale@catellanismith.com', 'grafica@catellanismith.com'));
+            //$mEmail->setBcc(array('e.grandinetti@bspkn.it','hello@bspkn.it', 'direzione.commerciale@catellanismith.com', 'grafica@catellanismith.com'));
             $mEmail->setFrom(array($email => $name));
             $mEmail->setReplyTo(array($email));
             $mEmail->setBody(template($body), 'text/html');
