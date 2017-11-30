@@ -1,6 +1,7 @@
 <?php
     global $post;
     if($_POST) :
+        var_dump(wp_verify_nonce( $_POST['calc_security'], 'cart-calculate-shipping' ));
     	$email = $_POST['email'];
     	$name = $_POST['sender'];
         $tel = $_POST['tel'];
@@ -19,6 +20,7 @@
         $error = __('Messaggio non inviato','catellani');
         if(empty($_POST['email'])) $fields_not_set[] = "email";
         if(empty($_POST['tel'])) $fields_not_set[] = "tel";
+        if(!wp_verify_nonce( $_POST['calc_security'], 'cart-calculate-shipping' )) $fields_not_set[] = "nonce";
         $name_row = (!empty($_POST['sender'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Da','catellani').'</em><br />'.$sender.'</td></tr>' : "";
         $email_row = (!empty($_POST['email'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#a7a9ac;font-style:italic">Email</em><br /><a href="mailto:'.$email.'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$email.'</a></td></tr>' : "";
         $tel_row = (!empty($_POST['tel'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Telefono','catellani').'</em><br />'.$tel.'</td></tr>' : "";
@@ -30,7 +32,7 @@
             $html = '<html><head><meta charset="utf-8" /></head><body style="background-color:#f6f6f6"><div style="background-color:#fff;font-family:\'Helvetica Neue\', Helvetica, Arial, san-serif;font-size:18px;color:#808285;max-width:500px;margin:0 auto;"><table style="width:100%;border-collapse:collapse;"><thead><tr><td style="padding: 20px;text-align:center; background-color:#fff"><a href="'.get_bloginfo('url').'" style="text-decoration:none"><img src="'.get_stylesheet_directory_uri().'/assets/images/logo.gif" style="border:0;width:100%;max-width:200px;height:auto"/></a></td></tr></thead><tfoot><tr><td style="padding:20px; text-align:center;color:#7d7d7d;font-size:11px">&copy;'.get_bloginfo('name').', '.get_field('address', 'options').'<br /><a href="'.get_bloginfo('url').'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.str_replace('http://', '', get_bloginfo('url')).'</a></td></tr></tfoot><tbody>'.$body.'</tbody></table></div></body></html>';
             return $html;
         }
-        if(empty($fields_not_set) && wp_verify_nonce( $_POST['calc_security'], 'cart-calculate-shipping' )) {
+        if(empty($fields_not_set)) {
             //$transport = Swift_MailTransport::newInstance();
             $transport = Swift_SmtpTransport::newInstance('asms3.assolo.net', 465, 'ssl')->setUsername('contact@catellanismith.com')->setPassword('gyg725bdl');
             $mMailer = Swift_Mailer::newInstance($transport);
