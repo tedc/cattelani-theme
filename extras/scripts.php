@@ -63,6 +63,8 @@
 		// $url = (isset($translations[$lang])) ? $translations[$lang] : $front_page[$lang];
 		$redirect = array('default_lang' => $sitepress->get_default_language(),'current' => ICL_LANGUAGE_CODE, 'langs' => $translations);
 		$ajax = array('url' => admin_url('admin-ajax.php'), 'action' => 'catellanipdf');
+		$sent = __('Messaggio inviato correttamente','catellani');
+        $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
 		$vars = array(
 			"main" => array(
 				'mobile' => (bool)is_handheld(),
@@ -76,7 +78,8 @@
 				'langs' => $codes,
 				'error' => $error,
 				'errorTitle' => __('Pagina non trovata', 'catellani'),
-				'redirect' => $redirect
+				'redirect' => $redirect,
+				'formMsg' => "<h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>"
 			),
 			"api" => array(	
 				'google_api_key' => acf_get_setting('google_api_key'),
