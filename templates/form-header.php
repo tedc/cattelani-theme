@@ -1,7 +1,7 @@
 <?php
     global $post;
     if($_POST) :
-        var_dump(wp_verify_nonce( $_POST['security_check'], 'catellani-security-form' ) );
+        var_dump($_POST['security_check'] );
     	$email = $_POST['email'];
     	$name = $_POST['sender'];
         $tel = $_POST['tel'];
