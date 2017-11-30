@@ -1,7 +1,6 @@
 <?php
     global $post;
     if($_POST) :
-        //var_dump($_POST['security_check'] );
         $email = $_POST['email'];
     	$name = $_POST['sender'];
         $tel = $_POST['tel'];
@@ -20,7 +19,7 @@
         $error = __('Messaggio non inviato','catellani');
         if(empty($_POST['email'])) $fields_not_set[] = "email";
         if(empty($_POST['tel'])) $fields_not_set[] = "tel";
-        if($_POST['security_check'] != $check) $fields_not_set[] = "nonce";
+        if(emtpy($_POST['security_check'])) $fields_not_set[] = "nonce";
         $name_row = (!empty($_POST['sender'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Da','catellani').'</em><br />'.$sender.'</td></tr>' : "";
         $email_row = (!empty($_POST['email'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#a7a9ac;font-style:italic">Email</em><br /><a href="mailto:'.$email.'" style="text-decoration:none;font-weight:bold;color:#0b1e2d">'.$email.'</a></td></tr>' : "";
         $tel_row = (!empty($_POST['tel'])) ? '<tr style="border-bottom: 1px solid #f6f6f6;"><td style="text-align:center;padding:20px;font-size:18px;"><em style="color:#7d7d7d;font-style:italic">'.__('Telefono','catellani').'</em><br />'.$tel.'</td></tr>' : "";
