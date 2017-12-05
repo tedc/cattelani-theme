@@ -9,7 +9,7 @@
 	$row++;
 	endwhile;
 	if($post_type != 'lampade' && $post_type != 'page') :
-		//include(locate_template( 'builder/content.php', false, true));
+		include(locate_template( 'builder/content.php', false, true));
 	endif;
 	if($post_type == 'lampade') :
 		include(locate_template( 'builder/colori.php', false, true ));
