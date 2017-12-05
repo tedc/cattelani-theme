@@ -485,7 +485,6 @@
 	add_filter( 'pre_get_posts', 'collezioni_posts_per_page' );
 
 	function my_gallery_shortcode( $output = '', $attrs ) {
-		return false;
 		global $post;
 		$row = str_replace(',', '', $attrs['ids']);
 		$ids = explode(',', $attrs['ids']);
