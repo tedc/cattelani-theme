@@ -499,7 +499,7 @@
 		// //include(locate_template('builder/commons/gallery.php', false, false));
 		// $output = $prepend.'<div class="container__gallery container__gallery--shrink-fw container__gallery--grow-lg-top container__gallery--grow-md-bottom" id="slider_'.$row.'">'.ob_get_clean().'</div>'.$append;
 		//return $output;
-		return explode(',', $attrs['ids']);
+		return $images;
 
 	}
 

@@ -30,6 +30,7 @@
 	$next = (get_post_type() == 'post' || get_post_type() == 'progetti' || get_post_type() == 'installazioni' ) ? get_previous_post() : apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true);
 	if($next) :
 	$next_id = id_by_lang($next->ID, get_post_type(), ICL_LANGUAGE_CODE);
+		var_dump($next->ID, $next_id);
 ?>
 <a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element href="<?php echo get_permalink($next_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next_id)); ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})">
 	<span class="next__cover" ng-style="{'background-image':'url(<?php echo get_the_post_thumbnail_url($next_id, 'full'); ?>)'}"></span>
