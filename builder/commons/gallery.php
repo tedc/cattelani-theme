@@ -1,6 +1,5 @@
 <?php
 	if($images):
-		var_dump($images);
 	$imgs = '';
 	$count=0; foreach($images as $img) :
 	$comma = ($count>0) ? ',' : '';
