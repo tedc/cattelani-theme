@@ -29,7 +29,6 @@
 	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_previous_post( true, null, 'collezioni');
 
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
-	var_dump(get_adjacent_post(false, null, true)->ID);
 	if($next) :
 
 	$next_id = id_by_lang($next->ID, get_post_type(), ICL_LANGUAGE_CODE);
