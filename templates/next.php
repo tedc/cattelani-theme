@@ -1,5 +1,6 @@
 <?php
 	//global $APTO;
+	acf_set_language_to_default();
 	$term = wp_get_post_terms( $post->ID, 'collezioni' );
 	// $args   =   array(
  //                    '_adminsort' =>  array('yes')  
@@ -27,7 +28,9 @@
 	// $post_type_object = get_post_type_object( $post_type );
 	
 	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_previous_post( true, null, 'collezioni');
+
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
+	acf_unset_language_to_default();
 	if($next) :
 
 	$next_id = id_by_lang($next->ID, get_post_type(), ICL_LANGUAGE_CODE);
