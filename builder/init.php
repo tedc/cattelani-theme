@@ -1,4 +1,5 @@
 <?php
+	var_dump(get_previous_post());
 	$post_type = get_post_type();
 	$aforisma = [];
 	$testi = [];
