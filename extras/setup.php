@@ -486,6 +486,7 @@
 
 	function my_gallery_shortcode( $output = '', $attrs ) {
 		global $post;
+		var_dump($attrs['ids']);
 		$row = str_replace(',', '', $attrs['ids']);
 		$ids = explode(',', $attrs['ids']);
 		$images = array();
