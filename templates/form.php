@@ -1,6 +1,6 @@
 <?php 
 $check = generateRandomString();
-//include(locate_template( 'templates/form-header.php', false, false )); 
+include(locate_template( 'templates/form-header.php', false, false )); 
 $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 <form id="contactForm" class="form" name="contactForm" ng-submit="submit(contactForm.$valid, '<?php echo $current_url; ?>')" novalidate>
 	<input type="hidden" ng-init="formData.security_check='<?php echo $check; ?>'" ng-value="<?php echo $check; ?>" ng-model="formData.security_check" />
