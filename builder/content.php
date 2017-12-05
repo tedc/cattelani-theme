@@ -13,6 +13,6 @@
 	<?php if(get_post_type() == 'post') :  ?>
 	</div>
 	
-	<?php 	//get_template_part( 'templates/entry-meta', 'social' ); 
+	<?php get_template_part( 'templates/entry-meta', 'social' ); 
 	endif; ?>
 </article>
