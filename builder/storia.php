@@ -41,7 +41,7 @@
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
 			$image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-			$alt = $image_alt ? $image_alt : __('La Storia', 'catellani') . ' di '.get_blofinfo('name').': '.get_the_title($s->ID);
+			$alt = $image_alt ? $image_alt : __('La Storia', 'catellani') . ' di '.get_bloginfo('name').': '.get_the_title($s->ID);
 					
 			echo wp_get_attachment_image($thumbnail_id, 'large', false, array('alt' => $alt));
 			 ?>
