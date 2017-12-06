@@ -3,7 +3,9 @@
 	<div class="zoom__container" ng-mouseenter="isCursor=true" ng-mousemove="cursor($event)" ng-mouseleave="leave()" ng-click="isZoom[<?php echo $row; ?>]=true;updateScrollbar(isZoom[<?php echo $row; ?>], <?php echo get_sub_field('zoom_image')['width'] ?>, <?php echo get_sub_field('zoom_image')['height']; ?>)">
 		<figure class="zoom__figure" ng-style="{'background-image' : 'url(<?php echo get_sub_field('zoom_preview') ? get_sub_field('zoom_preview')['url'] : get_sub_field('zoom_image')['url']; ?>)'}">
 			<div class="zoom__scroll">
-				<?php echo wp_get_attachment_image( get_sub_field('zoom_image')['ID'], 'full', false, array('class' => 'zoom__image')); ?>
+				<?php 
+				$alt = get_post_meta(get_sub_field('zoom_image')['ID'], '_wp_attachment_image_alt', true) ? get_post_meta(get_sub_field('zoom_image')['ID'], '_wp_attachment_image_alt', true) : Titles\title();
+				echo wp_get_attachment_image( get_sub_field('zoom_image')['ID'], 'full', false, array('class' => 'zoom__image', 'alt' => $alt)); ?>
 			</div>
 			<figcaption class="zoom__cursor" ng-class="{'zoom__cursor--hidden':closeHover}">
 				<i class="zoom__icn"></i>

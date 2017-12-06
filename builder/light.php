@@ -4,7 +4,9 @@
 ?>
 <div class="light light--shrink-fw light--grid" ng-class="{'light--on':isOn}">
 	<figure class="light__cell light__cell--figure light__cell--s<?php echo (get_sub_field('foto_verticale')) ? 5 : 7; ?>" ng-light-mask<?php if($accesa != $spenta) : ?> ng-mousemove="moveMask($event, '#light_svg_<?php echo $row; ?>')"<?php endif; ?>>
-		<?php echo wp_get_attachment_image( get_sub_field('immagine_spenta')['ID'], 'full' ); ?>
+		<?php 
+		$alt = get_post_meta(get_sub_field('immagine_spenta')['ID'], '_wp_attachment_image_alt', true) ? get_post_meta(get_sub_field('immagine_spenta')['ID'], '_wp_attachment_image_alt', true) : Titles\title();
+		echo wp_get_attachment_image( get_sub_field('immagine_spenta')['ID'], 'full', false, array('alt'=>$alt) ); ?>
 		<?php if($accesa != $spenta) : ?>
 		<svg class="light__svg" viewBox="0 0 <?php echo get_sub_field('immagine_accesa')['width']; ?> <?php echo get_sub_field('immagine_accesa')['height']; ?>" id="light_svg_<?php echo $row; ?>">
 			<defs>
