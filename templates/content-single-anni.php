@@ -4,7 +4,9 @@
 	<div class="anni__wrapper anni__wrapper--grow-md anni__wrapper--<?php echo ($a%2==0) ? 'even' : 'odd'; ?> anni__wrapper--grid<?php echo ($item['in_evidenza']) ? ' anni__wrapper--full': ''; ?>">
 		<div class="anni__cell anni__cell--shrink anni__cell--figure anni__cell--s<?php echo ($item['in_evidenza']) ? 12 : 5; ?>"">
 			<figure class="anni__figure">
-				<?php echo wp_get_attachment_image( $item['immagine_anno']['ID'], 'large', false, '' ); ?>
+				<?php 
+				$alt = get_post_meta($item['immagine_anno']['ID'], '_wp_attachment_image_alt', true) ? get_post_meta($item['immagine_anno']['ID'], '_wp_attachment_image_alt', true) : $item['didascalia_anno'];
+				echo wp_get_attachment_image( $item['immagine_anno']['ID'], 'large', false, array('alt' => $alt) ); ?>
 			</figure>
 		</div>
 		<div class="anni__cell anni__cell--content anni__cell--s<?php echo ($item['in_evidenza']) ? 12 : 7; ?>">
