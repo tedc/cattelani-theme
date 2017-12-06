@@ -40,13 +40,14 @@
 		<figure class="swiper-slide__figure" ng-click="expandStory()">
 			<?php 
 			$thumbnail_id = get_post_thumbnail_id( $s->ID );
+			$image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+			$alt = $image_alt ? $image_alt : __('La Storia', 'catellani') . ': '.get_the_title();
 					
-			echo wp_get_attachment_image($thumbnail_id, 'large');
+			echo wp_get_attachment_image($thumbnail_id, 'large', false, array('alt' => $alt));
 			 ?>
 			<figcaption class="swiper-slide__alt">
 				<?php 
-					$alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-					echo $alt;
+					echo $image_alt;
 				?>
 			</figcaption>
 		</figure>
