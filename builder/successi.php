@@ -9,7 +9,7 @@
 		?>
 		<div class="successes__cell successes__cell--image successes__cell--s6">
 			<?php 
-			$alt = get_post_meta($image['ID'], '_wp_attachment_image_alt', true) ? get_post_meta($image['ID'], '_wp_attachment_image_alt', true) : get_the_title();
+			$alt = get_post_meta($image['ID'], '_wp_attachment_image_alt', true) ? get_post_meta($image['ID'], '_wp_attachment_image_alt', true) : get_bloginfo('name') . ': '.get_the_title();
 			echo wp_get_attachment_image($image['ID'], 'large'); ?>
 			<div class="successes__contain"  ng-style="{'background-image':'url(<?php echo wp_get_attachment_image_src($image['ID'], 'full')[0]; ?>'}"></div>
 			<div class="successes__contain successes__contain--hover" ng-style="{backgroundImage:'url(<?php echo wp_get_attachment_image_src($horse['ID'], 'full')[0]; ?>'}"></div>
