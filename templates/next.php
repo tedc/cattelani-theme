@@ -3,7 +3,7 @@
 	// $args   =   array(
  //                    '_adminsort' =>  array('yes')  
  //                    );
-
+	$term = wp_get_post_terms( $post->ID, 'collezioni' );
 	// //create the arguments of a query
 	// $query  =   new stdClass();
 	// //set the post type
