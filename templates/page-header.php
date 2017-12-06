@@ -19,7 +19,7 @@
 <header class="header header--shrink header--<?php echo get_post_type(); ?> <?php echo $className; ?> <?php echo ($kind == 0) ? 'header--grow-md-bottom' : 'header--grow-lg-bottom'; ?>"<?php echo $data; ?>>
 	<?php if( $kind == 0 ): ?>
 	<div class="header__cover" ng-style="{'background-image' : 'url(<?php echo $cover; ?>)'}">
-		<img src="<?php echo $cover; ?>" alt="<?php echo $alt; ?>" class="seo-image" />
+		<img src="<?php echo $cover; ?>" alt="<?php echo $alt; ?>" class="seo-image" style="z-index: -10;position: absolute;top: -99999px; left: -9999px; opacity: 0;" />
 	</div>
 	<?php endif; ?>
 	<?php //if(get_post_type() != 'post') : ?>
