@@ -8,7 +8,7 @@
 	$the_id = ($obj) ? $obj->taxonomy.'_'.$the_id : $the_id;
 	$kind = get_field('header_kind');
 	$cover = get_field('featured_image', $the_id) ? get_the_post_thumbnail_url($the_id, 'full') : get_field('cover_image', $the_id)['url'];
-	$alt = get_field('featured_image', $the_id) ? get_post_meta(get_post_thumbnail_id($the_id), '_wp_attachment_image_alt', true) : Titles\title();
+	$alt = get_field('featured_image', $the_id) ? (get_post_meta(get_post_thumbnail_id($the_id), '_wp_attachment_image_alt', true) ? get_post_meta(get_post_thumbnail_id($the_id), '_wp_attachment_image_alt', true) : Titles\title() ): Titles\title();
 	$className  = $kind == 0 ? 'header--bg header--bg-'. get_post_type() : 'header--white';
 	$data = '';
 	if(get_post_type() == 'lampade')  :
