@@ -570,7 +570,7 @@
 		return $meta_fields;
 	}
 
-	add_filter( 'wpseo_metadesc', 'fix_yoast_metadesc', 10, 1 );
+	//add_filter( 'wpseo_metadesc', 'fix_yoast_metadesc', 10, 1 );
 	function fix_yoast_metadesc( $str ) {
 		$str = do_shortcode( $str );
 		$str= preg_replace('/\s/', ' ', wp_strip_all_tags($str));
