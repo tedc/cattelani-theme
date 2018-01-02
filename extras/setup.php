@@ -724,11 +724,13 @@ function collezioni_og_image($image) {
 	global $sitepress;
 	if(is_tax('collezioni')) {
 		$obj = get_queried_object();
-		$image = get_field('cover_image', 'collezioni_'.$obj->term_id)['url'];
+		$the_id = (ICL_LANGUAGE_CODE != $sitepress->get_default_language()) ? id_by_lang($obj->term_id, 'collezioni', ICL_LANGUAGE_CODE) : $obj->term_id;
+		$image = get_field('cover_image', 'collezioni_'.$the_id)['url'];
 	}
 	if(is_single() || is_page()) {
 		if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
-			$image = get_the_post_thumbnail_url($post->ID, 'full');
+			$the_id = id_by_lang($post->ID, $post->post_type, ICL_LANGUAGE_CODE);
+			$image = get_the_post_thumbnail_url($the_id, 'full');
 		}
 	}
 	return $image;
