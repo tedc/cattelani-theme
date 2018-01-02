@@ -574,7 +574,7 @@
 	function fix_yoast_metadesc( $str ) {
 		$str = do_shortcode( $str );
 		$str= preg_replace('/\s/', ' ', wp_strip_all_tags($str));
-		$str= explode(' ', $str, 100);
+		$str= explode(' ', $str, 200);
 		array_pop($str);
 		$str= implode(' ', $str);
 		return $str;
