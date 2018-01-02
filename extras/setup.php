@@ -575,8 +575,8 @@
 		$str = do_shortcode( $str );
 		$str= preg_replace('/\s/', ' ', wp_strip_all_tags($str));
 		//$str= explode(' ', $str, 100);
-		array_pop($str);
-		$str= implode(' ', $str);
+		// array_pop($str);
+		// $str= implode(' ', $str);
 		return $str;
 	}
 
