@@ -720,9 +720,16 @@ function add_query_vars_filter( $vars ){
 add_filter( 'query_vars', 'add_query_vars_filter' );
 
 function collezioni_og_image($image) {
+	global $post;
+	global $sitepress;
 	if(is_tax('collezioni')) {
 		$obj = get_queried_object();
 		$image = get_field('cover_image', 'collezioni_'.$obj->term_id)['url'];
+	}
+	if(is_single() || is_page()) {
+		if(ICL_LANGUAGE_CODE != $sitepress->get_default_language()) {
+			$image = get_the_post_thumbnail_url($post->ID, 'full');
+		}
 	}
 	return $image;
 }
