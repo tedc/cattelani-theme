@@ -718,3 +718,12 @@ function add_query_vars_filter( $vars ){
 	  return $vars;
 }
 add_filter( 'query_vars', 'add_query_vars_filter' );
+
+function collezioni_og_image($image) {
+	if(is_tax('collezioni')) {
+		$obj = get_queried_object();
+		$image = get_field('cover_image', 'collezioni_'.$obj->term_id)['url'];
+	}
+	return $image;
+}
+add_filter('wpseo_opengraph_image', 'collezioni_og_image');
