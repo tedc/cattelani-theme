@@ -513,7 +513,7 @@
 	function my_custom_wp_trim_excerpt($text) {
 	    if(''==$text) {
 	        $text= preg_replace('/\s/', ' ', wp_strip_all_tags(get_field('content')));
-	        $text= explode(' ', $text, 35);
+	        $text= explode(' ', $text, 50);
 	        array_pop($text);
 	        $text= implode(' ', $text);
 	    }
@@ -521,7 +521,7 @@
 	}
 
 	function custom_excerpt_length( $length ) {
-		return 35;
+		return 50;
 	}
 	add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
@@ -574,7 +574,7 @@
 	function fix_yoast_metadesc( $str ) {
 		$str = do_shortcode( $str );
 		$str= preg_replace('/\s/', ' ', wp_strip_all_tags($str));
-		$str= explode(' ', $str, 200);
+		$str= explode(' ', $str, 50);
 		array_pop($str);
 		$str= implode(' ', $str);
 		return $str;
