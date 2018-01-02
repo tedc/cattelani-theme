@@ -727,3 +727,14 @@ function collezioni_og_image($image) {
 	return $image;
 }
 add_filter('wpseo_opengraph_image', 'collezioni_og_image');
+
+function collezioni_og_type($type) {
+	if(is_tax('collezioni')) {
+		$type = __('collezione', 'catellani');
+	}
+	if(is_singular('lampade')) {
+		$type = __('lampada', 'catellani');
+	}
+	return $type;
+}
+add_filter('wpseo_opengraph_type', 'collezioni_og_type');
