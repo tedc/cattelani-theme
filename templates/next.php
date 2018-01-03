@@ -1,5 +1,6 @@
 <?php
 	global $sitepress;
+	global $post;
 	$post_type = get_post_type();
 	//global $APTO;
 	// $args   =   array(
