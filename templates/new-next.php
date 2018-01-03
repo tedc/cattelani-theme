@@ -9,9 +9,9 @@
 		'post__in' => array($the_id),
 		'suppress_filters' => false
 	);
+	var_dump(apto_get_adjacent_post( FALSE, FALSE, FALSE, TRUE)->ID);
 	$q = new WP_Query($args);
 	if($q->have_posts()) :
-		var_dump($the_id);
 		while($q->have_posts()) : $q->the_post(); 
 			$next = get_previous_post();
 	if($next) :
