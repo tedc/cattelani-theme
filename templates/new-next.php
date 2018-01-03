@@ -2,15 +2,16 @@
 	global $sitepress;
 	$post_type = get_post_type();
 	$the_id = $post->ID;
-	var_dump($the_id);
 	$args = array(
 		'post_type' => $post_type,
 		'post__in' => array($the_id),
 		'suppress_filters' => false
 	);
 	$q = new WP_Query($args);
-	if($q->have_posts) :
-		while($q->have_posts()) : $q->the_post(); $next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
+	if($q->have_posts()) :
+		var_dump($the_id);
+		while($q->have_posts()) : $q->the_post(); 
+			$next = get_previous_post();
 	if($next) :
 	$next_id = (ICL_LANGUAGE_CODE != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
 	if($next_id) :
