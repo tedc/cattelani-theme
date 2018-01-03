@@ -1,5 +1,6 @@
 <?php
 	global $sitepress;
+	$post_type = get_post_type();
 	//global $APTO;
 	// $args   =   array(
  //                    '_adminsort' =>  array('yes')  

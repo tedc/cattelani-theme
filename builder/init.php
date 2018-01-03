@@ -19,6 +19,7 @@
 		if($post_type ==  'progetti'  || $post_type == 'installazioni' ) {
 			include(locate_template( 'builder/related.php', false, true));
 		}
-		include(locate_template( 'templates/next.php', false, true));
+		//include(locate_template( 'templates/next.php', false, true));
+		get_template_part( 'templates/next' );
 	endif;
 ?>
