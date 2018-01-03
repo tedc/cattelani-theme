@@ -20,6 +20,10 @@
 			include(locate_template( 'builder/related.php', false, true));
 		}
 		//include(locate_template( 'templates/next.php', false, true));
+		if($post_type == 'lampade') :
 		get_template_part( 'templates/next' );
+		else :
+		get_template_part( 'templates/new', 'next' );
+		endif;
 	endif;
 ?>

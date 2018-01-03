@@ -1,36 +1,15 @@
 <?php
 	global $sitepress;
-	global $post;
 	$post_type = get_post_type();
-	//global $APTO;
-	// $args   =   array(
- //                    '_adminsort' =>  array('yes')  
- //                    );
-	$term = wp_get_post_terms( $post->ID, 'collezioni' );
-	// //create the arguments of a query
-	// $query  =   new stdClass();
-	// //set the post type
-	// $query->query_vars['post_type'] =   'lampade';
-	// //set taxonomy
-	// $query->tax_query->queries['relation']  =   'AND';
-	// $query->tax_query->queries[]    =   array(
-	//                                             'taxonomy'  =>   'collezioni',
-	//                                             'field'     =>   'term_id',
-	//                                             'terms'     =>   array( $term[0]->term_id ),
-	//                                             'operator'  =>  'IN'
-	//                                             );
-	                    
-	// $sort_view_id   =   $APTO->functions->query_match_sort_id($query, $args);
-
-	// $sort_view_post     =   get_post($sort_view_id);
-	// $sortID             =   $sort_view_post->post_parent;
-	// var_dump($sortID);
-	// $post_type = get_post_type();
-	// $post_type_object = get_post_type_object( $post_type );
-	
-	//$next = ($post_type == 'post' || $post_type == 'progetti' || $post_type == 'installazioni' ) ? get_previous_post() : get_previous_post( true, null, 'collezioni');
-
-	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
+	$the_id = $post->ID;
+	$args = array(
+		'post_type' => $post_type,
+		'post__in' => array($the_id),
+		'suppress_filters' => false
+	);
+	$q = new WP_Query($args);
+	if($q->have_posts) :
+		while($q->have_posts()) : $q->the_post(); $next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
 	if($next) :
 	$next_id = (ICL_LANGUAGE_CODE != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
 	if($next_id) :
@@ -57,4 +36,8 @@
 	</span>
 	</span>
 </a>
-<?php endif; endif; ?>
+<?php endif; endif; 
+		endwhile;
+	endif;
+	wp_reset_query(); wp_reset_postdata();
+?>
