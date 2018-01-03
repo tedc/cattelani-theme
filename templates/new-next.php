@@ -2,6 +2,7 @@
 	global $sitepress;
 	$post_type = get_post_type();
 	$the_id = $post->ID;
+	var_dump($the_id);
 	$args = array(
 		'post_type' => $post_type,
 		'post__in' => array($the_id),
