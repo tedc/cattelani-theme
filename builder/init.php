@@ -23,7 +23,8 @@
 		if($post_type == 'lampade') :
 		get_template_part( 'templates/next' );
 		else :
-		get_template_part( 'templates/new', 'next' );
+		include(locate_template( 'templates/new-next.php', false, true));
+		//get_template_part( 'templates/new', 'next' );
 		endif;
 	endif;
 ?>
