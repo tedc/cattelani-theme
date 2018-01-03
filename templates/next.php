@@ -31,7 +31,6 @@
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
 	if($next) :
 	$next_id = (ICL_LANGUAGE_CODE != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
-	var_dump($next->ID, $next_id, $post->ID);
 	if($next_id) :
 	//var_dump($next_id, $next->ID, get_post_type());
 	//echo previous_posts_link(__('Prossimo', 'catellani'));
