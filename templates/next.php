@@ -33,7 +33,7 @@
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : get_previous_post();
 	?>
 	<div style="display: none">
-	<?php var_dump($next->ID, get_previous_post()->ID); ?>
+	<?php var_dump($post->ID, get_previous_post()->ID); ?>
 </div>
 	<?php
 	if($next) :
