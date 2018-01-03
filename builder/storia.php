@@ -62,7 +62,21 @@
 			<?php include(locate_template( 'templates/content-single-'.$s->post_type .'.php', false, true)); ?>
 			<footer class="type-anni__footer anni__footer--shrink type-anni__footer--grid type-anni__footer--grow-md-top">
 				<span class="type-anni__send" ng-click="expandStory()"><?php _e('Torna alla storia', 'catellani'); ?></span>
-				
+				<?php 
+					$oldPost = $post;
+					$post = $s;
+
+					add_filter( 'get_next_post_where', 'my_next_post_where' );
+					add_filter( 'get_next_post_sort', 'my_next_post_sort' );
+					$next = get_next_post(); 
+					remove_filter( 'get_next_post_where', 'my_next_post_where' );
+					remove_filter( 'get_next_post_sort', 'my_next_post_sort' );
+					if($next) : 
+				?>
+				<span class="type-anni__next" ng-click="next(<?php echo $next->ID; ?>)"><?php echo get_the_title($next->ID); ?></span>
+				<?php endif;
+					$post = $oldPost;
+				 ?>
 			</footer>
 		</article>
 	</ks-swiper-slide>
