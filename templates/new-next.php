@@ -1,7 +1,9 @@
 <?php
 	global $sitepress;
+	$current_lang = $sitepress->get_current_language();
 	$post_type = get_post_type();
 	$the_id = $post->ID;
+	$sitepress->switch_lang($sitepress->get_default_language()); 
 	$args = array(
 		'post_type' => $post_type,
 		'post__in' => array($the_id),
@@ -42,4 +44,5 @@
 		endwhile;
 	endif;
 	wp_reset_query(); wp_reset_postdata();
+	$sitepress->switch_lang($current_lang);
 ?>
