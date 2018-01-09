@@ -3,7 +3,7 @@
 	$imgs = '';
 	$count=0; foreach($images as $img) :
 	$comma = ($count>0) ? ',' : '';
-	$imgs .= ($full) ? $comma. '{url : \''.$img['url'].'\',alt : \''.$img['alt'].'\'}' : $comma. '{url : \''.$img['url'].'\'}';
+	$imgs .= ($full) ? $comma. '{url : \''.$img['url'].'\',alt : \''.addslashes($img['alt']).'\'}' : $comma. '{url : \''.$img['url'].'\'}';
 	$count++; endforeach;
 ?>
 <ng-swiper>

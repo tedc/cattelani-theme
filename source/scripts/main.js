@@ -56454,13 +56454,15 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
       langRedirect.getBrowserLanguage().then(function(val) {
         var i, lang, languages, len, pageLang, url;
         languages = val;
+        $window.localStorage.setItem('agent', JSON.stringify(languages));
         for (i = 0, len = languages.length; i < len; i++) {
           lang = languages[i];
-          pageLang = redirect.current !== redirect.default_lang ? 'en' : void 0;
+          pageLang = redirect.current.toLowerCase() !== redirect.default_lang.toLowerCase() ? 'en' : redirect.current.toLowerCase();
           if (lang === pageLang) {
             $cookies.put('lang', lang, {
               'expires': currentDate
             });
+            break;
           } else {
             url = langRedirect.getRedirectUrl(lang, redirect);
             if (url !== false && typeof url !== 'undefined') {

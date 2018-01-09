@@ -16,10 +16,12 @@ catellani
 			langRedirect.getBrowserLanguage()
 				.then (val)->
 					languages = val
+					$window.localStorage.setItem('agent', JSON.stringify(languages));
 					for lang in languages
-						pageLang = if redirect.current isnt redirect.default_lang then 'en' else 
+						pageLang = if redirect.current.toLowerCase() isnt redirect.default_lang.toLowerCase() then 'en' else redirect.current.toLowerCase()
 						if lang is pageLang
-							$cookies.put('lang', lang, {'expires' : currentDate})
+							$cookies.put('lang', lang, {'expires' : currentDate});
+							break
 						else
 							url = langRedirect.getRedirectUrl(lang, redirect)
 							if url isnt off and typeof url isnt 'undefined'
