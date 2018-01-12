@@ -4,6 +4,7 @@ module.exports = ->
         controller: [ "$scope", "$rootScope", "$http", "$timeout", "transformRequestAsFormPost", "$location", "$window", ($scope, $rootScope, $http, $timeout, transformRequestAsFormPost, $location, $window)->
             $scope.formData = {}
             $scope.submit = (isValid, url)->
+                #url = vars.api.ajax.url
                 frmdata = $scope.formData
                 frmdata.location = $location.absUrl().split('#')[0]
                 $rootScope.isSubmitted = on
@@ -23,9 +24,10 @@ module.exports = ->
                                 "Content-type" : "application/x-www-form-urlencoded; charset=utf-8"
                             transformRequest: transformRequestAsFormPost
                         }).then (data)->
+                            console.log data
                             #console.log data
-                            $window.dataLayer.push 
-                                event: 'formSubmissionSuccess'
+                            # $window.dataLayer.push 
+                            #     event: 'formSubmissionSuccess'
                             # tmp = document.createElement 'div'
                             # console.log tmp
                             # tmp.innerHTML = data.data

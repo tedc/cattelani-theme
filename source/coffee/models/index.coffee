@@ -12,23 +12,24 @@ catellani
 		currentDate = new Date()
 		currentTime = currentDate.getTime()
 		currentDate.setTime(currentTime + (8 * 60 * 60 * 1000));
-		if not langCookie
-			langRedirect.getBrowserLanguage()
-				.then (val)->
-					languages = val
-					$window.localStorage.setItem('agent', JSON.stringify(languages));
-					for lang in languages
-						pageLang = if redirect.current.toLowerCase() isnt redirect.default_lang.toLowerCase() then 'en' else redirect.current.toLowerCase()
-						if lang is pageLang
-							$cookies.put('lang', lang, {'expires' : currentDate});
-							break
-						else
-							url = langRedirect.getRedirectUrl(lang, redirect)
-							if url isnt off and typeof url isnt 'undefined'
-								$cookies.put('lang', lang, {'expires' : currentDate})
-								$window.location = url
+		if $window.location.href.indexOf('?gclid') is -1 
+			if not langCookie
+				langRedirect.getBrowserLanguage()
+					.then (val)->
+						languages = val
+						$window.localStorage.setItem('agent', JSON.stringify(languages));
+						for lang in languages
+							pageLang = if redirect.current.toLowerCase() isnt redirect.default_lang.toLowerCase() then 'en' else redirect.current.toLowerCase()
+							if lang is pageLang
+								$cookies.put('lang', lang, {'expires' : currentDate});
 								break
-					return
+							else
+								url = langRedirect.getRedirectUrl(lang, redirect)
+								if url isnt off and typeof url isnt 'undefined'
+									$cookies.put('lang', lang, {'expires' : currentDate})
+									$window.location = url
+									break
+						return
 			#$rootScope.vimeo = angularLoad.loadScript 'https://player.vimeo.com/api/player.js'
 		$transitions.onBefore {}, (trans)->
 			newUrl = trans.router.stateService.href(trans.to().name, trans.params(), {absolute : on})
@@ -59,6 +60,7 @@ catellani
 			#return false if /#/.test(oldUrl) and newUrl is oldUrl.split('#')[0]
 			#console.log newUrl.split('#')[0] is oldUrl.split('#')[0] and hash.trim() is '',  hash.trim() is '', newUrl.split('#')[0] is oldUrl.split('#')[0]
 			return false if newUrl.split('#')[0] is oldUrl.split('#')[0]
+			return false if newUrl.split('?gclid')[0] is oldUrl.split('?gclid')[0]
 			# from = if $rootScope.from then $rootScope.from else trans.$from().name.replace('app.', '')
 			# to = trans.$to().name.replace('app.', '')
 			oldUrl = newUrl

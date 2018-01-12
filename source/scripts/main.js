@@ -54718,10 +54718,14 @@ module.exports = function() {
         $scope.formData = {};
         return $scope.submit = function(isValid, url) {
           var frmdata;
+          url = vars.api.ajax.url;
           frmdata = $scope.formData;
           frmdata.location = $location.absUrl().split('#')[0];
           $rootScope.isSubmitted = true;
-          $scope.formData = {};
+          $scope.formData = {
+            action: frmdata.action,
+            security: frmdata.security
+          };
           $scope.any = false;
           $scope.time = false;
           $rootScope.isPrivacyChecked = false;
@@ -54738,9 +54742,7 @@ module.exports = function() {
               transformRequest: transformRequestAsFormPost
             }).then(function(data) {
               var html;
-              $window.dataLayer.push({
-                event: 'formSubmissionSuccess'
-              });
+              console.log(data);
               html = vars.main.formMsg;
               $rootScope.isContactSent = true;
               $scope.alert = html;
@@ -56450,31 +56452,33 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
     currentDate = new Date();
     currentTime = currentDate.getTime();
     currentDate.setTime(currentTime + (8 * 60 * 60 * 1000));
-    if (!langCookie) {
-      langRedirect.getBrowserLanguage().then(function(val) {
-        var i, lang, languages, len, pageLang, url;
-        languages = val;
-        $window.localStorage.setItem('agent', JSON.stringify(languages));
-        for (i = 0, len = languages.length; i < len; i++) {
-          lang = languages[i];
-          pageLang = redirect.current.toLowerCase() !== redirect.default_lang.toLowerCase() ? 'en' : redirect.current.toLowerCase();
-          if (lang === pageLang) {
-            $cookies.put('lang', lang, {
-              'expires': currentDate
-            });
-            break;
-          } else {
-            url = langRedirect.getRedirectUrl(lang, redirect);
-            if (url !== false && typeof url !== 'undefined') {
+    if ($window.location.href.indexOf('?gclid') === -1) {
+      if (!langCookie) {
+        langRedirect.getBrowserLanguage().then(function(val) {
+          var i, lang, languages, len, pageLang, url;
+          languages = val;
+          $window.localStorage.setItem('agent', JSON.stringify(languages));
+          for (i = 0, len = languages.length; i < len; i++) {
+            lang = languages[i];
+            pageLang = redirect.current.toLowerCase() !== redirect.default_lang.toLowerCase() ? 'en' : redirect.current.toLowerCase();
+            if (lang === pageLang) {
               $cookies.put('lang', lang, {
                 'expires': currentDate
               });
-              $window.location = url;
               break;
+            } else {
+              url = langRedirect.getRedirectUrl(lang, redirect);
+              if (url !== false && typeof url !== 'undefined') {
+                $cookies.put('lang', lang, {
+                  'expires': currentDate
+                });
+                $window.location = url;
+                break;
+              }
             }
           }
-        }
-      });
+        });
+      }
     }
     $transitions.onBefore({}, function(trans) {
       var newUrl;
@@ -56510,6 +56514,9 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
         }
       }
       if (newUrl.split('#')[0] === oldUrl.split('#')[0]) {
+        return false;
+      }
+      if (newUrl.split('?gclid')[0] === oldUrl.split('?gclid')[0]) {
         return false;
       }
       oldUrl = newUrl;
