@@ -4,7 +4,7 @@
 	</header>
 	<ul class="instagram__posts instagram__posts--grid">
 		<li class="instagram__cell instagram__cell--s3" ng-repeat="i in items">
-			<a ng-href="{{i.link}}" ng-attr-target="_blank"><img ng-src="{{resize(i.images.thumbnail.url)}}" /></a>
+			<a ng-href="{{i.link}}" ng-attr-target="_blank"><img ng-src="{{i.images.standard_resolution.url}}" /></a>
 		</li>
 	</ul>	
 	<div class="instagram__link instagram__link--grow-top">
