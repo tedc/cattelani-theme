@@ -6,7 +6,6 @@
 	$the_id = ($obj) ? $obj->term_id : $post->ID;
 	$the_id = id_by_lang($the_id, $type, $sitepress->get_default_language());
 	$the_id = ($obj) ? $obj->taxonomy.'_'.$the_id : $the_id;
-	var_dump($the_id);
 	$kind = get_field('header_kind');
 	$cover = get_field('featured_image', $the_id) ? get_the_post_thumbnail_url($the_id, 'full') : get_field('cover_image', $the_id)['url'];
 	$alt = get_field('featured_image', $the_id) ? (get_post_meta(get_post_thumbnail_id($the_id), '_wp_attachment_image_alt', true) ? get_post_meta(get_post_thumbnail_id($the_id), '_wp_attachment_image_alt', true) : get_bloginfo('name') . ': '.Titles\title() ): get_bloginfo('name') . ': '.Titles\title();
