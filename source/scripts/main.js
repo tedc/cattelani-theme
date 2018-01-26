@@ -56785,7 +56785,7 @@ module.exports = function($rootScope, data, $scope) {
   if (!data) {
     return;
   }
-  $rootScope.lang_menu = data.wpml_menu[0];
+  $rootScope.lang_menu = data.wpml_menu;
   $rootScope.body_class = data.body_class + vars.main.logged_classes;
   $rootScope.breadcrumbs = data.breadcrumbs;
   $rootScope.$broadcast('resize_footer');
