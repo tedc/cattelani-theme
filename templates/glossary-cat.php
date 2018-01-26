@@ -2,7 +2,7 @@
 	$glossary = new WP_Query(array(
 		'post_type' =>  get_option('glossary-settings')['slug'],
 		'posts_per_page' => -1,
-		'orderby' => 'term_order',
+		'orderby' => 'menu_order',
 		'tax_query' => array(
 			array(
 				'taxonomy' => get_option('glossary-settings')['slug-cat'],
@@ -15,7 +15,7 @@
 		array(
 			'taxonomy' => get_option('glossary-settings')['slug-cat'],
 			'hide_empty' => false,
-			'orderby' => 'term_order',
+			'orderby' => 'menu_order',
 			'exclude' => $current->term_id
 		)
 	);
