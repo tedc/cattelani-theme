@@ -1,5 +1,6 @@
 <?php
 	function deregister_styles() {
+		wp_deregister_style( 'wpml-legacy-horizontal-list' );
 		wp_deregister_style( 'cff' );
 		wp_deregister_style( 'cff-font-awesome' );
 		wp_deregister_style( 'sb_instagram_styles' );

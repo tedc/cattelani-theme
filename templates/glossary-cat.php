@@ -15,7 +15,7 @@
 		array(
 			'taxonomy' => get_option('glossary-settings')['slug-cat'],
 			'hide_empty' => false,
-			'orderby' => 'menu_order',
+			'orderby' => 'term_order',
 			'exclude' => $current->term_id
 		)
 	);
