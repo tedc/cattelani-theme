@@ -82,15 +82,16 @@
 	            $mEmail->setFrom(array($email => $name));
 	            $mEmail->setReplyTo(array($email));
 	            $mEmail->setBody(template($body), 'text/html');
-	            //$rEmail->setSubject(str_replace('&amp;', '&', $rSubject));
-	            //$rEmail->setFrom(array($pTo => str_replace('&amp;', '&', get_bloginfo('name'))));
+	            $rEmail->setSubject(str_replace('&amp;', '&', $rSubject));
+	            $rEmail->setFrom(array($pTo => str_replace('&amp;', '&', get_bloginfo('name'))));
 	            $rEmail->setTo(array($email));
 	            $rEmail->setBody(template($resp), 'text/html');
-	            if( $mMailer->send($mEmail)){
-	            	// $data = array('formMsg' => "<h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
-	             //    $data = array('formMsg' => "<h3 class='form__subtitle form__subtitle'>".__('Grazie per averci contattato', 'iro')."</h3><p>".__('Ti risponderemo nel più breve tempo possibile', 'iro')."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__button' href='".get_home_url()."'>".__('Torna allo shop', 'iro')."</a>", 'mc' => $MailChimp->get("lists/$list_id/members/$subscriber_hash"));
+	            if($mMailer->send($mEmail)){
+	            	$data = array('formMsg' => "<h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
+	                $data = array('formMsg' => "<h3 class='form__subtitle form__subtitle'>".__('Grazie per averci contattato', 'iro')."</h3><p>".__('Ti risponderemo nel più breve tempo possibile', 'iro')."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__button' href='".get_home_url()."'>".__('Torna allo shop', 'iro')."</a>", 'mc' => $MailChimp->get("lists/$list_id/members/$subscriber_hash"));
+	                $mMailer->send($rEmail);
 	            } else {
-	                //$data = array('formMsg' => "<h3 class='form__subtitle--error'>".$error."</h3><p>".$errorMessage."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
+	                $data = array('formMsg' => "<h3 class='form__subtitle--error'>".$error."</h3><p>".$errorMessage."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
 	            }
 	        }
 	        wp_send_json( $data );
