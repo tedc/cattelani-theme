@@ -32,9 +32,9 @@
 	    	$sender = $name;
 	        $message = $_POST['message'];
 	        acf_set_language_to_default(); 
-	        //$pTo = get_field('email_address', 'options');
+	        $pTo = get_field('email_address', 'options');
 	        acf_unset_language_to_default(); 
-	        $pTo = array('e.grandinetti@bspkn.it');
+	        //$pTo = array('e.grandinetti@bspkn.it');
 	        $pSubject = __('Richiesta di contatto da') . ' ' . $sender;
 	        $rSubject = __('Risposta automatica da') . ' '. get_bloginfo('name');
 	        $tnx = __('Grazie per averci contattato.<br/>Ti risponderemo prima possibile','catellani');
@@ -78,8 +78,7 @@
 	            $mEmail = Swift_Message::newInstance();
 	            $mEmail->setSubject($pSubject);
 	            $mEmail->setTo($pTo);
-	           // $mEmail->setBcc(array('e.grandinetti@bspkn.it','form@bspkn.it', 'direzione.commerciale@catellanismith.com', 'grafica@catellanismith.com'));
-	            $mEmail->setBcc(array('e.grandinetti@bspkn.it','form@bspkn.it'));
+	            $mEmail->setBcc(array('e.grandinetti@bspkn.it','form@bspkn.it', 'direzione.commerciale@catellanismith.com', 'grafica@catellanismith.com'));
 	            $mEmail->setFrom(array($email => $name));
 	            $mEmail->setReplyTo(array($email));
 	            $mEmail->setBody(template($body), 'text/html');
@@ -90,7 +89,7 @@
 	            if($mMailer->send($mEmail)){
 	            	$data = array('formMsg' => "<h3 class='form__title'>".$sent."</h3><p>".$tnx."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
 	                $data = array('formMsg' => "<h3 class='form__subtitle form__subtitle'>".__('Grazie per averci contattato', 'iro')."</h3><p>".__('Ti risponderemo nel più breve tempo possibile', 'iro')."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__button' href='".get_home_url()."'>".__('Torna allo shop', 'iro')."</a>", 'mc' => $MailChimp->get("lists/$list_id/members/$subscriber_hash"));
-	                $mMailer->send($rEmail);
+	                //$mMailer->send($rEmail);
 	            } else {
 	                $data = array('formMsg' => "<h3 class='form__subtitle--error'>".$error."</h3><p>".$errorMessage."</p><a ui-sref='app.root({lang : \"".ICL_LANGUAGE_CODE."\"})' class='form__send' href='".get_home_url()."'>".__('Torna alla home', 'catellani')."</a>");
 	            }
