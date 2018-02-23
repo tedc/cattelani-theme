@@ -5,7 +5,12 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 <form id="contactForm" class="form" name="contactForm" ng-submit="submit(contactForm.$valid, '<?php echo $current_url; ?>')" novalidate>
 	<input type="hidden" ng-init="formData._catellani_form_nonce='<?php echo wp_create_nonce('catellani-contact-form'); ?>'" ng-model="formData._catellani_form_nonce" />
 	<input type="hidden" ng-init="formData.action='catellaniform'" ng-model="formData.action" />
-	
+	<div style="display:none;visibility:hidden;">
+	<label for="email_form"><?php _e('Email form', 'catellani'); ?></label>
+	<input class="form__input" type="email" id="email_form" ng-model="formData.email_form" placeholder="<?php _e('Email form', 'catellani'); ?>">
+	<label for="website"><?php _e('Website', 'catellani'); ?></label>
+	<input class="form__input" type="text" id="website" ng-model="formData.website" placeholder="<?php _e('Website', 'catellani'); ?>">
+	</div>
 	<p><input class="form__input" type="text" required ng-model="formData.sender" placeholder="<?php _e('Nome e cognome (richiesto)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="email" required ng-model="formData.email" placeholder="<?php _e('Indirizzo e-mail (richiesto)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="tel" required ng-model="formData.tel" placeholder="<?php _e('Telefono (richiesto)', 'catellani'); ?>"></p>

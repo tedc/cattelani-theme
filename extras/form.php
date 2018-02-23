@@ -17,7 +17,10 @@
 	}
 	function catellani_ajax_form(){
 		global $post;
-		check_ajax_referer( 'catellani-contact-form', '_catellani_form_nonce' ); 
+		//check_ajax_referer( 'catellani-contact-form', '_catellani_form_nonce' );
+		if(isset($_POST['email_form']) || isset($_POST['website'])) {
+			wp_send_json( array('msg'=>'error') );
+		}
         if(isset($_POST['email']) && isset($_POST['sender']) && isset($_POST['tel']) && isset($_POST['message']) ) :	 	
 			acf_set_language_to_default();
 			$mc = get_field('mailchimp', 'options');
@@ -95,9 +98,7 @@
 	            }
 	        }
 	        wp_send_json( $data );
-	        wp_die();
     	else :
     		wp_send_json( array('msg'=>'error') );
-    		wp_die();
     	endif;
     }
