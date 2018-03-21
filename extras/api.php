@@ -380,6 +380,8 @@ function wpsl_stores_rest_support() {
         $wp_post_types[$post_type_name]->rest_base = 'locations';
         $wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
     }
+    register_taxonomy_for_object_type('coutries', $post_type_name);
+    register_taxonomy_for_object_type('cities', $post_type_name);
 }
 
 add_action( 'init', 'wpsl_store_category_rest_support', 25 );
