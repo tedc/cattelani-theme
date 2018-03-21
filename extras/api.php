@@ -382,6 +382,7 @@ function wpsl_stores_rest_support() {
     }
     register_taxonomy_for_object_type('countries', $post_type_name);
     register_taxonomy_for_object_type('cities', $post_type_name);
+    register_taxonomy_for_object_type('regioni', $post_type_name);
 }
 
 add_action( 'init', 'wpsl_store_category_rest_support', 25 );
