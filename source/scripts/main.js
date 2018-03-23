@@ -55994,6 +55994,7 @@ module.exports = function() {
         store.cities = terms.cities;
         store.regions = terms.regions;
         store.stores = terms.stores;
+        store.store = [];
         store.isStoreLoading = false;
         store.cityFilter = function(city) {
           if (store.regione) {
@@ -56005,8 +56006,25 @@ module.exports = function() {
         store.regionFilter = function(region) {
           return store.country === region.country_ref;
         };
-        store.catChange = function() {
-          console.log(store.store);
+        store.checkAll = function() {
+          var i, len, ref;
+          ref = store.stores;
+          for (i = 0, len = ref.length; i < len; i++) {
+            s = ref[i];
+            store.store.push(s.language_ids[store.lang["default"]]);
+          }
+        };
+        store.isCatChecked = function(s) {
+          return store.store.indexOf(s.language_ids[store.lang["default"]]) !== -1;
+        };
+        store.catChange = function(s) {
+          var index;
+          if (store.isCatCheckedf(s)) {
+            index = store.store.indexOf(s.language_ids[store.lang["default"]]);
+            store.store.splice(index, 1);
+          } else {
+            store.store.push(s.language_ids[store.lang["default"]]);
+          }
         };
         store.$onInit = function() {
           store.map = {};
