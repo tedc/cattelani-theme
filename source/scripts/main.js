@@ -55989,6 +55989,11 @@ module.exports = function() {
         store.any = vars.strings.select_any;
         store.isStore = false;
         store.empty = vars.strings.empty_store;
+        store.terms = store.$eval($attrs.terms);
+        store.countries = terms.countries;
+        store.cities = terms.cities;
+        store.regions = terms.regions;
+        store.stores = terms.stores;
         store.isStoreLoading = false;
         store.$onInit = function() {
           store.map = {};
@@ -56245,11 +56250,6 @@ module.exports = function() {
             'eventValue': store.address
           });
         };
-        wpApi({
-          endpoint: 'stores'
-        }).then(function(res) {
-          store.stores = res.data;
-        });
         store.infoWindow = function(id, lat, lng) {
           var pos;
           store.isStore = store.isStore === id ? false : id;

@@ -49,6 +49,7 @@
 			margin: em($p/2) em($p);
 			display: flex;
 			align-items: center;
+			cursor: pointer;
 			&:before {
 				content: '';
 				width: em(30px);
@@ -61,16 +62,16 @@
 			}
 			&:after {
 				content: '';
-				width: em(20px);
-				height: em(20px);
+				width: em(10px);
+				height: em(10px);
 				border-radius: 2px;
-				background-color: $alternate-color;
+				background-color: #0b1e2d;
 				display: block;
 				opacity: 0;
 				position: absolute;
 				top: 50%;
 				transform: translate3d(0, -50%, 0);
-				left: em(5px);
+				left: em(10px);
 				transition: opacity $speed;
 			}
 		}
