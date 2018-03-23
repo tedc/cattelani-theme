@@ -54731,6 +54731,11 @@ module.exports = function() {
           $rootScope.isPrivacyChecked = false;
           $scope.contactForm.$setUntouched();
           $scope.contactForm.$setPristine();
+          if ($scope.formData.email_form || $scope.formData.website) {
+            $window.dataLayer.push({
+              event: 'formSubmissionSpam'
+            });
+          }
           if (isValid) {
             $http({
               method: 'POST',
@@ -54742,7 +54747,9 @@ module.exports = function() {
               transformRequest: transformRequestAsFormPost
             }).then(function(data) {
               var html;
-              console.log(data);
+              $window.dataLayer.push({
+                event: 'formSubmissionSuccess'
+              });
               html = vars.main.formMsg;
               $rootScope.isContactSent = true;
               $scope.alert = html;
