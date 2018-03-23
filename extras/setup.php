@@ -378,6 +378,30 @@
 		));
 	}
 
+	add_filter( 'manage_wpsl_stores_posts_columns', 'set_custom_edit_wpsl_stores_columns' );
+	add_action( 'manage_wpsl_stores_posts_custom_column' , 'custom_wpsl_stores_column', 10, 2 );
+	
+	function set_custom_edit_wpsl_stores_columns($columns) {
+	    $columns['wpsl_country'] = __( 'Nazione', 'catellani' );
+	    $columns['wpsl_city'] = __( 'Città', 'catellani' );
+	    
+	    return $columns;
+	}
+
+	function custom_wpsl_stores_column( $column, $post_id ) {
+	    switch ( $column ) {
+
+	        case 'wpsl_country' :
+	            echo get_post_meta( $post_id, 'wpsl_state' ,  true ); 
+	            break;
+
+	        case 'wpsl_city' :
+	           	echo get_post_meta( $post_id , 'wpsl_city' , true); 
+	            break;
+
+	    }
+	}
+
 	add_filter( 'manage_aforismi_posts_columns', 'set_custom_edit_aforismi_columns' );
 	add_action( 'manage_aforismi_posts_custom_column' , 'custom_aforismi_column', 10, 2 );
 	
