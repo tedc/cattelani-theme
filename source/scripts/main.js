@@ -54835,7 +54835,7 @@ var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.directive('ngStore', [require(123)]).directive('ngForm', [require(114)]).directive('collectionSearch', [require(121)]).directive('postTypeArchive', [require(111)]).directive('ngSm', ["$rootScope", "$timeout", require(122)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require(124)]).directive('ngInstagram', [require(117)]).directive('ngVideo', ["$rootScope", "$timeout", require(125)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(120)]).directive('ngMagazine', [require(119)]).directive('ngLoader', ['$timeout', require(118)]).directive('ngFooter', ["$window", "$document", require(113)]).directive('glossaryAutocomplete', [require(115)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", "screenSize", require(112)]).directive('clickedElement', [
+catellani.directive('ngStore', [require(123)]).directive('ngStoreNew', [require(124)]).directive('ngForm', [require(114)]).directive('collectionSearch', [require(121)]).directive('postTypeArchive', [require(111)]).directive('ngSm', ["$rootScope", "$timeout", require(122)]).directive('ngSwiper', ["$timeout", "$rootScope", '$location', "ScrollbarService", "screenSize", require(125)]).directive('ngInstagram', [require(117)]).directive('ngVideo', ["$rootScope", "$timeout", require(126)]).directive('ngPlayer', ["angularLoad", "$timeout", "$rootScope", "$window", require(120)]).directive('ngMagazine', [require(119)]).directive('ngLoader', ['$timeout', require(118)]).directive('ngFooter', ["$window", "$document", require(113)]).directive('glossaryAutocomplete', [require(115)]).directive('ngScrollCarousel', ['ScrollbarService', "$window", "$timeout", "$state", "$rootScope", "screenSize", require(112)]).directive('clickedElement', [
   '$rootScope', function($rootScope) {
     var clicked;
     return clicked = {
@@ -55064,7 +55064,7 @@ catellani.directive('ngStore', [require(123)]).directive('ngForm', [require(114)
 ]);
 
 
-},{"111":111,"112":112,"113":113,"114":114,"115":115,"117":117,"118":118,"119":119,"120":120,"121":121,"122":122,"123":123,"124":124,"125":125}],117:[function(require,module,exports){
+},{"111":111,"112":112,"113":113,"114":114,"115":115,"117":117,"118":118,"119":119,"120":120,"121":121,"122":122,"123":123,"124":124,"125":125,"126":126}],117:[function(require,module,exports){
 module.exports = function() {
   var instagram;
   return instagram = {
@@ -55970,6 +55970,8 @@ module.exports = function() {
 
 
 },{}],124:[function(require,module,exports){
+arguments[4][123][0].apply(exports,arguments)
+},{"123":123}],125:[function(require,module,exports){
 module.exports = function($timeout, $rootScope, $location, ScrollbarService, screenSize) {
   var ngSwiper;
   return ngSwiper = {
@@ -56133,7 +56135,7 @@ module.exports = function($timeout, $rootScope, $location, ScrollbarService, scr
 };
 
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 module.exports = function($rootScope, $timeout) {
   var video;
   return video = {
@@ -56208,7 +56210,7 @@ module.exports = function($rootScope, $timeout) {
 };
 
 
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 var angular, catellani;
 
 angular = require(100);
@@ -56239,7 +56241,7 @@ window.controller = new ScrollMagic.Controller();
 
 catellani = angular.module('catellani', ['ngCookies', 'matchMedia', 'ui.router', 'ngMap', 'ngSanitize', 'ngAnimate', 'angularLoad', 'angular-click-outside', 'angular-bind-html-compile', 'ksSwiper', 'SmoothScrollbar']);
 
-require(128);
+require(129);
 
 require(116);
 
@@ -56247,14 +56249,14 @@ require(104);
 
 require(110);
 
-require(133);
+require(134);
 
 angular.element(document).ready(function() {
   angular.bootstrap(document, ['catellani']);
 });
 
 
-},{"1":1,"100":100,"101":101,"104":104,"110":110,"116":116,"128":128,"133":133,"2":2,"6":6,"90":90,"92":92,"93":93,"94":94,"96":96,"97":97,"98":98}],127:[function(require,module,exports){
+},{"1":1,"100":100,"101":101,"104":104,"110":110,"116":116,"129":129,"134":134,"2":2,"6":6,"90":90,"92":92,"93":93,"94":94,"96":96,"97":97,"98":98}],128:[function(require,module,exports){
 var animationCover, animationDiv, animationInner, closeBlocks, speed;
 
 animationDiv = angular.element(document.querySelector('.transitioner'));
@@ -56441,12 +56443,12 @@ exports.prev = function($rootScope, $timeout, $q) {
 };
 
 
-},{}],128:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
 
-catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
+catellani.config(["$stateProvider", "$locationProvider", require(132)]).run([
   "$transitions", "$state", "$location", "$rootScope", "$timeout", "$stateParams", "$cookies", "$window", 'langRedirect', function($transitions, $state, $location, $rootScope, $timeout, $stateParams, $cookies, $window, langRedirect) {
     var currentDate, currentTime, langCookie, oldUrl, redirect;
     FastClick.attach(document.body);
@@ -56559,7 +56561,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(131)]).run([
 ]);
 
 
-},{"131":131}],129:[function(require,module,exports){
+},{"132":132}],130:[function(require,module,exports){
 module.exports = function($q, $timeout, $rootScope) {
   var deferred;
   if ($rootScope.prevElement) {
@@ -56590,7 +56592,7 @@ module.exports = function($q, $timeout, $rootScope) {
 };
 
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 module.exports = function($rootScope, $scope, data) {
   $scope.post = data;
   $scope.content = data ? $scope.post.content.rendered : vars.main.error;
@@ -56612,7 +56614,7 @@ module.exports = function($rootScope, $scope, data) {
 };
 
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 module.exports = function($stateProvider, $locationProvider) {
   $locationProvider.html5Mode({
     enabled: true,
@@ -56672,9 +56674,9 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(129)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(130)]
     },
-    controller: ["$rootScope", "$scope", "data", require(130)]
+    controller: ["$rootScope", "$scope", "data", require(131)]
   }).state('app.page', {
     url: '/:slug',
     params: {
@@ -56684,8 +56686,8 @@ module.exports = function($stateProvider, $locationProvider) {
     },
     template: '<div class="main__content" bind-html-compile="content"></div>',
     resolve: {
-      PrevBefore: ["$rootScope", "$timeout", "$q", require(127).prev],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(129)],
+      PrevBefore: ["$rootScope", "$timeout", "$q", require(128).prev],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(130)],
       data: [
         "$stateParams", "$q", 'wpApi', function($stateParams, $q, wpApi) {
           var deferred;
@@ -56712,9 +56714,9 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require(127).single]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "PreviousState", "screenSize", require(128).single]
     },
-    controller: ["$rootScope", "$scope", "data", require(130)]
+    controller: ["$rootScope", "$scope", "data", require(131)]
   }).state('app.collection', {
     url: '/c/:name',
     template: '<div class="main__content" bind-html-compile="content"></div>',
@@ -56743,10 +56745,10 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", require(127).collection],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(129)]
+      BlocksBefore: ["$rootScope", "$stateParams", "$timeout", "$q", "ScrollBefore", "PreviousState", "screenSize", require(128).collection],
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(130)]
     },
-    controller: ["$rootScope", "data", "$scope", require(132)]
+    controller: ["$rootScope", "data", "$scope", require(133)]
   }).state('app.glossary', {
     url: "/" + vars.main.glossary + "/:name",
     template: '<div class="main__content" bind-html-compile="content"></div>',
@@ -56775,14 +56777,14 @@ module.exports = function($stateProvider, $locationProvider) {
           };
         }
       ],
-      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(129)]
+      ScrollBefore: ["$q", "$timeout", "$rootScope", "PreviousState", require(130)]
     },
-    controller: ["$rootScope", "data", "$scope", require(132)]
+    controller: ["$rootScope", "data", "$scope", require(133)]
   });
 };
 
 
-},{"127":127,"129":129,"130":130,"132":132}],132:[function(require,module,exports){
+},{"128":128,"130":130,"131":131,"133":133}],133:[function(require,module,exports){
 module.exports = function($rootScope, data, $scope) {
   $scope.content = data ? data.content : vars.main.error;
   document.querySelector('title').innerHTML = data ? data.yoats_title : vars.main.errorTitle;
@@ -56799,7 +56801,7 @@ module.exports = function($rootScope, data, $scope) {
 };
 
 
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 var catellani;
 
 catellani = angular.module('catellani');
@@ -57034,4 +57036,4 @@ catellani.service('langRedirect', [
 ]);
 
 
-},{"100":100}]},{},[126]);
+},{"100":100}]},{},[127]);

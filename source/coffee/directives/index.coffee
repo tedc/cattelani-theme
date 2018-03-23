@@ -1,6 +1,7 @@
 catellani = angular.module 'catellani'
 catellani
 	.directive 'ngStore', [require './store.coffee'] 
+	.directive 'ngStoreNew', [require './storenew.coffee'] 
 	.directive 'ngForm', [require './formnew.coffee'] 
 	#.directive 'collectionSearch', [require './search.coffee']
 	.directive 'collectionSearch', [require './search_full.coffee']
