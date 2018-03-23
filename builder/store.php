@@ -23,7 +23,7 @@
 	if(get_sub_field('store_new')) {
 		$store_terms = ' terms="{';
 		if(!empty($countries)) {
-			$store_terms .= 'coutries:'.htmlspecialchars( wp_json_encode( $countries ) ) .',';
+			$store_terms .= 'countries:'.htmlspecialchars( wp_json_encode( $countries ) ) .',';
 		}
 		if(!empty($cities)) {
 			$store_terms .= 'cities:'.htmlspecialchars( wp_json_encode( $cities ) ).',';
