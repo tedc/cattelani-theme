@@ -56003,8 +56003,10 @@ module.exports = function() {
           }
         };
         store.regionFilter = function(region) {
-          console.log(store.country === region.country_ref, store.country, region.country_ref);
           return store.country === region.country_ref;
+        };
+        store.catChange = function() {
+          console.log(store.stores);
         };
         store.$onInit = function() {
           store.map = {};
