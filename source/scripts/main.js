@@ -55999,12 +55999,11 @@ module.exports = function() {
           if (store.regione) {
             return store.country === city.country_ref && store.regione === city.region_ref;
           } else {
-            console.log(store.country === city.country_ref, store.country, city.country_ref);
             return store.country === city.country_ref;
           }
         };
         store.regionFilter = function(region) {
-          return store.coutry === region.country_ref;
+          return store.country === region.country_ref;
         };
         store.$onInit = function() {
           store.map = {};
