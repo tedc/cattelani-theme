@@ -56007,7 +56007,6 @@ module.exports = function() {
           return store.country === region.country_ref;
         };
         store.isAllChecked = function() {
-          console.log(store.stores.length, store.store.length);
           return store.stores.length === store.store.length;
         };
         store.checkAll = function() {
@@ -56020,9 +56019,7 @@ module.exports = function() {
               arr.push(s.language_ids[store.lang["default"]]);
             }
             store.store = arr;
-          }
-          if (store.stores.length === store.store.length) {
-            store.store = [];
+            console.log(store.store);
           }
         };
         store.isCatChecked = function(s) {
