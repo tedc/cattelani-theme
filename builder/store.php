@@ -17,7 +17,7 @@
 	}
 	foreach (get_terms(array('taxonomy'=> 'regioni')) as $r) {
 		$country_ref = get_field('country_ref', 'regioni_'.$r->term_id);
-		array_push($cities, array('name' => $r->name, 'id' => $r->term_id, 'language_ids' => add_store_language_ids($r->term_id, 'regioni'), 'country_ref' => $country_ref));
+		array_push($regions, array('name' => $r->name, 'id' => $r->term_id, 'language_ids' => add_store_language_ids($r->term_id, 'regioni'), 'country_ref' => $country_ref));
 	}
 	$store_terms = '';
 	if(get_sub_field('store_new')) {
