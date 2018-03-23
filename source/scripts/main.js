@@ -56007,6 +56007,7 @@ module.exports = function() {
           return store.country === region.country_ref;
         };
         store.isAllChecked = function() {
+          console.log(store.stores.length, store.store.length);
           return store.stores.length === store.store.length;
         };
         store.checkAll = function() {
