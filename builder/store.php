@@ -1,16 +1,5 @@
 <?php 
 	global $sitepress;
-	function add_store_language_ids($object) {
-	  $languages = apply_filters('wpml_active_languages', null);
-	  $translations = [];
-	  foreach ($languages as $language) {
-	      $id = apply_filters('wpml_object_id', $object->term_id, $object->taxonomy, false, $language['language_code']);
-	      if(!empty($id)) {
-	         $translations[$language['language_code']] = $id;
-	      } 
-	  }
-	  return $translations;
-	}
 	$countries = array();
 	$cities = array();
 	$regions = array();
