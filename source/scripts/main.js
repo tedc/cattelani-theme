@@ -56006,15 +56006,19 @@ module.exports = function() {
         store.regionFilter = function(region) {
           return store.country === region.country_ref;
         };
+        store.isAllChecked = false;
         store.checkAll = function() {
           var arr, i, len, ref;
           arr = [];
           if (store.stores.length !== store.store.length) {
+            store.isAllChecked = false;
             ref = store.stores;
             for (i = 0, len = ref.length; i < len; i++) {
               s = ref[i];
               arr.push(s.language_ids[store.lang["default"]]);
             }
+          } else {
+            store.isAllChecked = true;
           }
           store.store = arr;
         };
