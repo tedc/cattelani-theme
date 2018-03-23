@@ -28,7 +28,7 @@
 		min-width: em(280px, 18px);
 	}
 	&__categories {
-		padding: em($p/2) 0;
+		padding: em($p) 0 em($p/2);
 		width: $f;
 		flex: 0 0 auto;
 		max-width: em(1000px);
@@ -50,14 +50,12 @@
 			align-items: center;
 			&:before {
 				content: '';
-				width: em($p);
-				height: em($p);
+				width: em(30px);
+				height: em(30px);
 				border-radius: 2px;
-				border: 1px solid $light-color;
 				background-color: $w;
-				box-shadow: inset 0 0 4px 2px $w;
 				display: block;
-				margin-right: em($p);
+				margin-right: em($p/2);
 				transition: background-color $speed;
 			}
 		}
