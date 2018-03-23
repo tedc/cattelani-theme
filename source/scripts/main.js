@@ -55990,7 +55990,6 @@ module.exports = function() {
         store.isStore = false;
         store.empty = vars.strings.empty_store;
         terms = $scope.$eval($attrs.terms);
-        console.log(terms);
         store.countries = terms.countries;
         store.cities = terms.cities;
         store.regions = terms.regions;
