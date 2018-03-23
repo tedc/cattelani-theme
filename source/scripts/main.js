@@ -55970,8 +55970,326 @@ module.exports = function() {
 
 
 },{}],124:[function(require,module,exports){
-arguments[4][123][0].apply(exports,arguments)
-},{"123":123}],125:[function(require,module,exports){
+module.exports = function() {
+  var s;
+  return s = {
+    templateUrl: vars.main.assets + "/tpl/store-new.tpl.html",
+    bindToController: true,
+    controllerAs: "store",
+    controller: [
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs) {
+        var getLocations, getMap, store, zoomChange;
+        store = this;
+        store.lang = {
+          current: $attrs.currentLang,
+          "default": $attrs.defaultLang
+        };
+        store.isSelected = false;
+        store.buttonString = vars.strings.btn_stores;
+        store.any = vars.strings.select_any;
+        store.isStore = false;
+        store.empty = vars.strings.empty_store;
+        store.isStoreLoading = false;
+        store.$onInit = function() {
+          store.map = {};
+          store.address = '';
+          store.api = "https://maps.googleapis.com/maps/api/js?key=" + vars.api.google_api_key + "&libraries=visualization,drawing,geometry,places";
+          store.styles = [
+            {
+              'featureType': 'all',
+              'elementType': 'labels.text.fill',
+              'stylers': [
+                {
+                  'color': '#ffffff'
+                }
+              ]
+            }, {
+              'featureType': 'all',
+              'elementType': 'labels.text.stroke',
+              'stylers': [
+                {
+                  'visibility': 'on'
+                }, {
+                  'color': '#3e606f'
+                }, {
+                  'weight': 2
+                }, {
+                  'gamma': 0.84
+                }
+              ]
+            }, {
+              'featureType': 'all',
+              'elementType': 'labels.icon',
+              'stylers': [
+                {
+                  'visibility': 'off'
+                }
+              ]
+            }, {
+              'featureType': 'administrative',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'weight': 0.6
+                }, {
+                  'color': '#1a3541'
+                }
+              ]
+            }, {
+              'featureType': 'administrative.locality',
+              'elementType': 'all',
+              'stylers': [
+                {
+                  'visibility': 'simplified'
+                }
+              ]
+            }, {
+              'featureType': 'administrative.neighborhood',
+              'elementType': 'all',
+              'stylers': [
+                {
+                  'visibility': 'off'
+                }
+              ]
+            }, {
+              'featureType': 'administrative.land_parcel',
+              'elementType': 'all',
+              'stylers': [
+                {
+                  'visibility': 'off'
+                }
+              ]
+            }, {
+              'featureType': 'landscape',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#2c5a71'
+                }
+              ]
+            }, {
+              'featureType': 'landscape.natural',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                {
+                  'color': '#0b1e2d'
+                }
+              ]
+            }, {
+              'featureType': 'landscape.natural.landcover',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                {
+                  'color': '#0b1e2d'
+                }
+              ]
+            }, {
+              'featureType': 'landscape.natural.terrain',
+              'elementType': 'geometry.fill',
+              'stylers': [
+                {
+                  'color': '#0b1e2d'
+                }, {
+                  'lightness': '-38'
+                }
+              ]
+            }, {
+              'featureType': 'poi',
+              'elementType': 'all',
+              'stylers': [
+                {
+                  'visibility': 'off'
+                }
+              ]
+            }, {
+              'featureType': 'poi',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#406d80'
+                }
+              ]
+            }, {
+              'featureType': 'poi.park',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#2c5a71'
+                }
+              ]
+            }, {
+              'featureType': 'road',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#29768a'
+                }, {
+                  'lightness': -37
+                }
+              ]
+            }, {
+              'featureType': 'transit',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#406d80'
+                }
+              ]
+            }, {
+              'featureType': 'water',
+              'elementType': 'geometry',
+              'stylers': [
+                {
+                  'color': '#193341'
+                }, {
+                  'visibility': 'simplified'
+                }
+              ]
+            }
+          ];
+          store.start = vars.api.start_latlng;
+          store.address = store.start;
+          $timeout(function() {
+            getMap();
+          });
+        };
+        store.storeCallback = function() {
+          var LatLng;
+          LatLng = new google.maps.LatLng(vars.api.start_latlng);
+          store.map.setCenter(LatLng);
+        };
+        store.content = function(content) {
+          content = content.replace('T. ', '<br/>T. ');
+          content = content.replace('M. ', '<br/>M. ');
+          content = content.replace('F. ', '<br/>F. ');
+          content = content.replace('T ', '<br/>T. ');
+          content = content.replace('M ', '<br/>M. ');
+          content = content.replace('F ', '<br/>M. ');
+          return content;
+        };
+        $rootScope.$on('markers_changed', function() {
+          store.isStoreLoading = false;
+          zoomChange();
+        });
+        $rootScope.$on('location_changed', function(event, data) {
+          var params;
+          store.coords = data.join();
+          params = {
+            order_location: store.coords,
+            per_page: vars.api.store_limit
+          };
+          if (store.store) {
+            params = angular.extend({}, params, {
+              stores: store.store
+            });
+          }
+          wpApi({
+            endpoint: 'locations',
+            params: params
+          }).then(function(res) {
+            $timeout(function() {
+              store.items = res.data;
+              $rootScope.$broadcast('markers_changed');
+            }, 10);
+          });
+        });
+        zoomChange = function() {
+          var bounds, coords, i, item, latLng, len, ref;
+          bounds = new google.maps.LatLngBounds();
+          if (store.items && store.items.length > 0) {
+            ref = store.items;
+            for (i = 0, len = ref.length; i < len; i++) {
+              item = ref[i];
+              latLng = new google.maps.LatLng(item.lat, item.lng);
+              bounds.extend(latLng);
+            }
+            store.map.fitBounds(bounds);
+          } else {
+            coords = store.coords.replace(' ', '').split(',');
+            latLng = new google.maps.LatLng(coords[0], coords[1]);
+            store.map.setCenter(latLng);
+          }
+          delete store.coords;
+        };
+        getLocations = function() {
+          var obj, options, storeParam, storeValue;
+          storeValue = store.store ? store.store : 0;
+          storeParam = storeValue === 0 ? 'stores_exclude' : 'stores';
+          options = {
+            endpoint: 'locations',
+            params: (
+              obj = {
+                order_location: "43.7418083,11.291265599999974"
+              },
+              obj["" + storeParam] = storeValue,
+              obj.per_page = vars.api.store_limit,
+              obj
+            )
+          };
+          return wpApi(options);
+        };
+        store.onSubmit = function() {
+          store.isStoreLoading = true;
+          GeoCoder.geocode({
+            address: store.address
+          }).then(function(res) {
+            $timeout(function() {
+              $rootScope.$broadcast('location_changed', [res[0].geometry.location.lat(), res[0].geometry.location.lng()]);
+            });
+          });
+          window.dataLayer.push({
+            'event': 'GAEvent',
+            'eventCategory': 'Cerca rivenditori',
+            'eventAction': 'storeSubmit',
+            'eventLabel': 'Cerca rivenditore',
+            'eventValue': store.address
+          });
+        };
+        wpApi({
+          endpoint: 'stores'
+        }).then(function(res) {
+          store.stores = res.data;
+        });
+        store.infoWindow = function(id, lat, lng) {
+          var pos;
+          store.isStore = store.isStore === id ? false : id;
+          if (store.isStore !== false) {
+            pos = new google.maps.LatLng(lat, lng);
+            store.map.setCenter(pos);
+          }
+        };
+        getMap = function() {
+          NgMap.getMap().then(function(map) {
+            store.isStoreLoading = true;
+            store.map = map;
+            if (navigator.geolocation) {
+              NavigatorGeolocation.getCurrentPosition().then(function(position) {
+                var latLng;
+                latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                GeoCoder.geocode({
+                  'latLng': latLng
+                }).then(function(res) {
+                  store.address = res[0].formatted_address;
+                  store.onSubmit();
+                });
+              });
+            } else {
+              store.onSubmit();
+            }
+          });
+        };
+        store.zoom = function(cond) {
+          var val;
+          val = cond ? 1 : -1;
+          store.map.setZoom(store.map.getZoom() + val);
+        };
+      }
+    ]
+  };
+};
+
+
+},{}],125:[function(require,module,exports){
 module.exports = function($timeout, $rootScope, $location, ScrollbarService, screenSize) {
   var ngSwiper;
   return ngSwiper = {
