@@ -34,6 +34,8 @@
 	}
 	&__locations {
 		max-width: em(1000px);
+		width: $f;
+		flex: 0 0 auto;
 		@include breakpoint() {
 			display: flex;
 			align-items: center;
