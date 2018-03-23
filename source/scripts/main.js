@@ -56009,18 +56009,18 @@ module.exports = function() {
         store.isAllChecked = false;
         store.checkAll = function() {
           var arr, i, len, ref;
-          arr = [];
           if (store.stores.length !== store.store.length) {
+            arr = [];
             store.isAllChecked = false;
             ref = store.stores;
             for (i = 0, len = ref.length; i < len; i++) {
               s = ref[i];
               arr.push(s.language_ids[store.lang["default"]]);
             }
+            store.store = arr;
           } else {
             store.isAllChecked = true;
           }
-          store.store = arr;
         };
         store.isCatChecked = function(s) {
           return store.store.indexOf(s.language_ids[store.lang["default"]]) !== -1;
