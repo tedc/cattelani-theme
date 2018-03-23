@@ -56007,17 +56007,16 @@ module.exports = function() {
           return store.country === region.country_ref;
         };
         store.checkAll = function() {
-          var i, len, ref;
-          if (store.stores.length === store.store.length) {
-            store.store = [];
-          } else {
+          var arr, i, len, ref;
+          arr = [];
+          if (store.stores.length !== store.store.length) {
             ref = store.stores;
             for (i = 0, len = ref.length; i < len; i++) {
               s = ref[i];
-              store.store.push(s.language_ids[store.lang["default"]]);
+              arr.push(s.language_ids[store.lang["default"]]);
             }
           }
-          console.log(store.store);
+          store.store = arr;
         };
         store.isCatChecked = function(s) {
           return store.store.indexOf(s.language_ids[store.lang["default"]]) !== -1;
