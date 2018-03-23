@@ -55977,7 +55977,7 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope) {
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', '$filter', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope, $filter) {
         var getLocations, getMap, store, terms, zoomChange;
         store = this;
         store.lang = {
@@ -55995,6 +55995,16 @@ module.exports = function() {
         store.regions = terms.regions;
         store.stores = terms.stores;
         store.isStoreLoading = false;
+        store.cityFilter = function(city) {
+          if (store.region) {
+            return store.coutry === city.country_ref && store.region === city.region_ref;
+          } else {
+            return store.coutry === city.country_ref;
+          }
+        };
+        store.regionFilter = function(region) {
+          return store.coutry === region.country_ref;
+        };
         store.$onInit = function() {
           store.map = {};
           store.address = '';
