@@ -56006,7 +56006,7 @@ module.exports = function() {
           return store.country === region.country_ref;
         };
         store.catChange = function() {
-          console.log(store.stores);
+          console.log(store.store);
         };
         store.$onInit = function() {
           store.map = {};
