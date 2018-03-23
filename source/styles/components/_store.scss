@@ -43,6 +43,13 @@
 }
 .map {
 	@include grow('lg');
+	&__map {
+		height: calc(100vw - #{em(80px)});
+		@include breakpoint() {
+			height: calc(100vh - #{em(80px)});
+		}
+		position: relative;
+	}
 	&__loader {
 		transition: $speed visibility, $speed opacity, max-height $speed;
 		&--visible {
