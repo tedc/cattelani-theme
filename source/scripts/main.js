@@ -55999,6 +55999,7 @@ module.exports = function() {
           if (store.regione) {
             return store.coutry === city.country_ref && store.regione === city.region_ref;
           } else {
+            console.log(store.coutry === city.country_ref);
             return store.coutry === city.country_ref;
           }
         };
