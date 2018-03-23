@@ -23,7 +23,7 @@
 	}
 	foreach (get_terms(array('taxonomy'=> 'cities')) as $cy) {
 		$country_ref = get_field('country_ref', 'cities_'.$cy->term_id);
-		$region_ref = get_field('region_ref', 'cities_'.$r->term_id);
+		$region_ref = get_field('region_ref', 'cities_'.$cy->term_id);
 		array_push($cities, array('name' => $cy->name, 'id' => $cy->term_id, 'language_ids' => add_store_language_ids($cy), 'country_ref' => $country_ref, 'region_ref' => $region_ref));
 	}
 	foreach (get_terms(array('taxonomy'=> 'regioni')) as $r) {
