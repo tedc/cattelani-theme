@@ -55997,10 +55997,10 @@ module.exports = function() {
         store.isStoreLoading = false;
         store.cityFilter = function(city) {
           if (store.regione) {
-            return store.coutry === city.country_ref && store.regione === city.region_ref;
+            return store.country === city.country_ref && store.regione === city.region_ref;
           } else {
-            console.log(store.coutry === city.country_ref);
-            return store.coutry === city.country_ref;
+            console.log(store.country === city.country_ref, store.country, city.country_ref);
+            return store.country === city.country_ref;
           }
         };
         store.regionFilter = function(region) {
