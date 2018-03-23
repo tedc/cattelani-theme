@@ -1,7 +1,6 @@
 <?php 
 	global $sitepress;
 	function add_store_language_ids($object) {
-	  global $sitepress;
 	  $languages = apply_filters('wpml_active_languages', null);
 	  $translations = [];
 	  foreach ($languages as $language) {
