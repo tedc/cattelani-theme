@@ -56019,7 +56019,7 @@ module.exports = function() {
         };
         store.catChange = function(s) {
           var index;
-          if (store.isCatCheckedf(s)) {
+          if (store.isCatChecked(s)) {
             index = store.store.indexOf(s.language_ids[store.lang["default"]]);
             store.store.splice(index, 1);
           } else {
