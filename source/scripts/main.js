@@ -56006,20 +56006,22 @@ module.exports = function() {
         store.regionFilter = function(region) {
           return store.country === region.country_ref;
         };
-        store.isAllChecked = false;
+        store.isAllChecked = function() {
+          return store.stores.length === store.store.length;
+        };
         store.checkAll = function() {
           var arr, i, len, ref;
           if (store.stores.length !== store.store.length) {
             arr = [];
-            store.isAllChecked = false;
             ref = store.stores;
             for (i = 0, len = ref.length; i < len; i++) {
               s = ref[i];
               arr.push(s.language_ids[store.lang["default"]]);
             }
             store.store = arr;
-          } else {
-            store.isAllChecked = true;
+          }
+          if (store.stores.length === store.store.length) {
+            store.store = [];
           }
         };
         store.isCatChecked = function(s) {
