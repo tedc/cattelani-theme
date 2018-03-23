@@ -6,6 +6,9 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			.store--new & {
+				flex-wrap: wrap;
+			}
 		}
 	}
 	&__input, &__options, &__select {
@@ -14,9 +17,28 @@
 	&__select {
 		margin: 0 em($p);
 		min-width: em(200px);
+		.store--new & {
+			@include breakpoint() {
+				flex: 1;
+				min-width: 0;
+			}
+		}
 	}
 	&__input {
 		min-width: em(280px, 18px);
+	}
+	&__categories {
+		width: $f;
+		flex: 0 0 auto;
+		max-width: em(1000px);
+	}
+	&__locations {
+		max-width: em(1000px);
+		@include breakpoint() {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 }
 .map {
@@ -50,6 +72,19 @@
 		border-bottom: 1px solid $lighter-color;
 		@include grow('md', 'bottom');
 		@include grow('md');
+		.map__list--grid & {
+			flex: 0 0 auto;
+			width: $f;
+			@include breakpoint() {
+				width: $f/2;
+			}
+		}
+	}
+	&__bottom {
+		flex: 0 0 auto;
+		padding-top: em($p);
+		width: $f;
+		text-align: center;
 	}
 	&__content {
 		padding-top: em($p);
