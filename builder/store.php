@@ -16,7 +16,7 @@
 	$regions = array();
 	$stores = array();
 	foreach (get_terms(array('taxonomy'=> 'wpsl_store_category')) as $c) {
-		array_push($stores, array('name' => $c->name, 'id' => $c->term_id, 'language_ids' => add_store_language_ids($r)));
+		array_push($stores, array('name' => $c->name, 'id' => $c->term_id, 'language_ids' => add_store_language_ids($c)));
 	}
 	foreach (get_terms(array('taxonomy'=> 'countries')) as $cr) {
 		array_push($countries, array('name' => $cr->name, 'id' => $cr->term_id, 'language_ids' => add_store_language_ids($cr)));
