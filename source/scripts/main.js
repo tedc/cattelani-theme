@@ -55978,7 +55978,7 @@ module.exports = function() {
     controllerAs: "store",
     controller: [
       'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope) {
-        var getLocations, getMap, store, zoomChange;
+        var getLocations, getMap, store, terms, zoomChange;
         store = this;
         store.lang = {
           current: $attrs.currentLang,
@@ -55989,7 +55989,7 @@ module.exports = function() {
         store.any = vars.strings.select_any;
         store.isStore = false;
         store.empty = vars.strings.empty_store;
-        store.terms = $scope.$eval($attrs.terms);
+        terms = $scope.$eval($attrs.terms);
         store.countries = terms.countries;
         store.cities = terms.cities;
         store.regions = terms.regions;

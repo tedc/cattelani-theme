@@ -137,6 +137,18 @@
 	    }
 	    return $randomString;
 	}
+
+	function add_store_language_ids($term_id, $taxonomy) {
+		$languages = apply_filters('wpml_active_languages', null);
+		$translations = [];
+		foreach ($languages as $language) {
+			$id = apply_filters('wpml_object_id', $term_id, $taxonomy, false, $language['language_code']);
+	      	if(!empty($id)) {
+	        	$translations[$language['language_code']] = $id;
+	      	} 
+	  	}
+	  	return $translations;
+	}
 	// function my_next_post_where() {
 
 	// 	global $post, $wpdb;
