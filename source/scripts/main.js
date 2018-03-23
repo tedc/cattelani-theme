@@ -55996,8 +55996,8 @@ module.exports = function() {
         store.stores = terms.stores;
         store.isStoreLoading = false;
         store.cityFilter = function(city) {
-          if (store.region) {
-            return store.coutry === city.country_ref && store.region === city.region_ref;
+          if (store.regione) {
+            return store.coutry === city.country_ref && store.regione === city.region_ref;
           } else {
             return store.coutry === city.country_ref;
           }
