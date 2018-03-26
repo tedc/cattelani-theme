@@ -55995,6 +55995,7 @@ module.exports = function() {
         store.regions = terms.regions;
         store.stores = terms.stores;
         store.store = [];
+        store.items = [];
         store.isStoreLoading = false;
         store.cityFilter = function(city) {
           if (store.regione) {
@@ -56215,16 +56216,35 @@ module.exports = function() {
           store.isStoreLoading = false;
           zoomChange();
         });
+        store.page = 1;
+        store.params = {
+          per_page: 100,
+          page: store.page
+        };
         $rootScope.$on('location_changed', function(event, data) {
-          var params;
-          store.coords = data.join();
-          params = {
-            order_location: store.coords,
-            per_page: vars.api.store_limit
-          };
-          if (store.store) {
-            params = angular.extend({}, params, {
-              stores: store.store
+          if (store.coords) {
+            store.params = angular.extend({}, store.params, {
+              order_location: store.coords
+            });
+          }
+          if (store.store.length > 0) {
+            store.params = angular.extend({}, store.params, {
+              stores: store.store.join()
+            });
+          }
+          if (store.countries) {
+            store.params = angular.extend({}, store.params, {
+              countries: store.countries
+            });
+          }
+          if (store.regioni) {
+            store.params = angular.extend({}, store.params, {
+              countries: store.regioni
+            });
+          }
+          if (store.cities) {
+            store.params = angular.extend({}, store.params, {
+              countries: store.cities
             });
           }
           wpApi({
@@ -56232,7 +56252,13 @@ module.exports = function() {
             params: params
           }).then(function(res) {
             $timeout(function() {
-              store.items = res.data;
+              var headers;
+              headers = res.headers();
+              store.items = store.items.concat(res.data);
+              store.page += 1;
+              if (store.page > parseInt(headers['x-wp-totalpages'])) {
+                store.isNotLoading = true;
+              }
               $rootScope.$broadcast('markers_changed');
             }, 10);
           });
@@ -56274,13 +56300,7 @@ module.exports = function() {
         };
         store.onSubmit = function() {
           store.isStoreLoading = true;
-          GeoCoder.geocode({
-            address: store.address
-          }).then(function(res) {
-            $timeout(function() {
-              $rootScope.$broadcast('location_changed', [res[0].geometry.location.lat(), res[0].geometry.location.lng()]);
-            });
-          });
+          $rootScope.$broadcast('location_changed');
           window.dataLayer.push({
             'event': 'GAEvent',
             'eventCategory': 'Cerca rivenditori',
