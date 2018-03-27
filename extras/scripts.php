@@ -99,7 +99,8 @@
 				'country_label' => __('Paese', 'catellani'),
 				'empty_store' => __('Non risultano store presenti nella zona', 'catellani'),
 				'more_stores' => __('Carica altri', 'catellani'),
-				'search_country' => __('Cerca una nazione...', 'catellani')
+				'search_country' => __('Cerca una nazione...', 'catellani'),
+				'search_city' => __('Cerca una nazione...', 'catellani')
 			)
 		);
 		wp_localize_script( 'catellanijs', 'vars', $vars );
