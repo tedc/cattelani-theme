@@ -2,13 +2,13 @@
 	&__form {
 		@include grow('md');
 		display: none;
-		@include breakpoint() {
+		.store--new & {
 			display: flex;
+			flex-wrap: wrap;
+		}
+		@include breakpoint() {
 			align-items: center;
 			justify-content: center;
-			.store--new & {
-				flex-wrap: wrap;
-			}
 		}
 	}
 	&__input, &__options, &__select {
@@ -18,17 +18,25 @@
 		margin: 0 em($p);
 		min-width: em(200px);
 		.store--new & {
+			margin-bottom: em($p);
 			@include breakpoint() {
 				flex: 1;
 				min-width: 0;
+				margin-bottom: 0;
 			}
 			&--hidden {
 				display: none;
 			}
-		}
+		}	
+	}
+	&__scrollbar {
+		position: relative;
+		max-height: em(200px);
 	}
 	&__input {
 		min-width: em(280px, 18px);
+		margin-bottom: 5px;
+		min-width: 0;
 	}
 	&__categories {
 		padding: em($p) 0 em($p/2);
@@ -94,6 +102,10 @@
 			justify-content: center;
 		}
 	}
+	&__input {
+		width: $f;
+		background-color: $lighter-color;
+	}
 }
 .map {
 	@include grow('lg');
@@ -104,7 +116,13 @@
 		}
 		position: relative;
 	}
+	&__results {
+		min-height: em($p*4);
+	}
 	&__loader {
+		.store--new .map__results & {
+			margin-top: em($p*2);
+		}
 		transition: $speed visibility, $speed opacity, max-height $speed;
 		&--visible {
 			visibility: visible;
@@ -117,6 +135,17 @@
 		&--hidden {
 			visibility: hidden;
 			opacity: 0;
+		}
+	}
+	&__loadmore {
+		@include grow('md');
+		text-align: center;
+		min-height: em($p*4);
+	}
+	&__empty {
+		@include grow('lg');
+		.store--new & {
+			text-align: center;
 		}
 	}
 	&__title {
@@ -201,6 +230,13 @@
 			&:before, &:after {
 				background-color: $lighter-color;
 			}
+		}
+	}
+	&__send {
+		transition: opacity $speed, visibility $speed;
+		&--hidden {
+			opacity: 0;
+			visibility: visible;
 		}
 	}
 	&__marker {

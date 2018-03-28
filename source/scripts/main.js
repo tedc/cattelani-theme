@@ -55977,7 +55977,7 @@ module.exports = function() {
     bindToController: true,
     controllerAs: "store",
     controller: [
-      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', '$filter', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope, $filter) {
+      'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', '$filter', 'ScrollbarService', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope, $filter, ScrollbarService) {
         var getLocations, getMap, store, terms, zoomChange;
         store = this;
         store.lang = {
@@ -55986,8 +55986,16 @@ module.exports = function() {
         };
         store.isSelected = false;
         store.buttonString = vars.strings.btn_stores;
+        store.moreStores = vars.strings.more_stores;
         store.any = vars.strings.select_any;
+        store.country_label = vars.strings.country_label;
+        store.city_label = vars.strings.city_label;
+        store.region_label = vars.strings.region_label;
+        store.search_country = vars.strings.search_country;
+        store.search_city = vars.strings.search_city;
+        store.search_region = vars.strings.search_region;
         store.isStore = false;
+        store.isNotLoading = false;
         store.empty = vars.strings.empty_store;
         terms = $scope.$eval($attrs.terms);
         store.countries = terms.countries;
@@ -55997,12 +56005,16 @@ module.exports = function() {
         store.store = [];
         store.items = [];
         store.isStoreLoading = false;
+        store.isMore = false;
         store.cityFilter = function(city) {
+          var is_visible;
+          is_visible = true;
           if (store.regione) {
-            return store.country === city.country_ref && store.regione === city.region_ref;
+            is_visible = store.country === city.country_ref && store.regione === city.region_ref;
           } else {
-            return store.country === city.country_ref;
+            is_visible = store.country === city.country_ref;
           }
+          return is_visible;
         };
         store.regionFilter = function(region) {
           return store.country === region.country_ref;
@@ -56020,7 +56032,6 @@ module.exports = function() {
               arr.push(s.language_ids[store.lang["default"]]);
             }
             store.store = arr;
-            console.log(store.store);
           }
         };
         store.isCatChecked = function(s) {
@@ -56033,6 +56044,15 @@ module.exports = function() {
             store.store.splice(index, 1);
           } else {
             store.store.push(s.language_ids[store.lang["default"]]);
+          }
+        };
+        store.countryChanged = function() {
+          store.city = false;
+          store.regione = false;
+          delete store.params.city;
+          delete store.params.regione;
+          if (!store.country) {
+            delete store.params.country;
           }
         };
         store.$onInit = function() {
@@ -56218,51 +56238,82 @@ module.exports = function() {
         });
         store.page = 1;
         store.params = {
-          per_page: 100,
+          per_page: vars.api.store_limit,
           page: store.page
         };
         $rootScope.$on('location_changed', function(event, data) {
+          if (data) {
+            store.coords = data.join();
+          }
           if (store.coords) {
             store.params = angular.extend({}, store.params, {
               order_location: store.coords
             });
+            delete store.coords;
+          } else {
+            delete store.params.order_location;
           }
           if (store.store.length > 0) {
             store.params = angular.extend({}, store.params, {
               stores: store.store.join()
             });
+          } else {
+            delete store.params.stores;
           }
-          if (store.countries) {
+          if (store.country) {
             store.params = angular.extend({}, store.params, {
-              countries: store.countries
+              countries: store.country
             });
+          } else {
+            delete store.params.countries;
           }
-          if (store.regioni) {
+          if (store.regione) {
             store.params = angular.extend({}, store.params, {
-              countries: store.regioni
+              regioni: store.regione
             });
+          } else {
+            store.params.regioni;
           }
-          if (store.cities) {
+          if (store.city) {
             store.params = angular.extend({}, store.params, {
-              countries: store.cities
+              cities: store.city
             });
+          } else {
+            delete store.params.cities;
           }
           wpApi({
             endpoint: 'locations',
-            params: params
+            params: store.params
           }).then(function(res) {
             $timeout(function() {
-              var headers;
+              var headers, offsetY;
               headers = res.headers();
-              store.items = store.items.concat(res.data);
-              store.page += 1;
-              if (store.page > parseInt(headers['x-wp-totalpages'])) {
-                store.isNotLoading = true;
-              }
+              store.items = store.isMore ? store.items.concat(res.data) : res.data;
+              store.isNotLoading = store.page >= parseInt(headers['x-wp-totalpages']) ? false : true;
               $rootScope.$broadcast('markers_changed');
+              offsetY = document.querySelector('.banner__tools').offsetHeight;
+              if (typeof store.country !== 'undefined' && !store.isMore) {
+                TweenMax.to(window, .75, {
+                  scrollTo: {
+                    y: "#map-results",
+                    offsetY: offsetY
+                  }
+                });
+              }
             }, 10);
           });
         });
+        store.loadMore = function() {
+          if (store.isStoreLoading) {
+            return;
+          }
+          store.isMore = true;
+          store.page += 1;
+          store.params = angular.extend({}, store.params, {
+            page: store.page
+          });
+          $rootScope.$broadcast('location_changed');
+        };
         zoomChange = function() {
           var bounds, coords, i, item, latLng, len, ref;
           bounds = new google.maps.LatLngBounds();
@@ -56275,11 +56326,15 @@ module.exports = function() {
             }
             store.map.fitBounds(bounds);
           } else {
-            coords = store.coords.replace(' ', '').split(',');
-            latLng = new google.maps.LatLng(coords[0], coords[1]);
-            store.map.setCenter(latLng);
+            if (store.coords) {
+              coords = store.coords.replace(' ', '').split(',');
+              latLng = new google.maps.LatLng(coords[0], coords[1]);
+              store.map.setCenter(latLng);
+            }
           }
-          delete store.coords;
+          if (store.coords) {
+            delete store.coords;
+          }
         };
         getLocations = function() {
           var obj, options, storeParam, storeValue;
@@ -56299,8 +56354,23 @@ module.exports = function() {
           return wpApi(options);
         };
         store.onSubmit = function() {
+          var address;
+          store.isMore = false;
+          store.page = 1;
           store.isStoreLoading = true;
-          $rootScope.$broadcast('location_changed');
+          if (!store.country && store.address) {
+            address = store.address;
+            delete store.address;
+            GeoCoder.geocode({
+              address: address
+            }).then(function(res) {
+              $timeout(function() {
+                $rootScope.$broadcast('location_changed', [res[0].geometry.location.lat(), res[0].geometry.location.lng()]);
+              });
+            });
+          } else {
+            $rootScope.$broadcast('location_changed');
+          }
           window.dataLayer.push({
             'event': 'GAEvent',
             'eventCategory': 'Cerca rivenditori',
