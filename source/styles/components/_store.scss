@@ -9,6 +9,7 @@
 		@include breakpoint() {
 			align-items: center;
 			justify-content: center;
+			display: flex;
 		}
 	}
 	&__input, &__options, &__select {
