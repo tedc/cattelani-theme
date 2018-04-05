@@ -396,19 +396,21 @@
 
 	        case 'wpsl_country' :
 	        	if($country = wp_get_post_terms( $post_id, 'countries' )) {
-	        		echo $country[0]->name; 	
+	        		echo '<a href="'.admin_url('edit.php?post_type=wpsl_store&countries='.$country[0]->slug ).'">'.$country[0]->name.'</a>'; 	
 	        	}
 	            //get_post_meta( $post_id, 'wpsl_country' ,  true ); 
 	            break;
 
 	        case 'wpsl_city' :
 	           	if($city = wp_get_post_terms( $post_id, 'cities' )) {
-	        		echo $city[0]->name; 	
+	           		echo '<a href="'.admin_url('edit.php?post_type=wpsl_store&cities='.$city[0]->slug ).'">'.$city[0]->name.'</a>';
+	        		//echo $city[0]->name; 	
 	        	}
 	            break;
 	        case 'wpsl_region' :
 	           	if($region = wp_get_post_terms( $post_id, 'regioni' )) {
-	        		echo $region[0]->name; 	
+	           		echo '<a href="'.admin_url('edit.php?post_type=wpsl_store&regioni='.$region[0]->slug ).'">'.$region[0]->name.'</a>';
+	        		//echo $region[0]->name; 	
 	        	}
 	            break;
 
