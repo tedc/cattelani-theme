@@ -382,8 +382,11 @@
 	add_action( 'manage_wpsl_stores_posts_custom_column' , 'custom_wpsl_stores_column', 10, 2 );
 	
 	function set_custom_edit_wpsl_stores_columns($columns) {
+	    unset($columns['city']);
+	    unset($columns['state']);
 	    $columns['wpsl_country'] = __( 'Nazione', 'catellani' );
-	    //$columns['wpsl_city'] = __( 'Città', 'catellani' );
+	    $columns['wpsl_city'] = __( 'Città', 'catellani' );
+	    $columns['wpsl_region'] = __( 'Regione', 'catellani' );
 	    
 	    return $columns;
 	}
@@ -392,12 +395,22 @@
 	    switch ( $column ) {
 
 	        case 'wpsl_country' :
-	            echo get_post_meta( $post_id, 'wpsl_country' ,  true ); 
+	        	if($country = wp_get_post_terms( $post_id, 'countries' )) {
+	        		echo $country[0]->name; 	
+	        	}
+	            //get_post_meta( $post_id, 'wpsl_country' ,  true ); 
 	            break;
 
-	        // case 'wpsl_city' :
-	        //    	echo get_post_meta( $post_id , 'wpsl_city' , true); 
-	        //     break;
+	        case 'wpsl_city' :
+	           	if($city = wp_get_post_terms( $post_id, 'cities' )) {
+	        		echo $city[0]->name; 	
+	        	}
+	            break;
+	        case 'wpsl_region' :
+	           	if($region = wp_get_post_terms( $post_id, 'regioni' )) {
+	        		echo $region[0]->name; 	
+	        	}
+	            break;
 
 	    }
 	}
