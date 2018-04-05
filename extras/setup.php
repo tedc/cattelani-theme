@@ -379,7 +379,7 @@
 	}
 
 	add_filter( 'manage_wpsl_stores_posts_columns', 'set_custom_edit_wpsl_stores_columns' );
-	add_action( 'manage_wpsl_stores_posts_custom_column' , 'custom_wpsl_stores_column', 10, 2 );
+	add_action( 'manage_wpsl_stores_posts_custom_column' , 'custom_wpsl_stores_column', 99999, 2 );
 	
 	function set_custom_edit_wpsl_stores_columns($columns) {
 	    unset($columns['city']);
