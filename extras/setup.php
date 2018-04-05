@@ -382,11 +382,11 @@
 	add_action( 'manage_wpsl_stores_posts_custom_column' , 'custom_wpsl_stores_column', 99999, 2 );
 	
 	function set_custom_edit_wpsl_stores_columns($columns) {
-	    unset($columns['city']);
-	    unset($columns['state']);
 	    $columns['wpsl_country'] = __( 'Nazione', 'catellani' );
 	    $columns['wpsl_city'] = __( 'Città', 'catellani' );
 	    $columns['wpsl_region'] = __( 'Regione', 'catellani' );
+	    unset($columns['city']);
+	    unset($columns['state']);
 	    
 	    return $columns;
 	}
