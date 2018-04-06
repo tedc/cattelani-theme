@@ -4,18 +4,18 @@
 	$cities = array();
 	$regions = array();
 	$stores = array();
-	foreach (get_terms(array('orderby' => 'name', 'taxonomy'=> 'wpsl_store_category')) as $c) {
+	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'wpsl_store_category')) as $c) {
 		array_push($stores, array('name' => $c->name, 'id' => $c->term_id, 'language_ids' => add_store_language_ids($c->term_id, 'wpsl_store_category')));
 	}
-	foreach (get_terms(array('orderby' => 'name', 'taxonomy'=> 'countries')) as $cr) {
+	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'countries')) as $cr) {
 		array_push($countries, array('name' => $cr->name, 'id' => $cr->term_id, 'language_ids' => add_store_language_ids($cr->term_id, 'countries')));
 	}
-	foreach (get_terms(array('orderby' => 'name', 'taxonomy'=> 'cities')) as $cy) {
+	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'cities')) as $cy) {
 		$country_ref = get_field('country_ref', 'cities_'.$cy->term_id);
 		$region_ref = get_field('region_ref', 'cities_'.$cy->term_id);
 		array_push($cities, array('name' => $cy->name, 'id' => $cy->term_id, 'language_ids' => add_store_language_ids($cy->term_id, 'cities'), 'country_ref' => $country_ref, 'region_ref' => $region_ref));
 	}
-	foreach (get_terms(array('orderby' => 'name', 'taxonomy'=> 'regioni')) as $r) {
+	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'regioni')) as $r) {
 		$country_ref = get_field('country_ref', 'regioni_'.$r->term_id);
 		array_push($regions, array('name' => $r->name, 'id' => $r->term_id, 'language_ids' => add_store_language_ids($r->term_id, 'regioni'), 'country_ref' => $country_ref));
 	}
