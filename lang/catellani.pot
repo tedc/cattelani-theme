@@ -309,6 +309,34 @@ msgstr "Any kind"
 msgid "Cerca rivenditori"
 msgstr "Search retailers"
 
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Regione"
+msgstr "Region"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Paese"
+msgstr "Country"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Città"
+msgstr "City"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Carica altri"
+msgstr "Search more"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Cerca una nazione..."
+msgstr "Search country"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Cerca una città..."
+msgstr "Search city"
+
+# wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
+msgid "Cerca una regione..."
+msgstr "Search Region"
+
 # wpml-name: 63dd971533978f62fdf706d9853e8e42
 msgid "Pagina non trovata"
 msgstr "Page not found"
