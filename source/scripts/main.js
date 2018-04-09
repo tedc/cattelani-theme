@@ -55978,7 +55978,9 @@ module.exports = function() {
     controllerAs: "store",
     controller: [
       'NgMap', "$timeout", "$rootScope", "$element", "wpApi", "GeoCoder", "NavigatorGeolocation", "$http", "$attrs", '$scope', '$filter', 'ScrollbarService', function(NgMap, $timeout, $rootScope, $element, wpApi, GeoCoder, NavigatorGeolocation, $http, $attrs, $scope, $filter, ScrollbarService) {
-        var getLocations, getMap, store, terms, zoomChange;
+        var getLocations, getMap, new_base, regex, store, terms, zoomChange;
+        regex = new RegExp("(" + vars.main.langs + ")$", "g");
+        new_base = vars.main.base.replace(/\/$/g, '').replace(regex, '');
         store = this;
         store.lang = {
           current: $attrs.currentLang,
@@ -56282,6 +56284,7 @@ module.exports = function() {
             delete store.params.cities;
           }
           wpApi({
+            base: new_base,
             endpoint: 'locations',
             params: store.params
           }).then(function(res) {
@@ -56341,6 +56344,7 @@ module.exports = function() {
           storeValue = store.store ? store.store : 0;
           storeParam = storeValue === 0 ? 'stores_exclude' : 'stores';
           options = {
+            base: new_base,
             endpoint: 'locations',
             params: (
               obj = {
