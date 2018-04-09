@@ -11,12 +11,14 @@
 		array_push($countries, array('name' => $cr->name, 'id' => $cr->term_id, 'language_ids' => add_store_language_ids($cr->term_id, 'countries')));
 	}
 	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'cities')) as $cy) {
-		$country_ref = get_field('country_ref', 'cities_'.$cy->term_id);
+		$original_city_id = apply_filters('wpml_object_id', $cy->term_id, 'cities', false, $sitepress->get_default_language());
+		$country_ref = get_field('country_ref', 'cities_'.$original_city_id);
 		$region_ref = get_field('region_ref', 'cities_'.$cy->term_id);
 		array_push($cities, array('name' => $cy->name, 'id' => $cy->term_id, 'language_ids' => add_store_language_ids($cy->term_id, 'cities'), 'country_ref' => $country_ref, 'region_ref' => $region_ref));
 	}
 	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'regioni')) as $r) {
-		$country_ref = get_field('country_ref', 'regioni_'.$r->term_id);
+		$original_region_id = apply_filters('wpml_object_id', $r->term_id, 'regioni', false, $sitepress->get_default_language());
+		$country_ref = get_field('country_ref', 'regioni_'.$original_region_id);
 		array_push($regions, array('name' => $r->name, 'id' => $r->term_id, 'language_ids' => add_store_language_ids($r->term_id, 'regioni'), 'country_ref' => $country_ref));
 	}
 	$store_terms = '';
