@@ -56263,6 +56263,7 @@ module.exports = function() {
             delete store.params.stores;
           }
           if (store.country) {
+            console.log(store.country, new_base);
             store.params = angular.extend({}, store.params, {
               countries: store.country
             });
