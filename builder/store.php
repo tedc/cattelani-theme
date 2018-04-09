@@ -13,7 +13,7 @@
 	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'cities')) as $cy) {
 		$original_city_id = apply_filters('wpml_object_id', $cy->term_id, 'cities', false, $sitepress->get_default_language());
 		$country_ref = get_field('country_ref', 'cities_'.$original_city_id);
-		$region_ref = get_field('region_ref', 'cities_'.$cy->term_id);
+		$region_ref = get_field('region_ref', 'cities_'.$original_city_id);
 		array_push($cities, array('name' => $cy->name, 'id' => $cy->term_id, 'language_ids' => add_store_language_ids($cy->term_id, 'cities'), 'country_ref' => $country_ref, 'region_ref' => $region_ref));
 	}
 	foreach (get_terms(array('hide_empty' => 0, 'orderby' => 'name', 'taxonomy'=> 'regioni')) as $r) {
