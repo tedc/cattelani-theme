@@ -92,11 +92,11 @@
 				'ajax' => $ajax
 			),
 			"strings" => array(
-				'btn_stores' => __('Cerca rivenditori', 'catellani'),
+				'btn_stores' => __('Cerca', 'catellani'),
 				'select_any' => __('Qualsiasi', 'catellani'),
 				'city_label' => __('Città', 'catellani'),
 				'region_label' => __('Regione', 'catellani'),
-				'country_label' => __('Paese', 'catellani'),
+				'country_label' => __('Nazione', 'catellani'),
 				'empty_store' => __('Non risultano store presenti nella zona', 'catellani'),
 				'more_stores' => __('Carica altri', 'catellani'),
 				'search_country' => __('Cerca una nazione...', 'catellani'),
