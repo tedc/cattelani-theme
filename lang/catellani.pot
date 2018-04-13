@@ -330,7 +330,7 @@ msgid "Carica altri"
 msgstr "Search more"
 
 # wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
-msgid "Cerca una nazione..."
+msgid "Cerca una nazione... (In inglese)"
 msgstr "Search country"
 
 # wpml-name: 083eb0c8a45a2fa7002824baec3a0cb1
