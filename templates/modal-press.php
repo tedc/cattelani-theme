@@ -3,7 +3,7 @@
 		$title = __('Rassegna stampa', 'catellani');
 		$string = __('Catalogo', 'catellani');
 		acf_set_language_to_default();
-		if(have_rows('downloads', 'options')):?>
+		if(have_rows('papers', 'options')):?>
 	<nav class="modal__nav modal__nav--shrink">
 		<header class="modal__header modal__header--grow-md-bottom">
 			<h4 class="modal__title modal__title--small modal__title--small-light"><?php echo $title; ?></h4>	
