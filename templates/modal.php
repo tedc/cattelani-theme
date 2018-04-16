@@ -7,4 +7,5 @@
 	<?php get_template_part('templates/modal', 'search'); ?>
 	<?php get_template_part('templates/modal', 'downloads'); ?>
 	<?php get_template_part('templates/modal', 'languages'); ?>
+	<?php get_template_part('templates/modal', 'press'); ?>
 </div>
