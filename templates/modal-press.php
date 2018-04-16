@@ -1,6 +1,6 @@
 <div class="modal__container" id="modal-press"  scrollbar>
 	<?php
-		$title = __('Rassegna stampa', 'catellani');
+		$title = __('Press', 'catellani');
 		$string = __('Catalogo', 'catellani');
 		acf_set_language_to_default();
 		if(have_rows('papers', 'options')):?>

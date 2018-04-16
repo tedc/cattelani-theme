@@ -286,8 +286,8 @@ msgid "Scarica i cataloghi"
 msgstr "Download the catalogues"
 
 # wpml-name: 5fb5f0b037e021f87a1736842683c51e
-msgid "Rassegna stampa"
-msgstr "Press release"
+msgid "Press"
+msgstr "Press"
 
 # wpml-name: 44f210f64090a401f2a2517426b9ad75
 msgid "Colori"
