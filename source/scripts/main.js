@@ -56263,7 +56263,6 @@ module.exports = function() {
             delete store.params.stores;
           }
           if (store.country) {
-            console.log(store.country, new_base);
             store.params = angular.extend({}, store.params, {
               countries: store.country
             });
@@ -56990,7 +56989,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(132)]).run([
       hash = $location.hash();
       if (hash) {
         $timeout(function() {
-          if (hash !== 'contact' && hash !== 'downloads' && hash !== 'search' && hash !== 'languages') {
+          if (hash !== 'contact' && hash !== 'downloads' && hash !== 'search' && hash !== 'languages' && hash !== 'press') {
             return;
           }
           $rootScope.modal(hash);

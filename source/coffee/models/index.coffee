@@ -77,7 +77,7 @@ catellani
 			hash = $location.hash()
 			if hash
 				$timeout ->
-					return if hash isnt 'contact' and hash isnt 'downloads' and hash isnt 'search' and hash isnt 'languages'
+					return if hash isnt 'contact' and hash isnt 'downloads' and hash isnt 'search' and hash isnt 'languages' and hash isnt 'press'
 					$rootScope.modal hash
 					$rootScope.$broadcast 'hash_change', {hash : hash}
 					return
