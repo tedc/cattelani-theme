@@ -33,13 +33,15 @@
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : apto_get_adjacent_post( FALSE, TRUE);
 
 	if($next) :
-	$next_id = (ICL_LANGUAGE_CODE != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
+	$next_id = ($sitepress->get_current_language != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
+
+	$original_next_id = apply_filters('wpml_object_id', $next_id, get_post_type(), false, $sitepress->get_default_language());
 	if($next_id) :
 	//var_dump($next_id, $next->ID, get_post_type());
 	//echo previous_posts_link(__('Prossimo', 'catellani'));
 ?>
 <a class="next next--grow-lg next--<?php echo $post_type; ?>" next-element href="<?php echo get_permalink($next_id); ?>" ui-sref="app.page({slug : '<?php echo basename(get_permalink($next_id)); ?>', lang : '<?php echo ICL_LANGUAGE_CODE; ?>'})">
-	<span class="next__cover" ng-style="{'background-image':'url(<?php echo get_the_post_thumbnail_url($next_id, 'full'); ?>)'}"></span>
+	<span class="next__cover" ng-style="{'background-image':'url(<?php echo get_the_post_thumbnail_url($original_next_id, 'full'); ?>)'}"></span>
 	<span class="next__container next__container--shrink-fw next__container--grow-md">
 	<span class="next__label next__label--grow-md-bottom"><?php 
 	$prossimo = ($post_type == 'post' || $post_type == 'progetti') ? __('Prossimo', 'catellani') : __('Prossima', 'catellani');
