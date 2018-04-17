@@ -41,6 +41,7 @@
 		if(get_field('magazine_template')) :
 			get_template_part('index');
 		else :
+			echo 'prova';
 			get_template_part('builder/init');
 		endif;
 		return ob_get_clean();
