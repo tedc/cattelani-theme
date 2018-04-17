@@ -105,6 +105,8 @@ class walker_texas_ranger extends Walker_Nav_Menu {
                 $hash = str_replace('#', '', esc_attr($item->url));
                 //$sref = ' ng-click="$event.preventDefault();modal(\''.$hash.'\')"';
                 $sref = '';
+            } elseif ($state == 'link') {
+                $sref = ''; 
             } else {
                 //$page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.str_replace(esc_attr(home_url('/')), '', esc_attr($item->url) ).'\'' : '';
                  $page = (get_field('state', $item->ID) == 'page') ? ', slug : \''.basename( esc_attr($item->url) ).'\'' : '';
