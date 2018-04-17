@@ -6,11 +6,10 @@
 	<?php $terms = get_terms(
 			array(
 				'taxonomy' => 'collezioni',
-				'hide_empty' => false,
+				'hide_empty' => true,
 				'orderby' => 'term_order'
 			)
 		);
-	var_dump($terms);
 		$loopedSlides = count($terms) * 2;
 	?>
 	<ks-swiper-container class="collections__slider collections__slider--home" swiper="main" slides-per-view="'auto'" override-parameters="{'speed' : 1000, 'loopedSlides':<?php echo $loopedSlides; ?>, 'grabCursor' : true,'mousewheelControl':true,'keyboardControl':true}" on-ready="sliderReady(main)">
