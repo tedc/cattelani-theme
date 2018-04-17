@@ -6,7 +6,7 @@
 	<?php $terms = get_terms(
 			array(
 				'taxonomy' => 'collezioni',
-				'hide_empty' => true,
+				'hide_empty' => false,
 				'orderby' => 'term_order'
 			)
 		);
