@@ -194,7 +194,7 @@
           $original_id = apply_filters('wpml_object_id', $object['id'], $object['type'], false, $sitepress->get_default_language());
           $id = get_post_thumbnail_id($original_id);
            $alt = get_post_meta($id, '_wp_attachment_image_alt', true);
-           return array('id'=>$id, 'alt' => $alt, 'magazine' => get_the_post_thumbnail_url( $original_id, 'magazine' ), 'large' => get_the_post_thumbnail_url( $original_id, 'large' ), 'full' => get_the_post_thumbnail_url( $original_id, 'full' ));
+           return array('id'=>$id, 'alt' => $alt, 'magazine' => get_the_post_thumbnail_url( $object['id'], 'magazine' ), 'large' => get_the_post_thumbnail_url( $object['id'], 'large' ), 'full' => get_the_post_thumbnail_url( $object['id'], 'full' ));
         }// POST THUMBNAIL
     
 
