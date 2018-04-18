@@ -12,14 +12,15 @@ catellani
 		currentDate = new Date()
 		currentTime = currentDate.getTime()
 		currentDate.setTime(currentTime + (8 * 60 * 60 * 1000));
-		if $window.location.href.indexOf('?gclid') is -1 
+		if $window.location.href.indexOf('?gclid') is -1
 			if not langCookie
 				langRedirect.getBrowserLanguage()
 					.then (val)->
 						languages = val
 						$window.localStorage.setItem('agent', JSON.stringify(languages));
 						for lang in languages
-							pageLang = if redirect.current.toLowerCase() isnt redirect.default_lang.toLowerCase() then 'en' else redirect.current.toLowerCase()
+							#pageLang = if redirect.current.toLowerCase() isnt redirect.default_lang.toLowerCase() then 'en' else redirect.current.toLowerCase()
+							pageLang = redirect.current.toLowerCase()
 							if lang is pageLang
 								$cookies.put('lang', lang, {'expires' : currentDate});
 								break

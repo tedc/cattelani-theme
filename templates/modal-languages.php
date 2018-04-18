@@ -10,11 +10,12 @@
 		<?php foreach($languages as $l) :
 			$language_link = $l['url'];
             $language_code = $l['language_code'];
-             if($language_code == 'it' || $language_code == 'en') :   
+             //if($language_code == 'it' || $language_code == 'en') :   
 		?>
 		<a href="<?php echo $language_link;  ?>" class="modal__button modal__button--lang modal__button--lang-upper<?php  echo ($language_code == ICL_LANGUAGE_CODE) ? ' modal__button--lang-active' : ''; ?>" ng-if="!lang_menu"><span class="lang"><?php echo $language_code; ?></span></a>
-		<?php endif; endforeach; ?>	
-		<a ng-href="{{l.href}}" class="modal__button modal__button--lang modal__button--lang-upper" ng-class="{'modal__button--lang-active':l.lang == '<?php echo ICL_LANGUAGE_CODE; ?>'}" ng-if="lang_menu" ng-repeat="l in lang_menu" ng-if="(l.lang == 'it' || l.lang=='en')"><span class="lang" ng-bind-html="l.lang"></span></a>
+		<?php //endif;
+		 endforeach; ?>	
+		<a ng-href="{{l.href}}" class="modal__button modal__button--lang modal__button--lang-upper" ng-class="{'modal__button--lang-active':l.lang == '<?php echo ICL_LANGUAGE_CODE; ?>'}" ng-if="lang_menu" ng-repeat="l in lang_menu"><span class="lang" ng-bind-html="l.lang"></span></a>
 	</nav>
 	<?php endif;?>
 </div>

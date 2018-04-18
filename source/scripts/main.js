@@ -56920,7 +56920,7 @@ catellani.config(["$stateProvider", "$locationProvider", require(132)]).run([
           $window.localStorage.setItem('agent', JSON.stringify(languages));
           for (i = 0, len = languages.length; i < len; i++) {
             lang = languages[i];
-            pageLang = redirect.current.toLowerCase() !== redirect.default_lang.toLowerCase() ? 'en' : redirect.current.toLowerCase();
+            pageLang = redirect.current.toLowerCase();
             if (lang === pageLang) {
               $cookies.put('lang', lang, {
                 'expires': currentDate
