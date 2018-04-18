@@ -54750,6 +54750,9 @@ module.exports = function() {
               $window.dataLayer.push({
                 event: 'formSubmissionSuccess'
               });
+              if ($window.fbq) {
+                $window.fbq('track', 'Lead');
+              }
               html = vars.main.formMsg;
               $rootScope.isContactSent = true;
               $scope.alert = html;
@@ -55403,7 +55406,23 @@ module.exports = function() {
             }
           }).then(function(results) {
             $timeout(function() {
+              var contents, i, j, len, ref;
               $scope.items = results.data;
+              if ($window.fbq) {
+                contents = [];
+                ref = $scope.items;
+                for (j = 0, len = ref.length; j < len; j++) {
+                  i = ref[j];
+                  contents.push({
+                    id: i.id,
+                    name: i.title
+                  });
+                }
+                $window.fbq('track', 'Search', {
+                  contents: contents,
+                  content_type: 'product'
+                });
+              }
               $rootScope.$broadcast('scrollBarUpdate');
               $scope.isSearchEnded = true;
             });
@@ -55528,6 +55547,27 @@ module.exports = function() {
             alt: alt
           };
         };
+        $scope.$watchCollection('items', function(newItems, oldItems) {
+          var contents, i, j, len, ref;
+          if (angular.equals(oldItems, newItems)) {
+            return;
+          }
+          if ($window.fbq) {
+            contents = [];
+            ref = $scope.items;
+            for (j = 0, len = ref.length; j < len; j++) {
+              i = ref[j];
+              contents.push({
+                id: i.id,
+                name: i.title
+              });
+            }
+            $window.fbq('track', 'Search', {
+              contents: contents,
+              content_type: 'product'
+            });
+          }
+        });
         $scope.filtered = function() {
           return $filter('taxSearch')($scope.items, $scope.search, true).length <= 0;
         };
@@ -57062,6 +57102,11 @@ module.exports = function($rootScope, $scope, data) {
     $rootScope.fromElement = false;
   }
   $rootScope.$broadcast('resize_footer');
+  if ($window.fbq && $scope.post.type === 'lampade') {
+    $window.fbq('track', 'Search', {
+      content_name: $scope.post.title
+    });
+  }
 };
 
 

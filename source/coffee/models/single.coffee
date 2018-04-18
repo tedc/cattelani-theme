@@ -11,4 +11,8 @@ module.exports = ($rootScope, $scope, data)->
 	$rootScope.breadcrumbs = $scope.post.breadcrumbs
 	$rootScope.fromElement = off if $scope.post.type isnt 'lampade'
 	$rootScope.$broadcast 'resize_footer'
+	if $window.fbq and $scope.post.type == 'lampade'
+		$window.fbq('track', 'Search', {
+			content_name : $scope.post.title
+		})
 	return

@@ -48,6 +48,17 @@ module.exports = ->
 				.then (results)->
 					$timeout ->
 						$scope.items = results.data
+						if $window.fbq
+							contents = []
+							for i in $scope.items
+								contents.push({
+									id : i.id,
+									name : i.title
+								})
+							$window.fbq('track', 'Search', {
+								contents : contents,
+								content_type: 'product'
+							})
 						$rootScope.$broadcast 'scrollBarUpdate'
 						$scope.isSearchEnded = on
 						return
@@ -156,6 +167,22 @@ module.exports = ->
 				array =
 					url : url
 					alt : alt
+
+			$scope.$watchCollection('items', (newItems, oldItems)->
+				return if angular.equals(oldItems, newItems);
+				if $window.fbq
+					contents = []
+					for i in $scope.items
+						contents.push({
+							id : i.id,
+							name : i.title
+						})
+					$window.fbq('track', 'Search', {
+						contents : contents,
+						content_type: 'product'
+					})
+				return
+			)
 			
 			$scope.filtered = ->
 				return $filter('taxSearch')($scope.items, $scope.search, true).length <= 0
