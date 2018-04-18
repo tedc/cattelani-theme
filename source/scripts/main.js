@@ -57103,7 +57103,7 @@ module.exports = function($rootScope, $scope, data) {
   }
   $rootScope.$broadcast('resize_footer');
   if (window.fbq && $scope.post.type === 'lampade') {
-    window.fbq('track', 'Search', {
+    window.fbq('track', 'ViewContent', {
       content_name: $scope.post.title
     });
   }

@@ -12,7 +12,7 @@ module.exports = ($rootScope, $scope, data)->
 	$rootScope.fromElement = off if $scope.post.type isnt 'lampade'
 	$rootScope.$broadcast 'resize_footer'
 	if window.fbq and $scope.post.type == 'lampade'
-		window.fbq('track', 'Search', {
+		window.fbq('track', 'ViewContent', {
 			content_name : $scope.post.title
 		})
 	return
