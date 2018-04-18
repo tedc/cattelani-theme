@@ -55347,7 +55347,7 @@ module.exports = function() {
   return search = {
     scope: true,
     controller: [
-      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", function($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location) {
+      "$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", '$window', function($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location, $window) {
         var closeAnim, getSearch, lang, wrapper;
         $scope.isSearchEnded = false;
         $scope.isSelect = {};
@@ -57102,8 +57102,8 @@ module.exports = function($rootScope, $scope, data) {
     $rootScope.fromElement = false;
   }
   $rootScope.$broadcast('resize_footer');
-  if ($window.fbq && $scope.post.type === 'lampade') {
-    $window.fbq('track', 'Search', {
+  if (window.fbq && $scope.post.type === 'lampade') {
+    window.fbq('track', 'Search', {
       content_name: $scope.post.title
     });
   }

@@ -1,7 +1,7 @@
 module.exports = ->
 	search =
 		scope : true
-		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", ($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location)->
+		controller : ["$rootScope", "$scope", "$q", "$attrs", "$timeout", "wpApi", "$animate", "ScrollbarService", "$filter", "$location", '$window', ($rootScope, $scope, $q, $attrs, $timeout, wpApi, $animate, ScrollbarService, $filter, $location, $window)->
 			$scope.isSearchEnded = off
 			$scope.isSelect = {}
 			lang = $attrs.lang
