@@ -33,10 +33,11 @@
 	$next = (get_post_type() == 'lampade' ) ? apto_get_adjacent_post( array('taxonomy' => 'collezioni', 'term_id' => $term[0]->term_id), true) : apto_get_adjacent_post( FALSE, TRUE);
 
 	if($next) :
-	$next_id = ($sitepress->get_current_language != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
+	$next_id = ($sitepress->get_current_language() != $sitepress->get_default_language()) ? apply_filters('wpml_object_id', $next->ID, get_post_type(), false, ICL_LANGUAGE_CODE) : $next->ID;
+
+	if($next_id) :
 
 	$original_next_id = apply_filters('wpml_object_id', $next_id, get_post_type(), false, $sitepress->get_default_language());
-	if($next_id) :
 	//var_dump($next_id, $next->ID, get_post_type());
 	//echo previous_posts_link(__('Prossimo', 'catellani'));
 ?>
