@@ -21,12 +21,13 @@ if(get_field('related', $the_id)) :
 		<ks-swiper-container slides-per-view="'auto'" show-nav-buttons="true" swiper="main" override-parameters="{'nextButton' : '#related_<?php the_ID(); ?> .icon-arrow--next', 'prevButton' : '#related_<?php the_ID(); ?> .icon-arrow--prev'}">
 		<?php
 			foreach($rels as $rel) :
+				$original_id = id_by_lang($rel->ID, 'lampade', $sitepress_>get_default_language());
 			
 		?>
 		<ks-swiper-slide class="swiper-slide swiper-slide--grow-md">
 			<figure class="swiper-slide__image">
 				<?php 
-				echo get_the_post_thumbnail( $rel->ID, 'vertical-thumb', '' );
+				echo get_the_post_thumbnail( $original_id, 'vertical-thumb', '' );
 				 ?>
 			</figure>
 			<h2 class="swiper-slide__title swiper-slide__title--alternate"><a class="swiper-slide__link" ui-sref="app.page({slug : '<?php echo basename(get_permalink($rel->ID)); ?>', lang : '<?php echo  ICL_LANGUAGE_CODE; ?>'})"><?php echo get_the_title($rel->ID); ?></a></h2>
