@@ -809,3 +809,9 @@ function fix_rewritebase($rules){
  
     return $rules;
 }
+
+function my_wpml_hreflangs_html($hreflang) {
+	$hreflang = str_replace('/"', '"', $hreflang);
+	return $hreflang;
+}
+add_filter( 'wpml_hreflangs_html', 'my_wpml_hreflangs_html', 10, 1 );
