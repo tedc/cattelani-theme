@@ -81,6 +81,7 @@
 	}
 	&__select {
 		margin-bottom: em($p);
+		padding: 0!important;
 	}
 	&__footer {
 		padding-bottom: 0;
@@ -88,6 +89,13 @@
 		@include breakpoint() {
 			text-align: right;
 		};
+	}
+	&__span {
+		align-items: center;
+		justify-content: space-between;
+		width: $f;
+		flex: 0 0 auto;
+		padding: 0 em($p);
 	}
 	&__send {
 		margin-right: em(30px*-1);
