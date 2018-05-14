@@ -16,7 +16,7 @@
 		</div>
 		<div class="contact__cell contact__cell--s6 contact__cell--shrink-double contact__cell--form" ng-form>
 			<header class="contact__header contact__header--grow-md-bottom" data-title="<?php _e('Contatti', 'catellani'); ?>"></header>
-			<?php get_template_part( 'templates/agile', null ); ?>
+			<?php get_template_part( 'templates/form', null ); ?>
 		</div>
 	</section>
 </div>
