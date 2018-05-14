@@ -27,13 +27,13 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 		</span>
 		<?php $data = array('Select', 'Verkaufsabteilung', 'Kundenspezifische Projekte', 'Customer Care', 'Sonstiges'); ?>
 		<select ng-model="formData.select" required name="tags">			
-			<?php for($i = 0; $i < $data; $i++) : ?>
+			<?php for($i = 0; $i < count($data); $i++) : ?>
 			<option value="<?php echo ($i==0) ? '' : $data[$i]; ?>"><?php echo $data[$i]; ?></option>
 			<?php endfor; ?>
 		</select>
 		<ul class="form__options" ng-class="{'form__options--visible':isContactSelected}">
 			<?php 
-				for($j = 0; $j < $data; $j++) : 
+				for($j = 0; $j < count($data); $j++) : 
 				if($j == 0) :
 			?>
 			<li class="form__option" ng-click="$event.stopPropagation();formData.select=false" ng-class="{'form__option--selected':!formData.select}"><?php echo $data[$i]; ?></li>
