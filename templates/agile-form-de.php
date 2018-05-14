@@ -36,9 +36,9 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 				for($j = 0; $j < count($data); $j++) : 
 				if($j == 0) :
 			?>
-			<li class="form__option" ng-click="$event.stopPropagation();formData.select=false" ng-class="{'form__option--selected':!formData.select}"><?php echo $data[$j]; ?></li>
+			<li class="form__option" ng-click="$event.stopPropagation();isContactSelected=false;formData.select=false" ng-class="{'form__option--selected':!formData.select}"><?php echo $data[$j]; ?></li>
 			<?php else: ?>
-			<li class="form__option" ng-click="$event.stopPropagation();formData.select='<?php echo $data[$j]; ?>';" ng-class="{'form__option--selected':formData.select=='<?php echo $data[$j]; ?>'}"><?php echo $data[$j]; ?></li>
+			<li class="form__option" ng-click="$event.stopPropagation();isContactSelected=false;formData.select='<?php echo $data[$j]; ?>';" ng-class="{'form__option--selected':formData.select=='<?php echo $data[$j]; ?>'}"><?php echo $data[$j]; ?></li>
 			<?php endif; endfor; ?>
 		</ul>
 	</div>
