@@ -19,10 +19,12 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 	<p><input class="form__input" type="text" name="last_name" required ng-model="formData.last_name" placeholder="<?php _e('Last Name (required)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="email" name="email" required ng-model="formData.email" placeholder="<?php _e('Email (required)', 'catellani'); ?>"></p>
 	<p><input class="form__input" type="tel" name="phone" required ng-model="formData.tel" placeholder="<?php _e('Phone Number (required)', 'catellani'); ?>"></p>
-	<div class="form__select" click-outside="isContactSelected=false" ng-class="{'form__select--filled' : formData.select}" ng-click="$event.stopPropagation();isContactSelected=!isContactSelected;">
-		<span class="form__value" ng-bind-html="(formData.select) ? formData.select : '<?php _e('Select', 'catellani'); ?>'"></span>
-		<span class="form__icons">
-			<i class="icon-select"></i>
+	<div class="form__select" click-outside="isContactSelected=false" ng-class="{'form__select--filled' : formData.select}">
+		<span class="form__span form__span--grid-nowrap" ng-click="$event.stopPropagation();isContactSelected=true;">
+			<span class="form__value" ng-bind-html="(formData.select) ? formData.select : '<?php _e('Select', 'catellani'); ?>'"></span>
+			<span class="form__icons">
+				<i class="icon-select"></i>
+			</span>
 		</span>
 		<?php $data = array('Select', 'Commercial', 'Custom Projects', 'Customer Care', 'Other'); ?>
 		<select ng-model="formData.select" required name="tags">			
