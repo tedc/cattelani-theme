@@ -1,3 +1,4 @@
 <?php 
-	get_template_part( 'templates/agile', 'form-'.ICL_LANGUAGE_CODE );
+	global $sitepress;
+	get_template_part( 'templates/agile', 'form-'.$sitepress->get_current_language() );
 ?>
