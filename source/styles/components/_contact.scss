@@ -79,6 +79,9 @@
 	p {
 		padding-bottom: em($p);
 	}
+	&__select {
+		margin-bottom: em($p);
+	}
 	&__footer {
 		padding-bottom: 0;
 		padding-top: em($p*2);
