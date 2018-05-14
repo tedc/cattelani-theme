@@ -1,4 +1,5 @@
 <?php 
+global $wp;
 $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 <form id="contactForm" class="form" name="contactForm" novalidate action="https://catellanismith.agilecrm.com/formsubmit" method="GET">
 	<div style="display:none;visibility:hidden;height:0;width:0;">
