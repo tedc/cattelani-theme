@@ -47,7 +47,7 @@ $current_url = home_url(add_query_arg(array(),$wp->request)); ?>
 	<p><textarea class="form__textarea" name="note" ng-model="formData.message" placeholder="<?php _e('Nachricht', 'catellani'); ?>"></textarea></p>
 	<em class="form__privacy"><?php _e('Mit dem ausgefüllten Formular in Anhang bestätige ich, dass ich die dass ich die Datenschutzstimmungen (D. Lg. 196/03) gelesen und akzeptiert habe.', 'catellani'); ?></em>
 	<p class="form__footer">
-		<button type="submit" class="form__send" ng-disabled="contactForm.$invalid">
+		<button type="submit" class="form__send" ng-disabled="contactForm.$invalid" onclick="dataLayer.push({'event':'submit'})">
 			<span><?php _e('Senden', 'catellani'); ?></span>
 		</button>
 	</p>
